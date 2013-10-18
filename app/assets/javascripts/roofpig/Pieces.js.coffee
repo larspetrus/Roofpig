@@ -20,6 +20,7 @@ class @Pieces3D
           for side in [x_side, y_side, z_side]
             if side != mid_slice
               new_piece.add(side.make_sticker(this._piece_center(x_side, y_side, z_side)))
+              new_piece.add(side.make_plastic(this._piece_center(x_side, y_side, z_side)))
           scene.add(new_piece)
 
   @_piece_center: (x_side, y_side, z_side) ->

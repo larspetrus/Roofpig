@@ -8,17 +8,26 @@ class @Side
     axix3 = v3(@normal.z, @normal.x, @normal.y)
 
     normal_sign = @normal.y + @normal.z + @normal.x
-    @f1 = axis2.clone().add(axix3).multiplyScalar(0.9 * normal_sign)
-    @f2 = axis2.clone().sub(axix3).multiplyScalar(0.9)
+    @sx = axis2.clone().add(axix3).multiplyScalar(0.9 * normal_sign)
+    @sy = axis2.clone().sub(axix3).multiplyScalar(0.9)
+
+    @px = axis2.clone().add(axix3).multiplyScalar(1.0 * normal_sign)
+    @py = axis2.clone().sub(axix3).multiplyScalar(1.0)
 
   make_sticker: (piece_center) ->
-    stc = piece_center.clone().add(@normal) # stc = "sticker center"
-    sticker = new THREE.Geometry();
-    sticker.vertices.push(stc.clone().add(@f1), stc.clone().add(@f2), stc.clone().sub(@f1), stc.clone().sub(@f2));
-    sticker.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
-    sticker.computeBoundingSphere();
+    sticker_center = piece_center.clone().add(@normal.clone().multiplyScalar(1.0001)) # Sticker hovers over plastic
+    return new THREE.Mesh(this.square(sticker_center, @sx, @sy), new THREE.MeshBasicMaterial(color: @color))
 
-    return new THREE.Mesh(sticker, new THREE.MeshBasicMaterial(color: @color))
+  make_plastic: (piece_center) ->
+    plastic_center = piece_center.clone().add(@normal) # stc = "sticker center"
+    return new THREE.Mesh(this.square(plastic_center, @px, @py), new THREE.MeshBasicMaterial(color: 'black'))
+
+  square: (stc, d1, d2) ->
+    square = new THREE.Geometry();
+    square.vertices.push(stc.clone().add(d1), stc.clone().add(d2), stc.clone().sub(d1), stc.clone().sub(d2));
+    square.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
+    square.computeBoundingSphere();
+    return square
 
   @by_name: (name) ->
     all[name]
