@@ -30,17 +30,10 @@ class @Display
 
   # this function is executed on each animation frame
   animate: ->
-    key_event = @input_handler.next_key()
+    next_move = @input_handler.next_move()
 
-    if key_event && key_event.key in ['U', 'D', 'F', 'B', 'L', 'R']
-      if key_event.shift
-        turns = 3
-      else if key_event.ctrl
-        turns = 2
-      else
-        turns = 1
-
-      this.new_move(new Move(Side.by_name(key_event.key), turns))
+    if next_move
+      this.new_move(next_move)
 
     @move.animate() if @move
 
