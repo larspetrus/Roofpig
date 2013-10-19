@@ -10,7 +10,7 @@ class @Display
   constructor: ->
     @input_handler = new InputHandler()
 
-    @renderer = new THREE.WebGLRenderer()
+    @renderer = new THREE.WebGLRenderer({ antialias: true })
     @renderer.setSize window.innerWidth, window.innerHeight
     document.body.appendChild @renderer.domElement
 
