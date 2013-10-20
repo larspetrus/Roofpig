@@ -1,8 +1,7 @@
 #= require three.min
 #= require roofpig/Move
-#= require roofpig/Pieces
+#= require roofpig/Pieces3D
 #= require roofpig/Positions
-#= require roofpig/Side
 
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 

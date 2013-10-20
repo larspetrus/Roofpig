@@ -17,10 +17,12 @@ class @Pieces3D
           new_piece.name = name
           @map[name] = new_piece
 
+          center = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
             if side != mid_slice
-              new_piece.add(side.make_sticker(this._piece_center(x_side, y_side, z_side)))
-              new_piece.add(side.make_plastic(this._piece_center(x_side, y_side, z_side)))
+              new_piece.add(side.make_sticker(center))
+              new_piece.add(side.make_reverse_sticker(center))
+              new_piece.add(side.make_plastic(center))
           scene.add(new_piece)
 
   @_piece_center: (x_side, y_side, z_side) ->

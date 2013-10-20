@@ -1,4 +1,4 @@
-#= require roofpig/Pieces
+#= require roofpig/Pieces3D
 
 class @Positions
 
