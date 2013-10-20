@@ -11,7 +11,7 @@ class @Side
     return this._3d_square(center, dx, dy, @color)
 
   make_reverse_sticker: (piece_center) ->
-    center = piece_center.clone().add(@normal.clone().multiplyScalar(6.0))
+    center = piece_center.clone().add(@normal.clone().multiplyScalar(6.5))
     [dx, dy] = this._offsets(0.98, true)
     return this._3d_square(center, dx, dy, @color)
 

@@ -9,16 +9,15 @@ class @Display
   constructor: ->
     @input_handler = new InputHandler()
 
-    @renderer = new THREE.WebGLRenderer({ antialias: true })
-    @renderer.setSize window.innerWidth, window.innerHeight
-    document.body.appendChild @renderer.domElement
+    @renderer = new THREE.WebGLRenderer({ antialias: true})
+    @renderer.setSize(500, 500)
+    @renderer.setClearColor(0xAAAAAA, 1);
+    document.body.appendChild(@renderer.domElement)
 
-    @camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100)
-    @camera.position.y = 22
-    @camera.position.z = 20
-    @camera.position.x = 10
+    @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
+    @camera.position.set(25, 25, 25)
+    @camera.up.set(0,0,1);
     @camera.lookAt(v3(0, 0, 0))
-    @camera.rotation.z = Math.PI
 
     @scene = new THREE.Scene()
 
