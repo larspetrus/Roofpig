@@ -9,10 +9,14 @@ class @Display
   constructor: ->
     @input_handler = new InputHandler()
 
-    @renderer = new THREE.WebGLRenderer({ antialias: true})
-    @renderer.setSize(500, 500)
+    canvas_div = $("#canvas_1")
+    canvas_size = Math.min(canvas_div.attr("width"), canvas_div.attr("height"))
+
+    @renderer = new THREE.WebGLRenderer({ antialias: true })
+    @renderer.setSize(canvas_size, canvas_size)
     @renderer.setClearColor(0xAAAAAA, 1);
-    document.body.appendChild(@renderer.domElement)
+
+    $("#buttons_1").before(@renderer.domElement);
 
     @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
     @camera.position.set(25, 25, 25)
@@ -45,3 +49,9 @@ class @Display
     if @move
       @move.finish()
     @move = move
+
+  button_click: (name) ->
+    switch name
+      when "forward" then this.new_move(new Move(Side.U, 1))
+      when "pause" then this.new_move(new Move(Side.L, 2))
+      when "back" then this.new_move(new Move(Side.U, 3))
