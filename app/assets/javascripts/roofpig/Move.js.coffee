@@ -3,15 +3,16 @@
 class @Move
   constructor: (@side, @turns) ->
     @turn_time = [300, 450, 300][@turns-1] #ms
-    @start_time = (new Date()).getTime()
-    @last_time = @start_time
-    q_turn = - Math.PI / 2
-    @total_angle_change = [q_turn, 2 *q_turn, -q_turn][@turns-1]
+    q_turn = -Math.PI/2
+    @total_angle_change = [q_turn, 2*q_turn, -q_turn][@turns-1]
 
   animate: ->
     return if @finished
 
-    @pieces ?= Positions.for_side(@side.name)
+    unless @pieces
+      @pieces = Positions.for_side(@side.name)
+      @start_time = (new Date()).getTime()
+      @last_time = @start_time
 
     now = (new Date()).getTime()
     if now > @start_time + @turn_time

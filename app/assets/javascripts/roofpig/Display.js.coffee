@@ -28,22 +28,33 @@ class @Display
     Pieces3D.make_stickers(@scene)
     Positions.init()
 
+    @alg = new Alg()
+    @playing_alg = false
+
     this.animate()
 
   # this function is executed on each animation frame
   animate: ->
-    next_move = @input_handler.next_move()
+    if @playing_alg
+      if not @move || @move.finished
+        this.new_move(@alg.next_move())
+        unless @move
+          @playing_alg = false
+    else
+      user_move = @input_handler.next_move()
+      if user_move
+        this.new_move(user_move)
+      else
+        if @move && @move.finished
+          @move = null # Is this a memory leak?
 
-    if next_move
-      this.new_move(next_move)
-
-    @move.animate() if @move
+    if @move
+      @move.animate()
 
     @renderer.render @scene, @camera
 
     # request new frame
-    requestAnimationFrame =>
-      this.animate()
+    requestAnimationFrame => this.animate()
 
   new_move: (move) ->
     if @move
@@ -52,6 +63,6 @@ class @Display
 
   button_click: (name) ->
     switch name
-      when "forward" then this.new_move(new Move(Side.U, 1))
-      when "pause" then this.new_move(new Move(Side.L, 2))
-      when "back" then this.new_move(new Move(Side.U, 3))
+      when "forward" then @playing_alg = true
+      when "pause" then @playing_alg = false
+      when "back" then "TODO"
