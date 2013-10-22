@@ -25,7 +25,7 @@ class @Display
     Pieces3D.make_stickers(@scene)
     Positions.init()
 
-    @alg = new Alg()
+    @alg = new Alg(canvas_div.data("alg"))
     @playing_alg = false
 
     this.animate()
