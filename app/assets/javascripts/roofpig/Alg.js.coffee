@@ -1,9 +1,14 @@
+#= require roofpig/Move
+
 class @Alg
-  constructor: ->
-    @moves = [new Move(Side.F,1),new Move(Side.U,1),new Move(Side.F,3),new Move(Side.U,1),new Move(Side.F,1),new Move(Side.U,2),new Move(Side.F,3)]
+  constructor: (string_of_moves = 'F1 U1 F3 U1 F1 U2 F3') ->
+    @moves = string_of_moves.split(' ').map (code) -> Move.from_code(code)
     @next = 0
 
   next_move: ->
     move = @moves[@next]
     @next += 1
     return move
+
+  to_s: ->
+    (@moves.map (move) -> move.to_s()).join(' ')

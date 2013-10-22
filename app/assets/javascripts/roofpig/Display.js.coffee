@@ -10,12 +10,9 @@ class @Display
     @input_handler = new InputHandler()
 
     canvas_div = $("#canvas_1")
-    canvas_size = Math.min(canvas_div.width(), canvas_div.height())
-    console.log(canvas_div.width(), canvas_div.height())
-
     @renderer = new THREE.WebGLRenderer({ antialias: true })
+    canvas_size = Math.min(canvas_div.width(), canvas_div.height())
     @renderer.setSize(canvas_size, canvas_size)
-
     $("#buttons_1").before(@renderer.domElement);
 
     @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
