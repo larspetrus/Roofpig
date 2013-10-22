@@ -10,11 +10,11 @@ class @Display
     @input_handler = new InputHandler()
 
     canvas_div = $("#canvas_1")
-    canvas_size = Math.min(canvas_div.attr("width"), canvas_div.attr("height"))
+    canvas_size = Math.min(canvas_div.width(), canvas_div.height())
+    console.log(canvas_div.width(), canvas_div.height())
 
     @renderer = new THREE.WebGLRenderer({ antialias: true })
     @renderer.setSize(canvas_size, canvas_size)
-    @renderer.setClearColor(0xAAAAAA, 1);
 
     $("#buttons_1").before(@renderer.domElement);
 
