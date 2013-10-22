@@ -4,8 +4,6 @@
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 
 class @Pieces3D
-  @map: {}
-
   @make_stickers: (scene) ->
     mid_slice = new Side("-", v3(0.0, 0.0, 0.0))
 
@@ -15,7 +13,7 @@ class @Pieces3D
           name = this._piece_name(x_side, y_side, z_side)
           new_piece = new THREE.Object3D()
           new_piece.name = name
-          @map[name] = new_piece
+          this[name] = new_piece
 
           center = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]

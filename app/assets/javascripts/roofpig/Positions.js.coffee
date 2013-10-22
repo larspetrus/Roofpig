@@ -4,34 +4,34 @@ class @Positions
 
   @init: ->
     @at =
-      UFR: Pieces3D.map.UFR
-      UFL: Pieces3D.map.UFL
-      UBR: Pieces3D.map.UBR
-      UBL: Pieces3D.map.UBL
-      DFR: Pieces3D.map.DFR
-      DFL: Pieces3D.map.DFL
-      DBR: Pieces3D.map.DBR
-      DBL: Pieces3D.map.DBL
-      UF: Pieces3D.map.UF
-      UB: Pieces3D.map.UB
-      UL: Pieces3D.map.UL
-      UR: Pieces3D.map.UR
-      DF: Pieces3D.map.DF
-      DB: Pieces3D.map.DB
-      DL: Pieces3D.map.DL
-      DR: Pieces3D.map.DR
-      FR: Pieces3D.map.FR
-      FL: Pieces3D.map.FL
-      BR: Pieces3D.map.BR
-      BL: Pieces3D.map.BL
+      UFR: Pieces3D.UFR
+      UFL: Pieces3D.UFL
+      UBR: Pieces3D.UBR
+      UBL: Pieces3D.UBL
+      DFR: Pieces3D.DFR
+      DFL: Pieces3D.DFL
+      DBR: Pieces3D.DBR
+      DBL: Pieces3D.DBL
+      UF: Pieces3D.UF
+      UB: Pieces3D.UB
+      UL: Pieces3D.UL
+      UR: Pieces3D.UR
+      DF: Pieces3D.DF
+      DB: Pieces3D.DB
+      DL: Pieces3D.DL
+      DR: Pieces3D.DR
+      FR: Pieces3D.FR
+      FL: Pieces3D.FL
+      BR: Pieces3D.BR
+      BL: Pieces3D.BL
 
 
-  @for_u: -> [@at.UFR, @at.UFL, @at.UBR, @at.UBL, @at.UF, @at.UB, @at.UL, @at.UR, Pieces3D.map.U]
-  @for_d: -> [@at.DFR, @at.DFL, @at.DBR, @at.DBL, @at.DF, @at.DB, @at.DL, @at.DR, Pieces3D.map.D]
-  @for_f: -> [@at.UFL, @at.UFR, @at.DFR, @at.DFL, @at.UF, @at.FR, @at.DF, @at.FL, Pieces3D.map.F]
-  @for_b: -> [@at.UBL, @at.UBR, @at.DBR, @at.DBL, @at.UB, @at.BR, @at.DB, @at.BL, Pieces3D.map.B]
-  @for_l: -> [@at.UFL, @at.DFL, @at.DBL, @at.UBL, @at.UL, @at.FL, @at.DL, @at.BL, Pieces3D.map.L]
-  @for_r: -> [@at.UFR, @at.DFR, @at.DBR, @at.UBR, @at.UR, @at.FR, @at.DR, @at.BR, Pieces3D.map.R]
+  @for_u: -> [@at.UFR, @at.UFL, @at.UBR, @at.UBL, @at.UF, @at.UB, @at.UL, @at.UR, Pieces3D.U]
+  @for_d: -> [@at.DFR, @at.DFL, @at.DBR, @at.DBL, @at.DF, @at.DB, @at.DL, @at.DR, Pieces3D.D]
+  @for_f: -> [@at.UFL, @at.UFR, @at.DFR, @at.DFL, @at.UF, @at.FR, @at.DF, @at.FL, Pieces3D.F]
+  @for_b: -> [@at.UBL, @at.UBR, @at.DBR, @at.DBL, @at.UB, @at.BR, @at.DB, @at.BL, Pieces3D.B]
+  @for_l: -> [@at.UFL, @at.DFL, @at.DBL, @at.UBL, @at.UL, @at.FL, @at.DL, @at.BL, Pieces3D.L]
+  @for_r: -> [@at.UFR, @at.DFR, @at.DBR, @at.UBR, @at.UR, @at.FR, @at.DR, @at.BR, Pieces3D.R]
 
   @for_side: (side_char) ->
     return this.for_u() if side_char == 'U'
