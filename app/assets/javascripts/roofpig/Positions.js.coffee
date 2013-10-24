@@ -73,7 +73,3 @@ class @Positions
 
   @_permute: (p1, p2, p3, p4) ->
     [@at[p1], @at[p2], @at[p3], @at[p4]] = [@at[p2], @at[p3], @at[p4], @at[p1]]
-
-  @print: ->
-    msg = "PRINT:UFR:#{@at.UFR.name} UFL:#{@at.UFL.name} UBR:#{@at.UBR.name} UBL:#{@at.UBL.name} DFR:#{@at.DFR.name} DFL:#{@at.DFL.name} DBR:#{@at.DBR.name} DBL:#{@at.DBL.name} UF:#{@at.UF.name} UB:#{@at.UB.name} UL:#{@at.UL.name} UR:#{@at.UR.name} DF:#{@at.DF.name} DB:#{@at.DB.name} DL:#{@at.DL.name} DR#{@at.DR.name} FR:#{@at.FR.name} FL:#{@at.FL.name} BR:#{@at.BR.name} BL:#{@at.BL.name}"
-    console.log(msg)

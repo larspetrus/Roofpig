@@ -39,7 +39,6 @@ class @Move
     Positions.l_move(@turns)  if @side == Side.L
     Positions.r_move(@turns)  if @side == Side.R
 
-    #    Positions.print()
     @finished = true
 
   to_s: ->
