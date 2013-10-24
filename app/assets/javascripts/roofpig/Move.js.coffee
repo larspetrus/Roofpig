@@ -31,14 +31,7 @@ class @Move
     return if @finished
 
     this.rotate(@start_time + @turn_time)
-
-    Positions.u_move(@turns)  if @side == Side.U
-    Positions.d_move(@turns)  if @side == Side.D
-    Positions.f_move(@turns)  if @side == Side.F
-    Positions.b_move(@turns)  if @side == Side.B
-    Positions.l_move(@turns)  if @side == Side.L
-    Positions.r_move(@turns)  if @side == Side.R
-
+    Positions.move_pieces(@side, @turns)
     @finished = true
 
   to_s: ->

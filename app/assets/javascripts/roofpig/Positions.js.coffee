@@ -41,6 +41,14 @@ class @Positions
     return this.for_l() if side_char == 'L'
     return this.for_r() if side_char == 'R'
 
+  @move_pieces: (side, turns) ->
+    this.u_move(turns)  if side == Side.U
+    this.d_move(turns)  if side == Side.D
+    this.f_move(turns)  if side == Side.F
+    this.b_move(turns)  if side == Side.B
+    this.l_move(turns)  if side == Side.L
+    this.r_move(turns)  if side == Side.R
+
   @u_move: (turns) ->
     for n in [1..turns]
       this._permute('UBR', 'UBL', 'UFL', 'UFR')
