@@ -16,7 +16,7 @@ class @Move
   start_animation: ->
     animation_pieces = Positions.for_side(@side.name)
     Positions.move_pieces(@side, @turns)
-    return new MoveAnimation(animation_pieces, @side, @total_angle_change, @turn_time)
+    new MoveAnimation(animation_pieces, @side, @total_angle_change, @turn_time)
 
   to_s: ->
     "#{@side.name}#{@turns}"

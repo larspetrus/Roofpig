@@ -11,11 +11,11 @@ class @Alg
 
     move = @moves[@next]
     @next += 1
-    return move
+    move
 
   start_animation: ->
     @playing = 'forward'
-    return new AlgAnimation(this)
+    new AlgAnimation(this)
 
   stop: ->
     @playing = false

@@ -8,24 +8,24 @@ class @Side
   make_sticker: (piece_center) ->
     center = piece_center.clone().add(@normal.clone().multiplyScalar(1.0001)) # Sticker hovers over plastic
     [dx, dy] = this._offsets(0.90, false)
-    return this._3d_square(center, dx, dy, @color)
+    this._3d_square(center, dx, dy, @color)
 
   make_reverse_sticker: (piece_center) ->
     center = piece_center.clone().add(@normal.clone().multiplyScalar(6.5))
     [dx, dy] = this._offsets(0.98, true)
-    return this._3d_square(center, dx, dy, @color)
+    this._3d_square(center, dx, dy, @color)
 
   make_plastic: (piece_center) ->
     center = piece_center.clone().add(@normal) # stc = "sticker center"
     [dx, dy] = this._offsets(1.0, true)
-    return this._3d_square(center, dx, dy, 'black')
+    this._3d_square(center, dx, dy, 'black')
 
   _3d_square: (stc, d1, d2, color) ->
     square = new THREE.Geometry();
     square.vertices.push(stc.clone().add(d1), stc.clone().add(d2), stc.clone().sub(d1), stc.clone().sub(d2));
     square.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
     square.computeBoundingSphere();
-    return new THREE.Mesh(square, new THREE.MeshBasicMaterial(color: color))
+    new THREE.Mesh(square, new THREE.MeshBasicMaterial(color: color))
 
   _offsets: (coverage, backside) ->
     axis2 = v3(@normal.y, @normal.z, @normal.x)
@@ -34,7 +34,7 @@ class @Side
 
     dx = axis2.clone().add(axis3).multiplyScalar(coverage * flip)
     dy = axis2.clone().sub(axis3).multiplyScalar(coverage)
-    return [dx, dy]
+    [dx, dy]
 
   @by_name: (name) ->
     all[name]

@@ -31,4 +31,4 @@ class @Pieces3D
     for ordered_side in [Side.U, Side.D, Side.F, Side.B, Side.R, Side.L]
       if ordered_side in sides
         code += ordered_side.name
-    return code
+    code
