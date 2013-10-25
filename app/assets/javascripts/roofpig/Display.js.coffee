@@ -7,7 +7,7 @@ v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 
 class @Display
   constructor: ->
-    @input_handler = new InputHandler()
+    @input_handler = new InputHandler(this)
 
     canvas_div = $("#canvas_1")
     @renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -28,38 +28,29 @@ class @Display
     @alg = new Alg(canvas_div.data("alg"))
     @playing_alg = false
 
+    @animations = []
+
     this.animate()
 
   # this function is executed on each animation frame
   animate: ->
-    if @playing_alg
-      if not @move || @move.finished
-        this.new_move(@alg.next_move())
-        unless @move
-          @playing_alg = false
-    else
-      user_move = @input_handler.next_move()
-      if user_move
-        this.new_move(user_move)
-      else
-        if @move && @move.finished
-          @move = null # Is this a memory leak?
-
-    if @move
-      @move.animate()
+    for animation in @animations
+      animation.animate()
 
     @renderer.render @scene, @camera
 
     # request new frame
     requestAnimationFrame => this.animate()
 
-  new_move: (move) ->
-    if @move
-      @move.finish()
-    @move = move
+  new_user_move: (move) ->
+    if @user_move
+      @user_move.finish()
+    @user_move = move
+
+    @animations.push(move)
 
   button_click: (name) ->
     switch name
-      when "forward" then @playing_alg = true
-      when "pause" then @playing_alg = false
+      when "forward" then @animations.push(@alg.start_animation())
+      when "pause" then @alg.stop()
       when "back" then "TODO"

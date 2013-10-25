@@ -13,41 +13,10 @@ class @Move
     q_turn = -Math.PI/2
     @total_angle_change = [q_turn, 2*q_turn, -q_turn][@turns-1]
 
-  animate: ->
-    return if @finished
-
-    unless @pieces
-      @pieces = Positions.for_side(@side.name)
-      @start_time = (new Date()).getTime()
-      @last_time = @start_time
-
-    now = (new Date()).getTime()
-    if now > @start_time + @turn_time
-      this.finish()
-    else
-      this.rotate(now)
-
-  finish: ->
-    return if @finished
-
-    this.rotate(@start_time + @turn_time)
+  start_animation: ->
+    animation_pieces = Positions.for_side(@side.name)
     Positions.move_pieces(@side, @turns)
-    @finished = true
+    return new MoveAnimation(animation_pieces, @side, @total_angle_change, @turn_time)
 
   to_s: ->
     "#{@side.name}#{@turns}"
-
-  # Rotate an object around an arbitrary axis in world space #adapted from http://stackoverflow.com/questions/11119753/how-to-rotate-a-object-on-axis-world-three-js
-  _rotateAroundWorldAxis: (object, axis, radians) ->
-    rotWorldMatrix = new THREE.Matrix4()
-    rotWorldMatrix.makeRotationAxis(axis.normalize(), radians)
-    rotWorldMatrix.multiply(object.matrix) # pre-multiply
-    object.matrix = rotWorldMatrix
-    object.rotation.setFromRotationMatrix(object.matrix)
-
-  rotate: (to_time) ->
-    change = (to_time - @last_time) * @total_angle_change / @turn_time
-    @last_time = to_time
-
-    for piece in @pieces
-      this._rotateAroundWorldAxis(piece, @side.normal, change)

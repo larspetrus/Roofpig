@@ -1,7 +1,6 @@
 class @InputHandler
-  moves: []
 
-  constructor: ->
+  constructor: (@display) ->
     $("body").keydown (e) =>
       this.key_pressed(e)
 
@@ -10,12 +9,7 @@ class @InputHandler
     if key in ['U', 'D', 'F', 'B', 'L', 'R']
       if e.shiftKey
         turns = 3
-      else if e.ctrlKey
-        turns = 2
       else
-        turns = 1
+        turns = if e.ctrlKey then 2 else 1
 
-      @moves.push(new Move(Side.by_name(key), turns))
-
-  next_move: ->
-    @moves.shift()
+      @display.new_user_move(new Move(Side.by_name(key), turns).start_animation())
