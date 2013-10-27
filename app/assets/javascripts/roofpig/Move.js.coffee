@@ -1,4 +1,4 @@
-#= require roofpig/Positions
+#= require roofpig/Pieces3D
 
 class @Move
   @from_code: (code) ->
@@ -14,8 +14,8 @@ class @Move
     @total_angle_change = [q_turn, 2*q_turn, -q_turn][@turns-1]
 
   start_animation: ->
-    animation_pieces = Positions.for_side(@side)
-    Positions.move_pieces(@side, @turns)
+    animation_pieces = Pieces3D.on(@side)
+    Pieces3D.move(@side, @turns)
     new MoveAnimation(animation_pieces, @side, @total_angle_change, @turn_time)
 
   to_s: ->

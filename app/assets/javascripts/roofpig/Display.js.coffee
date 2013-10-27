@@ -1,7 +1,6 @@
 #= require three.min
 #= require roofpig/Move
 #= require roofpig/Pieces3D
-#= require roofpig/Positions
 
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 
@@ -21,13 +20,9 @@ class @Display
     @camera.lookAt(v3(0, 0, 0))
 
     @scene = new THREE.Scene()
-
     Pieces3D.make_stickers(@scene)
-    Positions.init()
 
     @alg = new Alg(canvas_div.data("alg"))
-    @playing_alg = false
-
     @animations = []
 
     this.animate()
