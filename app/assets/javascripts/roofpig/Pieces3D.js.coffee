@@ -3,6 +3,7 @@
 
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 
+# Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc refers to the 3D models for those pieces
 class @Pieces3D
   @make_stickers: (scene) ->
     mid_slice = new Side("-", v3(0.0, 0.0, 0.0))
@@ -15,12 +16,12 @@ class @Pieces3D
           new_piece.name = name
           this[name] = new_piece
 
-          center = this._piece_center(x_side, y_side, z_side)
+          mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
             if side != mid_slice
-              new_piece.add(side.make_sticker(center))
-              new_piece.add(side.make_reverse_sticker(center))
-              new_piece.add(side.make_plastic(center))
+              new_piece.add(side.make_sticker(mid_point))
+              new_piece.add(side.make_reverse_sticker(mid_point))
+              new_piece.add(side.make_plastic(mid_point))
           scene.add(new_piece)
 
   @_piece_center: (x_side, y_side, z_side) ->
