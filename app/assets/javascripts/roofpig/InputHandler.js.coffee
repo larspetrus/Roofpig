@@ -12,4 +12,4 @@ class @InputHandler
       else
         turns = if e.ctrlKey then 2 else 1
 
-      @display.new_user_move(new Move(Side.by_name(key), turns).start_animation())
+      @display.new_single_move(new Move(Side.by_name(key), turns).start_animation())

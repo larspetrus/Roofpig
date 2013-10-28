@@ -37,15 +37,22 @@ class @Display
     # request new frame
     requestAnimationFrame => this.animate()
 
-  new_user_move: (move) ->
-    if @user_move
-      @user_move.finish()
-    @user_move = move
+  new_single_move: (move) ->
+    if @single_move then @single_move.finish()
+    @single_move = move
 
     @animations.push(move)
 
+  next: ->
+    @alg.next_move(this)
+
+  prev: ->
+    @alg.prev_move(this)
+
   button_click: (name) ->
     switch name
-      when "forward" then @animations.push(@alg.start_animation())
+      when "play" then @animations.push(@alg.start_animation(this))
       when "pause" then @alg.stop()
-      when "back" then "TODO"
+      when "next" then this.next()
+      when "prev" then this.prev()
+      when "reset" then "TODO"

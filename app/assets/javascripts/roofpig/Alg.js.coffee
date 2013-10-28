@@ -6,16 +6,25 @@ class @Alg
     @next = 0
     @playing = false
 
-  next_move: ->
-    return null unless @playing
-
+  next_move: (display) ->
     move = @moves[@next]
-    @next += 1
-    move
+    if move
+      @next += 1
+      mv_anim = move.do()
+      display.new_single_move(mv_anim)
+      mv_anim
+    else
+      this.stop()
 
-  start_animation: ->
-    @playing = 'forward'
-    new AlgAnimation(this)
+  prev_move: (display) ->
+    move = @moves[@next - 1]
+    if move
+      @next -= 1
+      display.new_single_move(move.undo())
+
+  start_animation: (display) ->
+    @playing = true
+    new AlgAnimation(this, display)
 
   stop: ->
     @playing = false
