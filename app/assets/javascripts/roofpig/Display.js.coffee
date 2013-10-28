@@ -51,7 +51,7 @@ class @Display
 
   button_click: (name) ->
     switch name
-      when "play" then @animations.push(@alg.start_animation(this))
+      when "play" then @animations.push(@alg.play(this))
       when "pause" then @alg.stop()
       when "next" then this.next()
       when "prev" then this.prev()

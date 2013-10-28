@@ -22,7 +22,7 @@ class @Alg
       @next -= 1
       display.new_single_move(move.undo())
 
-  start_animation: (display) ->
+  play: (display) ->
     @playing = true
     new AlgAnimation(this, display)
 
