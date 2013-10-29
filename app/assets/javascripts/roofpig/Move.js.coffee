@@ -1,4 +1,5 @@
 #= require roofpig/Pieces3D
+#= require roofpig/MoveAnimation
 
 class @Move
   @from_code: (code) ->

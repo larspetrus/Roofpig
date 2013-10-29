@@ -6,24 +6,15 @@ class @Alg
     @next = 0
     @playing = false
 
-  next_move: (display) ->
-    move = @moves[@next]
-    if move
+  next_move: ->
+    unless this.at_end()
       @next += 1
-      mv_anim = move.do()
-      display.new_single_move(mv_anim)
-      mv_anim
-    else
-      this.stop()
+      @moves[@next-1].do()
 
-  prev_move: (display) ->
-    move = @moves[@next - 1]
-    if move
+  prev_move: ->
+    unless this.at_start()
       @next -= 1
-      if display
-        display.new_single_move(move.undo())
-      else
-        move.undo().finish()
+      @moves[@next].undo()
 
   play: (display) ->
     @playing = true
@@ -31,6 +22,9 @@ class @Alg
 
   at_start: ->
     @next == 0
+
+  at_end: ->
+    @next == @moves.length
 
   stop: ->
     @playing = false

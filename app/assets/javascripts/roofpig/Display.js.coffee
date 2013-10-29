@@ -44,19 +44,21 @@ class @Display
     @animations.push(move)
 
   next: ->
-    @alg.next_move(this)
+    unless @alg.at_end()
+      this.new_single_move(@alg.next_move())
 
   prev: ->
-    @alg.prev_move(this)
+    unless @alg.at_start()
+      this.new_single_move(@alg.prev_move())
 
   reset: ->
     until @alg.at_start()
-      @alg.prev_move()
+      @alg.prev_move().finish()
 
   button_click: (name) ->
     switch name
-      when "play" then @animations.push(@alg.play(this))
-      when "pause" then @alg.stop()
-      when "next" then this.next()
-      when "prev" then this.prev()
-      when "reset" then this.reset()
+      when 'play' then @animations.push(@alg.play(this))
+      when 'pause' then @alg.stop()
+      when 'next' then this.next()
+      when 'prev' then this.prev()
+      when 'reset' then this.reset()

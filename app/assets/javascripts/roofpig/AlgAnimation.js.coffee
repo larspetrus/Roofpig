@@ -1,5 +1,5 @@
 class @AlgAnimation
-  constructor: (@alg, @display) ->
+  constructor: (@alg) ->
     this._next_alg_move()
 
   animate: ->
@@ -8,10 +8,10 @@ class @AlgAnimation
     if @move_animation.finished
       this._next_alg_move()
 
-    if @move_animation
-      @move_animation.animate()
+    @move_animation.animate()
 
   _next_alg_move: ->
-    if @alg.playing
-      @move_animation = @alg.next_move(@display)
-    @finished = not @alg.playing
+    if @alg.at_end()
+      @finished = true
+    else
+      @move_animation = @alg.next_move()
