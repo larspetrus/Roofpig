@@ -20,11 +20,17 @@ class @Alg
     move = @moves[@next - 1]
     if move
       @next -= 1
-      display.new_single_move(move.undo())
+      if display
+        display.new_single_move(move.undo())
+      else
+        move.undo().finish()
 
   play: (display) ->
     @playing = true
     new AlgAnimation(this, display)
+
+  at_start: ->
+    @next == 0
 
   stop: ->
     @playing = false

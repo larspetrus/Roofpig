@@ -49,10 +49,14 @@ class @Display
   prev: ->
     @alg.prev_move(this)
 
+  reset: ->
+    until @alg.at_start()
+      @alg.prev_move()
+
   button_click: (name) ->
     switch name
       when "play" then @animations.push(@alg.play(this))
       when "pause" then @alg.stop()
       when "next" then this.next()
       when "prev" then this.prev()
-      when "reset" then "TODO"
+      when "reset" then this.reset()

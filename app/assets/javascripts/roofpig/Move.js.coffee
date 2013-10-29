@@ -2,11 +2,9 @@
 
 class @Move
   @from_code: (code) ->
-    side = Side.by_name(code[0])
     turn_code = code[1] || '1'
-    if turn_code == "'"
-      turn_code = '3'
-    new Move(side, parseInt(turn_code))
+    if turn_code == "'" then turn_code = '3'
+    new Move(Side.by_name(code[0]), parseInt(turn_code))
 
   constructor: (@side, @turns) ->
     @turn_time = [300, 450, 300][@turns-1] #ms
