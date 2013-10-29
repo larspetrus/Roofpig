@@ -11,7 +11,7 @@ class @AlgAnimation
     @move_animation.animate()
 
   _next_alg_move: ->
-    if @alg.at_end()
+    if @alg.at_end() || not @alg.playing
       @finished = true
     else
       @move_animation = @alg.next_move()
