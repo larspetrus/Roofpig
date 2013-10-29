@@ -1,21 +1,25 @@
 class @ButtonRow
   constructor: ->
     @reset = this._make("↺",  "reset")
-    @prev  = this._make("-",  "prev").attr("disabled", "disabled")
+    @prev  = this._make("-",  "prev")
     @next  = this._make("+",  "next")
-    @pause = this._make("||", "pause").hide()
+    @pause = this._make("||", "pause")
     @play  = this._make("▶",  "play")
-    @all = [@reset, @prev, @next, @pause, @play]
+    @place = $("<div/>", { id: "place" })
 
-  update: (playing, at_start, at_end) ->
+    @buttons = [@reset, @prev, @next, @pause, @play]
+    @all = @buttons.concat [@place]
+
+
+  update: (playing, at_start, at_end, place) ->
     if playing
-      for button in @all
+      for button in @buttons
         if button == @play
           button.hide()
         else
           this._show(button, button == @pause)
     else
-      for button in @all
+      for button in @buttons
         switch button
           when @reset
             this._show(button, true)
@@ -27,6 +31,8 @@ class @ButtonRow
             button.hide()
           when @play
             this._show(button, not at_end)
+
+    @place.html(place)
 
 
   _show: (button, active) ->

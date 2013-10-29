@@ -39,4 +39,4 @@ class @Alg
     (@moves.map (move) -> move.to_s()).join(' ')
 
   _update_buttons: ->
-    @buttons.update(@playing, this.at_start(), this.at_end())
+    @buttons.update(@playing, this.at_start(), this.at_end(), "#{@next}/#{@moves.length}")
