@@ -13,7 +13,8 @@ class @Display
     canvas_size = Math.min(canvas_div.width(), canvas_div.height())
     @renderer.setSize(canvas_size, canvas_size)
     $("#buttons_1").before(@renderer.domElement);
-    $('#buttons_1c').append(Buttons.new_buttons())
+    @buttons = new ButtonRow()
+    $('#buttons_1c').append(@buttons.all)
 
     @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
     @camera.position.set(25, 25, 25)
@@ -23,7 +24,7 @@ class @Display
     @scene = new THREE.Scene()
     Pieces3D.make_stickers(@scene)
 
-    @alg = new Alg(canvas_div.data("alg"))
+    @alg = new Alg(canvas_div.data("alg"), @buttons)
     @animations = []
 
     this.animate()

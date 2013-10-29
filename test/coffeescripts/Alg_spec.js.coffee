@@ -1,11 +1,13 @@
 #= require roofpig/Alg
 
+mock_button_row = { update: -> }
+
 describe "Alg#constructor", ->
   it "works", ->
-    expect(new Alg("U F2 D''").to_s()).to.equal("U1 F2 D3")
+    expect(new Alg("U F2 D''", mock_button_row).to_s()).to.equal("U1 F2 D3")
 
   it "keeps track of moves", ->
-    alg = new Alg('F D')
+    alg = new Alg('F D', mock_button_row)
     expect(alg.at_start(), '0s').to.equal(true)
     expect(alg.at_end(), '0e').to.equal(false)
 
