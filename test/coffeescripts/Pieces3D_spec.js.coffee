@@ -14,7 +14,8 @@ it ".make_stickers() creates Pieces3D.UBL, Pieces3D.UL, Pieces3D.F etc", ->
   expect(Pieces3D.UL).to.be.undefined
   expect(Pieces3D.U).to.be.undefined
 
-  Pieces3D.make_stickers({add: -> }) # Mocking a scene
+  mock_scene = {add: -> }
+  Pieces3D.make_stickers(mock_scene)
 
   expect(Pieces3D.UBL).to.be.defined
   expect(Pieces3D.UL).to.be.defined
