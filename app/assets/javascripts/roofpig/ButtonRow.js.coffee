@@ -1,5 +1,5 @@
 class @ButtonRow
-  constructor: ->
+  constructor: (@display_id) ->
     @reset = this._make("↺",  "reset")
     @prev  = this._make("-",  "prev")
     @next  = this._make("+",  "next")
@@ -44,4 +44,4 @@ class @ButtonRow
 
 
   _make: (text, id) ->
-    $("<button/>", { text: text, id: id })
+    $("<button/>", { text: text, id: id, 'data-dpid': @display_id })

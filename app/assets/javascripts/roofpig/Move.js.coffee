@@ -12,14 +12,14 @@ class @Move
     q_turn = -Math.PI/2
     @total_angle_change = [q_turn, 2*q_turn, -q_turn][@turns-1]
 
-  do: ->
-    animation_pieces = Pieces3D.on(@side)
-    Pieces3D.move(@side, @turns)
+  do: (pieces3d) ->
+    animation_pieces = pieces3d.on(@side)
+    pieces3d.move(@side, @turns)
     new MoveAnimation(animation_pieces, @side, @total_angle_change, @turn_time)
 
-  undo: ->
-    animation_pieces = Pieces3D.on(@side)
-    Pieces3D.move(@side, 4 - @turns)
+  undo: (pieces3d) ->
+    animation_pieces = pieces3d.on(@side)
+    pieces3d.move(@side, 4 - @turns)
     new MoveAnimation(animation_pieces, @side, -@total_angle_change, @turn_time)
 
   to_s: ->

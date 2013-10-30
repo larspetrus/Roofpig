@@ -5,18 +5,24 @@
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 
 class @Display
-  constructor: ->
-    canvas_div = $("#canvas_1")
+  @unique_id = 0
+
+  constructor: (roofpig_div) ->
+    @id = Display.unique_id += 1
+
+    burron_area_div = $(roofpig_div.children()[0])
+    burron_row_div = $(roofpig_div.children().children()[0])
 
     @input_handler = new InputHandler(this)
-    @settings = new Settings(canvas_div)
+    @settings = new Settings(roofpig_div)
 
     @renderer = new THREE.WebGLRenderer({ antialias: true })
-    canvas_size = Math.min(canvas_div.width(), canvas_div.height())
+    canvas_size = Math.min(roofpig_div.width(), roofpig_div.height())
     @renderer.setSize(canvas_size, canvas_size)
-    $("#buttons_1").before(@renderer.domElement);
-    @buttons = new ButtonRow()
-    $('#buttons_1c').append(@buttons.all)
+    burron_area_div.before(@renderer.domElement);
+
+    @buttons = new ButtonRow(@id)
+    burron_row_div.append(@buttons.all)
 
     @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
     @camera.position.set(25, 25, 25)
@@ -24,9 +30,9 @@ class @Display
     @camera.lookAt(v3(0, 0, 0))
 
     @scene = new THREE.Scene()
-    Pieces3D.make_stickers(@scene, @settings)
+    @pieces3d = new Pieces3D(@scene, @settings)
 
-    @alg = new Alg(@settings.alg, @buttons)
+    @alg = new Alg(@settings.alg, @buttons, @pieces3d)
     @animations = []
 
     this.animate()
