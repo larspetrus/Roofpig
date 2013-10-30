@@ -6,19 +6,19 @@ class @Side
   constructor: (@name, @normal, @color) ->
 
   make_sticker: (piece_center) ->
-    center = piece_center.clone().add(@normal.clone().multiplyScalar(1.0001)) # Sticker hovers over plastic
     [dx, dy] = this._offsets(0.90, false)
-    this._3d_square(center, dx, dy, @color)
+    this._3d_square(this._square_center(piece_center, 1.0001), dx, dy, @color)
 
-  make_reverse_sticker: (piece_center) ->
-    center = piece_center.clone().add(@normal.clone().multiplyScalar(6.5))
+  make_reverse_sticker: (piece_center, hover) ->
     [dx, dy] = this._offsets(0.98, true)
-    this._3d_square(center, dx, dy, @color)
+    this._3d_square(this._square_center(piece_center, hover), dx, dy, @color)
 
   make_plastic: (piece_center) ->
-    center = piece_center.clone().add(@normal) # stc = "sticker center"
     [dx, dy] = this._offsets(1.0, true)
-    this._3d_square(center, dx, dy, 'black')
+    this._3d_square(this._square_center(piece_center, 1), dx, dy, 'black')
+
+  _square_center: (piece_center, distance) ->
+    piece_center.clone().add(@normal.clone().multiplyScalar(distance))
 
   _3d_square: (stc, d1, d2, color) ->
     square = new THREE.Geometry();

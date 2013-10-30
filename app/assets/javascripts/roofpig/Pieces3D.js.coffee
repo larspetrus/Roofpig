@@ -7,7 +7,7 @@ v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 class @Pieces3D
   at = {}
 
-  @make_stickers: (scene) ->
+  @make_stickers: (scene, settings) ->
     mid_slice = new Side("-", v3(0.0, 0.0, 0.0))
 
     for x_side in [Side.R, mid_slice, Side.L]
@@ -21,7 +21,7 @@ class @Pieces3D
           for side in [x_side, y_side, z_side]
             if side != mid_slice
               new_piece.add(side.make_sticker(mid_point))
-              new_piece.add(side.make_reverse_sticker(mid_point))
+              new_piece.add(side.make_reverse_sticker(mid_point, settings.hover))
               new_piece.add(side.make_plastic(mid_point))
 
           this[name] = new_piece
