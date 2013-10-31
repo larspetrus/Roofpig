@@ -1,6 +1,10 @@
 #= require three.min
+#= require roofpig/Alg
+#= require roofpig/ButtonRow
+#= require roofpig/InputHandler
 #= require roofpig/Move
 #= require roofpig/Pieces3D
+#= require roofpig/Settings
 
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 
