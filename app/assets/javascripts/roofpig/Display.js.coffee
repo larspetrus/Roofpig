@@ -15,7 +15,6 @@ class @Display
     @id = Display.unique_id += 1
 
     burron_area_div = $(roofpig_div.children()[0])
-    burron_row_div = $(roofpig_div.children().children()[0])
 
     @input_handler = new InputHandler(this)
     @settings = new Settings(roofpig_div)
@@ -25,8 +24,8 @@ class @Display
     @renderer.setSize(canvas_size, canvas_size)
     burron_area_div.before(@renderer.domElement);
 
-    @buttons = new ButtonRow(@id)
-    burron_row_div.append(@buttons.all)
+    @buttons = new ButtonRow(@id, canvas_size/400)
+    burron_area_div.append(@buttons.all)
 
     @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
     @camera.position.set(25, 25, 25)
