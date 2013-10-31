@@ -5,9 +5,9 @@ v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 class @Side
   constructor: (@name, @normal, @color) ->
 
-  make_sticker: (piece_center) ->
+  make_sticker: (piece_center, color) ->
     [dx, dy] = this._offsets(0.90, false)
-    this._3d_square(this._square_center(piece_center, 1.0001), dx, dy, @color)
+    this._3d_square(this._square_center(piece_center, 1.0001), dx, dy, color)
 
   make_reverse_sticker: (piece_center, hover) ->
     [dx, dy] = this._offsets(0.98, true)
@@ -39,7 +39,7 @@ class @Side
   @by_name: (name) ->
     all[name]
 
-  @R: new Side('R', v3(-1, 0, 0), 'green')
+  @R: new Side('R', v3(-1, 0, 0), '#0d0')
   @L: new Side('L', v3( 1, 0, 0), 'blue')
   @F: new Side('F', v3( 0, 1, 0), 'red')
   @B: new Side('B', v3( 0,-1, 0), 'orange')

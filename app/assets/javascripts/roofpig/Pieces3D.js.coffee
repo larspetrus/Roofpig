@@ -22,8 +22,11 @@ class @Pieces3D
           mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
             if side != mid_slice
-              new_piece.add(side.make_sticker(mid_point))
-              new_piece.add(side.make_reverse_sticker(mid_point, settings.hover))
+              real_sticker = settings.solve_to != 'FL' || (z_side == Side.U)
+              color = if real_sticker then side.color else '#aaa'
+              new_piece.add(side.make_sticker(mid_point, color))
+              if real_sticker
+                new_piece.add(side.make_reverse_sticker(mid_point, settings.hover))
               new_piece.add(side.make_plastic(mid_point))
 
           this[name] = new_piece
