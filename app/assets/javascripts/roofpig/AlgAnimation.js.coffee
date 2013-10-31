@@ -1,5 +1,5 @@
 class @AlgAnimation
-  constructor: (@alg) ->
+  constructor: (@alg, @pieces3d) ->
     this._next_alg_move()
 
   animate: ->
@@ -14,4 +14,4 @@ class @AlgAnimation
     if @alg.at_end() || not @alg.playing
       @finished = true
     else
-      @move_animation = @alg.next_move()
+      @move_animation = @alg.next_move().do(@pieces3d)

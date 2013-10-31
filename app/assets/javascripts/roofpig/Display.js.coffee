@@ -36,7 +36,7 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
 
-    @alg = new Alg(@settings.alg, @buttons, @pieces3d)
+    @alg = new Alg(@settings.alg, @buttons)
     @animations = []
 
     this.animate()
@@ -59,11 +59,11 @@ class @Display
 
   next: ->
     unless @alg.at_end()
-      this.new_single_move(@alg.next_move())
+      this.new_single_move(@alg.next_move().do(@pieces3d))
 
   prev: ->
     unless @alg.at_start()
-      this.new_single_move(@alg.prev_move())
+      this.new_single_move(@alg.prev_move().undo(@pieces3d))
 
   reset: ->
     until @alg.at_start()
@@ -71,7 +71,7 @@ class @Display
 
   button_click: (name) ->
     switch name
-      when 'play' then @animations.push(@alg.play(this))
+      when 'play' then @animations.push(@alg.play(@pieces3d))
       when 'pause' then @alg.stop()
       when 'next' then this.next()
       when 'prev' then this.prev()
