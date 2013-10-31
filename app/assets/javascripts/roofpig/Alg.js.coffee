@@ -7,6 +7,12 @@ class @Alg
     @playing = false
     this._update_buttons()
 
+  premix: (pieces3d) ->
+    @next =  @moves.length
+    until this.at_start()
+      this.prev_move().undo(pieces3d).finish()
+    this
+
   next_move: ->
     unless this.at_end()
       @next += 1

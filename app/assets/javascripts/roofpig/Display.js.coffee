@@ -36,7 +36,7 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
 
-    @alg = new Alg(@settings.alg, @buttons)
+    @alg = new Alg(@settings.alg, @buttons).premix(@pieces3d)
     @animations = []
 
     this.animate()
@@ -67,7 +67,7 @@ class @Display
 
   reset: ->
     until @alg.at_start()
-      @alg.prev_move().finish()
+      @alg.prev_move().undo(@pieces3d).finish()
 
   button_click: (name) ->
     switch name
