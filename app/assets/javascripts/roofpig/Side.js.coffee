@@ -27,10 +27,10 @@ class @Side
     square.computeBoundingSphere();
     new THREE.Mesh(square, new THREE.MeshBasicMaterial(color: color))
 
-  _offsets: (coverage, backside) ->
+  _offsets: (coverage, reversed) ->
     axis2 = v3(@normal.y, @normal.z, @normal.x)
     axis3 = v3(@normal.z, @normal.x, @normal.y)
-    flip = (@normal.y + @normal.z + @normal.x) * (if backside then -1.0 else 1.0)
+    flip = (@normal.y + @normal.z + @normal.x) * (if reversed then -1.0 else 1.0)
 
     dx = axis2.clone().add(axis3).multiplyScalar(coverage * flip)
     dy = axis2.clone().sub(axis3).multiplyScalar(coverage)
