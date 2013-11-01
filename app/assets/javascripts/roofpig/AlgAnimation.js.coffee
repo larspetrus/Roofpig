@@ -10,6 +10,9 @@ class @AlgAnimation
 
     @move_animation.animate()
 
+  finish: ->
+    # API creep
+
   _next_alg_move: ->
     if @alg.at_end() || not @alg.playing
       @finished = true
