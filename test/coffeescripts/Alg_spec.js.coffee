@@ -1,6 +1,6 @@
 #= require roofpig/Alg
 
-mock_button_row = { update: -> }
+mock_button_row = { alg_changed: -> }
 mock_pieces = {
   on: ->
   move: ->

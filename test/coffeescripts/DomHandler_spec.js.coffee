@@ -1,4 +1,4 @@
-#= require roofpig/ButtonRow
+#= require roofpig/DomHandler
 
 #TODO: Make selenium work somehow. 'rake konacha:run' shows errors.
 
@@ -12,9 +12,9 @@ state: (button) ->
 #    else
 #      'on'
 
-describe "ButtonRow#constructor", ->
+describe "DomHandler#constructor", ->
   xit "creates the right buttons with the right states", ->
-#    row = new ButtonRow()
+#    row = new DomHandler()
 #    expect(state(row.reset)'reset').to.equal('on')
 #    expect(state(row.prev) 'prev' ).to.equal('disabled')
 #    expect(state(row.next) 'next' ).to.equal('on')

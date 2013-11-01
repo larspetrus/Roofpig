@@ -1,7 +1,7 @@
 #= require roofpig/Move
 
 class @Alg
-  constructor: (move_codes, @buttons) ->
+  constructor: (move_codes, @dom_handler) ->
     @moves = move_codes.split(' ').map (code) -> Move.from_code(code)
     @next = 0
     @playing = false
@@ -45,4 +45,4 @@ class @Alg
     (@moves.map (move) -> move.to_s()).join(' ')
 
   _update_buttons: ->
-    @buttons.update(@playing, this.at_start(), this.at_end(), "#{@next}/#{@moves.length}")
+    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), "#{@next}/#{@moves.length}")

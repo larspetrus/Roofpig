@@ -1,6 +1,6 @@
 #= require three.min
 #= require roofpig/Alg
-#= require roofpig/ButtonRow
+#= require roofpig/DomHandler
 #= require roofpig/InputHandler
 #= require roofpig/Move
 #= require roofpig/Pieces3D
@@ -17,7 +17,8 @@ class @Display
     @input_handler = new InputHandler(this)
     @settings = new Settings(roofpig_div)
 
-    this._build_dom(roofpig_div)
+    @renderer = new THREE.WebGLRenderer({ antialias: true })
+    @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
 
     @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
     @camera.position.set(25, 25, 25)
@@ -27,20 +28,10 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
 
-    @alg = new Alg(@settings.alg, @buttons).premix(@pieces3d)
+    @alg = new Alg(@settings.alg, @dom_handler).premix(@pieces3d)
     @animations = []
 
     this.animate()
-
-
-  _build_dom: (pig) ->
-    @renderer = new THREE.WebGLRenderer({ antialias: true })
-    @renderer.setSize(pig.width(), pig.width())
-    pig.append(@renderer.domElement);
-
-    button_area = $("<div/>", { class: 'button-area' }).height(pig.height() - pig.width()).width(pig.width())
-    @buttons = new ButtonRow(@id, pig.width()/400, button_area)
-    pig.append(button_area)
 
   # this function is executed on each animation frame
   animate: ->
@@ -72,8 +63,13 @@ class @Display
 
   button_click: (name) ->
     switch name
-      when 'play' then @animations.push(@alg.play(@pieces3d))
-      when 'pause' then @alg.stop()
-      when 'next' then this.next()
-      when 'prev' then this.prev()
-      when 'reset' then this.reset()
+      when 'play'
+        @animations.push(@alg.play(@pieces3d))
+      when 'pause'
+        @alg.stop()
+      when 'next'
+        this.next()
+      when 'prev'
+        this.prev()
+      when 'reset'
+        this.reset()
