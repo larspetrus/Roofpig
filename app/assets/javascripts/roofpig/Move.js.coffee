@@ -15,12 +15,12 @@ class @Move
   do: (pieces3d) ->
     animation_pieces = pieces3d.on(@side)
     pieces3d.move(@side, @turns)
-    new MoveAnimation(animation_pieces, @side, @total_angle_change, @turn_time)
+    new MoveAnimation(animation_pieces, @side.normal, @total_angle_change, @turn_time)
 
   undo: (pieces3d) ->
     animation_pieces = pieces3d.on(@side)
     pieces3d.move(@side, 4 - @turns)
-    new MoveAnimation(animation_pieces, @side, -@total_angle_change, @turn_time)
+    new MoveAnimation(animation_pieces, @side.normal, -@total_angle_change, @turn_time)
 
   to_s: ->
     "#{@side.name}#{@turns}"
