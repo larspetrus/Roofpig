@@ -38,9 +38,8 @@ class @Display
     @renderer.setSize(pig.width(), pig.width())
     pig.append(@renderer.domElement);
 
-    @buttons = new ButtonRow(@id, pig.width()/400)
     button_area = $("<div/>", { class: 'button-area' }).height(pig.height() - pig.width()).width(pig.width())
-    button_area.append(@buttons.all)
+    @buttons = new ButtonRow(@id, pig.width()/400, button_area)
     pig.append(button_area)
 
   # this function is executed on each animation frame

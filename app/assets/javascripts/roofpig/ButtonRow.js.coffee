@@ -1,14 +1,15 @@
 class @ButtonRow
-  constructor: (@display_id, @size) ->
+  constructor: (@display_id, @size, @div) ->
     @reset = this._make("↺",  "reset")
     @prev  = this._make("-",  "prev")
     @next  = this._make("+",  "next")
     @pause = this._make("||", "pause")
     @play  = this._make("▶",  "play")
+
     @place = $("<div/>", { id: "place" }).height(40 * @size).width(60 * @size).css("font-size": 24 * @size, "text-align": 'right', 'float': 'right')
+    @div.append(@place)
 
     @buttons = [@reset, @prev, @next, @pause, @play]
-    @all = @buttons.concat [@place]
 
 
   update: (playing, at_start, at_end, place) ->
@@ -44,4 +45,6 @@ class @ButtonRow
 
 
   _make: (text, id) ->
-    $("<button/>", { text: text, id: id, 'data-dpid': @display_id }).height(40 * @size).width(60 * @size).css("font-size", 24 * @size)
+    button = $("<button/>", { text: text, id: id, 'data-dpid': @display_id }).height(40 * @size).width(60 * @size).css("font-size", 24 * @size)
+    @div.append(button)
+    button
