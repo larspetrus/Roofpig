@@ -14,18 +14,10 @@ class @Display
   constructor: (roofpig_div) ->
     @id = Display.unique_id += 1
 
-    burron_area_div = $(roofpig_div.children()[0])
-
     @input_handler = new InputHandler(this)
     @settings = new Settings(roofpig_div)
 
-    @renderer = new THREE.WebGLRenderer({ antialias: true })
-    canvas_size = Math.min(roofpig_div.width(), roofpig_div.height())
-    @renderer.setSize(canvas_size, canvas_size)
-    burron_area_div.before(@renderer.domElement);
-
-    @buttons = new ButtonRow(@id, canvas_size/400)
-    burron_area_div.append(@buttons.all)
+    this._build_dom(roofpig_div)
 
     @camera = new THREE.PerspectiveCamera(24, 1, 1, 100)
     @camera.position.set(25, 25, 25)
@@ -39,6 +31,17 @@ class @Display
     @animations = []
 
     this.animate()
+
+
+  _build_dom: (pig) ->
+    @renderer = new THREE.WebGLRenderer({ antialias: true })
+    @renderer.setSize(pig.width(), pig.width())
+    pig.append(@renderer.domElement);
+
+    @buttons = new ButtonRow(@id, pig.width()/400)
+    button_area = $("<div/>", { class: 'button-area' }).height(pig.height() - pig.width()).width(pig.width())
+    button_area.append(@buttons.all)
+    pig.append(button_area)
 
   # this function is executed on each animation frame
   animate: ->
