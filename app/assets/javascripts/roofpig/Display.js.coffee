@@ -20,24 +20,31 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
     @alg = new Alg(@settings.alg, @dom_handler).premix(@pieces3d)
+    @unrendered = true
 
     this.animate()
 
   # this function is executed on each animation frame
   animate: ->
-    for animation in this.animations()
-      if animation
-        animation.animate()
+    any_change = @unrendered
+    @unrendered = false
+    if @move
+      @move.animate()
+      if @move.finished then @move = null
+      any_change = true
+    if @spin
+      @spin.animate()
+      if @spin.finished then @spin = null
+      any_change = true
 
-    @renderer.render @scene, @camera.cam
+
+    if any_change
+      @renderer.render @scene, @camera.cam
 
     # request new frame
     requestAnimationFrame => this.animate()
 
   
-  animations: ->
-    [@move, @spin]
-    
   new_move: (move) ->
     if @move then @move.finish()
     @move = move
@@ -57,6 +64,7 @@ class @Display
   reset: ->
     until @alg.at_start()
       @alg.prev_move().undo(@pieces3d).finish()
+    @unrendered = true
 
   button_click: (name) ->
     switch name
