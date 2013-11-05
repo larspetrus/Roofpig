@@ -1,5 +1,7 @@
 class @DomHandler
   constructor: (@display_id, @div, renderer) ->
+    @div.css(position:'relative')
+
     renderer.setSize(@div.width(), @div.width())
     @div.append(renderer.domElement);
 
