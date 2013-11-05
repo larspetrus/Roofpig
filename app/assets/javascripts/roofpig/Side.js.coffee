@@ -46,10 +46,4 @@ class @Side
   @U: new Side('U', v3( 0, 0, 1), 'yellow')
   @D: new Side('D', v3( 0, 0,-1), '#eee')
 
-  all =
-    R: @R
-    L: @L
-    F: @F
-    B: @B
-    D: @D
-    U: @U
+  all = { R: @R, L: @L, F: @F, B: @B, D: @D, U: @U }
