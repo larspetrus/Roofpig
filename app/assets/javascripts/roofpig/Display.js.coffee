@@ -8,11 +8,12 @@
 
 class @Display
   @unique_id = 0
+  @instances = {}
 
   constructor: (roofpig_div) ->
     @id = Display.unique_id += 1
+    Display.instances[@id] = this
 
-    @input_handler = new InputHandler(this)
     @settings = new Settings(roofpig_div)
     @renderer = new THREE.WebGLRenderer({ antialias: true })
 #    @renderer = new THREE.CanvasRenderer()
