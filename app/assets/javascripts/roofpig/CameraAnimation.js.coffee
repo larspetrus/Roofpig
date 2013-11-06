@@ -3,10 +3,9 @@ class @CameraAnimation
     @start_time = (new Date()).getTime()
     @last_time = @start_time
 
-  animate: ->
+  update: (now) ->
     return if @finished
 
-    now = (new Date()).getTime()
     if now > @start_time + @turn_time
       this.finish()
     else

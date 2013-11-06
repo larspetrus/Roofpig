@@ -12,7 +12,7 @@ class @InputHandler
 
     key = String.fromCharCode(e.keyCode)
     if key in ['U', 'D', 'F', 'B', 'L', 'R']
-      @display.new_move(new Move(Side.by_name(key), turns).do(@display.pieces3d))
+      @display.add_changer('move', new Move(Side.by_name(key), turns).do(@display.pieces3d))
 
     if key == '1'
       this._rotate(@display.camera.viewer_z, turns)
@@ -24,4 +24,4 @@ class @InputHandler
   _rotate: (axis, turns) ->
     q_turn = -Math.PI/2
     total_angle_change = [q_turn, 2*q_turn, -q_turn][turns-1]
-    @display.new_spin(new CameraAnimation(@display.camera, axis, total_angle_change, 600))
+    @display.add_changer('spin', new CameraAnimation(@display.camera, axis, total_angle_change, 600))

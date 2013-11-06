@@ -20,56 +20,48 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
     @alg = new Alg(@settings.alg, @dom_handler).premix(@pieces3d)
-    @unrendered = true
+
+    @changers = {}
+    this.force_render()
 
     this.animate()
 
   # this function is executed on each animation frame
   animate: ->
-    any_change = @unrendered
-    @unrendered = false
-    if @move
-      @move.animate()
-      if @move.finished then @move = null
-      any_change = true
-    if @spin
-      @spin.animate()
-      if @spin.finished then @spin = null
-      any_change = true
+    now = (new Date()).getTime()
 
+    for own category, changer of @changers
+      if changer
+        changer.update(now)
+        if changer.finished then @changers[category] = null
+        any_change = true
 
     if any_change
       @renderer.render @scene, @camera.cam
 
-    # request new frame
-    requestAnimationFrame => this.animate()
+    requestAnimationFrame => this.animate() # request new frame
 
-  
-  new_move: (move) ->
-    if @move then @move.finish()
-    @move = move
-
-  new_spin: (spin) ->
-    if @spin then @spin.finish()
-    @spin = spin
+  add_changer: (category, changer) ->
+    if @changers[category] then @changers[category].finish()
+    @changers[category] = changer
 
   next: ->
     unless @alg.at_end()
-      this.new_move(@alg.next_move().do(@pieces3d))
+      this.add_changer('move', @alg.next_move().do(@pieces3d))
 
   prev: ->
     unless @alg.at_start()
-      this.new_move(@alg.prev_move().undo(@pieces3d))
+      this.add_changer('move', @alg.prev_move().undo(@pieces3d))
 
   reset: ->
     until @alg.at_start()
       @alg.prev_move().undo(@pieces3d).finish()
-    @unrendered = true
+    this.force_render()
 
   button_click: (name) ->
     switch name
       when 'play'
-        this.new_move(@alg.play(@pieces3d))
+        this.add_changer('move', @alg.play(@pieces3d))
       when 'pause'
         @alg.stop()
       when 'next'
@@ -78,3 +70,6 @@ class @Display
         this.prev()
       when 'reset'
         this.reset()
+
+  force_render: ->
+    this.add_changer('force_render', { finished: true, update: (now) -> })
