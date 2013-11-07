@@ -5,19 +5,20 @@ v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 class @Camera
 
   constructor: (hover) ->
-    coo = 25
-    @cam = new THREE.PerspectiveCamera(this._fov(hover, coo), 1, 1, 100)
+    coord = 25
+    @cam = new THREE.PerspectiveCamera(this._fov(hover, coord), 1, 1, 100)
 
-    @cam.position.set(coo, coo, coo)
+    @cam.position.set(coord, coord, coord)
     @cam.up.set(0,0,1);
     @cam.lookAt(v3(0, 0, 0))
 
-    @viewer_x = v3(1, 0, 0)
-    @viewer_y = v3(0, 1, 0)
-    @viewer_z = v3(0, 0, 1)
+    @viewer_dir =
+       x: v3(1, 0, 0)
+       y: v3(0, 1, 0)
+       z: v3(0, 0, 1)
 
   rotate: (axis, angle) ->
-    for v in [@cam.position, @cam.up, @viewer_x, @viewer_y, @viewer_z]
+    for v in [@cam.position, @cam.up, @viewer_dir.x, @viewer_dir.y, @viewer_dir.z]
       v.applyAxisAngle(axis, angle)
     @cam.lookAt(v3(0, 0, 0))
 
