@@ -26,7 +26,14 @@ class @Display
     @changers = {}
     this.force_render()
 
+    if @id == 1
+      InputHandler.set_active_display(this)
+
     this.animate()
+
+
+  keyboard_focus: (has_it) ->
+    @dom_handler.keyboard_focus(has_it)
 
   # this function is executed on each animation frame
   animate: ->

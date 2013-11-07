@@ -1,7 +1,14 @@
 $(document).ready ->
-  for rpd in $('.roofpig')
-    new Display($(rpd)).animate()
+  for roofpig_div in $('.roofpig')
+    new Display($(roofpig_div)).animate()
 
-  jQuery("button").click ->
-    display = Display.instances[jQuery(this).data('dpid')]
-    display.button_click(jQuery(this).attr("id"))
+  $('.roofpig').click ->
+    display = Display.instances[$(this).data('dpid')]
+    InputHandler.set_active_display(display)
+
+  $("button").click ->
+    display = Display.instances[$(this).data('dpid')]
+    display.button_click($(this).attr("id"))
+
+  $("body").keydown (e) =>
+    InputHandler.key_pressed(e)

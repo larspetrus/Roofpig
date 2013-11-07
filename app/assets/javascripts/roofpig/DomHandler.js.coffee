@@ -1,6 +1,10 @@
 class @DomHandler
+  INACTIVE: '2px solid #eee'
+  ACTIVE:   '2px solid gray'
+
   constructor: (@display_id, @div, renderer) ->
-    @div.css(position:'relative')
+    @div.css(position:'relative', "border": @INACTIVE)
+    @div.data('dpid', @display_id)
 
     renderer.setSize(@div.width(), @div.width())
     @div.append(renderer.domElement);
@@ -10,7 +14,7 @@ class @DomHandler
 
     @scale = @div.width()/400
 
-    @reset = this._make_button("↺",  "reset")
+    @reset = this._make_button("↩",  "reset")
     @prev  = this._make_button("-",  "prev")
     @next  = this._make_button("+",  "next")
     @pause = this._make_button("||", "pause")
@@ -43,6 +47,9 @@ class @DomHandler
 
     @place.html(place_text)
 
+  keyboard_focus: (has_it) ->
+    color = if has_it then @ACTIVE else @INACTIVE
+    @div.css("border": color)
 
   _show: (button, active) ->
     button.show()
