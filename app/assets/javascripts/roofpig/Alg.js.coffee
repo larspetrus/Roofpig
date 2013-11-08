@@ -2,6 +2,9 @@
 
 class @Alg
   constructor: (move_codes, @dom_handler) ->
+    if not move_codes || move_codes == ""
+      throw new Error("Invalid alg: '#{move_codes}'")
+
     @moves = move_codes.split(' ').map (code) -> Move.from_code(code)
     @next = 0
     @playing = false
