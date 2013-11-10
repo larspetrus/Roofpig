@@ -24,16 +24,12 @@ class @DomHandler
     else
       for button in @buttons
         switch button
-          when @reset
-            this._show(button, true)
-          when @prev
+          when @reset, @prev
             this._show(button, not at_start)
-          when @next
+          when @next, @play
             this._show(button, not at_end)
           when @pause
             button.hide()
-          when @play
-            this._show(button, not at_end)
 
     @place.html(place_text)
 
