@@ -3,7 +3,7 @@
 describe "Settings#constructor", ->
   it "has defaults", ->
     empty_settings = new Settings({ data: -> null })
-    expect(empty_settings.alg).to.equal(null)
+    expect(empty_settings.alg).to.equal("")
     expect(empty_settings.hover).to.equal(6.5)
     expect(empty_settings.solve_to).to.equal("full")
     expect(empty_settings.flags).to.equal("")

@@ -15,13 +15,19 @@ class @Display
     Display.instances[@id] = this
 
     @settings = new Settings(roofpig_div)
-    @renderer = new THREE.WebGLRenderer({ antialias: true })
-#    @renderer = new THREE.CanvasRenderer()
+
+    if @settings.flag('canvas')
+      @renderer = new THREE.CanvasRenderer()
+    else
+      @renderer = new THREE.WebGLRenderer({ antialias: true })
+
     @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
     @camera = new Camera(@settings.hover)
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
-    @alg = new Alg(@settings.alg, @dom_handler).premix(@pieces3d)
+    unless @settings.alg == ""
+      @dom_handler.add_alg_buttons()
+      @alg = new Alg(@settings.alg, @dom_handler).premix(@pieces3d)
 
     @changers = {}
     this.force_render()
@@ -48,7 +54,7 @@ class @Display
     if any_change
       @renderer.render @scene, @camera.cam
 
-    requestAnimationFrame => this.animate() # request new frame
+    requestAnimationFrame => this.animate() # request next frame
 
   add_changer: (category, changer) ->
     if @changers[category] then @changers[category].finish()

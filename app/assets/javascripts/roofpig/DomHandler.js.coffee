@@ -1,28 +1,18 @@
 class @DomHandler
-  INACTIVE: '2px solid #eee'
-  ACTIVE:   '2px solid gray'
 
   constructor: (@display_id, @div, renderer) ->
-    @div.css(position:'relative', "border": @INACTIVE)
+    @div.css(position:'relative')
+    this.keyboard_focus(false)
     @div.data('dpid', @display_id)
 
     renderer.setSize(@div.width(), @div.width())
     @div.append(renderer.domElement);
 
-    @button_area = $("<div/>", { class: 'button-area' }).height(@div.height() - @div.width()).width(@div.width())
-    @div.append(@button_area)
-
     @scale = @div.width()/400
 
-    @reset = this._make_button("↩",  "reset")
-    @prev  = this._make_button("-",  "prev")
-    @next  = this._make_button("+",  "next")
-    @pause = this._make_button("||", "pause")
-    @play  = this._make_button("▶",  "play")
-
-    @place = this._assimilate($("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right'))
-
-    @buttons = [@reset, @prev, @next, @pause, @play]
+  keyboard_focus: (has_it) ->
+    color = if has_it then 'gray' else '#eee'
+    @div.css("border": "2px solid #{color}")
 
   alg_changed: (playing, at_start, at_end, place_text) ->
     if playing
@@ -47,9 +37,20 @@ class @DomHandler
 
     @place.html(place_text)
 
-  keyboard_focus: (has_it) ->
-    color = if has_it then @ACTIVE else @INACTIVE
-    @div.css("border": color)
+  add_alg_buttons: ->
+    @button_area = $("<div/>", { class: 'button-area' }).height(@div.height() - @div.width()).width(@div.width())
+    @div.append(@button_area)
+
+    @reset = this._make_button("↩",  "reset")
+    @prev  = this._make_button("-",  "prev")
+    @next  = this._make_button("+",  "next")
+    @pause = this._make_button("||", "pause")
+    @play  = this._make_button("▶",  "play")
+
+    @place = this._assimilate($("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right'))
+
+    @buttons = [@reset, @prev, @next, @pause, @play]
+
 
   _show: (button, active) ->
     button.show()
