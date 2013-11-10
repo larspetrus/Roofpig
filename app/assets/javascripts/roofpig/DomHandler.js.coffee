@@ -47,7 +47,7 @@ class @DomHandler
     @pause = this._make_button("||", "pause")
     @play  = this._make_button("▶",  "play")
 
-    @place = this._assimilate($("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right'))
+    @place = this._scale($("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right'))
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
@@ -61,8 +61,8 @@ class @DomHandler
 
 
   _make_button: (text, id) ->
-    this._assimilate($("<button/>", { text: text, id: id, 'data-dpid': @display_id }))
+    this._scale($("<button/>", { text: text, id: id, 'data-dpid': @display_id }))
 
-  _assimilate: (button_area_element) ->
+  _scale: (button_area_element) ->
     @button_area.append(button_area_element)
     button_area_element.height(40 * @scale).width(60 * @scale).css("font-size", 24 * @scale)
