@@ -1,4 +1,3 @@
-#= require three.min
 #= require roofpig/Alg
 #= require roofpig/DomHandler
 #= require roofpig/InputHandler

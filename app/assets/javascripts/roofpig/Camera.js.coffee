@@ -1,5 +1,3 @@
-#= require three.min
-
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
 
 class @Camera

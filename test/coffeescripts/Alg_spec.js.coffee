@@ -1,3 +1,4 @@
+#= require three.min
 #= require roofpig/Alg
 
 mock_button_row = { alg_changed: -> }

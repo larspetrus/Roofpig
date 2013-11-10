@@ -1,4 +1,3 @@
-#= require three.min
 #= require roofpig/Side
 
 v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
