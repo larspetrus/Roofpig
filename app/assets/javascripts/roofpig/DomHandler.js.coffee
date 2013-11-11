@@ -31,6 +31,8 @@ class @DomHandler
           when @pause
             button.hide()
 
+    @play_or_pause = if playing then @pause else @play
+
     @place.html(place_text)
 
   add_alg_buttons: ->

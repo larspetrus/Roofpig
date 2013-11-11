@@ -13,6 +13,7 @@ class @InputHandler
       turns = if e.ctrlKey then 2 else 1
 
     switch String.fromCharCode(e.keyCode)
+      when ' ' then @active_display.dom_handler.play_or_pause.click()
       when 'C' then this._rotate('z', 1)
       when 'Z' then this._rotate('z', 3)
       when 'X' then this._rotate('y', 1)
