@@ -63,4 +63,4 @@ class @DomHandler
 
   _scale: (button_area_element) ->
     @button_area.append(button_area_element)
-    button_area_element.height(40 * @scale).width(60 * @scale).css("font-size", 24 * @scale)
+    button_area_element.height(40 * @scale).width(72 * @scale - 12).css("font-size", 32 * @scale)
