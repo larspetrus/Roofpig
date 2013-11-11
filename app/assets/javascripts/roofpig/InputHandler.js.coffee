@@ -20,15 +20,15 @@ class @InputHandler
       when 'D' then this._rotate('y', 3)
       when 'A' then this._rotate('x', 1)
       when 'S' then this._rotate('x', 3)
-      when 'J' then this._move(Side.U, turns)
-      when 'K' then this._move(Side.F, turns)
-      when 'L' then this._move(Side.R, turns)
+      when 'J' then this._move("U#{turns}")
+      when 'K' then this._move("F#{turns}")
+      when 'L' then this._move("R#{turns}")
 
   @_rotate: (axis_name, turns) ->
     axis = @active_display.camera.viewer_dir[axis_name]
     q_turn = -Math.PI/2
-    total_angle_change = [q_turn, 2*q_turn, -q_turn][turns-1]
-    @active_display.add_changer('spin', new CameraAnimation(@active_display.camera, axis, total_angle_change, 600))
+    angle_to_turn = [q_turn, 2*q_turn, -q_turn][turns-1]
+    @active_display.add_changer('spin', new CameraAnimation(@active_display.camera, axis, angle_to_turn, 600))
 
   @_move: (side, turns) ->
     @active_display.add_changer('move', new Move(side, turns).do(@active_display.pieces3d))

@@ -2,25 +2,36 @@
 #= require roofpig/MoveAnimation
 
 class @Move
-  @from_code: (code) ->
-    turn_code = code[1] || '1'
-    if turn_code == "'" then turn_code = '3'
-    new Move(Side.by_name(code[0]), parseInt(turn_code))
+  constructor: (code) ->
+    [@side, @turns] = Move._parse_code(code)
 
-  constructor: (@side, @turns) ->
-    @turn_time = [300, 450, 300][@turns-1] #ms
-    q_turn = -Math.PI/2
-    @total_angle_change = [q_turn, 2*q_turn, -q_turn][@turns-1]
+    @turn_time = 150 + 150 * Math.abs(@turns)
+
+  @_parse_code: (code) ->
+    turns = switch code.substring(1)
+      when "1", ""   then 1
+      when "2", "²"  then 2
+      when "3", "'"  then -1
+      when "Z", "2'" then -2
+    [Side.by_name(code[0]), turns]
 
   do: (pieces3d) ->
-    animation_pieces = pieces3d.on(@side)
-    pieces3d.move(@side, @turns)
-    new MoveAnimation(animation_pieces, @side.normal, @total_angle_change, @turn_time)
+    this._do(pieces3d, @turns)
 
   undo: (pieces3d) ->
+    this._do(pieces3d, -@turns)
+
+  _do: (pieces3d, do_turns) ->
     animation_pieces = pieces3d.on(@side)
-    pieces3d.move(@side, 4 - @turns)
-    new MoveAnimation(animation_pieces, @side.normal, -@total_angle_change, @turn_time)
+    pieces3d.move(@side, do_turns)
+    new MoveAnimation(animation_pieces, @side.normal, do_turns * -Math.PI/2, @turn_time)
+
 
   to_s: ->
-    "#{@side.name}#{@turns}"
+    turn_code = switch @turns
+      when  1 then ""
+      when  2 then "2"
+      when -1 then "'"
+      when -2 then "Z"
+
+    "#{@side.name}#{turn_code}"

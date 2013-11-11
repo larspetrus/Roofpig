@@ -59,6 +59,8 @@ class @Pieces3D
     this._move(turns,['UFR','DFR','DBR','UBR'],['UR','FR','DR','BR'])  if side == Side.R
 
   _move: (turns, corners, edges) ->
+    if turns < 0
+      turns += 4
     for n in [1..turns]
       this._permute(corners)
       this._permute(edges)

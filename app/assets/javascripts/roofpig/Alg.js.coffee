@@ -5,7 +5,7 @@ class @Alg
     if not move_codes || move_codes == ""
       throw new Error("Invalid alg: '#{move_codes}'")
 
-    @moves = move_codes.split(' ').map (code) -> Move.from_code(code)
+    @moves = move_codes.split(' ').map (code) -> new Move(code)
     @next = 0
     @playing = false
     this._update_buttons()
