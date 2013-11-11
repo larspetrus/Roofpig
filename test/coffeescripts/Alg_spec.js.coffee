@@ -9,8 +9,9 @@ mock_pieces = {
 
 describe "Alg", ->
   describe "#constructor", ->
-    it "reads a move string", ->
-      expect(new Alg("U F2 D'", mock_button_row).to_s()).to.equal("U F2 D'")
+    it "reads move strings", ->
+      expect(new Alg("U F2 D' LZ", mock_button_row).to_s()).to.equal("U F2 D' LZ")
+      expect(new Alg(" U F2  D' LZ  ", mock_button_row).to_s()).to.equal("U F2 D' LZ")
 
     it "fails empty alg", ->
       newbad = -> new Alg("", mock_button_row)
