@@ -1,4 +1,4 @@
-v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
+#= require roofpig/v3_utils
 
 class @Side
   constructor: (@name, @normal, @color) ->
@@ -16,11 +16,11 @@ class @Side
     this._3d_square(this._square_center(piece_center, 1), dx, dy, 'black')
 
   _square_center: (piece_center, distance) ->
-    piece_center.clone().add(@normal.clone().multiplyScalar(distance))
+    v3_add(piece_center, @normal.clone().multiplyScalar(distance))
 
   _3d_square: (stc, d1, d2, color) ->
     square = new THREE.Geometry();
-    square.vertices.push(stc.clone().add(d1), stc.clone().add(d2), stc.clone().sub(d1), stc.clone().sub(d2));
+    square.vertices.push(v3_add(stc, d1), v3_add(stc, d2), v3_sub(stc, d1), v3_sub(stc, d2));
     square.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
     square.computeBoundingSphere();
     new THREE.Mesh(square, new THREE.MeshBasicMaterial(color: color))
@@ -30,8 +30,8 @@ class @Side
     axis3 = v3(@normal.z, @normal.x, @normal.y)
     flip = (@normal.y + @normal.z + @normal.x) * (if reversed then -1.0 else 1.0)
 
-    dx = axis2.clone().add(axis3).multiplyScalar(sticker_size * flip)
-    dy = axis2.clone().sub(axis3).multiplyScalar(sticker_size)
+    dx = v3_add(axis2, axis3).multiplyScalar(sticker_size * flip)
+    dy = v3_sub(axis2, axis3).multiplyScalar(sticker_size)
     [dx, dy]
 
   @by_name: (name) ->

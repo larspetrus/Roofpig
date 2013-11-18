@@ -1,4 +1,4 @@
-v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
+#= require roofpig/v3_utils
 
 class @Camera
 

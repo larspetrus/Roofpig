@@ -1,6 +1,5 @@
 #= require roofpig/Side
-
-v3 = (x, y, z) -> new THREE.Vector3(x, y, z)
+#= require roofpig/v3_utils
 
 # Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc refers to the 3D models for those pieces
 class @Pieces3D
