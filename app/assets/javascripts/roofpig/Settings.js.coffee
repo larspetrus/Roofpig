@@ -1,5 +1,3 @@
-#= require roofpig/Settings
-
 class @Settings
   constructor: (settings_dom) ->
     @alg = settings_dom.data("alg") ||""
