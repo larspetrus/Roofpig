@@ -25,8 +25,8 @@ class @Camera
     @cam.position = @cam_position.clone()
     @cam.up = @cam_up.clone()
     for v in [@cam.position, @cam.up]
-      v.applyAxisAngle(@user_dir.z, -0.01*dx)
-      v.applyAxisAngle(v3_sub(@user_dir.y, @user_dir.x).normalize(), -0.01*dy)
+      v.applyAxisAngle(@user_dir.z, dx)
+      v.applyAxisAngle(v3_sub(@user_dir.y, @user_dir.x).normalize(), dy)
     @cam.lookAt(v3(0, 0, 0))
 
   _view_angle: (hover, cam_pos) ->

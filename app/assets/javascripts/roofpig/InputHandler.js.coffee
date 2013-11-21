@@ -3,11 +3,13 @@
 class @InputHandler
 
   @set_active_display: (new_active) ->
-    @active_display.has_focus(false) if @active_display
-    new_active.has_focus(true)
+    @dom_handler.has_focus(false) if @active_display
 
     @active_display = new_active
     @camera = @active_display.camera
+    @dom_handler = @active_display.dom_handler
+
+    @dom_handler.has_focus(true)
 
   @key_pressed: (e) ->
     if e.shiftKey
@@ -16,7 +18,7 @@ class @InputHandler
       turns = if e.ctrlKey then 2 else 1
 
     switch String.fromCharCode(e.keyCode)
-      when ' ' then @active_display.dom_handler.play_or_pause.click()
+      when ' ' then @dom_handler.play_or_pause.click()
       when 'C' then this._rotate('z', 1)
       when 'Z' then this._rotate('z', 3)
       when 'X' then this._rotate('y', 1)
@@ -29,19 +31,21 @@ class @InputHandler
 
   @mouse_down: (e, target_display_id) ->
     if target_display_id == @active_display.id
-      @mouse_start_x = e.pageX
-      @mouse_start_y = e.pageY
+      @bend_start_x = e.pageX
+      @bend_start_y = e.pageY
 
-      @moving = true
+      @bending = true
 
   @mouse_end: (e) ->
     @camera.bend(0, 0)
     @active_display.force_render()
-    @moving = false
+    @bending = false
 
   @mouse_move: (e) ->
-    if @moving
-      @camera.bend(e.pageX - @mouse_start_x, e.pageY - @mouse_start_y)
+    if @bending
+      dx = -0.02 * (e.pageX - @bend_start_x) / @dom_handler.scale
+      dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
+      @camera.bend(dx, dy)
       @active_display.force_render()
 
   @_rotate: (axis_name, turns) ->

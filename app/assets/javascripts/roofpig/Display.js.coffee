@@ -37,9 +37,6 @@ class @Display
     this.animate()
 
 
-  has_focus: (has_it) ->
-    @dom_handler.has_focus(has_it)
-
   # this function is executed on each animation frame
   animate: ->
     now = (new Date()).getTime()
