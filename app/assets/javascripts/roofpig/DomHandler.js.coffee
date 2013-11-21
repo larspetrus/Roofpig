@@ -2,7 +2,7 @@ class @DomHandler
 
   constructor: (@display_id, @div, renderer) ->
     @div.css(position:'relative')
-    this.keyboard_focus(false)
+    this.has_focus(false)
     @div.data('dpid', @display_id)
 
     renderer.setSize(@div.width(), @div.width())
@@ -10,7 +10,7 @@ class @DomHandler
 
     @scale = @div.width()/400
 
-  keyboard_focus: (has_it) ->
+  has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'
     @div.css("border": "2px solid #{color}")
 

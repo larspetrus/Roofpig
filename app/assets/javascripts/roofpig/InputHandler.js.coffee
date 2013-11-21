@@ -3,8 +3,8 @@
 class @InputHandler
 
   @set_active_display: (new_active) ->
-    @active_display.keyboard_focus(false) if @active_display
-    new_active.keyboard_focus(true)
+    @active_display.has_focus(false) if @active_display
+    new_active.has_focus(true)
 
     @active_display = new_active
     @camera = @active_display.camera

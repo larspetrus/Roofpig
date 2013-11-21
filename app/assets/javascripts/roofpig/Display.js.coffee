@@ -37,8 +37,8 @@ class @Display
     this.animate()
 
 
-  keyboard_focus: (has_it) ->
-    @dom_handler.keyboard_focus(has_it)
+  has_focus: (has_it) ->
+    @dom_handler.has_focus(has_it)
 
   # this function is executed on each animation frame
   animate: ->
