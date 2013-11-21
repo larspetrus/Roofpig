@@ -86,4 +86,5 @@ class @Display
         this.reset()
 
   force_render: ->
-    this.add_changer('force_render', { finished: true, update: (now) -> })
+    null_func = ->
+    this.add_changer('force_render', { finished: true, finish: null_func, update: null_func })
