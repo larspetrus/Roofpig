@@ -22,11 +22,14 @@ class @Camera
     this._cam_moved()
 
   bend: (dx, dy) ->
-    @cam.position = @cam_position.clone()
-    @cam.up = @cam_up.clone()
+    v1 = @user_dir.z.clone().multiplyScalar(dx)
+    v2 = v3_sub(@user_dir.y, @user_dir.x).normalize().multiplyScalar(dy)
+    axis = v3_add(v1, v2).normalize()
+
+    @cam.position = @unbent_position.clone()
+    @cam.up = @unbent_up.clone()
     for v in [@cam.position, @cam.up]
-      v.applyAxisAngle(@user_dir.z, dx)
-      v.applyAxisAngle(v3_sub(@user_dir.y, @user_dir.x).normalize(), dy)
+      v.applyAxisAngle(axis, Math.sqrt(dx*dx + dy*dy))
     @cam.lookAt(v3(0, 0, 0))
 
   _view_angle: (hover, cam_pos) ->
@@ -36,5 +39,5 @@ class @Camera
 
   _cam_moved: ->
     @cam.lookAt(v3(0, 0, 0))
-    @cam_up = @cam.up.clone()
-    @cam_position = @cam.position.clone()
+    @unbent_up = @cam.up.clone()
+    @unbent_position = @cam.position.clone()
