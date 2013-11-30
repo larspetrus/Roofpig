@@ -34,8 +34,9 @@ class @Camera
 
   _view_angle: (hover, cam_pos) ->
     max_cube_size = 2 * Math.sqrt(hover*hover + 4*hover + 13)
-    dist = Math.sqrt(3*cam_pos*cam_pos) - 2
-    2 * Math.atan(max_cube_size / (2 * dist)) * (180 / Math.PI)
+    distance = Math.sqrt(3*cam_pos*cam_pos) - 2
+    adjustment_factor = 1.015 + 0.13 * (5-hover)/4 # I don't understand the math, but this looks OK
+    adjustment_factor * 2 * Math.atan(max_cube_size / (2*distance)) * (180 / Math.PI)
 
   _cam_moved: ->
     @cam.lookAt(v3(0, 0, 0))
