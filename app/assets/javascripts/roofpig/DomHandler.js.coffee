@@ -1,7 +1,7 @@
 class @DomHandler
 
   constructor: (@display_id, @div, renderer) ->
-    @div.css(position:'relative')
+    @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", Lucida Grande, sans-serif')
     this.has_focus(false)
     @div.data('dpid', @display_id)
 
@@ -45,7 +45,7 @@ class @DomHandler
     @pause = this._make_button("||", "pause")
     @play  = this._make_button("▶",  "play")
 
-    @place = this._scale($("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right'))
+    @place = this._make_place_area()
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
@@ -64,3 +64,8 @@ class @DomHandler
   _scale: (button_area_element) ->
     @button_area.append(button_area_element)
     button_area_element.height(40 * @scale).width(72 * @scale - 12).css("font-size", 32 * @scale)
+
+  _make_place_area: ->
+    place_div = $("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right')
+    @button_area.append(place_div)
+    place_div.height(40 * @scale).width(80 * @scale).css("font-size", 24 * @scale)
