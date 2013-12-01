@@ -9,6 +9,7 @@ class @DomHandler
     @div.append(renderer.domElement);
 
     @scale = @div.width()/400
+    console.log("scale:#{@scale}")
 
   has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'
@@ -63,7 +64,7 @@ class @DomHandler
 
   _scale: (button_area_element) ->
     @button_area.append(button_area_element)
-    button_area_element.height(40 * @scale).width(72 * @scale - 12).css("font-size", 32 * @scale)
+    button_area_element.height(40 * @scale).width(80 * @scale - 16).css("font-size", 32 * @scale) # -16 = 2x6px margin +2x2px border
 
   _make_place_area: ->
     place_div = $("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right')
