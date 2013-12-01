@@ -9,7 +9,6 @@ class @DomHandler
     @div.append(renderer.domElement);
 
     @scale = @div.width()/400
-    console.log("scale:#{@scale}")
 
   has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'
