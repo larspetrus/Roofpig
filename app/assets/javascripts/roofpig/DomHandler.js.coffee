@@ -12,7 +12,8 @@ class @DomHandler
 
   has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'
-    @div.css("border": "2px solid #{color}")
+    cursor = if has_it then 'pointer' else 'default'
+    @div.css("border": "2px solid #{color}", cursor: cursor)
 
   alg_changed: (playing, at_start, at_end, place_text) ->
     if playing
