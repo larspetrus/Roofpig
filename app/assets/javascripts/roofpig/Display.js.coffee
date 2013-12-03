@@ -64,15 +64,23 @@ class @Display
     unless @alg.at_start()
       this.add_changer('move', @alg.prev_move().undo(@pieces3d))
 
-  reset: ->
+  to_start: ->
     until @alg.at_start()
       @alg.prev_move().undo(@pieces3d).finish()
     this.force_render()
 
-  button_click: (name) ->
+  to_end: ->
+    until @alg.at_end()
+      @alg.next_move().do(@pieces3d).finish()
+    this.force_render()
+
+  button_click: (name, shift) ->
     switch name
       when 'play'
-        this.add_changer('move', @alg.play(@pieces3d))
+        unless shift
+          this.add_changer('move', @alg.play(@pieces3d))
+        else
+          this.to_end()
       when 'pause'
         @alg.stop()
       when 'next'
@@ -80,7 +88,7 @@ class @Display
       when 'prev'
         this.prev()
       when 'reset'
-        this.reset()
+        this.to_start()
 
   force_render: ->
     null_func = ->

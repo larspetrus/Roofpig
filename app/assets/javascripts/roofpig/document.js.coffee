@@ -6,9 +6,9 @@ $(document).ready ->
     display = Display.instances[$(this).data('dpid')]
     InputHandler.set_active_display(display)
 
-  $("button").click ->
+  $("button").click (e) ->
     display = Display.instances[$(this).data('dpid')]
-    display.button_click($(this).attr("id"))
+    display.button_click($(this).attr("id"), e.shiftKey)
 
   $("body").keydown (e) ->
     InputHandler.key_pressed(e)
