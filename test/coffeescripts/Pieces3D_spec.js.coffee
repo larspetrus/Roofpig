@@ -2,7 +2,7 @@
 #= require roofpig/Pieces3D
 
 mock_scene    = { add: -> }
-mock_settings = { hover: 1.0 }
+mock_settings = { hover: 1.0, color_only: "(ignored)" }
 
 describe "Pieces3D", ->
   describe "#_piece_name", ->
@@ -25,3 +25,9 @@ describe "Pieces3D", ->
     expect(pieces.WTF).to.be.undefined
     expect(pieces.LU).to.be.undefined
 
+  describe "#_colored_sticker", ->
+    it "triggers on only full codes", ->
+      expect(Pieces3D._colored_sticker(" UFR FR ", "UFR")).to.equal(true)
+      expect(Pieces3D._colored_sticker(" UFR FR ", "FR")).to.equal(true)
+      expect(Pieces3D._colored_sticker(" UFR FR ", "UF")).to.equal(false)
+      expect(Pieces3D._colored_sticker(" UFR FR ", "U")).to.equal(false)

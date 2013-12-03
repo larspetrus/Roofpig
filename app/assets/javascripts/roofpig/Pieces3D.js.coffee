@@ -20,7 +20,8 @@ class @Pieces3D
           mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
             if side != mid_slice
-              real_sticker = settings.solve_to != 'FL' || (z_side == Side.U)
+              real_sticker = Pieces3D._colored_sticker(settings.color_only, name)
+
               color = if real_sticker then side.color else '#aaa'
               new_piece.add(side.make_sticker(mid_point, color))
               if real_sticker
@@ -30,6 +31,9 @@ class @Pieces3D
           this[name] = new_piece
           @at[name] = new_piece
           scene.add(new_piece)
+
+  @_colored_sticker: (color_only, piece_name) ->
+    color_only.indexOf(" #{piece_name} ") > -1
 
   _piece_center: (x_side, y_side, z_side) ->
     v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
