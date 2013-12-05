@@ -5,9 +5,9 @@
 class @Pieces3D
   constructor: (scene, settings) ->
     @at = {}
-    this.make_stickers(scene, settings)
+    this.make_stickers(scene, settings.hover, settings.colors)
 
-  make_stickers: (scene, settings) ->
+  make_stickers: (scene, hover, colors) ->
     mid_slice = new Side("-", v3(0.0, 0.0, 0.0))
 
     for x_side in [Side.R, mid_slice, Side.L]
@@ -20,20 +20,15 @@ class @Pieces3D
           mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
             if side != mid_slice
-              real_sticker = Pieces3D._colored_sticker(settings.color_only, name)
-
-              color = if real_sticker then side.color else '#aaa'
-              new_piece.add(side.make_sticker(mid_point, color))
-              if real_sticker
-                new_piece.add(side.make_reverse_sticker(mid_point, settings.hover))
+              sticker = colors.at(name, side)
+              new_piece.add(side.make_sticker(mid_point, sticker.color))
+              if sticker.real
+                new_piece.add(side.make_reverse_sticker(mid_point, sticker.color, hover))
               new_piece.add(side.make_plastic(mid_point))
 
           this[name] = new_piece
           @at[name] = new_piece
           scene.add(new_piece)
-
-  @_colored_sticker: (color_only, piece_name) ->
-    color_only.indexOf(" #{piece_name} ") > -1
 
   _piece_center: (x_side, y_side, z_side) ->
     v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
