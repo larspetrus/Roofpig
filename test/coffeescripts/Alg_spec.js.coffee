@@ -14,8 +14,7 @@ describe "Alg", ->
       expect(new Alg(" U F2  D' LZ  ", mock_button_row).to_s()).to.equal("U F2 D' LZ")
 
     it "fails empty alg", ->
-      newbad = -> new Alg("", mock_button_row)
-      expect(newbad).to.throw("Invalid alg: ''")
+      expect(-> new Alg("", mock_button_row)).to.throw("Invalid alg: ''")
 
   it "keeps track of moves", ->
     alg = new Alg('F D', mock_button_row, mock_pieces)
