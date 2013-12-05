@@ -1,4 +1,3 @@
-#= require three.min
 #= require roofpig/Move
 
 describe "Move", ->
