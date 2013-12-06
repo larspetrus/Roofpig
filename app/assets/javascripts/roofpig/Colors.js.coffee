@@ -2,9 +2,11 @@
 
 class @Colors
 
-  constructor: (colored, solved) ->
+  constructor: (colored, solved, colors_settings = "") ->
     @colored = Colors._expand(colored)
     @solved = Colors._expand(solved || "n/a")
+    @side_colors = Colors._set_colors(colors_settings)
+
 
   at: (piece_name, side) ->
     if Colors._selected_sticker(@solved, piece_name)
@@ -15,17 +17,10 @@ class @Colors
       { real: false, color: this.of('ignored') }
 
   of: (sticker_type) ->
-    switch sticker_type
-      when Side.R    then '#0d0'  # green
-      when Side.L    then 'blue'
-      when Side.F    then 'red'
-      when Side.B    then 'orange'
-      when Side.U    then 'yellow'
-      when Side.D    then '#eee' # white
-      when 'solved'  then '#666' # dark grey
-      when 'ignored' then '#aaa' # light gray
-      else
-        throw new Error("Unknown sticker type #{sticker_type}")
+    type = sticker_type.name || sticker_type
+    unless @side_colors[type]
+      throw new Error("Unknown sticker type '#{sticker_type}'")
+    @side_colors[type]
 
   @_selected_sticker: (selection, piece_name) ->
     selection.indexOf(" #{piece_name} ") > -1
@@ -48,4 +43,13 @@ class @Colors
               result += name + " "
       else
         result += exp + " "
+    result
+
+  CODES = {G:'#0d0', B:'blue', R:'red', O:'orange', Y:'yellow', W:'#eee'}
+  @_set_colors: (colors_settings) ->
+    result = {R:CODES.G, L:CODES.B, F:CODES.R, B:CODES.O, U:CODES.Y, D:CODES.W, solved:'#666', ignored:'#aaa'}
+
+    for setting in colors_settings.split(' ')
+      [type, color] = setting.split(':')
+      result[type] = CODES[color] || color
     result

@@ -4,7 +4,7 @@
 describe "Colors", ->
   describe "of", ->
     it "has default values", ->
-      colors = new Colors("", "")
+      colors = new Colors("", "", "")
       expect(colors.of(Side.R)).to.equal('#0d0')
       expect(colors.of(Side.L)).to.equal('blue')
       expect(colors.of(Side.F)).to.equal('red')
@@ -15,6 +15,16 @@ describe "Colors", ->
       expect(colors.of('ignored')).to.equal('#aaa')
 
       expect(-> colors.of('UNKNOWN')).to.throw(Error)
+    
+    it "can set side colors", ->
+      colors = new Colors("", "", "R:O L:#abc solved:R")
+
+      expect(colors.of(Side.R)).to.equal('orange')
+      expect(colors.of(Side.L)).to.equal('#abc')
+      expect(colors.of('solved')).to.equal('red')
+
+      expect(colors.of(Side.U)).to.equal('yellow')
+      expect(colors.of(Side.D)).to.equal('#eee'  )
 
   describe "#at", ->
     it "is colored by default", ->
@@ -37,7 +47,7 @@ describe "Colors", ->
       expect(colors.at('L', Side.L).color).to.equal(colors.of('ignored'))
 
   describe "_expand", ->
-    it "Passes through the simple", ->
+    it "Passes through simple piece names", ->
       expect(Colors._expand("UFR")).to. equal(" UFR ")
       expect(Colors._expand("UFR FL")).to. equal(" UFR FL ")
 
