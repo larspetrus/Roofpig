@@ -6,7 +6,7 @@ class @Camera
     coord = 25
     @cam = new THREE.PerspectiveCamera(this._view_angle(hover, coord), 1, 1, 100)
 
-    @cam.position.set(coord, coord, coord)
+    @cam.position.set(-coord, coord, coord)
     @cam.up.set(0,0,1);
     this._cam_moved()
 
