@@ -13,7 +13,7 @@ class @Pieces3D
     for x_side in [Side.R, mid_slice, Side.L]
       for y_side in [Side.F, mid_slice, Side.B]
         for z_side in [Side.U, mid_slice, Side.D]
-          name = Pieces3D._piece_name(x_side, y_side, z_side)
+          name = Pieces3D.piece_name(x_side.name, y_side.name, z_side.name)
           new_piece = new THREE.Object3D()
           new_piece.name = name
 
@@ -33,12 +33,13 @@ class @Pieces3D
   _piece_center: (x_side, y_side, z_side) ->
     v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
 
-  @_piece_name: (sides...) ->
-    code = ""
-    for ordered_side in [Side.U, Side.D, Side.F, Side.B, Side.R, Side.L]
+  @piece_name: (sides...) ->
+    name = ""
+    for ordered_side in ['U', 'D', 'F', 'B', 'R', 'L']
       if ordered_side in sides
-        code += ordered_side.name
-    code
+        name += ordered_side
+    console.log(sides, name)
+    name
 
   on: (side) ->
     return [@at.UFR, @at.UFL, @at.UBR, @at.UBL, @at.UF, @at.UB, @at.UL, @at.UR, @at.U]  if side == Side.U

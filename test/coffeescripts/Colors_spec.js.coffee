@@ -61,8 +61,15 @@ describe "Colors", ->
       expect(Colors._expand(null)).to. equal(" B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR ")
 
   describe "#_selected_sticker", ->
-    it "triggers on only full codes", ->
+    it "doesn't have the substring bug", ->
       expect(Colors._selected_sticker(" UFR FR ", "UFR")).to.equal(true)
       expect(Colors._selected_sticker(" UFR FR ", "FR")).to.equal(true)
       expect(Colors._selected_sticker(" UFR FR ", "UF")).to.equal(false)
       expect(Colors._selected_sticker(" UFR FR ", "U")).to.equal(false)
+
+    it "handles permuted piece names", ->
+      expect(Colors._selected_sticker(" UFR FR ", "FRU")).to.equal(true)
+      expect(Colors._selected_sticker(" UFR FR ", "URF")).to.equal(true)
+      expect(Colors._selected_sticker(" UFR FR ", "RF")).to.equal(true)
+      expect(Colors._selected_sticker(" UFR FR ", "UFFR")).to.equal(false)
+
