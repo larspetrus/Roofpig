@@ -60,6 +60,12 @@ describe "Colors", ->
       expect(Colors._expand("")).to. equal(" B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR ")
       expect(Colors._expand(null)).to. equal(" B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR ")
 
+    it "handles permuted names", ->
+      expect(Colors._expand("FRU")).to. equal(" UFR ")
+      expect(Colors._expand("FUR LF")).to. equal(" UFR FL ")
+      expect(Colors._expand("FRU*")).to. equal(" UFR UF UR FR U F R ")
+
+
   describe "#_selected_sticker", ->
     it "doesn't have the substring bug", ->
       expect(Colors._selected_sticker(" UFR FR ", "UFR")).to.equal(true)

@@ -35,14 +35,15 @@ class @Colors
     for exp in expressions.split(" ")
       if exp[exp.length - 1] == "*"
         if exp.length == 4
-          [c1, c2, c3] = [exp[0], exp[1], exp[2]]
+          nmz = Pieces3D.piece_name(exp[0], exp[1], exp[2])
+          [c1, c2, c3] = [nmz[0], nmz[1], nmz[2]]
           result += c1+c2+c3+" "+c1+c2+" "+c1+c3+" "+c2+c3+" "+c1+" "+c2+" "+c3+" "
         if exp.length == 2
           for name in PIECE_NAMES
             if name.indexOf(exp[0]) > -1
               result += name + " "
       else
-        result += exp + " "
+        result += Pieces3D.piece_name(exp[0], exp[1], exp[2]) + " "
     result
 
   CODES = {G:'#0d0', B:'blue', R:'red', O:'orange', Y:'yellow', W:'#eee'}
