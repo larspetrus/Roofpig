@@ -1,18 +1,18 @@
 #= require roofpig/Side
 #= require roofpig/Pieces3D
+#= require roofpig/CubeExp
 
 class @Colors
 
   constructor: (colored, solved, colors_settings = "") ->
-    @colored = Colors._expand(colored)
-    @solved = Colors._expand(solved || "n/a")
+    @colored = new CubeExp(colored)
+    @solved = new CubeExp(solved || "n/a")
     @side_colors = Colors._set_colors(colors_settings)
 
-
   to_draw: (piece_name, side) ->
-    if Colors._selected_sticker(@solved, piece_name)
+    if @solved.matches_sticker(piece_name, side)
       { real: false, color: this.of('solved') }
-    else if Colors._selected_sticker(@colored, piece_name)
+    else if @colored.matches_sticker(piece_name, side)
       { real: true, color: this.of(side) }
     else
       { real: false, color: this.of('ignored') }
@@ -26,25 +26,6 @@ class @Colors
   @_selected_sticker: (selection, piece_name) ->
     normalized_name = Pieces3D.piece_name(piece_name[0], piece_name[1], piece_name[2])
     selection.indexOf(" #{normalized_name} ") > -1
-
-  PIECE_NAMES = ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
-  @_expand: (expressions) ->
-    return " #{PIECE_NAMES.join(' ')} " unless expressions
-
-    result = " "
-    for exp in expressions.split(" ")
-      if exp[exp.length - 1] == "*"
-        if exp.length == 4
-          nmz = Pieces3D.piece_name(exp[0], exp[1], exp[2])
-          [c1, c2, c3] = [nmz[0], nmz[1], nmz[2]]
-          result += c1+c2+c3+" "+c1+c2+" "+c1+c3+" "+c2+c3+" "+c1+" "+c2+" "+c3+" "
-        if exp.length == 2
-          for name in PIECE_NAMES
-            if name.indexOf(exp[0]) > -1
-              result += name + " "
-      else
-        result += Pieces3D.piece_name(exp[0], exp[1], exp[2]) + " "
-    result
 
   CODES = {G:'#0d0', B:'blue', R:'red', O:'orange', Y:'yellow', W:'#eee'}
   @_set_colors: (colors_settings) ->
