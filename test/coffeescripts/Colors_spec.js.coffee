@@ -26,25 +26,25 @@ describe "Colors", ->
       expect(colors.of(Side.U)).to.equal('yellow')
       expect(colors.of(Side.D)).to.equal('#eee'  )
 
-  describe "#at", ->
+  describe "#to_draw", ->
     it "is colored by default", ->
       colors = new Colors("", "")
-      expect(colors.at('UFR', Side.F).color).to.equal(colors.of(Side.F))
-      expect(colors.at('DB', Side.B).color).to.equal(colors.of(Side.B))
-      expect(colors.at('L', Side.L).color).to.equal(colors.of(Side.L))
+      expect(colors.to_draw('UFR', Side.F).color).to.equal(colors.of(Side.F))
+      expect(colors.to_draw('DB', Side.B).color).to.equal(colors.of(Side.B))
+      expect(colors.to_draw('L', Side.L).color).to.equal(colors.of(Side.L))
 
     it "colors only specified stickers", ->
       colors = new Colors("U*", "")
-      expect(colors.at('UFR', Side.F).color).to.equal(colors.of(Side.F))
-      expect(colors.at('DB', Side.B).color).to.equal(colors.of('ignored'))
-      expect(colors.at('L', Side.L).color).to.equal(colors.of('ignored'))
+      expect(colors.to_draw('UFR', Side.F).color).to.equal(colors.of(Side.F))
+      expect(colors.to_draw('DB', Side.B).color).to.equal(colors.of('ignored'))
+      expect(colors.to_draw('L', Side.L).color).to.equal(colors.of('ignored'))
 
     it "solved overrides colored", ->
       colors = new Colors("U*", "F*")
-      expect(colors.at('UFR', Side.F).color).to.equal(colors.of('solved'))
-      expect(colors.at('UR', Side.U).color).to.equal(colors.of(Side.U))
-      expect(colors.at('F', Side.F).color).to.equal(colors.of('solved'))
-      expect(colors.at('L', Side.L).color).to.equal(colors.of('ignored'))
+      expect(colors.to_draw('UFR', Side.F).color).to.equal(colors.of('solved'))
+      expect(colors.to_draw('UR', Side.U).color).to.equal(colors.of(Side.U))
+      expect(colors.to_draw('F', Side.F).color).to.equal(colors.of('solved'))
+      expect(colors.to_draw('L', Side.L).color).to.equal(colors.of('ignored'))
 
   describe "_expand", ->
     it "Passes through simple piece names", ->

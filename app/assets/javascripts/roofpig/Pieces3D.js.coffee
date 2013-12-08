@@ -20,7 +20,7 @@ class @Pieces3D
           mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
             if side != mid_slice
-              sticker = colors.at(name, side)
+              sticker = colors.to_draw(name, side)
               new_piece.add(side.make_sticker(mid_point, sticker.color))
               if sticker.real
                 new_piece.add(side.make_reverse_sticker(mid_point, sticker.color, hover))

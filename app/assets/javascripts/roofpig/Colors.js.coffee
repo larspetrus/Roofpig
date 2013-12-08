@@ -9,7 +9,7 @@ class @Colors
     @side_colors = Colors._set_colors(colors_settings)
 
 
-  at: (piece_name, side) ->
+  to_draw: (piece_name, side) ->
     if Colors._selected_sticker(@solved, piece_name)
       { real: false, color: this.of('solved') }
     else if Colors._selected_sticker(@colored, piece_name)

@@ -2,7 +2,7 @@
 #= require roofpig/Pieces3D
 
 mock_scene    = { add: -> }
-mock_settings = { hover: 1.0, colors: { at: -> { real: true, color: 'red'} } }
+mock_settings = { hover: 1.0, colors: { to_draw: -> { real: true, color: 'red'} } }
 
 describe "Pieces3D", ->
   describe "#piece_name", ->
