@@ -1,5 +1,5 @@
+#= require roofpig/utils
 #= require roofpig/Side
-#= require roofpig/Pieces3D
 #= require roofpig/CubeExp
 
 class @Colors
@@ -22,10 +22,6 @@ class @Colors
     unless @side_colors[type]
       throw new Error("Unknown sticker type '#{sticker_type}'")
     @side_colors[type]
-
-  @_selected_sticker: (selection, piece_name) ->
-    normalized_name = Pieces3D.piece_name(piece_name[0], piece_name[1], piece_name[2])
-    selection.indexOf(" #{normalized_name} ") > -1
 
   CODES = {G:'#0d0', B:'blue', R:'red', O:'orange', Y:'yellow', W:'#eee'}
   @_set_colors: (colors_settings) ->

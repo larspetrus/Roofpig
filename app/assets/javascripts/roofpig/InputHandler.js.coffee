@@ -1,4 +1,4 @@
-#= require roofpig/v3_utils
+#= require roofpig/utils
 
 class @InputHandler
 

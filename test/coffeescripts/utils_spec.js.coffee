@@ -1,5 +1,5 @@
 #= require three.min.js
-#= require roofpig/v3_utils
+#= require ../../app/assets/javascripts/roofpig/utils.js.coffee
 
 describe "v3", ->
   it "#constructor", ->
@@ -19,3 +19,12 @@ describe "v3", ->
     expect(diff.x).to.equal(2)
     expect(diff.y).to.equal(4)
     expect(diff.z).to.equal(6)
+
+  describe "#standard_piece_name", ->
+    it "returns the right names, independent of order", ->
+      standard_piece_name('F', 'R').should.equal("FR")
+      standard_piece_name('R', 'F').should.equal("FR")
+      standard_piece_name('R', 'F', 'D').should.equal("DFR")
+
+    it "ignores non official Sides", ->
+      standard_piece_name('F', 'Bob', 'R').should.equal("FR")

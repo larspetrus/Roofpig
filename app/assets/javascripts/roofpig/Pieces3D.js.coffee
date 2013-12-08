@@ -1,5 +1,5 @@
 #= require roofpig/Side
-#= require roofpig/v3_utils
+#= require roofpig/utils
 
 # Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc refers to the 3D models for those pieces
 class @Pieces3D
@@ -13,7 +13,7 @@ class @Pieces3D
     for x_side in [Side.R, mid_slice, Side.L]
       for y_side in [Side.F, mid_slice, Side.B]
         for z_side in [Side.U, mid_slice, Side.D]
-          name = Pieces3D.piece_name(x_side.name, y_side.name, z_side.name)
+          name = standard_piece_name(x_side.name, y_side.name, z_side.name)
           new_piece = new THREE.Object3D()
           new_piece.name = name
 
@@ -32,13 +32,6 @@ class @Pieces3D
 
   _piece_center: (x_side, y_side, z_side) ->
     v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
-
-  @piece_name: (sides...) ->
-    name = ""
-    for ordered_side in ['U', 'D', 'F', 'B', 'R', 'L']
-      if ordered_side in sides
-        name += ordered_side
-    name
 
   on: (side) ->
     return [@at.UFR, @at.UFL, @at.UBR, @at.UBL, @at.UF, @at.UB, @at.UL, @at.UR, @at.U]  if side == Side.U
