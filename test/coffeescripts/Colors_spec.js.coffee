@@ -1,5 +1,6 @@
 #= require three.min
 #= require roofpig/Colors
+#= require roofpig/Side
 
 describe "Colors", ->
   describe "of", ->

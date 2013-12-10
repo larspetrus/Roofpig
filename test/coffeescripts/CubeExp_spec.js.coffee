@@ -4,10 +4,12 @@ exp = (e) -> new CubeExp(e)
 
 describe "CubeExp", ->
   describe "matches", ->
-    it "Passes through simple piece names", ->
+    it "simple piece names", ->
       expect(JSON.stringify(exp("UFR").matches)).to.equal(JSON.stringify(exp("UFR").matches))
       expect(exp("UFR").matches).to.deep.equal(exp("UFR").matches)
       expect(exp("UFR FL").matches).to.deep.equal(exp("UFR FL").matches)
+      expect(exp("").matches).to.deep.equal(exp("").matches)
+      expect(exp(null).matches).to.deep.equal(exp("").matches)
 
     it "Expands wild cards", ->
       expect(exp("UFR*").matches).to.deep.equal(exp("UFR UF UR FR U F R").matches)
@@ -15,14 +17,12 @@ describe "CubeExp", ->
       expect(exp("U*").matches).to.deep.equal(exp("U UB UBL UBR UF UFL UFR UL UR").matches)
       expect(exp("F*").matches).to.deep.equal(exp("DF DFL DFR F FL FR UF UFL UFR").matches)
 
-      expect(exp("").matches).to.deep.equal(exp("B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR").matches)
-      expect(exp(null).matches).to.deep.equal(exp("B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR").matches)
+      expect(exp("*").matches).to.deep.equal(exp("B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR").matches)
 
-    it "handles permuted names", ->
+    it "permuted names", ->
       expect(exp("FRU").matches).to.deep.equal(exp("UFR").matches)
       expect(exp("FUR LF").matches).to.deep.equal(exp("UFR FL").matches)
       expect(exp("FRU*").matches).to.deep.equal(exp("UFR UF UR FR U F R").matches)
-
 
   describe "#matches_sticker", ->
     it "doesn't have the substring bug", ->

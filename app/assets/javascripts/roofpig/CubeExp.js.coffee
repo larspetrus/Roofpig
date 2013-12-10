@@ -21,11 +21,13 @@ class @CubeExp
             for piece in PIECE_NAMES
               if piece.indexOf(exp[0]) > -1
                 @matches[piece] = piece
+
+          if exp.length == 1
+            for piece in PIECE_NAMES
+              @matches[piece] = piece
+
         else
           @matches[piece_name] = standardize_name(exp)
-    else
-      for piece in PIECE_NAMES
-        @matches[piece] = piece
 
 
   matches_sticker: (piece_name, side) ->

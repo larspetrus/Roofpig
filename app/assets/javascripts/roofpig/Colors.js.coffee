@@ -1,12 +1,11 @@
 #= require roofpig/utils
-#= require roofpig/Side
 #= require roofpig/CubeExp
 
 class @Colors
 
   constructor: (colored, solved, colors_settings = "") ->
-    @colored = new CubeExp(colored)
-    @solved = new CubeExp(solved || "n/a")
+    @colored = new CubeExp(colored || "*")
+    @solved = new CubeExp(solved)
     @side_colors = Colors._set_colors(colors_settings)
 
   to_draw: (piece_name, side) ->
