@@ -13,7 +13,7 @@ class @Pieces3D
     for x_side in [Side.R, mid_slice, Side.L]
       for y_side in [Side.F, mid_slice, Side.B]
         for z_side in [Side.U, mid_slice, Side.D]
-          name = standard_piece_name(x_side.name, y_side.name, z_side.name)
+          name = standard_piece_name(x_side, y_side, z_side)
           new_piece = new THREE.Object3D()
           new_piece.name = name
 

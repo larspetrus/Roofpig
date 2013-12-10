@@ -1,5 +1,5 @@
 #= require three.min.js
-#= require ../../app/assets/javascripts/roofpig/utils.js.coffee
+#= require roofpig/utils
 
 describe "v3", ->
   it "#constructor", ->
@@ -26,5 +26,21 @@ describe "v3", ->
       standard_piece_name('R', 'F').should.equal("FR")
       standard_piece_name('R', 'F', 'D').should.equal("DFR")
 
+    it "handles Side objects", ->
+      standard_piece_name({name: 'F'}, {name: 'R'}).should.equal("FR")
+
     it "ignores non official Sides", ->
-      standard_piece_name('F', 'Bob', 'R').should.equal("FR")
+      expect(standard_piece_name('F', 'Bob', 'R')).to.equal("FR")
+
+  describe "#standardize_name", ->
+      it "works", ->
+        expect(standardize_name("LDF")).to.equal("DFL")
+        expect(standardize_name("LdF")).to.equal("FL")
+        expect(standardize_name("RDFL")).to.equal("DFR")
+        expect(standardize_name("x UD")).to.equal("U")
+
+  describe "#side_name", ->
+    it "works with strings, Side objects and nulls", ->
+      expect(side_name("F")).to.equal("F")
+      expect(side_name({name: "D"})).to.equal("D")
+      expect(side_name()).to.equal("")

@@ -1,28 +1,33 @@
 #= require roofpig/utils
 
-#The name is a flawed analogy with RegExps
+#Named in flawed analogy with RegExp
 class @CubeExp
 
   PIECE_NAMES = ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
 
   constructor: (expressions) ->
+    @matches = {}
     if expressions
-      @stringthing = " "
       for exp in expressions.split(" ")
+        piece_name = standardize_name(exp.toUpperCase())
+
         if exp[exp.length - 1] == "*"
           if exp.length == 4
-            spn = standard_piece_name(exp[0], exp[1], exp[2])
-            [c1, c2, c3] = [spn[0], spn[1], spn[2]]
-            @stringthing += c1+c2+c3+" "+c1+c2+" "+c1+c3+" "+c2+c3+" "+c1+" "+c2+" "+c3+" "
+            [s1, s2, s3] = [piece_name[0], piece_name[1], piece_name[2]]
+            for piece in [s1+s2+s3, s1+s2, s1+s3, s2+s3, s1, s2, s3]
+              @matches[piece] = piece
+
           if exp.length == 2
-            for name in PIECE_NAMES
-              if name.indexOf(exp[0]) > -1
-                @stringthing += name + " "
+            for piece in PIECE_NAMES
+              if piece.indexOf(exp[0]) > -1
+                @matches[piece] = piece
         else
-          @stringthing += standard_piece_name(exp[0], exp[1], exp[2]) + " "
+          @matches[piece_name] = standardize_name(exp)
     else
-      @stringthing = " #{PIECE_NAMES.join(' ')} "
+      for piece in PIECE_NAMES
+        @matches[piece] = piece
 
 
   matches_sticker: (piece_name, side) ->
-    @stringthing.indexOf(" #{standard_piece_name(piece_name[0], piece_name[1], piece_name[2])} ") > -1
+    matching_stickers = @matches[standardize_name(piece_name)] || ""
+    matching_stickers.indexOf(side_name(side)) > -1
