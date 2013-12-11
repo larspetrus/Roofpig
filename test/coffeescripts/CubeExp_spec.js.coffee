@@ -11,13 +11,27 @@ describe "CubeExp", ->
       expect(exp("").matches).to.deep.equal(exp("").matches)
       expect(exp(null).matches).to.deep.equal(exp("").matches)
 
-    it "Expands wild cards", ->
+    it "Shorthand syntax", ->
       expect(exp("UFR*").matches).to.deep.equal(exp("UFR UF UR FR U F R").matches)
 
       expect(exp("U*").matches).to.deep.equal(exp("U UB UBL UBR UF UFL UFR UL UR").matches)
       expect(exp("F*").matches).to.deep.equal(exp("DF DFL DFR F FL FR UF UFL UFR").matches)
 
       expect(exp("*").matches).to.deep.equal(exp("B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR").matches)
+
+      expect(exp("f").matches).to.deep.equal(exp("dF dFl dFr F Fl Fr uF uFl uFr").matches)
+
+    it "type filter syntax", ->
+      expect(exp("UFR*/e").matches).to.deep.equal(exp("UF UR FR").matches)
+
+      expect(exp("U*/c").matches).to.deep.equal(exp("UBL UBR UFL UFR").matches)
+      expect(exp("F*/cm").matches).to.deep.equal(exp("DFL DFR F UFL UFR").matches)
+
+      expect(exp("*/ce").matches).to.deep.equal(exp("BL BR DB DBL DBR DF DFL DFR DL DR FL FR UB UBL UBR UF UFL UFR UL UR").matches)
+
+      expect(exp("f/me").matches).to.deep.equal(exp("dF F Fl Fr uF").matches)
+
+
 
     it "permuted names", ->
       expect(exp("FRU").matches).to.deep.equal(exp("UFR").matches)
