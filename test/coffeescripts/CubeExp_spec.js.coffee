@@ -31,12 +31,19 @@ describe "CubeExp", ->
 
       expect(exp("f/me").matches).to.deep.equal(exp("dF F Fl Fr uF").matches)
 
-
-
     it "permuted names", ->
       expect(exp("FRU").matches).to.deep.equal(exp("UFR").matches)
       expect(exp("FUR LF").matches).to.deep.equal(exp("UFR FL").matches)
       expect(exp("FRU*").matches).to.deep.equal(exp("UFR UF UR FR U F R").matches)
+
+    it "ignores ill formed expressions", ->
+      expect(exp("UF*").matches).to.deep.equal(exp("").matches)
+
+
+    xit "selections accumulate", ->
+      expect(exp("Ufr ufR").matches).to.deep.equal(exp("UfR").matches)
+      expect(exp("UF f/e").matches).to.deep.equal(exp("UF lF rF dF").matches)
+
 
   describe "#matches_sticker", ->
     it "doesn't have the substring bug", ->
