@@ -15,7 +15,7 @@ class @CubeExp
           when 'XYZ'
             this._add_match(exp.piece, exp.type_filter, exp.sides)
           when 'XYZ*'
-            [s1, s2, s3] = [exp.piece[0], exp.piece[1], exp.piece[2]]
+            [s1, s2, s3] = exp.piece.split('')
             for piece in [s1+s2+s3, s1+s2, s1+s3, s2+s3, s1, s2, s3]
               this._add_match(piece, exp.type_filter)
           when 'X*'
@@ -30,12 +30,16 @@ class @CubeExp
               if piece.indexOf(exp.piece) > -1
                 this._add_match(piece, exp.type_filter, exp.piece)
           else
-            console.log("Ignored incomprehensible CubeExp '#{expression}'")
+            console.log("Couldn't understand CubeExp '#{expression}', and ignored it.")
 
   _add_match: (piece, type_filter, sides = piece) ->
     piece_type = 'mec'[piece.length-1]
     if not type_filter || type_filter.indexOf(piece_type) > -1
-      @matches[piece] = sides
+      if @matches[piece]
+        for side in sides.split('')
+          @matches[piece] += side if @matches[piece].indexOf(side) == -1
+      else
+        @matches[piece] = sides
 
   _parse: (expression) ->
     result = {}

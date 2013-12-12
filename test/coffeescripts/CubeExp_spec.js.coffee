@@ -39,10 +39,9 @@ describe "CubeExp", ->
     it "ignores ill formed expressions", ->
       expect(exp("UF*").matches).to.deep.equal(exp("").matches)
 
-
-    xit "selections accumulate", ->
+    it "selections accumulate", ->
       expect(exp("Ufr ufR").matches).to.deep.equal(exp("UfR").matches)
-      expect(exp("UF f/e").matches).to.deep.equal(exp("UF lF rF dF").matches)
+      expect(exp("UF f/e").matches).to.deep.equal(exp("UF Fl Fr dF").matches)
 
 
   describe "#matches_sticker", ->
