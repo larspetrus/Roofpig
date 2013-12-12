@@ -5,41 +5,40 @@ class @CubeExp
 
   PIECE_NAMES = ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
 
-  constructor: (expressions) ->
+  constructor: (expressions = "") ->
     @matches = {}
-    if expressions
-      for expression in expressions.split(" ")
-        exp = this._parse(expression)
+    for piece in PIECE_NAMES
+      @matches[piece] = {}
 
-        switch exp.type
-          when 'XYZ'
-            this._add_match(exp.piece, exp.type_filter, exp.sides)
-          when 'XYZ*'
-            [s1, s2, s3] = exp.piece.split('')
-            for piece in [s1+s2+s3, s1+s2, s1+s3, s2+s3, s1, s2, s3]
+    for expression in expressions.split(" ")
+      exp = this._parse(expression)
+
+      switch exp.type
+        when 'XYZ'
+          this._add_match(exp.piece, exp.type_filter, exp.sides)
+        when 'XYZ*'
+          [s1, s2, s3] = exp.piece.split('')
+          for piece in [s1+s2+s3, s1+s2, s1+s3, s2+s3, s1, s2, s3]
+            this._add_match(piece, exp.type_filter)
+        when 'X*'
+          for piece in PIECE_NAMES
+            if piece.indexOf(exp.piece[0]) > -1
               this._add_match(piece, exp.type_filter)
-          when 'X*'
-            for piece in PIECE_NAMES
-              if piece.indexOf(exp.piece[0]) > -1
-                this._add_match(piece, exp.type_filter)
-          when '*'
-            for piece in PIECE_NAMES
-              this._add_match(piece, exp.type_filter)
-          when 'x'
-            for piece in PIECE_NAMES
-              if piece.indexOf(exp.piece) > -1
-                this._add_match(piece, exp.type_filter, exp.piece)
-          else
-            console.log("Couldn't understand CubeExp '#{expression}', and ignored it.")
+        when '*'
+          for piece in PIECE_NAMES
+            this._add_match(piece, exp.type_filter)
+        when 'x'
+          for piece in PIECE_NAMES
+            if piece.indexOf(exp.piece[0]) > -1
+              this._add_match(piece, exp.type_filter, exp.piece)
+        else
+          console.log("Ignored unrecognized CubeExp '#{expression}'.")
 
   _add_match: (piece, type_filter, sides = piece) ->
     piece_type = 'mec'[piece.length-1]
     if not type_filter || type_filter.indexOf(piece_type) > -1
-      if @matches[piece]
-        for side in sides.split('')
-          @matches[piece] += side if @matches[piece].indexOf(side) == -1
-      else
-        @matches[piece] = sides
+      for side in sides.split('')
+        @matches[piece][side] = true
 
   _parse: (expression) ->
     result = {}
@@ -57,5 +56,4 @@ class @CubeExp
     result
 
   matches_sticker: (piece, side) ->
-    matching_stickers = @matches[standardize_name(piece)] || ""
-    matching_stickers.indexOf(side_name(side)) > -1
+    @matches[standardize_name(piece)][side_name(side)]?
