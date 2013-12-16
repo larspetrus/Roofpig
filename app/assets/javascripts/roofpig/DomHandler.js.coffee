@@ -37,7 +37,7 @@ class @DomHandler
     @place.html(place_text)
 
   add_alg_buttons: ->
-    @button_area = $("<div/>", { class: 'button-area' }).height(@div.height() - @div.width()).width(@div.width())
+    @button_area = $("<div/>").height(@div.height() - @div.width()).width(@div.width()).css("border-top": "1px solid #ccc")
     @div.append(@button_area)
 
     @reset = this._make_button("↩",  "reset")
