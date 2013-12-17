@@ -1,7 +1,10 @@
 class @MoveAnimation
-  constructor: (@pieces, @axis, @angle_to_turn, @turn_time) ->
+  constructor: (@pieces, @axis, @angle_to_turn, @turn_time, animate) ->
     @start_time = (new Date()).getTime()
     @last_time = @start_time
+
+    unless animate
+      this.finish()
 
   update: (now) ->
     return if @finished

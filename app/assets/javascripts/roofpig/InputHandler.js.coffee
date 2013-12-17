@@ -54,4 +54,4 @@ class @InputHandler
     @active_display.add_changer('spin', new CameraAnimation(@camera, @camera.user_dir[axis_name], angle_to_turn, 600))
 
   @_move: (side, turns) ->
-    @active_display.add_changer('move', new Move(side, turns).do(@active_display.pieces3d))
+    @active_display.add_changer('move', new Move(side, turns).show_do(@active_display.pieces3d))

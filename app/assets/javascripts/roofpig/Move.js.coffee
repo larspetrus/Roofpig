@@ -16,15 +16,21 @@ class @Move
     [Side.by_name(code[0]), turns]
 
   do: (pieces3d) ->
-    this._do(pieces3d, @turns)
+    this._do(pieces3d, @turns, false)
 
   undo: (pieces3d) ->
-    this._do(pieces3d, -@turns)
+    this._do(pieces3d, -@turns, false)
 
-  _do: (pieces3d, do_turns) ->
+  show_do: (pieces3d) ->
+    this._do(pieces3d, @turns, true)
+
+  show_undo: (pieces3d) ->
+    this._do(pieces3d, -@turns, true)
+
+  _do: (pieces3d, do_turns, animate) ->
     animation_pieces = pieces3d.on(@side)
     pieces3d.move(@side, do_turns)
-    new MoveAnimation(animation_pieces, @side.normal, do_turns * -Math.PI/2, @turn_time)
+    new MoveAnimation(animation_pieces, @side.normal, do_turns * -Math.PI/2, @turn_time, animate)
 
 
   to_s: ->

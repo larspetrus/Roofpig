@@ -16,7 +16,7 @@ class @Alg
   premix: (pieces3d) ->
     @next =  @moves.length
     until this.at_start()
-      this.prev_move().undo(pieces3d).finish()
+      this.prev_move().undo(pieces3d)
     this
 
   next_move: ->

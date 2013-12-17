@@ -17,4 +17,4 @@ class @AlgAnimation
     if @alg.at_end() || not @alg.playing
       @finished = true
     else
-      @mover = @alg.next_move().do(@pieces3d)
+      @mover = @alg.next_move().show_do(@pieces3d)

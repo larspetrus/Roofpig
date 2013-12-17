@@ -58,20 +58,20 @@ class @Display
 
   next: ->
     unless @alg.at_end()
-      this.add_changer('move', @alg.next_move().do(@pieces3d))
+      this.add_changer('move', @alg.next_move().show_do(@pieces3d))
 
   prev: ->
     unless @alg.at_start()
-      this.add_changer('move', @alg.prev_move().undo(@pieces3d))
+      this.add_changer('move', @alg.prev_move().show_undo(@pieces3d))
 
   to_start: ->
     until @alg.at_start()
-      @alg.prev_move().undo(@pieces3d).finish()
+      @alg.prev_move().undo(@pieces3d)
     this.force_render()
 
   to_end: ->
     until @alg.at_end()
-      @alg.next_move().do(@pieces3d).finish()
+      @alg.next_move().do(@pieces3d)
     this.force_render()
 
   button_click: (name, shift) ->
