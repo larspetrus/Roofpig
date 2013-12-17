@@ -6,6 +6,7 @@ describe "Settings#constructor", ->
     expect(empty_settings.alg).to.equal("")
     expect(empty_settings.hover).to.equal(6.5)
     expect(empty_settings.flags).to.equal("")
+    expect(empty_settings.setup).to.equal("")
 
     expect(empty_settings.colors).to.exist
 

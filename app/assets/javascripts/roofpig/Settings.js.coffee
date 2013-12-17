@@ -6,6 +6,7 @@ class @Settings
     @hover = settings_dom.data("hover") || 6.5
     @flags = settings_dom.data("flags") || ""
     @colors = new Colors(settings_dom.data("colored"), settings_dom.data("solved"), settings_dom.data("sidecolors"))
+    @setup = settings_dom.data("setup") || ""
 
   flag: (name) ->
     @flags.indexOf(name) > -1
