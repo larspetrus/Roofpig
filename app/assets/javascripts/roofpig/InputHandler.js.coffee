@@ -51,7 +51,7 @@ class @InputHandler
   @_rotate: (axis_name, turns) ->
     q_turn = -Math.PI/2
     angle_to_turn = [q_turn, 2*q_turn, -q_turn][turns-1]
-    @active_display.add_changer('spin', new CameraAnimation(@camera, @camera.user_dir[axis_name], angle_to_turn, 600))
+    @active_display.add_changer('spin', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 600))
 
   @_move: (side, turns) ->
     @active_display.add_changer('move', new Move(side, turns).show_do(@active_display.pieces3d))
