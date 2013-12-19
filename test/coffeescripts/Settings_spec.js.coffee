@@ -12,10 +12,17 @@ describe "Settings#constructor", ->
 
 describe "Settings#flag", ->
   it "reads a move string", ->
-    ss = new Settings({ data: (name) -> {flags: "fast shiny"}[name] })
-    expect(ss.flags, 1).to.equal("fast shiny")
-    expect(ss.flag("fast")).to.equal(true)
-    expect(ss.flag("slow")).to.equal(false)
+    settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] })
+    expect(settings.flags).to.equal("fast shiny")
+    expect(settings.flag("fast")).to.equal(true)
+    expect(settings.flag("slow")).to.equal(false)
 
+  describe "prefs", ->
+    it "reads prefs and settings", ->
+      settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] }, { hover: "3.3"})
+      expect(settings.flags).to.equal("fast shiny")
+      expect(settings.hover).to.equal("3.3")
 
-
+    it "settings override prefs", ->
+      settings = new Settings({ data: (name) -> {hover: "2.5"}[name] }, { hover: "3.3"})
+      expect(settings.hover).to.equal("2.5")

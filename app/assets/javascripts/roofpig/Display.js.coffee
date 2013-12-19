@@ -13,7 +13,7 @@ class @Display
     @id = Display.unique_id += 1
     Display.instances[@id] = this
 
-    @settings = new Settings(roofpig_div)
+    @settings = Settings.from_page(roofpig_div)
 
     if @settings.flag('canvas')
       @renderer = new THREE.CanvasRenderer()
