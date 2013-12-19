@@ -25,7 +25,7 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
     unless @settings.alg == ""
-      @dom_handler.add_alg_buttons()
+      @dom_handler.add_alg_area(@settings.flag('showalg'))
       @alg = new Alg(@settings.alg, @dom_handler).premix(@pieces3d)
 
     @changers = {}

@@ -8,7 +8,7 @@ class @Pieces3D
     this.make_stickers(scene, settings.hover, settings.colors)
 
     if (settings.setup)
-      setup_alg = new Alg(settings.setup, { alg_changed: -> })
+      setup_alg = new Alg(settings.setup)
       until setup_alg.at_end()
         setup_alg.next_move().do(this)
 

@@ -1,6 +1,6 @@
 class @DomHandler
 
-  constructor: (@display_id, @div, renderer) ->
+  constructor: (@display_id, @div, renderer, alg_to_show) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", Lucida Grande, sans-serif')
     this.has_focus(false)
     @div.data('dpid', @display_id)
@@ -36,9 +36,13 @@ class @DomHandler
 
     @place.html(place_text)
 
-  add_alg_buttons: ->
-    @button_area = $("<div/>").height(@div.height() - @div.width()).width(@div.width()).css("border-top": "1px solid #ccc")
-    @div.append(@button_area)
+  add_alg_area: (showalg) ->
+    @alg_area = $("<div/>").height(@div.height() - @div.width()).width(@div.width()).css("border-top": "1px solid #ccc")
+    @div.append(@alg_area)
+
+    if showalg
+      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eee", 'margin-bottom': '2px')
+      @alg_area.append(@alg_text)
 
     @reset = this._make_button("↩",  "reset")
     @prev  = this._make_button("-",  "prev")
@@ -50,6 +54,11 @@ class @DomHandler
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
+  init_alg_text: (text) ->
+    if @alg_text
+      font_size = 24 * @scale * Math.min(1, 35/text.length)
+      @alg_text.height(1.2 * font_size).css("font-size": font_size)
+      @alg_text.text(text)
 
   _show: (button, active) ->
     button.show()
@@ -63,10 +72,10 @@ class @DomHandler
     this._scale($("<button/>", { text: text, id: id, 'data-dpid': @display_id }))
 
   _scale: (button_area_element) ->
-    @button_area.append(button_area_element)
+    @alg_area.append(button_area_element)
     button_area_element.height(40 * @scale).width(80 * @scale - 16).css("font-size", 32 * @scale) # -16 = 2x6px margin +2x2px border
 
   _make_place_area: ->
     place_div = $("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right')
-    @button_area.append(place_div)
+    @alg_area.append(place_div)
     place_div.height(40 * @scale).width(80 * @scale).css("font-size", 24 * @scale)
