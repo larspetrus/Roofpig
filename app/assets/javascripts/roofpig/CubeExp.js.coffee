@@ -20,6 +20,10 @@ class @CubeExp
           [s1, s2, s3] = exp.piece.split('')
           for piece in [s1+s2+s3, s1+s2, s1+s3, s2+s3, s1, s2, s3]
             this._add_match(piece, exp.type_filter)
+        when 'X-'
+          for piece in PIECE_NAMES
+            if piece.indexOf(exp.piece[0]) == -1
+              this._add_match(piece, exp.type_filter)
         when 'X*'
           for piece in PIECE_NAMES
             if piece.indexOf(exp.piece[0]) > -1
@@ -45,14 +49,17 @@ class @CubeExp
     [exp, result.type_filter] = expression.split('/')
     result.piece = standardize_name(exp.toUpperCase())
 
-    if exp[exp.length - 1] == "*"
-      result.type = ['*', 'X*', '', 'XYZ*'][exp.length - 1]
-    else
-      if exp == result.piece.toLowerCase()
-        result.type = 'x'
+    switch exp[exp.length - 1]
+      when "*"
+        result.type = ['*', 'X*', '', 'XYZ*'][exp.length - 1]
+      when "-"
+        result.type = 'X-'
       else
-        result.type = 'XYZ'
-        result.sides = standardize_name(exp)
+        if exp == result.piece.toLowerCase()
+          result.type = 'x'
+        else
+          result.type = 'XYZ'
+          result.sides = standardize_name(exp)
     result
 
   matches_sticker: (piece, side) ->
