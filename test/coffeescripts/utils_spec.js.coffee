@@ -20,6 +20,13 @@ describe "v3", ->
     expect(diff.y).to.equal(4)
     expect(diff.z).to.equal(6)
 
+  it "#x", ->
+    whole = v3(2, 4, 6)
+    half = v3_x(whole, 0.5)
+    expect(half.x).to.equal(whole.x/2)
+    expect(half.y).to.equal(whole.y/2)
+    expect(half.z).to.equal(whole.z/2)
+
   describe "#standard_piece_name", ->
     it "returns the right names, independent of order", ->
       standard_piece_name('F', 'R').should.equal("FR")

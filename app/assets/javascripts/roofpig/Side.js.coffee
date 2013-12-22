@@ -3,27 +3,45 @@
 class @Side
   constructor: (@name, @normal) ->
 
-  make_sticker: (piece_center, color) ->
+  make_sticker: (obj_3d, piece_center, color, x_color) ->
     [dx, dy] = this._offsets(0.90, false)
-    this._3d_square(this._square_center(piece_center, 1.0001), dx, dy, color)
+    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1.0002), dx, dy, color))
 
-  make_reverse_sticker: (piece_center, color, hover) ->
+    if x_color
+      this.make_X(obj_3d, piece_center, x_color, 1.0004, true)
+
+  make_reverse_sticker: (obj_3d, piece_center, color, hover, x_color) ->
     [dx, dy] = this._offsets(0.98, true)
-    this._3d_square(this._square_center(piece_center, hover), dx, dy, color)
+    obj_3d.add(this._3d_diamond(this._square_center(piece_center, hover), dx, dy, color))
 
-  make_plastic: (piece_center) ->
+    if x_color
+      this.make_X(obj_3d, piece_center, x_color, hover - 0.0002, false)
+
+  make_X: (obj_3d, piece_center, color, hover, reversed) ->
+    [dx, dy] = this._offsets(0.54, reversed)
+    center = this._square_center(piece_center, hover)
+    obj_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
+    obj_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
+
+  make_plastic: (obj_3d, piece_center) ->
     [dx, dy] = this._offsets(1.0, true)
-    this._3d_square(this._square_center(piece_center, 1), dx, dy, 'black')
+    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1), dx, dy, 'black'))
 
   _square_center: (piece_center, distance) ->
     v3_add(piece_center, @normal.clone().multiplyScalar(distance))
 
-  _3d_square: (stc, d1, d2, color) ->
-    square = new THREE.Geometry();
-    square.vertices.push(v3_add(stc, d1), v3_add(stc, d2), v3_sub(stc, d1), v3_sub(stc, d2));
-    square.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
-    square.computeBoundingSphere();
-    new THREE.Mesh(square, new THREE.MeshBasicMaterial(color: color))
+  _3d_diamond: (stc, d1, d2, color) ->
+    this._3d_4side(v3_add(stc, d1), v3_add(stc, d2), v3_sub(stc, d1), v3_sub(stc, d2), color)
+
+  _3d_rect: (stc, d1, d2, color) ->
+    this._3d_diamond(stc, v3_add(d1, d2), v3_sub(d1, d2), color)
+
+  _3d_4side: (v1, v2, v3 ,v4, color) ->
+    geo = new THREE.Geometry();
+    geo.vertices.push(v1, v2, v3 ,v4);
+    geo.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
+    geo.computeBoundingSphere(); #TODO Kill?
+    new THREE.Mesh(geo, new THREE.MeshBasicMaterial(color: color))
 
   _offsets: (sticker_size, reversed) ->
     axis2 = v3(@normal.y, @normal.z, @normal.x)
