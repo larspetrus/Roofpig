@@ -33,6 +33,6 @@ describe "Alg", ->
     expect(alg.at_start(), '3s').to.equal(false)
     expect(alg.at_end(), '3e').to.equal(true)
 
-  it "handles missing DomHandler", ->
+  it "doesn't need a DomHandler", ->
     alone_alg = new Alg("U F2 D' LZ", null)
     expect(alone_alg.to_s()).to.equal("U F2 D' LZ")
