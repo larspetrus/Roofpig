@@ -29,7 +29,7 @@ class @Pieces3D
 
               side.make_sticker(new_piece, mid_point, sticker)
 
-              if sticker.real && hover > 1
+              if sticker.hovers && hover > 1
                 side.make_reverse_sticker(new_piece, mid_point, sticker, hover)
 
               side.make_plastic(new_piece, mid_point)

@@ -10,22 +10,23 @@ class @Colors
     @side_colors = Colors._set_colors(colors_settings)
 
   to_draw: (piece_name, side) ->
-    result = { real: false, color: this.of(side) }
+    result = { hovers: false, color: this.of(side) }
 
     if @solved.matches_sticker(piece_name, side)
       result.color = this.of('solved')
     else if @colored.matches_sticker(piece_name, side)
-      this.real = true
+      result.hovers = true
     else
       result.color = this.of('ignored')
 
     for tweak in (@tweaks.for_sticker(piece_name, side) || "").split('')
       switch tweak
         when 'X', 'x'
+          result.hovers = true
           result.x_color = if tweak == 'X' then 'black' else 'white'
         else
           if Side.by_name(tweak)
-            result.real = true
+            result.hovers = true
             result.color = this.of(tweak)
           else
             console.log("Unknown tweak:'#{tweak}'")

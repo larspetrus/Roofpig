@@ -33,34 +33,30 @@ describe "Colors", ->
   describe "#to_draw", ->
     it "is colored by default", ->
       colors = new Colors("", "")
-      expect(colors.to_draw('UFR', Side.F).color).to.equal(colors.of(Side.F))
-      expect(colors.to_draw('DB', Side.B).color).to.equal(colors.of(Side.B))
-      expect(colors.to_draw('L', Side.L).color).to.equal(colors.of(Side.L))
+      expect(colors.to_draw('UFR','F')).to.deep.equal(color: colors.of('F'), hovers: true)
+      expect(colors.to_draw('DB', 'B')).to.deep.equal(color: colors.of('B'), hovers: true)
+      expect(colors.to_draw('L',  'L')).to.deep.equal(color: colors.of('L'), hovers: true)
 
     it "colors only specified stickers", ->
       colors = new Colors("U*", "")
-      expect(colors.to_draw('UFR', Side.F).color).to.equal(colors.of(Side.F))
-      expect(colors.to_draw('DB', Side.B).color).to.equal(colors.of('ignored'))
-      expect(colors.to_draw('L', Side.L).color).to.equal(colors.of('ignored'))
+      expect(colors.to_draw('UFR','F')).to.deep.equal(color: colors.of('F'), hovers: true)
+      expect(colors.to_draw('DB', 'B')).to.deep.equal(color: colors.of('ignored'), hovers: false)
+      expect(colors.to_draw('L',  'L')).to.deep.equal(color: colors.of('ignored'), hovers: false)
 
     it "solved overrides colored", ->
       colors = new Colors("U*", "F*")
-      expect(colors.to_draw('UFR', Side.F).color).to.equal(colors.of('solved'))
-      expect(colors.to_draw('UR', Side.U).color).to.equal(colors.of(Side.U))
-      expect(colors.to_draw('F', Side.F).color).to.equal(colors.of('solved'))
-      expect(colors.to_draw('L', Side.L).color).to.equal(colors.of('ignored'))
+      expect(colors.to_draw('UFR','F')).to.deep.equal(color: colors.of('solved'), hovers: false)
+      expect(colors.to_draw('UR', 'U')).to.deep.equal(color: colors.of('U'), hovers: true)
+      expect(colors.to_draw('F',  'F')).to.deep.equal(color: colors.of('solved'), hovers: false)
+      expect(colors.to_draw('L',  'L')).to.deep.equal(color: colors.of('ignored'), hovers: false)
 
     describe "tweaks", ->
       it "sets X and colors", ->
         colors = new Colors("", "*", "uFR:.Xx  UfR:D.L")
 
-        expect(colors.to_draw('UFR', Side.U).x_color).to.be.undefined
-        expect(colors.to_draw('UFR', Side.F).x_color).to.equal('black')
-        expect(colors.to_draw('UFR', Side.R).x_color).to.equal('white')
-
-        expect(colors.to_draw('UFR', Side.U).color).to.equal(colors.of(Side.D))
-        expect(colors.to_draw('UFR', Side.F).color).to.equal(colors.of('solved'))
-        expect(colors.to_draw('UFR', Side.R).color).to.equal(colors.of(Side.L))
+        expect(colors.to_draw('UFR', 'U')).to.deep.equal(color: colors.of('D'), hovers: true)
+        expect(colors.to_draw('UFR', 'F')).to.deep.equal(color: colors.of('solved'), hovers: true, x_color: 'black')
+        expect(colors.to_draw('UFR', 'R')).to.deep.equal(color: colors.of('L'), hovers: true, x_color: 'white')
 
       it "overrides colored and solved", ->
         colors = new Colors("U*", "D*", "U:L  D:R")
