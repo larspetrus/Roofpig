@@ -1,6 +1,6 @@
 #= require roofpig/Settings
 
-describe "Settings#constructor", ->
+describe "Settings", ->
   it "has defaults", ->
     empty_settings = new Settings({ data: -> null })
     expect(empty_settings.alg).to.equal("")
@@ -10,19 +10,21 @@ describe "Settings#constructor", ->
 
     expect(empty_settings.colors).to.exist
 
-describe "Settings#flag", ->
-  it "reads a move string", ->
-    settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] })
-    expect(settings.flags).to.equal("fast shiny")
-    expect(settings.flag("fast")).to.equal(true)
-    expect(settings.flag("slow")).to.equal(false)
+  describe "flags", ->
+    it "reads a move string", ->
+      settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] })
+      expect(settings.flags).to.equal("fast shiny")
+      expect(settings.flag("fast")).to.equal(true)
+      expect(settings.flag("slow")).to.equal(false)
 
   describe "prefs", ->
+    prefs = { hover: "3.3"}
+
     it "reads prefs and settings", ->
-      settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] }, { hover: "3.3"})
+      settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] }, prefs)
       expect(settings.flags).to.equal("fast shiny")
       expect(settings.hover).to.equal("3.3")
 
     it "settings override prefs", ->
-      settings = new Settings({ data: (name) -> {hover: "2.5"}[name] }, { hover: "3.3"})
+      settings = new Settings({ data: (name) -> {hover: "2.5"}[name] }, prefs)
       expect(settings.hover).to.equal("2.5")
