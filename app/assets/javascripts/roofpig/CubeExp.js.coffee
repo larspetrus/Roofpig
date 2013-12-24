@@ -35,14 +35,23 @@ class @CubeExp
           for piece in PIECE_NAMES
             if piece.indexOf(exp.piece[0]) > -1
               this._add_match(piece, exp.type_filter, exp.piece)
+        when 'XYZ:abc'
+          for side, i in exp.sides.split('')
+            if Side.by_name(side)
+              this._add_match(exp.piece, exp.type_filter, side, exp.tweaks[i])
+
         else
           console.log("Ignored unrecognized CubeExp '#{expression}'.")
 
-  _add_match: (piece, type_filter, sides = piece) ->
+  _add_match: (piece, type_filter, sides = piece, value = true) ->
     piece_type = 'mec'[piece.length-1]
     if not type_filter || type_filter.indexOf(piece_type) > -1
       for side in sides.split('')
-        @matches[piece][side] = true
+        mp = @matches[piece]
+        if mp[side] && mp[side] != true # TODO: Concepts collide here...
+          mp[side] += value
+        else
+          mp[side] = value
 
   _parse: (expression) ->
     result = {}
@@ -55,12 +64,20 @@ class @CubeExp
       when "-"
         result.type = 'X-'
       else
-        if exp == result.piece.toLowerCase()
-          result.type = 'x'
+        if exp.indexOf(':') > -1
+          result.type = 'XYZ:abc'
+          [result.sides, result.tweaks] = exp.split(':')
+          result.piece = standardize_name(result.sides.toUpperCase())
         else
-          result.type = 'XYZ'
-          result.sides = standardize_name(exp)
+          if exp == result.piece.toLowerCase()
+            result.type = 'x'
+          else
+            result.type = 'XYZ'
+            result.sides = standardize_name(exp) # removes lower case letters
     result
+
+  for_sticker: (piece, side) ->
+    @matches[standardize_name(piece)][side_name(side)]
 
   matches_sticker: (piece, side) ->
     @matches[standardize_name(piece)][side_name(side)]?

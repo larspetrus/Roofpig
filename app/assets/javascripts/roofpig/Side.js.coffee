@@ -3,19 +3,19 @@
 class @Side
   constructor: (@name, @normal) ->
 
-  make_sticker: (obj_3d, piece_center, color, x_color) ->
+  make_sticker: (obj_3d, piece_center, sticker) ->
     [dx, dy] = this._offsets(0.90, false)
-    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1.0002), dx, dy, color))
+    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1.0002), dx, dy, sticker.color))
 
-    if x_color
-      this.make_X(obj_3d, piece_center, x_color, 1.0004, true)
+    if sticker.x_color
+      this.make_X(obj_3d, piece_center, sticker.x_color, 1.0004, true)
 
-  make_reverse_sticker: (obj_3d, piece_center, color, hover, x_color) ->
+  make_reverse_sticker: (obj_3d, piece_center, sticker, hover) ->
     [dx, dy] = this._offsets(0.98, true)
-    obj_3d.add(this._3d_diamond(this._square_center(piece_center, hover), dx, dy, color))
+    obj_3d.add(this._3d_diamond(this._square_center(piece_center, hover), dx, dy, sticker.color))
 
-    if x_color
-      this.make_X(obj_3d, piece_center, x_color, hover - 0.0002, false)
+    if sticker.x_color
+      this.make_X(obj_3d, piece_center, sticker.x_color, hover - 0.0002, false)
 
   make_X: (obj_3d, piece_center, color, hover, reversed) ->
     [dx, dy] = this._offsets(0.54, reversed)

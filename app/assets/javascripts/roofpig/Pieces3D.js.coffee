@@ -24,16 +24,13 @@ class @Pieces3D
 
           mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
-            if side != mid_slice
+            unless side == mid_slice
               sticker = colors.to_draw(name, side)
-              x_color = null
-#              if name == 'UBR'
-#                x_color = 'purple'
 
-              side.make_sticker(new_piece, mid_point, sticker.color, x_color)
+              side.make_sticker(new_piece, mid_point, sticker)
 
               if sticker.real && hover > 1
-                side.make_reverse_sticker(new_piece, mid_point, sticker.color, hover, x_color)
+                side.make_reverse_sticker(new_piece, mid_point, sticker, hover)
 
               side.make_plastic(new_piece, mid_point)
 
