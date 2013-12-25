@@ -23,9 +23,9 @@ class @Side
     obj_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
     obj_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
 
-  make_plastic: (obj_3d, piece_center) ->
+  make_plastic: (obj_3d, piece_center, color) ->
     [dx, dy] = this._offsets(1.0, true)
-    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1), dx, dy, 'black'))
+    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1), dx, dy, color))
 
   _square_center: (piece_center, distance) ->
     v3_add(piece_center, @normal.clone().multiplyScalar(distance))

@@ -32,7 +32,7 @@ class @Pieces3D
               if sticker.hovers && hover > 1
                 side.make_reverse_sticker(new_piece, mid_point, sticker, hover)
 
-              side.make_plastic(new_piece, mid_point)
+              side.make_plastic(new_piece, mid_point, colors.of('plastic'))
 
           this[name] = @at[name] = new_piece
           scene.add(new_piece)

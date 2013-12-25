@@ -20,12 +20,13 @@ describe "Colors", ->
 
       expect(-> colors.of('UNKNOWN')).to.throw(Error)
     
-    it "can set side colors", ->
-      colors = new Colors("", "", "", "R:O L:#abc solved:R")
+    it "can change colors", ->
+      colors = new Colors("", "", "", "R:O L:#abc solved:R p:#123")
 
       expect(colors.of(Side.R)).to.equal('orange')
       expect(colors.of(Side.L)).to.equal('#abc')
       expect(colors.of('solved')).to.equal('red')
+      expect(colors.of('plastic')).to.equal('#123')
 
       expect(colors.of(Side.U)).to.equal('yellow')
       expect(colors.of(Side.D)).to.equal('#eee'  )
