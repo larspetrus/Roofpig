@@ -21,22 +21,22 @@ describe "Move", ->
       u1 = new Move("U")
       expect(u1.side).to.equal(Side.U)
       expect(u1.turns).to.equal(1)
-      expect(u1.turn_time).to.equal(300)
+      expect(u1.turn_time).to.equal(400)
 
       u2 = new Move("U2")
       expect(u2.side).to.equal(Side.U)
       expect(u2.turns).to.equal(2)
-      expect(u2.turn_time).to.equal(450)
+      expect(u2.turn_time).to.equal(600)
 
       u3 = new Move("U'")
       expect(u3.side).to.equal(Side.U)
       expect(u3.turns).to.equal(-1)
-      expect(u3.turn_time).to.equal(300)
+      expect(u3.turn_time).to.equal(400)
 
       uz = new Move("UZ")
       expect(uz.side).to.equal(Side.U)
       expect(uz.turns).to.equal(-2)
-      expect(uz.turn_time).to.equal(450)
+      expect(uz.turn_time).to.equal(600)
 
   it "#to_s", ->
     expect(new Move("U1").to_s()).to.equal("U")

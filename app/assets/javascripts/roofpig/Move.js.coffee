@@ -5,7 +5,7 @@ class @Move
   constructor: (code) ->
     [@side, @turns] = Move._parse_code(code)
 
-    @turn_time = 150 + 150 * Math.abs(@turns)
+    @turn_time = 200 * (1 + Math.abs(@turns))
 
   @_parse_code: (code) ->
     turns = switch code.substring(1)
