@@ -7,7 +7,15 @@
 
 class @Display
   @unique_id = 0
-  @instances = {}
+  @instances = []
+
+  next_display: ->
+    next_id = (@id % Display.unique_id) + 1
+    Display.instances[next_id]
+
+  previous_display: ->
+    prev_id = ((@id + Display.unique_id - 2) % Display.unique_id) + 1
+    Display.instances[prev_id]
 
   constructor: (roofpig_div) ->
     @id = Display.unique_id += 1
