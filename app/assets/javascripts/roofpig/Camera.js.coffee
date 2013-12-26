@@ -10,7 +10,7 @@ class @Camera
     @cam.up.set(0,0,1);
     this._cam_moved()
 
-    #Directions, as seen by the user
+    #Directions, as seen by the user (This is probably not true anymore)
     @user_dir =
        x: v3(1, 0, 0)
        y: v3(0, 1, 0)
@@ -23,7 +23,7 @@ class @Camera
 
   bend: (dx, dy) ->
     v1 = @user_dir.z.clone().multiplyScalar(dx)
-    v2 = v3_sub(@user_dir.y, @user_dir.x).normalize().multiplyScalar(dy)
+    v2 = v3_add(@user_dir.y, @user_dir.x).normalize().multiplyScalar(-dy)
     axis = v3_add(v1, v2).normalize()
 
     @cam.position = @unbent_position.clone()
