@@ -26,7 +26,7 @@ class @InputHandler
       when key_home        then @dom_handler.reset.click()
       when key_left_arrow  then @dom_handler.prev.click()
       when key_right_arrow then @dom_handler.next.click()
-      when key_space       then @dom_handler.play_or_pause.click()
+      when key_space       then @dom_handler.active_play_or_pause.click()
       when key_C then this._rotate('z', 1)
       when key_Z then this._rotate('z', 3)
       when key_S then this._rotate('y', 1)

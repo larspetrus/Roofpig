@@ -32,9 +32,15 @@ class @DomHandler
           when @pause
             button.hide()
 
-    @play_or_pause = if playing then @pause else @play
+    @active_play_or_pause = this._active_play_or_pause(playing, at_end)
 
     @place.html(place_text)
+
+  _active_play_or_pause: (playing, at_end) ->
+    if at_end
+      return { click: -> }
+
+    if playing then @pause else @play
 
   add_alg_area: (showalg) ->
     @alg_area = $("<div/>").height(@div.height() - @div.width()).width(@div.width()).css("border-top": "1px solid #ccc")
