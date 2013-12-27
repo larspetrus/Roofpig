@@ -53,7 +53,7 @@ class @DomHandler
     @reset = this._make_button("↩",  "reset")
     @prev  = this._make_button("-",  "prev")
     @next  = this._make_button("+",  "next")
-    @pause = this._make_button("||", "pause")
+    @pause = this._make_button("Ⅱ", "pause")
     @play  = this._make_button("▶",  "play")
 
     @place = this._make_place_area()
@@ -69,17 +69,14 @@ class @DomHandler
   _show: (button, active) ->
     button.show()
     if active
-      button.removeAttr("disabled")
+      button.button('enable')
     else
-      button.attr("disabled", "disabled")
-
+      button.button('disable')
 
   _make_button: (text, id) ->
-    this._scale($("<button/>", { text: text, id: id, 'data-dpid': @display_id }))
-
-  _scale: (button_area_element) ->
-    @alg_area.append(button_area_element)
-    button_area_element.height(40 * @scale).width(80 * @scale - 16).css("font-size", 32 * @scale) # -16 = 2x6px margin +2x2px border
+    button = $("<button/>", { id: id, 'data-dpid': @display_id }).button(label: text)
+    @alg_area.append(button)
+    button.height(40 * @scale).width(80 * @scale).css("font-size", 22 * @scale)
 
   _make_place_area: ->
     place_div = $("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right')
