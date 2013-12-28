@@ -40,7 +40,12 @@ class @Side
     geo = new THREE.Geometry();
     geo.vertices.push(v1, v2, v3 ,v4);
     geo.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
-    geo.computeBoundingSphere(); #TODO Kill?
+
+    # http://stackoverflow.com/questions/20734216/when-should-i-call-geometry-computeboundingbox-etc
+    geo.computeCentroids();
+    geo.computeFaceNormals();
+    geo.computeBoundingSphere();
+
     new THREE.Mesh(geo, new THREE.MeshBasicMaterial(color: color))
 
   _offsets: (sticker_size, reversed) ->
