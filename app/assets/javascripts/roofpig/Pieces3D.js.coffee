@@ -21,6 +21,7 @@ class @Pieces3D
           name = standard_piece_name(x_side, y_side, z_side)
           new_piece = new THREE.Object3D()
           new_piece.name = name
+          new_piece.sticker_locations = name.split('')
 
           mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
@@ -41,22 +42,41 @@ class @Pieces3D
     v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
 
   on: (side) ->
-    return [@at.UFR, @at.UFL, @at.UBR, @at.UBL, @at.UF, @at.UB, @at.UL, @at.UR, @at.U]  if side == Side.U
-    return [@at.DFR, @at.DFL, @at.DBR, @at.DBL, @at.DF, @at.DB, @at.DL, @at.DR, @at.D]  if side == Side.D
-    return [@at.UFL, @at.UFR, @at.DFR, @at.DFL, @at.UF, @at.FR, @at.DF, @at.FL, @at.F]  if side == Side.F
-    return [@at.UBL, @at.UBR, @at.DBR, @at.DBL, @at.UB, @at.BR, @at.DB, @at.BL, @at.B]  if side == Side.B
-    return [@at.UFL, @at.DFL, @at.DBL, @at.UBL, @at.UL, @at.FL, @at.DL, @at.BL, @at.L]  if side == Side.L
-    return [@at.UFR, @at.DFR, @at.DBR, @at.UBR, @at.UR, @at.FR, @at.DR, @at.BR, @at.R]  if side == Side.R
+    switch side
+      when Side.U then [@at.UFR, @at.UFL, @at.UBR, @at.UBL, @at.UF, @at.UB, @at.UL, @at.UR, @at.U]
+      when Side.D then [@at.DFR, @at.DFL, @at.DBR, @at.DBL, @at.DF, @at.DB, @at.DL, @at.DR, @at.D]
+      when Side.F then [@at.UFL, @at.UFR, @at.DFR, @at.DFL, @at.UF, @at.FR, @at.DF, @at.FL, @at.F]
+      when Side.B then [@at.UBL, @at.UBR, @at.DBR, @at.DBL, @at.UB, @at.BR, @at.DB, @at.BL, @at.B]
+      when Side.L then [@at.UFL, @at.DFL, @at.DBL, @at.UBL, @at.UL, @at.FL, @at.DL, @at.BL, @at.L]
+      when Side.R then [@at.UFR, @at.DFR, @at.DBR, @at.UBR, @at.UR, @at.FR, @at.DR, @at.BR, @at.R]
 
   move: (side, turns) ->
-    this._move(turns,['UBR','UBL','UFL','UFR'],['UR','UB','UL','UF'])  if side == Side.U
-    this._move(turns,['DFR','DFL','DBL','DBR'],['DF','DL','DB','DR'])  if side == Side.D
-    this._move(turns,['DFL','DFR','UFR','UFL'],['FL','DF','FR','UF'])  if side == Side.F
-    this._move(turns,['UBL','UBR','DBR','DBL'],['UB','BR','DB','BL'])  if side == Side.B
-    this._move(turns,['UBL','DBL','DFL','UFL'],['BL','DL','FL','UL'])  if side == Side.L
-    this._move(turns,['UFR','DFR','DBR','UBR'],['UR','FR','DR','BR'])  if side == Side.R
+    switch side
+      when Side.U
+        this._track_stickers(side, turns, F:'R', R:'B', B:'L', L:'F', U:'U', D:'D')
+        this._track_pieces(turns,['UBR','UBL','UFL','UFR'],['UR','UB','UL','UF'])
+      when Side.D
+        this._track_stickers(side, turns, F:'L', L:'B', B:'R', R:'F', U:'U', D:'D')
+        this._track_pieces(turns,['DFR','DFL','DBL','DBR'],['DF','DL','DB','DR'])
+      when Side.F
+        this._track_stickers(side, turns, U:'R', R:'D', D:'L', L:'U', F:'F', B:'B')
+        this._track_pieces(turns,['DFL','DFR','UFR','UFL'],['FL','DF','FR','UF'])
+      when Side.B
+        this._track_stickers(side, turns, U:'L', L:'D', D:'R', R:'U', F:'F', B:'B')
+        this._track_pieces(turns,['UBL','UBR','DBR','DBL'],['UB','BR','DB','BL'])
+      when Side.L
+        this._track_stickers(side, turns, B:'U', U:'F', F:'D', D:'B', L:'L', R:'R')
+        this._track_pieces(turns,['UBL','DBL','DFL','UFL'],['BL','DL','FL','UL'])
+      when Side.R
+        this._track_stickers(side, turns, B:'D', D:'F', F:'U', U:'B', L:'L', R:'R')
+        this._track_pieces(turns,['UFR','DFR','DBR','UBR'],['UR','FR','DR','BR'])
 
-  _move: (turns, corners, edges) ->
+  _track_stickers: (side, turns, map) ->
+    for n in [1..turns]
+      for piece in this.on(side)
+        piece.sticker_locations = (map[item] for item in piece.sticker_locations)
+
+  _track_pieces: (turns, corners, edges) ->
     if turns < 0
       turns += 4
     for n in [1..turns]
