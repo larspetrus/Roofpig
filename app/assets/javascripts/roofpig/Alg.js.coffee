@@ -61,4 +61,11 @@ class @Alg
     if time == 'first time'
       @dom_handler.init_alg_text(this.to_s())
 
-    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), "#{@next}/#{@moves.length}")
+    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), this._place_text())
+
+  _place_text: ->
+    total = current = 0
+    for move, i in @moves
+      current += move.count() if @next > i
+      total += move.count()
+    "#{current}/#{total}"

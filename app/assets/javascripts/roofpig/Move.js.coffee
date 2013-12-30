@@ -32,6 +32,9 @@ class @Move
     pieces3d.move(@side, do_turns)
     new MoveExecution(animation_pieces, @side.normal, do_turns * -Math.PI/2, @turn_time, animate)
 
+  count: ->
+    1
+
   to_s: ->
     turn_code = switch @turns
       when  1 then ""

@@ -16,5 +16,8 @@ class @CompositeMove
   show_undo: (pieces3d) ->
     new ConcurrentChangers( (@moves.map (move) -> move.show_undo(pieces3d)) )
 
+  count:->
+    @moves.length
+
   to_s: ->
     "(#{(@moves.map (move) -> move.to_s()).join(' ')})"

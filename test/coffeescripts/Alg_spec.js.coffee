@@ -37,3 +37,13 @@ describe "Alg", ->
   it "doesn't need a DomHandler", ->
     alone_alg = new Alg("U F2 D' LZ", null)
     expect(alone_alg.to_s()).to.equal("U F2 D' LZ")
+
+  it "_place_text", ->
+    alg = new Alg("F D'+U")
+    expect(alg._place_text()).to.equal('0/3')
+
+    alg.next_move()
+    expect(alg._place_text()).to.equal('1/3')
+
+    alg.next_move()
+    expect(alg._place_text()).to.equal('3/3')
