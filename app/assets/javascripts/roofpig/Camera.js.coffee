@@ -10,20 +10,20 @@ class @Camera
     @cam.up.set(0,0,1);
     this._cam_moved()
 
-    #Directions, as seen by the user (This is probably not true anymore)
+    # Directions, as seen on the screen
     @user_dir =
-       x: v3(1, 0, 0)
-       y: v3(0, 1, 0)
-       z: v3(0, 0, 1)
+       dr: v3(-1, 0, 0) # dr == "down right"
+       dl: v3( 0, 1, 0) # dl == "down left"
+       up: v3( 0, 0, 1)
 
   rotate: (axis, angle) ->
-    for v in [@cam.position, @cam.up, @user_dir.x, @user_dir.y, @user_dir.z]
+    for v in [@cam.position, @cam.up, @user_dir.dl, @user_dir.dr, @user_dir.up]
       v.applyAxisAngle(axis, angle)
     this._cam_moved()
 
   bend: (dx, dy) ->
-    v1 = @user_dir.z.clone().multiplyScalar(dx)
-    v2 = v3_add(@user_dir.y, @user_dir.x).normalize().multiplyScalar(-dy)
+    v1 = @user_dir.up.clone().multiplyScalar(dx)
+    v2 = v3_sub(@user_dir.dr, @user_dir.dl).normalize().multiplyScalar(dy)
     axis = v3_add(v1, v2).normalize()
 
     @cam.position = @unbent_position.clone()
