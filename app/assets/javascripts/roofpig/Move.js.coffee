@@ -1,5 +1,5 @@
-#= require roofpig/Pieces3D
 #= require roofpig/MoveExecution
+#= require roofpig/Side
 
 class @Move
   constructor: (code) ->
@@ -31,7 +31,6 @@ class @Move
     animation_pieces = pieces3d.on(@side)
     pieces3d.move(@side, do_turns)
     new MoveExecution(animation_pieces, @side.normal, do_turns * -Math.PI/2, @turn_time, animate)
-
 
   to_s: ->
     turn_code = switch @turns

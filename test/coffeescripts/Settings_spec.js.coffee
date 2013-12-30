@@ -14,8 +14,8 @@ describe "Settings", ->
     it "reads a move string", ->
       settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] })
       expect(settings.flags).to.equal("fast shiny")
-      expect(settings.flag("fast")).to.equal(true)
-      expect(settings.flag("slow")).to.equal(false)
+      expect(settings.flag("fast")).to.be.true
+      expect(settings.flag("slow")).to.be.false
 
   describe "prefs", ->
     prefs = { hover: "3.3"}

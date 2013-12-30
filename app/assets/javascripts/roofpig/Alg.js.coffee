@@ -1,4 +1,5 @@
 #= require roofpig/Move
+#= require roofpig/CompositeMove
 
 class @Alg
   constructor: (move_codes, @dom_handler) ->
@@ -8,10 +9,14 @@ class @Alg
     @moves = []
     for code in move_codes.split(' ')
       if code.length > 0
-        @moves.push(new Move(code))
+        if code.indexOf('+') > -1
+          moves = (code.split('+').map (code) -> new Move(code))
+          @moves.push(new CompositeMove(moves))
+        else
+          @moves.push(new Move(code))
     @next = 0
     @playing = false
-    this._update_dom(true)
+    this._update_dom('first time')
 
   premix: (pieces3d) ->
     @next =  @moves.length
@@ -50,10 +55,10 @@ class @Alg
   to_s: ->
     (@moves.map (move) -> move.to_s()).join(' ')
 
-  _update_dom: (first_time = false) ->
+  _update_dom: (time = 'later') ->
     return unless @dom_handler
 
-    if first_time
+    if time == 'first time'
       @dom_handler.init_alg_text(this.to_s())
 
     @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), "#{@next}/#{@moves.length}")
