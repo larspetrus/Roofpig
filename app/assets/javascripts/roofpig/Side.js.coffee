@@ -28,7 +28,7 @@ class @Side
     obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1), dx, dy, color))
 
   _square_center: (piece_center, distance) ->
-    v3_add(piece_center, @normal.clone().multiplyScalar(distance))
+    v3_add(piece_center, v3_x(@normal, distance))
 
   _3d_diamond: (stc, d1, d2, color) ->
     this._3d_4side(v3_add(stc, d1), v3_add(stc, d2), v3_sub(stc, d1), v3_sub(stc, d2), color)

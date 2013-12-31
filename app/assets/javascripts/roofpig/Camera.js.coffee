@@ -22,7 +22,7 @@ class @Camera
     this._cam_moved()
 
   bend: (dx, dy) ->
-    v1 = @user_dir.up.clone().multiplyScalar(dx)
+    v1 = v3_x(@user_dir.up, dx)
     v2 = v3_sub(@user_dir.dr, @user_dir.dl).normalize().multiplyScalar(dy)
     axis = v3_add(v1, v2).normalize()
 
