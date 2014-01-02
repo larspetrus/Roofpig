@@ -4,20 +4,23 @@
 class @CompositeMove
   constructor: (@moves) ->
 
-  do: (pieces3d) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.do(pieces3d)) )
+  do: (world) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.do(world)) )
 
-  undo: (pieces3d) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.undo(pieces3d)) )
+  undo: (world) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.undo(world)) )
 
-  show_do: (pieces3d) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.show_do(pieces3d)) )
+  show_do: (world) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.show_do(world)) )
 
-  show_undo: (pieces3d) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.show_undo(pieces3d)) )
+  show_undo: (world) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.show_undo(world)) )
 
-  count:->
-    @moves.length
+  count: ->
+    result = 0
+    for move in @moves
+      result += move.count()
+    result
 
   to_s: ->
     "(#{(@moves.map (move) -> move.to_s()).join(' ')})"

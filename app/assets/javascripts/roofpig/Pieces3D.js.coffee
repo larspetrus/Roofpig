@@ -7,11 +7,6 @@ class @Pieces3D
     @at = {}
     this.make_stickers(scene, settings.hover, settings.colors)
 
-    if (settings.setup)
-      setup_alg = new Alg(settings.setup)
-      until setup_alg.at_end()
-        setup_alg.next_move().do(this)
-
   make_stickers: (scene, hover, colors) ->
     mid_slice = new Side("-", v3(0.0, 0.0, 0.0))
 

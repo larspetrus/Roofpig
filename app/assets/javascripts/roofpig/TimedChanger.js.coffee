@@ -4,7 +4,7 @@ class @TimedChanger
     @last_time = @start_time
 
   update: (now) ->
-    return if @finished
+    return if @_finished
 
     if now > @start_time + @duration
       this.finish()
@@ -12,10 +12,13 @@ class @TimedChanger
       this._make_change(now)
 
   finish: ->
-    return if @finished
+    return if @_finished
 
     this._make_change(@start_time + @duration)
-    @finished = true
+    @_finished = true
+
+  finished: ->
+    @_finished
 
   _make_change: (to_time) ->
     this.do_change(to_time - @last_time)

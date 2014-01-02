@@ -1,20 +1,23 @@
 class @AlgAnimation
-  constructor: (@alg, @pieces3d) ->
+  constructor: (@alg, @world) ->
     this._next_alg_move()
 
   update: (now) ->
-    return if @finished
+    return if @_finished
 
-    if @mover.finished
+    if @changer.finished()
       this._next_alg_move()
 
-    @mover.update(now)
+    @changer.update(now)
 
   finish: ->
     # API creep
 
+  finished: ->
+    @_finished
+
   _next_alg_move: ->
     if @alg.at_end() || not @alg.playing
-      @finished = true
+      @_finished = true
     else
-      @mover = @alg.next_move().show_do(@pieces3d)
+      @changer = @alg.next_move().show_do(@world)

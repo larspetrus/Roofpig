@@ -1,4 +1,5 @@
 #= require roofpig/Move
+#= require roofpig/Rotation
 #= require roofpig/CompositeMove
 
 class @Alg
@@ -6,22 +7,29 @@ class @Alg
     if not move_codes || move_codes == ""
       throw new Error("Invalid alg: '#{move_codes}'")
 
-    @moves = []
+    @actions = []
     for code in move_codes.split(' ')
       if code.length > 0
-        if code.indexOf('+') > -1
-          moves = (code.split('+').map (code) -> new Move(code))
-          @moves.push(new CompositeMove(moves))
-        else
-          @moves.push(new Move(code))
+        @actions.push(Alg._make_action(code))
     @next = 0
     @playing = false
     this._update_dom('first time')
 
-  premix: (pieces3d) ->
-    @next =  @moves.length
+  @_make_action: (code) ->
+    if code.indexOf('+') > -1
+      moves = (code.split('+').map (code) -> Alg._make_action(code))
+      new CompositeMove(moves)
+    else
+      if code.indexOf('>') > -1 || code.indexOf('<') > -1
+        new Rotation(code)
+      else
+        new Move(code)
+
+
+  premix: (world) ->
+    @next =  @actions.length
     until this.at_start()
-      this.prev_move().undo(pieces3d)
+      this.prev_move().undo(world)
     this
 
   next_move: ->
@@ -29,18 +37,18 @@ class @Alg
       @next += 1
       if this.at_end() then @playing = false
       this._update_dom()
-      @moves[@next-1]
+      @actions[@next-1]
 
   prev_move: ->
     unless this.at_start()
       @next -= 1
       this._update_dom()
-      @moves[@next]
+      @actions[@next]
 
-  play: (pieces3d) ->
+  play: (world) ->
     @playing = true
     this._update_dom()
-    new AlgAnimation(this, pieces3d)
+    new AlgAnimation(this, world)
 
   stop: ->
     @playing = false
@@ -50,10 +58,10 @@ class @Alg
     @next == 0
 
   at_end: ->
-    @next == @moves.length
+    @next == @actions.length
 
   to_s: ->
-    (@moves.map (move) -> move.to_s()).join(' ')
+    (@actions.map (move) -> move.to_s()).join(' ')
 
   _update_dom: (time = 'later') ->
     return unless @dom_handler
@@ -65,7 +73,7 @@ class @Alg
 
   _place_text: ->
     total = current = 0
-    for move, i in @moves
+    for move, i in @actions
       current += move.count() if @next > i
       total += move.count()
     "#{current}/#{total}"

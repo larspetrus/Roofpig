@@ -39,11 +39,17 @@ describe "Alg", ->
     expect(alone_alg.to_s()).to.equal("U F2 D' LZ")
 
   it "_place_text", ->
-    alg = new Alg("F D'+U")
-    expect(alg._place_text()).to.equal('0/3')
+    alg = new Alg("F L> D'+U R+R>")
+    expect(alg._place_text()).to.equal('0/4')
 
     alg.next_move()
-    expect(alg._place_text()).to.equal('1/3')
+    expect(alg._place_text()).to.equal('1/4')
 
     alg.next_move()
-    expect(alg._place_text()).to.equal('3/3')
+    expect(alg._place_text()).to.equal('1/4')
+
+    alg.next_move()
+    expect(alg._place_text()).to.equal('3/4')
+
+    alg.next_move()
+    expect(alg._place_text()).to.equal('4/4')

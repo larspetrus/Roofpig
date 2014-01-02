@@ -29,12 +29,20 @@ class @Display
       @renderer = new THREE.WebGLRenderer({ antialias: true })
 
     @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
-    @camera = new Camera(@settings.hover)
+
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
+    @camera = new Camera(@settings.hover)
+    @world = { pieces3d: @pieces3d, camera:@camera }
+
+    if (@settings.setup)
+      setup_alg = new Alg(@settings.setup)
+      until setup_alg.at_end()
+        setup_alg.next_move().do(@world)
+
     unless @settings.alg == ""
       @dom_handler.add_alg_area(@settings.flag('showalg'))
-      @alg = new Alg(@settings.alg, @dom_handler).premix(@pieces3d)
+      @alg = new Alg(@settings.alg, @dom_handler).premix(@world)
 
     @changers = {}
     this.force_render()
@@ -52,7 +60,7 @@ class @Display
     for own category, changer of @changers
       if changer
         changer.update(now)
-        if changer.finished then @changers[category] = null
+        if changer.finished() then @changers[category] = null
         any_change = true
 
     if any_change
@@ -66,27 +74,27 @@ class @Display
 
   next: ->
     unless @alg.at_end()
-      this.add_changer('move', @alg.next_move().show_do(@pieces3d))
+      this.add_changer('move', @alg.next_move().show_do(@world))
 
   prev: ->
     unless @alg.at_start()
-      this.add_changer('move', @alg.prev_move().show_undo(@pieces3d))
+      this.add_changer('move', @alg.prev_move().show_undo(@world))
 
   to_start: ->
     until @alg.at_start()
-      @alg.prev_move().undo(@pieces3d)
+      @alg.prev_move().undo(@world)
     this.force_render()
 
   to_end: ->
     until @alg.at_end()
-      @alg.next_move().do(@pieces3d)
+      @alg.next_move().do(@world)
     this.force_render()
 
   button_click: (name, shift) ->
     switch name
       when 'play'
         unless shift
-          this.add_changer('move', @alg.play(@pieces3d))
+          this.add_changer('move', @alg.play(@world))
         else
           this.to_end()
       when 'pause'
@@ -100,4 +108,5 @@ class @Display
 
   force_render: ->
     null_func = ->
-    this.add_changer('force_render', { finished: true, finish: null_func, update: null_func })
+    true_func = -> true
+    this.add_changer('force_render', { finished: true_func, finish: null_func, update: null_func })
