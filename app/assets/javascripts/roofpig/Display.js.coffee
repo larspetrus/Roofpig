@@ -33,7 +33,7 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
     @camera = new Camera(@settings.hover)
-    @world3d = { pieces3d: @pieces3d, camera: @camera }
+    @world3d = { pieces: @pieces3d, camera: @camera }
 
     if (@settings.setup)
       setup_alg = new Alg(@settings.setup)
