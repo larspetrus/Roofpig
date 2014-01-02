@@ -28,11 +28,11 @@ class @InputHandler
       when key_right_arrow then @dom_handler.next.click()
       when key_space       then @dom_handler.active_play_or_pause.click()
       when key_C then this._rotate('up', 1)
-      when key_Z then this._rotate('up', 3)
+      when key_Z then this._rotate('up',-1)
       when key_A then this._rotate('dr', 1)
-      when key_D then this._rotate('dr', 3)
+      when key_D then this._rotate('dr',-1)
       when key_S then this._rotate('dl', 1)
-      when key_X then this._rotate('dl', 3)
+      when key_X then this._rotate('dl',-1)
       when key_J then this._move("U#{turns}")
       when key_K then this._move("F#{turns}")
       when key_L then this._move("R#{turns}")
@@ -61,9 +61,8 @@ class @InputHandler
       @active_display.force_render()
 
   @_rotate: (axis_name, turns) ->
-    q_turn = -Math.PI/2
-    angle_to_turn = [q_turn, 2*q_turn, -q_turn][turns-1]
-    @active_display.add_changer('spin', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 600))
+    angle_to_turn = -Math.PI/2 * turns
+    @active_display.add_changer('spin', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
 
   @_move: (side, turns) ->
     @active_display.add_changer('move', new Move(side, turns).show_do(@active_display.world3d))

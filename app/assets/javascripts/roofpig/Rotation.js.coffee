@@ -27,8 +27,7 @@ class @Rotation
     this._do(world3d.camera, -@turns, true)
 
   _do: (camera, do_turns, animate) ->
-    # TODO How does this work in premix and reset?
-    new CameraMovement(camera, @side.normal, do_turns * Math.PI/2, @turn_time) #, animate)
+    new CameraMovement(camera, @side.normal, do_turns * Math.PI/2, @turn_time, animate)
 
   count: -> 0
 
