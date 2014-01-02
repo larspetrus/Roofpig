@@ -14,17 +14,17 @@ class @Rotation
       when "<<" then -2
     [Side.by_name(code[0]), turns]
 
-  do: (world) ->
-    this._do(world.camera, @turns, false)
+  do: (world3d) ->
+    this._do(world3d.camera, @turns, false)
 
-  undo: (world) ->
-    this._do(world.camera, -@turns, false)
+  undo: (world3d) ->
+    this._do(world3d.camera, -@turns, false)
 
-  show_do: (world) ->
-    this._do(world.camera, @turns, true)
+  show_do: (world3d) ->
+    this._do(world3d.camera, @turns, true)
 
-  show_undo: (world) ->
-    this._do(world.camera, -@turns, true)
+  show_undo: (world3d) ->
+    this._do(world3d.camera, -@turns, true)
 
   _do: (camera, do_turns, animate) ->
     # TODO How does this work in premix and reset?

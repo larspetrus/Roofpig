@@ -15,17 +15,17 @@ class @Move
       when "Z", "2'" then -2
     [Side.by_name(code[0]), turns]
 
-  do: (world) ->
-    this._do(world.pieces3d, @turns, false)
+  do: (world3d) ->
+    this._do(world3d.pieces, @turns, false)
 
-  undo: (world) ->
-    this._do(world.pieces3d, -@turns, false)
+  undo: (world3d) ->
+    this._do(world3d.pieces, -@turns, false)
 
-  show_do: (world) ->
-    this._do(world.pieces3d, @turns, true)
+  show_do: (world3d) ->
+    this._do(world3d.pieces, @turns, true)
 
-  show_undo: (world) ->
-    this._do(world.pieces3d, -@turns, true)
+  show_undo: (world3d) ->
+    this._do(world3d.pieces, -@turns, true)
 
   _do: (pieces3d, do_turns, animate) ->
     animation_pieces = pieces3d.on(@side)

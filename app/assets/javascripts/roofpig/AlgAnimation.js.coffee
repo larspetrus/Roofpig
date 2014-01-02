@@ -1,5 +1,5 @@
 class @AlgAnimation
-  constructor: (@alg, @world) ->
+  constructor: (@alg, @world3d) ->
     this._next_alg_move()
 
   update: (now) ->
@@ -20,4 +20,4 @@ class @AlgAnimation
     if @alg.at_end() || not @alg.playing
       @_finished = true
     else
-      @changer = @alg.next_move().show_do(@world)
+      @changer = @alg.next_move().show_do(@world3d)

@@ -4,17 +4,17 @@
 class @CompositeMove
   constructor: (@moves) ->
 
-  do: (world) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.do(world)) )
+  do: (world3d) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.do(world3d)) )
 
-  undo: (world) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.undo(world)) )
+  undo: (world3d) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.undo(world3d)) )
 
-  show_do: (world) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.show_do(world)) )
+  show_do: (world3d) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.show_do(world3d)) )
 
-  show_undo: (world) ->
-    new ConcurrentChangers( (@moves.map (move) -> move.show_undo(world)) )
+  show_undo: (world3d) ->
+    new ConcurrentChangers( (@moves.map (move) -> move.show_undo(world3d)) )
 
   count: ->
     result = 0

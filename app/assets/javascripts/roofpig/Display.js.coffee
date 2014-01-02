@@ -33,16 +33,16 @@ class @Display
     @scene = new THREE.Scene()
     @pieces3d = new Pieces3D(@scene, @settings)
     @camera = new Camera(@settings.hover)
-    @world = { pieces3d: @pieces3d, camera:@camera }
+    @world3d = { pieces3d: @pieces3d, camera: @camera }
 
     if (@settings.setup)
       setup_alg = new Alg(@settings.setup)
       until setup_alg.at_end()
-        setup_alg.next_move().do(@world)
+        setup_alg.next_move().do(@world3d)
 
     unless @settings.alg == ""
       @dom_handler.add_alg_area(@settings.flag('showalg'))
-      @alg = new Alg(@settings.alg, @dom_handler).premix(@world)
+      @alg = new Alg(@settings.alg, @dom_handler).premix(@world3d)
 
     @changers = {}
     this.force_render()
@@ -74,27 +74,27 @@ class @Display
 
   next: ->
     unless @alg.at_end()
-      this.add_changer('move', @alg.next_move().show_do(@world))
+      this.add_changer('move', @alg.next_move().show_do(@world3d))
 
   prev: ->
     unless @alg.at_start()
-      this.add_changer('move', @alg.prev_move().show_undo(@world))
+      this.add_changer('move', @alg.prev_move().show_undo(@world3d))
 
   to_start: ->
     until @alg.at_start()
-      @alg.prev_move().undo(@world)
+      @alg.prev_move().undo(@world3d)
     this.force_render()
 
   to_end: ->
     until @alg.at_end()
-      @alg.next_move().do(@world)
+      @alg.next_move().do(@world3d)
     this.force_render()
 
   button_click: (name, shift) ->
     switch name
       when 'play'
         unless shift
-          this.add_changer('move', @alg.play(@world))
+          this.add_changer('move', @alg.play(@world3d))
         else
           this.to_end()
       when 'pause'

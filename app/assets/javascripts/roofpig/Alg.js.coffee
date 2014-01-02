@@ -26,10 +26,10 @@ class @Alg
         new Move(code)
 
 
-  premix: (world) ->
+  premix: (world3d) ->
     @next =  @actions.length
     until this.at_start()
-      this.prev_move().undo(world)
+      this.prev_move().undo(world3d)
     this
 
   next_move: ->
@@ -45,10 +45,10 @@ class @Alg
       this._update_dom()
       @actions[@next]
 
-  play: (world) ->
+  play: (world3d) ->
     @playing = true
     this._update_dom()
-    new AlgAnimation(this, world)
+    new AlgAnimation(this, world3d)
 
   stop: ->
     @playing = false
