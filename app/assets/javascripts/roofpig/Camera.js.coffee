@@ -52,7 +52,12 @@ class @Camera
     @cam.lookAt(v3(0, 0, 0))
     @unbent_up = @cam.up.clone()
     @unbent_position = @cam.position.clone()
-  
+
+  @_flip: (pov, parity) ->
+    if (parity > 0)
+      [pov.xn, pov.yn] = [pov.yn, pov.xn]
+    pov
+
   @_POVs = do ->
     result = {}
     for z in [Side.U, Side.D]
@@ -63,8 +68,9 @@ class @Camera
           [xu, xl, xn] = [x.name, x.name.toLowerCase(), x.normal.clone()]
 
           pos = v3(xn.x, yn.y, zn.z).multiplyScalar(DIST)
-          result[zu+yl+xl] = { pos: pos, up: zn, zn: zn, yn: yn, xn: xn }
-          result[zl+yu+xl] = { pos: pos, up: yn, zn: zn, yn: yn, xn: xn }
-          result[zl+yl+xu] = { pos: pos, up: xn, zn: zn, yn: yn, xn: xn }
-    result
+          parity = xn.x * yn.y * zn.z
 
+          result[zu+yl+xl] = Camera._flip({ pos: pos, up: zn, zn: zn, yn: yn, xn: xn }, parity)
+          result[zl+yu+xl] = Camera._flip({ pos: pos, up: yn, zn: yn, yn: xn, xn: zn }, parity)
+          result[zl+yl+xu] = Camera._flip({ pos: pos, up: xn, zn: xn, yn: zn, xn: yn }, parity)
+    result
