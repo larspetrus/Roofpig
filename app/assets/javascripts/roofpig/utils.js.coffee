@@ -24,3 +24,8 @@
 
 @side_name = (side) ->
   if side then side.name || side else ""
+
+# --- Logging ---
+
+@log_error = (text) ->
+  console.log("RoofPig error: #{text}")

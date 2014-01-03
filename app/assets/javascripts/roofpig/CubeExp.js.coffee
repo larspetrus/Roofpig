@@ -41,7 +41,7 @@ class @CubeExp
               this._add_match(exp.piece, exp.type_filter, side, exp.tweaks[i])
 
         else
-          console.log("Ignored unrecognized CubeExp '#{expression}'.")
+          log_error("Ignored unrecognized CubeExp '#{expression}'.")
 
   _add_match: (piece, type_filter, sides = piece, value = true) ->
     piece_type = 'mec'[piece.length-1]

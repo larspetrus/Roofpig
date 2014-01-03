@@ -29,7 +29,7 @@ class @Colors
             result.hovers = true
             result.color = this.of(tweak)
           else
-            console.log("Unknown tweak:'#{tweak}'")
+            log_error("Unknown tweak: '#{tweak}'")
     result
 
   of: (sticker_type) ->

@@ -9,6 +9,7 @@ class @Settings
     @flags  = this._get("flags")
     @colors = new Colors(this._get("colored"), this._get("solved"), this._get("tweaks"), this._get("colors"))
     @setup  = this._get("setup")
+    @pov    = this._get("pov", "Ufr")
 
   _get: (name, default_value = "") ->
     @settings_dom.data(name) || @prefs[name] || default_value

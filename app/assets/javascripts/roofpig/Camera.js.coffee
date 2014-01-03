@@ -1,20 +1,30 @@
 #= require roofpig/utils
+#= require roofpig/Side
 
 class @Camera
+  DIST = 25
 
-  constructor: (hover) ->
-    coord = 25
-    @cam = new THREE.PerspectiveCamera(this._view_angle(hover, coord), 1, 1, 100)
+  constructor: (hover, @pov_code) ->
+    @cam = new THREE.PerspectiveCamera(this._view_angle(hover, DIST), 1, 1, 100)
+    this.to_pov()
 
-    @cam.position.set(-coord, coord, coord)
-    @cam.up.set(0,0,1);
-    this._cam_moved()
+  to_pov: ->
+    pov = Camera._POVs[@pov_code]
+
+    unless pov
+      pov = Camera._POVs.Ufr
+      log_error("Invalid POV '#{@pov_code}'. Using Ufr")
+
+    @cam.position.copy(pov.pos)
+    @cam.up.copy(pov.up)
 
     # Directions, as seen on the screen
     @user_dir =
-       dr: v3(-1, 0, 0) # dr == "down right"
-       dl: v3( 0, 1, 0) # dl == "down left"
-       up: v3( 0, 0, 1)
+      dr: pov.xn.clone() # dr == "down right"
+      dl: pov.yn.clone() # dl == "down left"
+      up: pov.zn.clone()
+    this._cam_moved()
+
 
   rotate: (axis, angle) ->
     for v in [@cam.position, @cam.up, @user_dir.dl, @user_dir.dr, @user_dir.up]
@@ -42,3 +52,19 @@ class @Camera
     @cam.lookAt(v3(0, 0, 0))
     @unbent_up = @cam.up.clone()
     @unbent_position = @cam.position.clone()
+  
+  @_POVs = do ->
+    result = {}
+    for z in [Side.U, Side.D]
+      [zu, zl, zn] = [z.name, z.name.toLowerCase(), z.normal.clone()]
+      for y in [Side.F, Side.B]
+        [yu, yl, yn] = [y.name, y.name.toLowerCase(), y.normal.clone()]
+        for x in [Side.R, Side.L]
+          [xu, xl, xn] = [x.name, x.name.toLowerCase(), x.normal.clone()]
+
+          pos = v3(xn.x, yn.y, zn.z).multiplyScalar(DIST)
+          result[zu+yl+xl] = { pos: pos, up: zn, zn: zn, yn: yn, xn: xn }
+          result[zl+yu+xl] = { pos: pos, up: yn, zn: zn, yn: yn, xn: xn }
+          result[zl+yl+xu] = { pos: pos, up: xn, zn: zn, yn: yn, xn: xn }
+    result
+
