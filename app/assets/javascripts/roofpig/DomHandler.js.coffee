@@ -50,11 +50,11 @@ class @DomHandler
       @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eee", 'margin-bottom': '2px')
       @alg_area.append(@alg_text)
 
-    @reset = this._make_button("↩",  "reset")
-    @prev  = this._make_button("-",  "prev")
-    @next  = this._make_button("+",  "next")
+    @reset = this._make_button("↩", "reset")
+    @prev  = this._make_button("-", "prev")
+    @next  = this._make_button("+", "next")
     @pause = this._make_button("Ⅱ", "pause")
-    @play  = this._make_button("▶",  "play")
+    @play  = this._make_button("▶", "play")
 
     @place = this._make_place_area()
 
@@ -68,15 +68,13 @@ class @DomHandler
 
   _show: (button, active) ->
     button.show()
-    if active
-      button.button('enable')
-    else
-      button.button('disable')
+    action = if active then 'enable' else 'disable'
+    button.button(action)
 
   _make_button: (text, id) ->
     button = $("<button/>", { id: id, 'data-dpid': @display_id }).button(label: text)
     @alg_area.append(button)
-    button.height(40 * @scale).width(80 * @scale).css("font-size", 22 * @scale)
+    button.height(40 * @scale).width(72 * @scale).css("font-size": 22 * @scale, 'float': 'left')
 
   _make_place_area: ->
     place_div = $("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right')
