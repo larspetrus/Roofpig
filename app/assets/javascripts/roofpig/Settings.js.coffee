@@ -5,7 +5,7 @@ class @Settings
     @prefs ||= {}
 
     @alg    = this._get("alg")
-    @hover  = this._get("hover", 6.5)
+    @hover  = this._get("hover", 2.0)
     @flags  = this._get("flags")
     @colors = new Colors(this._get("colored"), this._get("solved"), this._get("tweaks"), this._get("colors"))
     @setup  = this._get("setup")

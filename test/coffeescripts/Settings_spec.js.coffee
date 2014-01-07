@@ -4,7 +4,7 @@ describe "Settings", ->
   it "has defaults", ->
     empty_settings = new Settings({ data: -> null })
     expect(empty_settings.alg).to.equal("")
-    expect(empty_settings.hover).to.equal(6.5)
+    expect(empty_settings.hover).to.equal(2.0)
     expect(empty_settings.flags).to.equal("")
     expect(empty_settings.pov).to.equal("Ufr")
     expect(empty_settings.setup).to.equal("")
