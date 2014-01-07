@@ -41,7 +41,7 @@ class @Colors
   DEFAULT_COLORS = {G:'#0d0', B:'blue', R:'red', O:'orange', Y:'yellow', W:'#eee'}
   @_set_colors: (colors_settings) ->
     dc = DEFAULT_COLORS
-    result = {R:dc.G, L:dc.B, F:dc.R, B:dc.O, U:dc.Y, D:dc.W, solved:'#666', ignored:'#aaa', plastic:'black'}
+    result = {R:dc.G, L:dc.B, F:dc.R, B:dc.O, U:dc.Y, D:dc.W, solved:'#444', ignored:'#888', plastic:'black'}
 
     for setting in colors_settings.split(' ')
       [type, color] = setting.split(':')

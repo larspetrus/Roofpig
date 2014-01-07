@@ -12,8 +12,8 @@ describe "Colors", ->
       expect(colors.of(Side.B)).to.equal('orange')
       expect(colors.of(Side.U)).to.equal('yellow')
       expect(colors.of(Side.D)).to.equal('#eee'  )
-      expect(colors.of('solved')).to.equal('#666')
-      expect(colors.of('ignored')).to.equal('#aaa')
+      expect(colors.of('solved')).to.equal('#444')
+      expect(colors.of('ignored')).to.equal('#888')
 
       expect(colors.of('L')).to.equal(colors.of(Side.L))
       expect(colors.of('F')).to.equal(colors.of(Side.F))
