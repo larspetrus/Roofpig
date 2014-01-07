@@ -47,7 +47,7 @@ class @DomHandler
     @div.append(@alg_area)
 
     if showalg
-      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eee", 'margin-bottom': '2px')
+      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eef", 'margin-bottom': '2px')
       @alg_area.append(@alg_text)
 
     @reset = this._make_button("↩", "reset")

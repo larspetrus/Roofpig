@@ -39,3 +39,5 @@ class @Rotation
       when -2 then "<<"
 
     "#{@side.name}#{turn_code}"
+
+  standard_text: -> ''

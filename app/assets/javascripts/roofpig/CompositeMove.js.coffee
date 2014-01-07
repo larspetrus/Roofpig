@@ -24,3 +24,10 @@ class @CompositeMove
 
   to_s: ->
     "(#{(@moves.map (move) -> move.to_s()).join(' ')})"
+
+  standard_text: ->
+    printables = []
+    for action in @moves
+      if action.standard_text()
+        printables.push(action.standard_text())
+    printables.join('+')

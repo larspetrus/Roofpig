@@ -31,11 +31,8 @@ describe "Rotation", ->
       expect(uz.turns).to.equal(-2)
       expect(uz.turn_time).to.equal(360)
 
-  it "#to_s", ->
-    expect(new Rotation("U>").to_s()).to.equal("U>")
-    expect(new Rotation("U>>").to_s()).to.equal("U>>")
-    expect(new Rotation("U<").to_s()).to.equal("U<")
-    expect(new Rotation("U<<").to_s()).to.equal("U<<")
+  it "#standard_text", ->
+    expect(new Rotation("U>").standard_text()).to.equal('')
 
   it "#count", ->
     expect(new Rotation("U>>").count()).to.equal(0)

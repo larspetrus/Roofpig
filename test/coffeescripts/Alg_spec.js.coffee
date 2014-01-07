@@ -53,3 +53,7 @@ describe "Alg", ->
 
     alg.next_move()
     expect(alg._place_text()).to.equal('4/4')
+
+  it "#standard_text", ->
+    alg = new Alg("F R> U+D' L2 R' LZ D+D>")
+    expect(alg.standard_text()).to.equal("F U+D' L2 R' L2 D")

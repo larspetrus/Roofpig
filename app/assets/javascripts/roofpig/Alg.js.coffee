@@ -63,11 +63,18 @@ class @Alg
   to_s: ->
     (@actions.map (move) -> move.to_s()).join(' ')
 
+  standard_text: ->
+    printables = []
+    for action in @actions
+      if action.standard_text()
+        printables.push(action.standard_text())
+    printables.join(' ')
+
   _update_dom: (time = 'later') ->
     return unless @dom_handler
 
     if time == 'first time'
-      @dom_handler.init_alg_text(this.to_s())
+      @dom_handler.init_alg_text(this.standard_text())
 
     @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), this._place_text())
 

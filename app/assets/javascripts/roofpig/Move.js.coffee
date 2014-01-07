@@ -42,3 +42,6 @@ class @Move
       when -2 then "Z"
 
     "#{@side.name}#{turn_code}"
+
+  standard_text: ->
+    this.to_s().replace('Z', '2')

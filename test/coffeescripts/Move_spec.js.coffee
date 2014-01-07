@@ -44,5 +44,11 @@ describe "Move", ->
     expect(new Move("U3").to_s()).to.equal("U'")
     expect(new Move("UZ").to_s()).to.equal("UZ")
 
+  it "#standard_text", ->
+    expect(new Move("U1").standard_text()).to.equal("U")
+    expect(new Move("U2").standard_text()).to.equal("U2")
+    expect(new Move("U3").standard_text()).to.equal("U'")
+    expect(new Move("UZ").standard_text()).to.equal("U2")
+
   it "#count", ->
     expect(new Move("U2").count()).to.equal(1)
