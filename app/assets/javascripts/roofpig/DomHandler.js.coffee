@@ -15,7 +15,7 @@ class @DomHandler
     cursor = if has_it then 'pointer' else 'default'
     @div.css("border": "2px solid #{color}", cursor: cursor)
 
-  alg_changed: (playing, at_start, at_end, place_text) ->
+  alg_changed: (playing, at_start, at_end, place_text, alg_texts) ->
     if playing
       for button in @buttons
         if button == @play
@@ -36,6 +36,10 @@ class @DomHandler
 
     @place.html(place_text)
 
+    if @alg_text
+      @alg_past.text(alg_texts.past + " ")
+      @alg_future.text(alg_texts.future)
+
   _active_play_or_pause: (playing, at_end) ->
     if at_end
       return { click: -> }
@@ -47,8 +51,11 @@ class @DomHandler
     @div.append(@alg_area)
 
     if showalg
-      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eef", 'margin-bottom': '2px')
-      @alg_area.append(@alg_text)
+      @alg_area.append(
+        @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eef", 'margin-bottom': '2px'))
+      @alg_text.append(
+        @alg_past = $("<span/>").css(color: '#888'),
+        @alg_future = $("<span/>"))
 
     @reset = this._make_button("↩", "reset")
     @prev  = this._make_button("-", "prev")
@@ -62,9 +69,8 @@ class @DomHandler
 
   init_alg_text: (text) ->
     if @alg_text
-      font_size = 24 * @scale * Math.min(1, 35/text.length)
+      font_size = 24 * @scale * Math.min(1, 34/text.length)
       @alg_text.height(1.2 * font_size).css("font-size": font_size)
-      @alg_text.text(text)
 
   _show: (button, active) ->
     button.show()

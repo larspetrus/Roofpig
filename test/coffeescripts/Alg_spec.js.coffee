@@ -56,4 +56,11 @@ describe "Alg", ->
 
   it "#standard_text", ->
     alg = new Alg("F R> U+D' L2 R' LZ D+D>")
-    expect(alg.standard_text()).to.equal("F U+D' L2 R' L2 D")
+    expect(alg.standard_text()).to.deep.equal(past:"", future: "F U+D' L2 R' L2 D")
+
+    alg.next_move()
+    expect(alg.standard_text()).to.deep.equal(past:"F", future: "U+D' L2 R' L2 D")
+
+    alg.next_move()
+    alg.next_move()
+    expect(alg.standard_text()).to.deep.equal(past:"F U+D'", future: "L2 R' L2 D")
