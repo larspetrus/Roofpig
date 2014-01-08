@@ -12,7 +12,7 @@ describe "Settings", ->
     expect(empty_settings.colors).to.exist
 
   describe "flags", ->
-    it "reads a move string", ->
+    it "recognizes flags", ->
       settings = new Settings({ data: (name) -> {flags: "fast shiny"}[name] })
       expect(settings.flags).to.equal("fast shiny")
       expect(settings.flag("fast")).to.be.true
