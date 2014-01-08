@@ -57,6 +57,8 @@ class @InputHandler
     if @bending
       dx = -0.02 * (e.pageX - @bend_start_x) / @dom_handler.scale
       dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
+      if e.shiftKey
+        dy = 0
       @camera.bend(dx, dy)
       @active_display.force_render()
 
