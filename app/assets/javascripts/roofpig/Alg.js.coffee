@@ -64,15 +64,12 @@ class @Alg
     (@actions.map (move) -> move.to_s()).join(' ')
 
   standard_text: ->
-    past = []
+    active = past = []
     future = []
     for action, i in @actions
-      text = action.standard_text()
-      if text
-        if @next > i
-          past.push(text)
-        else
-          future.push(text)
+      if @next == i then active = future
+      if action.standard_text()
+        active.push(action.standard_text())
     { past: past.join(' '), future: future.join(' ')}
 
   _update_dom: (time = 'later') ->
