@@ -17,7 +17,9 @@ describe "CubeExp", ->
       expect(exp("U*").matches).to.deep.equal(exp("U UB UBL UBR UF UFL UFR UL UR").matches)
       expect(exp("F*").matches).to.deep.equal(exp("DF DFL DFR F FL FR UF UFL UFR").matches)
 
-      expect(exp("B-").matches).to.deep.equal(exp("D DF DFL DFR DL DR F FL FR L R U UF UFL UFR UL UR").matches)
+      expect(exp("B-").matches, 5).to.deep.equal(exp("D DF DFL DFR DL DR F FL FR L R U UF UFL UFR UL UR").matches)
+      expect(exp("BF-").matches, 6).to.deep.equal(exp("D DL DR L R U UL UR").matches)
+      expect(exp("BL-").matches, 7).to.deep.equal(exp("D DF DFR DR F FR R U UF UFR UR").matches)
 
       expect(exp("*").matches).to.deep.equal(exp("B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR").matches)
 

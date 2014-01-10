@@ -22,8 +22,12 @@ class @CubeExp
             this._add_match(piece, exp.type_filter)
         when 'X-'
           for piece in PIECE_NAMES
-            if piece.indexOf(exp.piece[0]) == -1
+            excluded = false
+            for side in exp.sides.split('')
+              excluded ||= piece.indexOf(side) > -1
+            unless excluded
               this._add_match(piece, exp.type_filter)
+
         when 'X*'
           for piece in PIECE_NAMES
             if piece.indexOf(exp.piece[0]) > -1
@@ -63,6 +67,7 @@ class @CubeExp
         result.type = ['*', 'X*', '', 'XYZ*'][exp.length - 1]
       when "-"
         result.type = 'X-'
+        result.sides = standardize_name(exp) # removes the '-'
       else
         if exp.indexOf(':') > -1
           result.type = 'XYZ:abc'
