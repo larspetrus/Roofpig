@@ -37,46 +37,23 @@ class @Pieces3D
     v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
 
   on: (side) ->
-    switch side
-      when Side.U then [@at.UFR, @at.UFL, @at.UBR, @at.UBL, @at.UF, @at.UB, @at.UL, @at.UR, @at.U]
-      when Side.D then [@at.DFR, @at.DFL, @at.DBR, @at.DBL, @at.DF, @at.DB, @at.DL, @at.DR, @at.D]
-      when Side.F then [@at.UFL, @at.UFR, @at.DFR, @at.DFL, @at.UF, @at.FR, @at.DF, @at.FL, @at.F]
-      when Side.B then [@at.UBL, @at.UBR, @at.DBR, @at.DBL, @at.UB, @at.BR, @at.DB, @at.BL, @at.B]
-      when Side.L then [@at.UFL, @at.DFL, @at.DBL, @at.UBL, @at.UL, @at.FL, @at.DL, @at.BL, @at.L]
-      when Side.R then [@at.UFR, @at.DFR, @at.DBR, @at.UBR, @at.UR, @at.FR, @at.DR, @at.BR, @at.R]
+    (@at[position] for position in side.positions)
 
   move: (side, turns) ->
-    switch side
-      when Side.U
-        this._track_stickers(side, turns, F:'R', R:'B', B:'L', L:'F', U:'U', D:'D')
-        this._track_pieces(turns,['UBR','UBL','UFL','UFR'],['UR','UB','UL','UF'])
-      when Side.D
-        this._track_stickers(side, turns, F:'L', L:'B', B:'R', R:'F', U:'U', D:'D')
-        this._track_pieces(turns,['DFR','DFL','DBL','DBR'],['DF','DL','DB','DR'])
-      when Side.F
-        this._track_stickers(side, turns, U:'R', R:'D', D:'L', L:'U', F:'F', B:'B')
-        this._track_pieces(turns,['DFL','DFR','UFR','UFL'],['FL','DF','FR','UF'])
-      when Side.B
-        this._track_stickers(side, turns, U:'L', L:'D', D:'R', R:'U', F:'F', B:'B')
-        this._track_pieces(turns,['UBL','UBR','DBR','DBL'],['UB','BR','DB','BL'])
-      when Side.L
-        this._track_stickers(side, turns, B:'U', U:'F', F:'D', D:'B', L:'L', R:'R')
-        this._track_pieces(turns,['UBL','DBL','DFL','UFL'],['BL','DL','FL','UL'])
-      when Side.R
-        this._track_stickers(side, turns, B:'D', D:'F', F:'U', U:'B', L:'L', R:'R')
-        this._track_pieces(turns,['UFR','DFR','DBR','UBR'],['UR','FR','DR','BR'])
+    this._track_stickers(side, turns, side.sticker_cycle)
+    this._track_pieces(turns, side.cycle1, side.cycle2)
 
   _track_stickers: (side, turns, map) ->
     for n in [1..turns]
       for piece in this.on(side)
         piece.sticker_locations = (map[item] for item in piece.sticker_locations)
 
-  _track_pieces: (turns, corners, edges) ->
+  _track_pieces: (turns, cycle1, cycle2) ->
     if turns < 0
       turns += 4
     for n in [1..turns]
-      this._permute(corners)
-      this._permute(edges)
+      this._permute(cycle1)
+      this._permute(cycle2)
 
   _permute: (p) ->
     [@at[p[0]], @at[p[1]], @at[p[2]], @at[p[3]]] = [@at[p[1]], @at[p[2]], @at[p[3]], @at[p[0]]]
