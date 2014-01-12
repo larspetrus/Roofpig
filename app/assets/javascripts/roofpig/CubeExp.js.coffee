@@ -39,23 +39,28 @@ class @CubeExp
           for piece in PIECE_NAMES
             if piece.indexOf(exp.piece[0]) > -1
               this._add_match(piece, exp.type_filter, exp.piece)
-        when 'XYZ:abc'
-          for side, i in exp.sides.split('')
-            if Side.by_name(side)
-              this._add_match(exp.piece, exp.type_filter, side, exp.tweaks[i])
-
         else
           log_error("Ignored unrecognized CubeExp '#{expression}'.")
 
-  _add_match: (piece, type_filter, sides = piece, value = true) ->
+  matches_sticker: (piece, side) ->
+    @matches[standardize_name(piece)][side_name(side)]?
+
+  selected_pieces: ->
+    result = []
+    for piece, selections of @matches
+      code = ''
+      selected = false
+      for side in piece.split('')
+        selected ||= selections[side]
+        code += if selections[side] then side else side.toLowerCase()
+      if selected then result.push(code)
+    result
+
+  _add_match: (piece, type_filter, sides = piece) ->
     piece_type = 'mec'[piece.length-1]
     if not type_filter || type_filter.indexOf(piece_type) > -1
       for side in sides.split('')
-        mp = @matches[piece]
-        if mp[side] && mp[side] != true # TODO: Concepts collide here...
-          mp[side] += value
-        else
-          mp[side] = value
+        @matches[piece][side] = true
 
   _parse: (expression) ->
     result = {}
@@ -69,20 +74,9 @@ class @CubeExp
         result.type = 'X-'
         result.sides = standardize_name(exp) # removes the '-'
       else
-        if exp.indexOf(':') > -1
-          result.type = 'XYZ:abc'
-          [result.sides, result.tweaks] = exp.split(':')
-          result.piece = standardize_name(result.sides.toUpperCase())
+        if exp == result.piece.toLowerCase()
+          result.type = 'x'
         else
-          if exp == result.piece.toLowerCase()
-            result.type = 'x'
-          else
-            result.type = 'XYZ'
-            result.sides = standardize_name(exp) # removes lower case letters
+          result.type = 'XYZ'
+          result.sides = standardize_name(exp) # removes lower case letters
     result
-
-  for_sticker: (piece, side) ->
-    @matches[standardize_name(piece)][side_name(side)]
-
-  matches_sticker: (piece, side) ->
-    @matches[standardize_name(piece)][side_name(side)]?

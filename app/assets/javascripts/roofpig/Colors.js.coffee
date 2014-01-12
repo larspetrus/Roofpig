@@ -1,12 +1,13 @@
 #= require roofpig/utils
 #= require roofpig/CubeExp
+#= require roofpig/Tweaks
 
 class @Colors
 
   constructor: (colored, solved, tweaks, colors_settings = "") ->
     @colored = new CubeExp(colored || "*")
     @solved = new CubeExp(solved)
-    @tweaks = new CubeExp(tweaks)
+    @tweaks = new Tweaks(tweaks)
     @side_colors = Colors._set_colors(colors_settings)
 
   to_draw: (piece_name, side) ->
@@ -19,14 +20,13 @@ class @Colors
     else
       result.color = this.of('ignored')
 
-    for tweak in (@tweaks.for_sticker(piece_name, side) || "").split('')
+    for tweak in @tweaks.for_sticker(piece_name, side)
+      result.hovers = true
       switch tweak
         when 'X', 'x'
-          result.hovers = true
           result.x_color = if tweak == 'X' then 'black' else 'white'
         else
           if Side.by_name(tweak)
-            result.hovers = true
             result.color = this.of(tweak)
           else
             log_error("Unknown tweak: '#{tweak}'")
