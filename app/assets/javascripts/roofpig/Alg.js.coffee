@@ -17,7 +17,7 @@ class @Alg
 
   @_make_action: (code) ->
     if code.indexOf('+') > -1
-      moves = (code.split('+').map (code) -> Alg._make_action(code))
+      moves = (Alg._make_action(code) for code in code.split('+'))
       new CompositeMove(moves)
     else
       if code.indexOf('>') > -1 || code.indexOf('<') > -1
