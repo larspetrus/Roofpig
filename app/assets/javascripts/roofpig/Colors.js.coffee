@@ -1,12 +1,12 @@
 #= require roofpig/utils
-#= require roofpig/CubeExp
+#= require roofpig/Cubexp
 #= require roofpig/Tweaks
 
 class @Colors
 
   constructor: (colored, solved, tweaks, colors_settings = "") ->
-    @colored = new CubeExp(colored || "*")
-    @solved = new CubeExp(solved)
+    @colored = new Cubexp(colored || "*")
+    @solved = new Cubexp(solved)
     @tweaks = new Tweaks(tweaks)
     @side_colors = Colors._set_colors(colors_settings)
 

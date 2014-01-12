@@ -1,8 +1,8 @@
-#= require roofpig/CubeExp
+#= require roofpig/Cubexp
 
-exp = (e) -> new CubeExp(e)
+exp = (e) -> new Cubexp(e)
 
-describe "CubeExp", ->
+describe "Cubexp", ->
   describe "matches", ->
     it "simple piece names", ->
       expect(JSON.stringify(exp("UFR").matches)).to.equal(JSON.stringify(exp("UFR").matches))

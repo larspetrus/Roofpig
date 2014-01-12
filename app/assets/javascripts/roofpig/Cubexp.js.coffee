@@ -1,7 +1,7 @@
 #= require roofpig/utils
 
-#Named in flawed analogy with RegExp
-class @CubeExp
+#Named in flawed analogy with Regexp
+class @Cubexp
 
   PIECE_NAMES = ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
 
@@ -40,7 +40,7 @@ class @CubeExp
             if piece.indexOf(exp.piece[0]) > -1
               this._add_match(piece, exp.type_filter, exp.piece)
         else
-          log_error("Ignored unrecognized CubeExp '#{expression}'.")
+          log_error("Ignored unrecognized Cubexp '#{expression}'.")
 
   matches_sticker: (piece, side) ->
     @matches[standardize_name(piece)][side_name(side)]?
