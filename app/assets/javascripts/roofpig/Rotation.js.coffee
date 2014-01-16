@@ -12,7 +12,7 @@ class @Rotation
       when ">>"  then 2
       when "<"  then -1
       when "<<" then -2
-    unless side = Side.by_name(code[0])
+    unless (side = Side.by_name(code[0])) && turns
       throw new Error("Invalid Rotation code '#{code}'")
     [side, turns]
 

@@ -10,6 +10,7 @@ describe "Rotation", ->
       expect(Rotation._parse_code("D<")).to.have.members([Side.D,-1])
 
       expect(-> Rotation._parse_code("Q>")).to.throw("Invalid Rotation code 'Q>'")
+      expect(-> Rotation._parse_code("U<>")).to.throw("Invalid Rotation code 'U<>'")
 
   describe "#constructor", ->
     it "set the right attributes", ->

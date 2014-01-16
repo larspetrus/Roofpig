@@ -13,7 +13,7 @@ class @Move
       when "2", "²"  then 2
       when "3", "'"  then -1
       when "Z", "2'" then -2
-    unless side = Side.by_name(code[0])
+    unless (side = Side.by_name(code[0])) && turns
       throw new Error("Invalid Move code '#{code}'")
     [side, turns]
 
