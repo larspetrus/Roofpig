@@ -13,7 +13,9 @@ class @Move
       when "2", "²"  then 2
       when "3", "'"  then -1
       when "Z", "2'" then -2
-    [Side.by_name(code[0]), turns]
+    unless side = Side.by_name(code[0])
+      throw new Error("Invalid Move code '#{code}'")
+    [side, turns]
 
   do: (world3d) ->
     this._do(world3d.pieces, @turns, false)

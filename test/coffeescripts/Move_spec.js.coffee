@@ -16,6 +16,8 @@ describe "Move", ->
       expect(Move._parse_code("D3")).to.have.members([Side.D,-1])
       expect(Move._parse_code("F'")).to.have.members([Side.F,-1])
 
+      expect(-> Move._parse_code("Q2")).to.throw("Invalid Move code 'Q2'")
+
   describe "#constructor", ->
     it "set the right attributes", ->
       u1 = new Move("U")

@@ -4,7 +4,7 @@ class @Rotation
   constructor: (code) ->
     [@side, @turns] = Rotation._parse_code(code)
 
-    @turn_time = 120 * (1 + Math.abs(@turns))
+    @turn_time = 200 * (1 + Math.abs(@turns))
 
   @_parse_code: (code) ->
     turns = switch code.substring(1)
@@ -12,7 +12,9 @@ class @Rotation
       when ">>"  then 2
       when "<"  then -1
       when "<<" then -2
-    [Side.by_name(code[0]), turns]
+    unless side = Side.by_name(code[0])
+      throw new Error("Invalid Rotation code '#{code}'")
+    [side, turns]
 
   do: (world3d) ->
     this._do(world3d.camera, @turns, false)
