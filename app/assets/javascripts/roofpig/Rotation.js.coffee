@@ -22,6 +22,9 @@ class @Rotation
   undo: (world3d) ->
     this._do(world3d.camera, -@turns, false)
 
+  premix: (world3d) ->
+    # No Rotations in premix
+
   show_do: (world3d) ->
     this._do(world3d.camera, @turns, true)
 

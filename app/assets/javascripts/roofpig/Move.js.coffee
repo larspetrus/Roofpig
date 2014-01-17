@@ -23,6 +23,9 @@ class @Move
   undo: (world3d) ->
     this._do(world3d.pieces, -@turns, false)
 
+  premix: (world3d) ->
+    this.undo(world3d)
+
   show_do: (world3d) ->
     this._do(world3d.pieces, @turns, true)
 

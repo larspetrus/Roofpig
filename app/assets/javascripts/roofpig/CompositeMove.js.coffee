@@ -10,6 +10,9 @@ class @CompositeMove
   undo: (world3d) ->
     new ConcurrentChangers( (@actions.map (action) -> action.undo(world3d)) )
 
+  premix: (world3d) ->
+    new ConcurrentChangers( (@actions.map (action) -> action.premix(world3d)) )
+
   show_do: (world3d) ->
     new ConcurrentChangers( (@actions.map (action) -> action.show_do(world3d)) )
 

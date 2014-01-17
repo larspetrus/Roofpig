@@ -29,7 +29,7 @@ class @Alg
   premix: (world3d) ->
     @next =  @actions.length
     until this.at_start()
-      this.prev_move().undo(world3d)
+      this.prev_move().premix(world3d)
     this
 
   next_move: ->
