@@ -58,6 +58,10 @@ class @Camera
       [pov.xn, pov.yn] = [pov.yn, pov.xn]
     pov
 
+  @_set_perms: (povs, a, b, c, value) ->
+    povs[a+b+c] = povs[a+c+b] = povs[b+a+c] = povs[b+c+a] = povs[c+a+b] = povs[c+b+a] = value
+
+
   @_POVs = do ->
     result = {}
     for z in [Side.U, Side.D]
@@ -70,7 +74,7 @@ class @Camera
           pos = v3(xn.x, yn.y, zn.z).multiplyScalar(DIST)
           parity = xn.x * yn.y * zn.z
 
-          result[zu+yl+xl] = Camera._flip({ pos: pos, up: zn, zn: zn, yn: yn, xn: xn }, parity)
-          result[zl+yu+xl] = Camera._flip({ pos: pos, up: yn, zn: yn, yn: xn, xn: zn }, parity)
-          result[zl+yl+xu] = Camera._flip({ pos: pos, up: xn, zn: xn, yn: zn, xn: yn }, parity)
+          Camera._set_perms(result, zu, yl, xl, Camera._flip({ pos: pos, up: zn, zn: zn, yn: yn, xn: xn }, parity))
+          Camera._set_perms(result, zl, yu, xl, Camera._flip({ pos: pos, up: yn, zn: yn, yn: xn, xn: zn }, parity))
+          Camera._set_perms(result, zl, yl, xu, Camera._flip({ pos: pos, up: xn, zn: xn, yn: zn, xn: yn }, parity))
     result

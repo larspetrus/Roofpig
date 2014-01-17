@@ -15,6 +15,14 @@ describe "Camera", ->
     expect(Camera._POVs.dfL).to.deep.equal({pos: v3( 25, 25,-25), up: Ln, zn: Ln, yn: Dn, xn: Fn} )
     expect(Camera._POVs.dBl).to.deep.equal({pos: v3( 25,-25,-25), up: Bn, zn: Bn, yn: Dn, xn: Ln} )
 
+    # Accept permutations
+    expect(Camera._POVs.Ufr).to.equal(Camera._POVs.frU)
+    expect(Camera._POVs.Ufr).to.equal(Camera._POVs.fUr)
+    expect(Camera._POVs.Ufr).to.equal(Camera._POVs.rUf)
+    expect(Camera._POVs.Ufr).to.equal(Camera._POVs.rfU)
+    expect(Camera._POVs.Ufr).to.equal(Camera._POVs.Urf)
+    expect(Camera._POVs.dBl).to.equal(Camera._POVs.Bld)
+
     # Don't expose the Side.normal vectors
     expect(Camera._POVs.Ufr.up).to.not.equal(Un)
     expect(Camera._POVs.Ufr.zn).to.not.equal(Un)
