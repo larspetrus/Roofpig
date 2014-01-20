@@ -40,8 +40,15 @@ class @Pieces3D
     (@at[position] for position in side.positions)
 
   move: (side, turns) ->
-    this._track_stickers(side, turns, side.sticker_cycle)
-    this._track_pieces(turns, side.cycle1, side.cycle2)
+    positive_turns = (turns + 4) % 4
+    this._track_stickers(side, positive_turns, side.sticker_cycle)
+    this._track_pieces(positive_turns, side.cycle1, side.cycle2)
+
+  state: ->
+    result = ""
+    for piece in ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
+      result += this[piece].sticker_locations.join('') + ' '
+    result
 
   _track_stickers: (side, turns, map) ->
     for n in [1..turns]
@@ -49,8 +56,6 @@ class @Pieces3D
         piece.sticker_locations = (map[item] for item in piece.sticker_locations)
 
   _track_pieces: (turns, cycle1, cycle2) ->
-    if turns < 0
-      turns += 4
     for n in [1..turns]
       this._permute(cycle1)
       this._permute(cycle2)

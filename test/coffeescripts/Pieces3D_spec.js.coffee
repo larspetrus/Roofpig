@@ -41,3 +41,13 @@ describe "Pieces3D", ->
     expect(pieces.at.DR.name).to.equal('BR')
 
     expect(pieces.UBL.sticker_locations).to.deep.equal(['U', 'F', 'R'])
+
+  it "#solved", ->
+    solved = 'B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR '
+
+    pieces = new Pieces3D(mock_scene, mock_settings)
+    expect(pieces.state()).to.equal(solved)
+
+    pieces.move(Side.R, 2)
+    pieces.move(Side.R, -2)
+    expect(pieces.state()).to.equal(solved)
