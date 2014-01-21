@@ -68,6 +68,15 @@ class @Side
   @U: new Side('U', v3( 0, 0, 1), ['UBR','UBL','UFL','UFR'],['UR','UB','UL','UF'], ['U'], F:'R', R:'B', B:'L', L:'F', U:'U', D:'D')
   @D: new Side('D', v3( 0, 0,-1), ['DFR','DFL','DBL','DBR'],['DF','DL','DB','DR'], ['D'], F:'L', L:'B', B:'R', R:'F', U:'U', D:'D')
 
+  shift: (side_name, turns) ->
+    return null unless @sticker_cycle[side_name]
+    throw new Error("Invalid turn number: '#{turns}'") if turns < 1
+
+    result = side_name
+    for n in [1..turns]
+      result = @sticker_cycle[result]
+    result
+
 #  @M: new Side('M', Side.L.normal, [], [], [], Side.L.sticker_cycle)
 #  @E: new Side('E', Side.D.normal, [], [], [], Side.D.sticker_cycle)
 #  @S: new Side('S', Side.F.normal, [], [], [], Side.F.sticker_cycle)

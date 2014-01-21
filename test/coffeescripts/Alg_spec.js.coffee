@@ -1,23 +1,18 @@
 #= require three.min
 #= require roofpig/Alg
 
-mock_dom_handler = {
-  alg_changed: ->
-  init_alg_text: ->
-}
-
 describe "Alg", ->
   describe "#constructor", ->
     it "reads move strings", ->
-      expect(new Alg("U F2 D' LZ", mock_dom_handler).to_s()).to.equal("U F2 D' LZ")
-      expect(new Alg(" U F2  D' LZ  ", mock_dom_handler).to_s()).to.equal("U F2 D' LZ")
-      expect(new Alg("F D+U'", mock_dom_handler).to_s()).to.equal("F (D U')")
+      expect(new Alg("U F2 D' LZ").to_s()).to.equal("U F2 D' LZ")
+      expect(new Alg(" U F2  D' LZ  ").to_s()).to.equal("U F2 D' LZ")
+      expect(new Alg("F D+U'").to_s()).to.equal("F (D U')")
 
     it "fails empty alg", ->
-      expect(-> new Alg("", mock_dom_handler)).to.throw("Invalid alg: ''")
+      expect(-> new Alg("")).to.throw("Invalid alg: ''")
 
   it "keeps track of moves", ->
-    alg = new Alg('F D', mock_dom_handler)
+    alg = new Alg('F D')
 
     expect(alg.at_start()).to.be.true
     expect(alg.at_end()).to.be.false
@@ -64,3 +59,8 @@ describe "Alg", ->
     alg.next_move()
     alg.next_move()
     expect(alg.standard_text()).to.deep.equal(past:"F U+D'", future: "L2 R' L2 D")
+
+  it "handles 'shift'", ->
+    expect(new Alg("shift> U F2 D' LZ").to_s(), 1).to.equal("U L2 D' BZ")
+    expect(new Alg("shift2 U F2 D' LZ").to_s(), 2).to.equal("U B2 D' RZ")
+    expect(new Alg("shift< U F2 D' LZ").to_s(), 3).to.equal("U R2 D' FZ")

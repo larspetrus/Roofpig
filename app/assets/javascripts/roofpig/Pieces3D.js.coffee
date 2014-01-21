@@ -1,7 +1,7 @@
 #= require roofpig/Side
 #= require roofpig/utils
 
-# Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc refers to the 3D models for those pieces
+# Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc are the 3D models for those pieces
 class @Pieces3D
   constructor: (scene, settings) ->
     @at = {}
@@ -41,7 +41,7 @@ class @Pieces3D
 
   move: (side, turns) ->
     positive_turns = (turns + 4) % 4
-    this._track_stickers(side, positive_turns, side.sticker_cycle)
+    this._track_stickers(side, positive_turns)
     this._track_pieces(positive_turns, side.cycle1, side.cycle2)
 
   state: ->
@@ -50,10 +50,9 @@ class @Pieces3D
       result += this[piece].sticker_locations.join('') + ' '
     result
 
-  _track_stickers: (side, turns, map) ->
-    for n in [1..turns]
-      for piece in this.on(side)
-        piece.sticker_locations = (map[item] for item in piece.sticker_locations)
+  _track_stickers: (side, turns) ->
+    for piece in this.on(side)
+      piece.sticker_locations = (side.shift(item, turns) for item in piece.sticker_locations)
 
   _track_pieces: (turns, cycle1, cycle2) ->
     for n in [1..turns]

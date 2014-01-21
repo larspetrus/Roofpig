@@ -3,17 +3,30 @@
 #= require roofpig/CompositeMove
 
 class @Alg
-  constructor: (move_codes, @dom_handler) ->
-    if not move_codes || move_codes == ""
-      throw new Error("Invalid alg: '#{move_codes}'")
+  constructor: (@move_codes, @dom_handler) ->
+    if not @move_codes || @move_codes == ""
+      throw new Error("Invalid alg: '#{@move_codes}'")
+    this._pre_process()
 
     @actions = []
-    for code in move_codes.split(' ')
+    for code in @move_codes.split(' ')
       if code.length > 0
         @actions.push(Alg._make_action(code))
     @next = 0
     @playing = false
     this._update_dom('first time')
+
+  _pre_process: ->
+    switch @move_codes.substring(0, 6)
+      when 'shift>' then shift = 1
+      when 'shift2' then shift = 2
+      when 'shift<' then shift = 3
+
+    if shift
+      shifted_codes = ""
+      for char in @move_codes.substring(6).split('')
+        shifted_codes += Side.D.shift(char, shift) || char
+      @move_codes = shifted_codes
 
   @_make_action: (code) ->
     if code.indexOf('+') > -1
