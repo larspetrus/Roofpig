@@ -17,13 +17,18 @@ class @Display
     prev_id = ((@id + Display.unique_id - 2) % Display.unique_id) + 1
     Display.instances[prev_id]
 
-  constructor: (roofpig_div) ->
+  constructor: (roofpig_div, webgl_works, canvas_works) ->
+    unless canvas_works
+      roofpig_div.html("Your browser does not support <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>WebGL</a>.<p/> Find out how to get it <a href='http://get.webgl.org/'>here</a>.")
+      roofpig_div.css(background: '#f66')
+      return
+
     @id = Display.unique_id += 1
     Display.instances[@id] = this
 
     @settings = Settings.from_page(roofpig_div)
 
-    if @settings.flag('canvas')
+    if @settings.flag('canvas') || not webgl_works
       @renderer = new THREE.CanvasRenderer()
     else
       @renderer = new THREE.WebGLRenderer({ antialias: true })

@@ -10,6 +10,8 @@ mock_div = {
   append: ->
 }
 
+new_display = -> new Display(mock_div, true, true)
+
 describe "Display", ->
   beforeEach ->
     Display.unique_id = 0
@@ -18,16 +20,16 @@ describe "Display", ->
   it "gives the keyboard focus to the first Display created", ->
     expect(InputHandler.active_display, 1).to.equal(undefined)
 
-    d1 = new Display(mock_div)
+    d1 = new_display()
     expect(InputHandler.active_display, 2).to.equal(d1)
 
-    d2 = new Display(mock_div)
+    d2 = new_display()
     expect(InputHandler.active_display, 3).to.equal(d1)
 
   it "@id, #next_display(), #previous_display()", ->
-    d1 = new Display(mock_div)
-    d2 = new Display(mock_div)
-    d3 = new Display(mock_div)
+    d1 = new_display()
+    d2 = new_display()
+    d3 = new_display()
 
     expect(d1.id).to.equal(1)
     expect(d2.id).to.equal(2)
