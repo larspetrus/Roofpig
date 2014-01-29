@@ -7,7 +7,7 @@ describe "Colors", ->
     it "has default values", ->
       colors = new Colors("", "", "")
       expect(colors.of(Side.R)).to.equal('#0d0')
-      expect(colors.of(Side.L)).to.equal('#05f')
+      expect(colors.of(Side.L)).to.equal('#07f')
       expect(colors.of(Side.F)).to.equal('red')
       expect(colors.of(Side.B)).to.equal('orange')
       expect(colors.of(Side.U)).to.equal('yellow')
