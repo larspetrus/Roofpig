@@ -26,7 +26,10 @@ $(document).ready ->
     display.button_click($(this).attr("id"), e.shiftKey)
 
   $("body").keydown (e) ->
-    InputHandler.key_pressed(e)
+    InputHandler.key_down(e)
+
+  $("body").keyup (e) ->
+    InputHandler.key_up(e)
 
   $(".roofpig").mousedown (e) ->
     InputHandler.mouse_down(e, $(this).data('dpid'))

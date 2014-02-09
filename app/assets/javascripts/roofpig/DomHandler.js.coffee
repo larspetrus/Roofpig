@@ -1,6 +1,6 @@
 class @DomHandler
 
-  constructor: (@display_id, @div, renderer, alg_to_show) ->
+  constructor: (@display_id, @div, renderer) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", Lucida Grande, sans-serif')
     this.has_focus(false)
     @div.data('dpid', @display_id)
@@ -9,6 +9,7 @@ class @DomHandler
     @div.append(renderer.domElement);
 
     @scale = @div.width()/400
+    @hscale = Math.max(@scale, 22.0/40) # Below 22 pixels, Safari renders buttons with rounded corners. Chrome:21. Firefox:27.
 
   has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'
@@ -74,15 +75,17 @@ class @DomHandler
 
   _show: (button, active) ->
     button.show()
-    action = if active then 'enable' else 'disable'
-    button.button(action)
+    if active
+      button.removeAttr("disabled")
+    else
+      button.attr("disabled", "disabled")
 
   _make_button: (text, id) ->
-    button = $("<button/>", { id: id, 'data-dpid': @display_id }).button(label: text)
+    button = $("<button/>", { text: text, id: id, 'data-dpid': @display_id })
     @alg_area.append(button)
-    button.height(40 * @scale).width(72 * @scale).css("font-size": 22 * @scale, 'float': 'left')
+    button.height(40*@hscale).width(76*@scale).css(padding: 0, 'border-width': '1px', 'font-size': 28*@hscale, float: 'left')
 
   _make_place_area: ->
-    place_div = $("<div/>", { id: "place" }).css("text-align": 'right', 'float': 'right')
+    place_div = $("<div/>", { id: 'place' }).css('text-align': 'right', float: 'right')
     @alg_area.append(place_div)
-    place_div.height(40 * @scale).width(80 * @scale).css("font-size", 24 * @scale)
+    place_div.height(40*@scale).width(80*@scale).css("font-size", 24*@scale)
