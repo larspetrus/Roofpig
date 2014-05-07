@@ -77,13 +77,18 @@ class @DomHandler
     button.show()
     if active
       button.removeAttr("disabled")
+      button.addClass('roofpig-button-enabled')
     else
       button.attr("disabled", "disabled")
+      button.removeClass('roofpig-button-enabled')
 
   _make_button: (text, id) ->
     button = $("<button/>", { text: text, id: id, 'data-dpid': @display_id })
     @alg_area.append(button)
-    button.height(40*@hscale).width(76*@scale).css(padding: 0, 'border-width': '1px', 'font-size': 28*@hscale, float: 'left')
+
+    button.addClass('roofpig-button')
+    button.css('font-size': 28*@hscale, float: 'left')
+    button.height(40*@hscale).width(76*@scale)
 
   _make_place_area: ->
     place_div = $("<div/>", { id: 'place' }).css('text-align': 'right', float: 'right')

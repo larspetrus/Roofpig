@@ -23,10 +23,10 @@ class @InputHandler
       when key_tab
         new_focus = if e.shiftKey then @active_display.previous_display() else @active_display.next_display()
         this.set_active_display(new_focus)
-      when key_home        then @dom_handler.reset.css('background-color': '#bbb')
-      when key_left_arrow  then @dom_handler.prev.css('background-color': '#bbb')
-      when key_right_arrow then @dom_handler.next.css('background-color': '#bbb')
-      when key_space       then @dom_handler.active_play_or_pause.css('background-color': '#bbb')
+      when key_home        then this._fake_click_down(@dom_handler.reset)
+      when key_left_arrow  then this._fake_click_down(@dom_handler.prev)
+      when key_right_arrow then this._fake_click_down(@dom_handler.next)
+      when key_space       then this._fake_click_down(@dom_handler.active_play_or_pause)
       when key_C then this._rotate('up', 1)
       when key_Z then this._rotate('up',-1)
       when key_A then this._rotate('dr', 1)
@@ -45,18 +45,23 @@ class @InputHandler
     unhandled = false
 
     switch e.keyCode
-      when key_home        then this._click(@dom_handler.reset)
-      when key_left_arrow  then this._click(@dom_handler.prev)
-      when key_right_arrow then this._click(@dom_handler.next)
-      when key_space       then this._click(@dom_handler.active_play_or_pause)
+      when key_home        then this._fake_click_up(@dom_handler.reset)
+      when key_left_arrow  then this._fake_click_up(@dom_handler.prev)
+      when key_right_arrow then this._fake_click_up(@dom_handler.next)
+      when key_space       then this._fake_click_up(@dom_handler.active_play_or_pause)
       else
         unhandled = true
 
     unhandled
 
-  @_click: (button) ->
-    button.css('background-color': '')
-    button.click()
+  @_fake_click_down: (button) ->
+    unless button.attr("disabled")
+      button.addClass('roofpig-button-fake-active')
+
+  @_fake_click_up: (button) ->
+    unless button.attr("disabled")
+      button.removeClass('roofpig-button-fake-active')
+      button.click()
 
   @mouse_down: (e, target_display_id) ->
     if target_display_id == @active_display.id

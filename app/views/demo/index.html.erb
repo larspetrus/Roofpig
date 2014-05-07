@@ -4,7 +4,48 @@
   <style>
       .rp140 {width:140px; height:160px;}
   </style>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  <style type="text/css">
+      .roofpig-button {
+          font-family:Lucida Sans Unicode, Lucida Grande, sans-serif;
+          font-weight:normal;
+          font-style:normal;
+          padding:0;
+
+          -moz-box-shadow:inset    0px 1px 0px 0px #ffffff;
+          -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+          box-shadow:inset         0px 1px 0px 0px #ffffff;
+          background-color:#ededed;
+
+          border:1px solid #dcdcdc;
+          outline:none;
+          -webkit-border-radius:2px;
+          -moz-border-radius:2px;
+          border-radius:2px;
+
+          text-indent:0;
+          display:inline-block;
+          text-decoration:none;
+          text-align:center;
+          text-shadow:1px 1px 0px #ffffff;
+      }
+
+      .roofpig-button-enabled {
+          background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bbb) );
+          background:-moz-linear-gradient( center top, #ededed 5%, #bbb 100% );
+          filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bbb');
+      }
+      .roofpig-button-enabled:hover {
+          background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #bbb), color-stop(1, #ededed) );
+          background:-moz-linear-gradient( center top, #bbb 5%, #ededed 100% );
+          filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbb', endColorstr='#ededed');
+      }
+      .roofpig-button-enabled:active, .roofpig-button-fake-active {
+          position:relative;
+          top:2px;
+      }
+
+  </style>
+  /* This button was generated using CSSButtonGenerator.com */  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -12,24 +53,36 @@
   <script>
     ROOFPIG_PREF_P1 = { colors:"plastic:white", hover: "1.8" };
     ROOFPIG_PREF_F4 = { solved: "UR-", colored: "U DFR* DBR*", colors: "F:B B:G U:R D:O R:W L:Y"};
+    ROOFPIG_PREF_F5 = { solved: "U-", colors: "F:B B:G U:R D:O R:W L:Y"};
   </script>
 </head>
 
 <h1>I am RoofPig. Hear me oink!</h1>
 
 <body>
-  <div class="roofpig" style="height:305px; width: 250px; float: left;" data-pref="P1" data-solved="UFR*" data-tweaks="UFR:XxX UBR:BBB" data-flags="showalg" data-alg="D'+D> R>+R' D R' D' R2"></div>
-  <div class="roofpig" style="height:195px; width: 160px; float: left;" data-pref="P1" data-flags="canvas showalg" data-alg="L2 R U2+DZ" data-pov="dbR"></div>
+  <div class="roofpig" style="height:299px; width: 250px; float: left;" data-pref="P1" data-solved="UFR*" data-tweaks="UFR:XxX UBR:BBB" data-flags="showalg" data-alg="D'+D> R>+R' D R' D' R2"></div>
+  <div class="roofpig" style="height:199px; width: 160px; float: left;" data-pref="P1" data-flags="canvas showalg" data-alg="L2 R U2+DZ" data-pov="dbR"></div>
   <div class="roofpig" style="height:499px; width: 440px; float: left;" data-pref="P1" data-hover="7.1" data-flags="showalg" data-alg="L2 D U2 B2 L B> U'+U> F U' F U' F' L> U>> U' F2 UZ R2 U F R' F' R F' R2 F R' F R F' R2 F D R2 D' R' D R D' R' D R' D' R2"></div>
 
 <div align="center">
   <table align="center">
     <tr>
-      <td><div class="roofpig rp140" data-pref="F4" data-setup="R' U R U" data-alg="R' U R U' R U2 R U2 R2"></div>   </td>
-      <td><div class="roofpig rp140" data-pref="F4" data-setup="R' U' R U R' U' R U R' U' R U" data-alg="U2 R U' R U' R2 U R U' R'"></div></td>
-      <td><div class="roofpig rp140" data-pref="F4" data-setup="R' U' R U2 R' U R U2" data-alg="R U' R' U2 R'"></div>            </td>
+      <td><div style="height:225px; width: 170px; '-webkit-appearance':none" class="roofpig " data-pref="F4" data-setup="R' U' R U R' U' R U R' U' R U" data-alg="U2 R U' R U' R2 U R U' R'"></div></td>
+      <td><div style="height:245px; width: 190px; '-webkit-appearance':none" class="roofpig " data-pref="F4" data-setup="R' U' R U2 R' U R U2" data-alg="R U' R' U2 R'"></div>            </td>
+      <td><div style="height:125px; width: 100px; '-webkit-appearance':none" class="roofpig " data-pref="F4" data-setup="R' U R U" data-alg="R' U R U' R U2 R U2 R2"></div>   </td>
     </tr>
   </table>
 </div>
+
+  <div class="roofpig rp140 right" data-pref="F5" data-solved="U-/ec" data-colored="*/m u/e" data-tweaks="UFr:FR UFl:FL ULb:LB URb:RB" data-alg="L U' R' U L' U' R U2"></div>
+
+  <!--<h2>Chrome</h2>-->
+
+<!--<button style="height:19px; width: 37px; border-radius: 0; float: left;">19</button>-->
+<!--<button style="height:20px; width: 37px; border-radius: 0; float: left;">20</button>-->
+<!--<button style="height:21px; width: 37px; border-radius: 0; float: left;">21</button>-->
+<!--<button style="height:22px; width: 37px; border-radius: 0; float: left;">22</button>-->
+<!--<button style="height:26px; width: 37px; border-radius: 0; float: left;">26</button>-->
+<!--<button style="height:27px; width: 37px; border-radius: 0; float: left;">27</button>-->
 
 </body>
