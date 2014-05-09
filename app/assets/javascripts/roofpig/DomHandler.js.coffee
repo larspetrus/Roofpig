@@ -9,12 +9,12 @@ class @DomHandler
     @div.append(renderer.domElement);
 
     @scale = @div.width()/400
-    @hscale = Math.max(@scale, 22.0/40) # Below 22 pixels, Safari renders buttons with rounded corners. Chrome:21. Firefox:27.
+    @hscale = Math.max(@scale, 15.0/40) # Minimum height -> readable text
 
   has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'
     cursor = if has_it then 'pointer' else 'default'
-    @div.css("border": "2px solid #{color}", cursor: cursor)
+    @div.css(border: "2px solid #{color}", cursor: cursor)
 
   alg_changed: (playing, at_start, at_end, place_text, alg_texts) ->
     if playing
@@ -52,11 +52,12 @@ class @DomHandler
     @div.append(@alg_area)
 
     if showalg
-      @alg_area.append(
-        @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eef", 'margin-bottom': '2px'))
-      @alg_text.append(
-        @alg_past = $("<span/>").css(color: '#888'),
-        @alg_future = $("<span/>"))
+      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eef", 'margin-bottom': '2px')
+      @alg_area.append(@alg_text)
+
+      @alg_past = $("<span/>").css(color: '#888')
+      @alg_future = $("<span/>")
+      @alg_text.append(@alg_past, @alg_future)
 
     @reset = this._make_button("↩", "reset")
     @prev  = this._make_button("-", "prev")
@@ -87,10 +88,9 @@ class @DomHandler
     @alg_area.append(button)
 
     button.addClass('roofpig-button')
-    button.css('font-size': 28*@hscale, float: 'left')
-    button.height(40*@hscale).width(76*@scale)
+    button.css('font-size': 28*@hscale, float: 'left', height: 40*@hscale, width: 76*@scale)
 
   _make_place_area: ->
     place_div = $("<div/>", { id: 'place' }).css('text-align': 'right', float: 'right')
     @alg_area.append(place_div)
-    place_div.height(40*@scale).width(80*@scale).css("font-size", 24*@scale)
+    place_div.height(40*@hscale).width(80*@scale).css("font-size", 24*@hscale)
