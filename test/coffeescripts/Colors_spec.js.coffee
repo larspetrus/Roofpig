@@ -51,16 +51,23 @@ describe "Colors", ->
       expect(colors.to_draw('F',  'F')).to.deep.equal(color: colors.of('solved'), hovers: false)
       expect(colors.to_draw('L',  'L')).to.deep.equal(color: colors.of('ignored'), hovers: false)
 
+    it "last tweak color wins", ->
+      colors = new Colors("*", "", "R:U* L:F*")
+      expect(colors.to_draw('D', 'D')).to.deep.equal(color: colors.of('D'), hovers: true) #untweaked
+      expect(colors.to_draw('U', 'U')).to.deep.equal(color: colors.of('R'), hovers: true) #tweaked
+      expect(colors.to_draw('F', 'F')).to.deep.equal(color: colors.of('L'), hovers: true) #tweaked
+      expect(colors.to_draw('UF','U')).to.deep.equal(color: colors.of('L'), hovers: true) #double tweaked
+
     describe "tweaks", ->
       it "sets X and colors", ->
-        colors = new Colors("", "*", "uFR:.Xx  UfR:D.L")
+        colors = new Colors("", "*", ".Xx:uFR  D.L:UfR")
 
         expect(colors.to_draw('UFR', 'U')).to.deep.equal(color: colors.of('D'), hovers: true)
         expect(colors.to_draw('UFR', 'F')).to.deep.equal(color: colors.of('solved'), hovers: true, x_color: 'black')
         expect(colors.to_draw('UFR', 'R')).to.deep.equal(color: colors.of('L'), hovers: true, x_color: 'white')
 
       it "overrides colored and solved", ->
-        colors = new Colors("U*", "D*", "U:L  D:R")
+        colors = new Colors("U*", "D*", "L:U  R:D")
 
         expect(colors.to_draw('U', Side.U).color).to.equal(colors.of(Side.L))
         expect(colors.to_draw('D', Side.D).color).to.equal(colors.of(Side.R))

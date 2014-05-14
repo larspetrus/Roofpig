@@ -24,7 +24,7 @@ class @Colors
       result.hovers = true
       switch tweak
         when 'X', 'x'
-          result.x_color = if tweak == 'X' then 'black' else 'white'
+          result.x_color = {X: 'black', x: 'white'}[tweak]
         else
           if Side.by_name(tweak)
             result.color = this.of(tweak)

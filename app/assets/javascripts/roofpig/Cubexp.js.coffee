@@ -5,12 +5,12 @@ class @Cubexp
 
   PIECE_NAMES = ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
 
-  constructor: (expressions = "") ->
+  constructor: (cubexp_string = "") ->
     @matches = {}
     for piece in PIECE_NAMES
       @matches[piece] = {}
 
-    for expression in expressions.split(" ")
+    for expression in cubexp_string.split(" ")
       exp = this._parse(expression)
 
       switch exp.type
@@ -27,7 +27,6 @@ class @Cubexp
               excluded ||= piece.indexOf(side) > -1
             unless excluded
               this._add_match(piece, exp.type_filter)
-
         when 'X*'
           for piece in PIECE_NAMES
             if piece.indexOf(exp.piece[0]) > -1
