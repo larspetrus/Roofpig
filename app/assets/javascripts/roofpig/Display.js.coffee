@@ -31,14 +31,13 @@ class @Display
     if @settings.flag('canvas') || not webgl_works
       @renderer = new THREE.CanvasRenderer()
     else
-      @renderer = new THREE.WebGLRenderer({ antialias: true })
+      @renderer = new THREE.WebGLRenderer(antialias: true)
 
     @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
 
     @scene = new THREE.Scene()
-    @pieces3d = new Pieces3D(@scene, @settings)
     @camera = new Camera(@settings.hover, @settings.pov)
-    @world3d = { pieces: @pieces3d, camera: @camera }
+    @world3d = { pieces: new Pieces3D(@scene, @settings), camera: @camera }
 
     if (@settings.setup)
       setup_alg = new Alg(@settings.setup)
