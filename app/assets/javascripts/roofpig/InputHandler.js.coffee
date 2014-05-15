@@ -23,9 +23,9 @@ class @InputHandler
       when key_tab
         new_focus = if e.shiftKey then @active_display.previous_display() else @active_display.next_display()
         this.set_active_display(new_focus)
-      when key_home        then this._fake_click_down(@dom_handler.reset)
-      when key_left_arrow  then this._fake_click_down(@dom_handler.prev)
-      when key_right_arrow then this._fake_click_down(@dom_handler.next)
+      when key_home, key_down_arrow then this._fake_click_down(@dom_handler.reset)
+      when key_left_arrow  then b = (if e.shiftKey then @dom_handler.reset else @dom_handler.prev); this._fake_click_down(b)
+      when key_right_arrow then b = (if e.shiftKey then @dom_handler.active_play_or_pause else @dom_handler.next); this._fake_click_down(b)
       when key_space       then this._fake_click_down(@dom_handler.active_play_or_pause)
       when key_C then this._rotate('up', 1)
       when key_Z then this._rotate('up',-1)
@@ -45,10 +45,10 @@ class @InputHandler
     unhandled = false
 
     switch e.keyCode
-      when key_home        then this._fake_click_up(@dom_handler.reset)
-      when key_left_arrow  then this._fake_click_up(@dom_handler.prev)
-      when key_right_arrow then this._fake_click_up(@dom_handler.next)
-      when key_space       then this._fake_click_up(@dom_handler.active_play_or_pause)
+      when key_home, key_left_arrow, key_right_arrow, key_space
+        if @down_button
+          this._fake_click_up(@down_button)
+          @down_button = null
       else
         unhandled = true
 
@@ -56,6 +56,7 @@ class @InputHandler
 
   @_fake_click_down: (button) ->
     unless button.attr("disabled")
+      @down_button = button
       button.addClass('roofpig-button-fake-active')
 
   @_fake_click_up: (button) ->
@@ -97,7 +98,9 @@ class @InputHandler
   key_space = 32
   key_home = 36
   key_left_arrow = 37
+  key_up_arrow = 38
   key_right_arrow = 39
+  key_down_arrow = 40
   key_A = 65
   key_C = 67
   key_D = 68
