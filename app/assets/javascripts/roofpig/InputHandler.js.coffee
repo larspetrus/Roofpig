@@ -17,8 +17,6 @@ class @InputHandler
     else
       turns = if e.ctrlKey then 2 else 1
 
-    unhandled = false
-
     switch e.keyCode
       when key_tab
         new_focus = if e.shiftKey then @active_display.previous_display() else @active_display.next_display()
@@ -37,22 +35,20 @@ class @InputHandler
       when key_K then this._move("F#{turns}")
       when key_L then this._move("R#{turns}")
       else
-        unhandled = true
+        handled = false
 
-    unhandled
+    !handled
 
   @key_up: (e) ->
-    unhandled = false
-
     switch e.keyCode
       when key_home, key_left_arrow, key_right_arrow, key_space
         if @down_button
           this._fake_click_up(@down_button)
           @down_button = null
       else
-        unhandled = true
+        handled = false
 
-    unhandled
+    !handled
 
   @_fake_click_down: (button) ->
     unless button.attr("disabled")
