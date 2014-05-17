@@ -1,7 +1,7 @@
 class @DomHandler
 
   constructor: (@display_id, @div, renderer) ->
-    @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", Lucida Grande, sans-serif')
+    @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", "Lucida Grande", sans-serif')
     this.has_focus(false)
     @div.data('dpid', @display_id)
 
