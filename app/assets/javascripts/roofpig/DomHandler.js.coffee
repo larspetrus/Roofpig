@@ -69,9 +69,13 @@ class @DomHandler
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
+  LUCIDA_WIDTHS = {'+': 100, ' ':40, "'":29, '2':80, '²':53, 'U':87, 'D':94, 'L':67, 'R':80, 'F':68, 'B':73}
   init_alg_text: (text) ->
     if @alg_text
-      font_size = 24 * @scale * Math.min(1, 34/text.length)
+      width = 0
+      width += LUCIDA_WIDTHS[char] for char in text.split('')
+
+      font_size = 24 * @scale * Math.min(1, 1970/width)
       @alg_text.height(1.2 * font_size).css("font-size": font_size)
 
   _show: (button, active) ->
