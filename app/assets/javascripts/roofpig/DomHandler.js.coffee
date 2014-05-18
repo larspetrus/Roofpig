@@ -38,8 +38,8 @@ class @DomHandler
     @place.html(place_text)
 
     if @alg_text
-      @alg_past.text(alg_texts.past + " ")
-      @alg_future.text(alg_texts.future)
+      @alg_past.text(alg_texts.past)
+      @alg_future.text(" "+ alg_texts.future)
 
   _active_play_or_pause: (playing, at_end) ->
     if at_end
@@ -52,10 +52,10 @@ class @DomHandler
     @div.append(@alg_area)
 
     if showalg
-      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eef", 'margin-bottom': '2px')
+      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eee", 'margin-bottom': '2px')
       @alg_area.append(@alg_text)
 
-      @alg_past = $("<span/>").css(color: '#888')
+      @alg_past = $("<span/>").css('background-color': "#ff9")
       @alg_future = $("<span/>")
       @alg_text.append(@alg_past, @alg_future)
 
