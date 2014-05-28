@@ -1,11 +1,11 @@
 #= require roofpig/Colors
 
 class @Config
-  constructor: (@config_dom, @prefs) ->
-    if typeof @prefs == 'string'
-      @prefs = Config._parse(@prefs)
+  constructor: (@config_dom, @baseconf) ->
+    if typeof @baseconf == 'string'
+      @baseconf = Config._parse(@baseconf)
 
-    @prefs ||= {}
+    @baseconf ||= {}
 
     @alg    = this._get("alg")
     @hover  = this._get("hover", 2.0)
@@ -15,14 +15,14 @@ class @Config
     @pov    = this._get("pov", "Ufr")
 
   @from_page: (config_dom) ->
-    prefs = window["ROOFPIG_PREF_" + config_dom.data("pref")]
-    new Config(config_dom, prefs)
+    baseconf = window["ROOFPIG_CONF_" + config_dom.data("baseconf")]
+    new Config(config_dom, baseconf)
 
   flag: (name) ->
     @flags.indexOf(name) > -1
 
   _get: (name, default_value = "") ->
-    @config_dom.data(name) || @prefs[name] || default_value
+    @config_dom.data(name) || @baseconf[name] || default_value
 
   @_parse: (config_string) ->
     result = {}

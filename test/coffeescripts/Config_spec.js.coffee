@@ -24,7 +24,7 @@ describe "Config", ->
       expect(config.flag("fast")).to.be.true
       expect(config.flag("slow")).to.be.false
 
-  describe "prefs", ->
+  describe "baseconf", ->
     prefs = { hover: "3.3"}
 
     it "reads prefs and config", ->
