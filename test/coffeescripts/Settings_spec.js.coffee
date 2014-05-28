@@ -18,6 +18,12 @@ describe "Settings", ->
       expect(settings.flag("fast")).to.be.true
       expect(settings.flag("slow")).to.be.false
 
+    it "handles moreflags", ->
+      settings = new Settings({ data: (name) -> {flags: "fast", moreflags: "shiny", }[name] })
+      expect(settings.flags).to.equal("fast shiny")
+      expect(settings.flag("fast")).to.be.true
+      expect(settings.flag("slow")).to.be.false
+
   describe "prefs", ->
     prefs = { hover: "3.3"}
 

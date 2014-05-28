@@ -6,7 +6,7 @@ class @Settings
 
     @alg    = this._get("alg")
     @hover  = this._get("hover", 2.0)
-    @flags  = this._get("flags")
+    @flags  = (this._get("flags") + ' ' + this._get("moreflags")).trim()
     @colors = new Colors(this._get("colored"), this._get("solved"), this._get("tweaks"), this._get("colors"))
     @setup  = this._get("setup")
     @pov    = this._get("pov", "Ufr")
