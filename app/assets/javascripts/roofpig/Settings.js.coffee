@@ -2,6 +2,9 @@
 
 class @Settings
   constructor: (@settings_dom, @prefs) ->
+    if typeof @prefs == 'string'
+      @prefs = Settings._parse(@prefs)
+
     @prefs ||= {}
 
     @alg    = this._get("alg")
@@ -20,3 +23,12 @@ class @Settings
 
   _get: (name, default_value = "") ->
     @settings_dom.data(name) || @prefs[name] || default_value
+
+  @_parse: (settings_string) ->
+    result = {}
+    for segment in settings_string.split("|")
+      eq_pos = segment.indexOf("=")
+      key = segment.substring(0, eq_pos).trim()
+      value = segment.substring(eq_pos+1).trim()
+      result[key] = value
+    result

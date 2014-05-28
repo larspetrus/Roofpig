@@ -35,3 +35,7 @@ describe "Settings", ->
     it "settings override prefs", ->
       settings = new Settings({ data: (name) -> {hover: "2.5"}[name] }, prefs)
       expect(settings.hover).to.equal("2.5")
+
+  describe "@_parse", ->
+    it "makes an object", ->
+      expect(Settings._parse("abc=123|x = 42")).to.deep.equal({abc: '123', x:'42'})
