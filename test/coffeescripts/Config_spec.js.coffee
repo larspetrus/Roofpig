@@ -25,15 +25,13 @@ describe "Config", ->
       expect(config.flag("slow")).to.be.false
 
   describe "baseconf", ->
-    prefs = { hover: "3.3"}
-
-    it "reads prefs and config", ->
-      config = new Config({ data: (name) -> {flags: "fast shiny"}[name] }, prefs)
+    it "reads config and baseconf", ->
+      config = new Config({ data: (name) -> {flags: "fast shiny"}[name] }, "hover=3.3")
       expect(config.flags).to.equal("fast shiny")
       expect(config.hover).to.equal("3.3")
 
-    it "config override prefs", ->
-      config = new Config({ data: (name) -> {hover: "2.5"}[name] }, prefs)
+    it "config overrides baseconf", ->
+      config = new Config({ data: (name) -> {hover: "2.5"}[name] }, "hover=3.3")
       expect(config.hover).to.equal("2.5")
 
   describe "@_parse", ->

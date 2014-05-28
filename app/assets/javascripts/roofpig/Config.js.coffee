@@ -1,11 +1,8 @@
 #= require roofpig/Colors
 
 class @Config
-  constructor: (@config_dom, @baseconf) ->
-    if typeof @baseconf == 'string'
-      @baseconf = Config._parse(@baseconf)
-
-    @baseconf ||= {}
+  constructor: (@config_dom, baseconf_string = "") ->
+    @baseconf = Config._parse(baseconf_string)
 
     @alg    = this._get("alg")
     @hover  = this._get("hover", 2.0)
