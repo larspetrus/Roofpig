@@ -11,13 +11,12 @@ class @Settings
     @setup  = this._get("setup")
     @pov    = this._get("pov", "Ufr")
 
-  _get: (name, default_value = "") ->
-    @settings_dom.data(name) || @prefs[name] || default_value
-
   @from_page: (settings_dom) ->
-    if settings_dom.data("pref")
-      prefs = window["ROOFPIG_PREF_" + settings_dom.data("pref")]
+    prefs = window["ROOFPIG_PREF_" + settings_dom.data("pref")]
     new Settings(settings_dom, prefs)
 
   flag: (name) ->
     @flags.indexOf(name) > -1
+
+  _get: (name, default_value = "") ->
+    @settings_dom.data(name) || @prefs[name] || default_value
