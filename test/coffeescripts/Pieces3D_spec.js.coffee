@@ -3,7 +3,7 @@
 
 mock_scene    = { add: -> }
 
-mock_settings = {
+mock_config = {
   hover: 1.0,
   colors: {
     to_draw: -> { hovers: true, color: 'red'}
@@ -12,7 +12,7 @@ mock_settings = {
 }
 describe "Pieces3D", ->
   it ".make_stickers() creates Pieces3D.UBL, Pieces3D.UL, Pieces3D.F etc", ->
-    pieces = new Pieces3D(mock_scene, mock_settings)
+    pieces = new Pieces3D(mock_scene, mock_config)
 
     for piece in [pieces.UBL, pieces.UL, pieces.U]
       expect(piece).to.be.defined
@@ -21,7 +21,7 @@ describe "Pieces3D", ->
       expect(piece).to.be.undefined
 
   it "keeps track of pieces and stickers", ->
-    pieces = new Pieces3D(mock_scene, mock_settings)
+    pieces = new Pieces3D(mock_scene, mock_config)
 
     expect(pieces.at.UFR.name).to.equal('UFR')
     expect(pieces.at.DR.name).to.equal('DR')
@@ -45,7 +45,7 @@ describe "Pieces3D", ->
   it "#solved", ->
     solved = 'B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR '
 
-    pieces = new Pieces3D(mock_scene, mock_settings)
+    pieces = new Pieces3D(mock_scene, mock_config)
     expect(pieces.state()).to.equal(solved)
 
     pieces.move(Side.R, 2)

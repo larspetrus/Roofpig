@@ -3,9 +3,9 @@
 
 # Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc are the 3D models for those pieces
 class @Pieces3D
-  constructor: (scene, settings) ->
+  constructor: (scene, config) ->
     @at = {}
-    this.make_stickers(scene, settings.hover, settings.colors)
+    this.make_stickers(scene, config.hover, config.colors)
 
   make_stickers: (scene, hover, colors) ->
     mid_slice = new Side("-", v3(0.0, 0.0, 0.0))

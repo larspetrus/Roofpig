@@ -4,11 +4,11 @@
 
 class @Colors
 
-  constructor: (colored, solved, tweaks, colors_settings = "") ->
+  constructor: (colored, solved, tweaks, colors = "") ->
     @colored = new Cubexp(colored || "*")
     @solved = new Cubexp(solved)
     @tweaks = new Tweaks(tweaks)
-    @side_colors = Colors._set_colors(colors_settings)
+    @side_colors = Colors._set_colors(colors)
 
   to_draw: (piece_name, side) ->
     result = { hovers: false, color: this.of(side) }
@@ -39,12 +39,12 @@ class @Colors
     @side_colors[type]
 
   DEFAULT_COLORS = {G:'#0d0', B:'#07f', R:'red', O:'orange', Y:'yellow', W:'#eee'}
-  @_set_colors: (colors_settings) ->
+  @_set_colors: (overrides) ->
     dc = DEFAULT_COLORS
     result = {R:dc.G, L:dc.B, F:dc.R, B:dc.O, U:dc.Y, D:dc.W, solved:'#444', ignored:'#888', plastic:'black'}
 
-    for setting in colors_settings.split(' ')
-      [type, color] = setting.split(':')
+    for override in overrides.split(' ')
+      [type, color] = override.split(':')
       type = {s:'solved', i:'ignored', p:'plastic'}[type] || type
       result[type] = DEFAULT_COLORS[color] || color
     result

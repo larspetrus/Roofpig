@@ -1,9 +1,9 @@
 #= require roofpig/Colors
 
-class @Settings
-  constructor: (@settings_dom, @prefs) ->
+class @Config
+  constructor: (@config_dom, @prefs) ->
     if typeof @prefs == 'string'
-      @prefs = Settings._parse(@prefs)
+      @prefs = Config._parse(@prefs)
 
     @prefs ||= {}
 
@@ -14,21 +14,21 @@ class @Settings
     @setup  = this._get("setup")
     @pov    = this._get("pov", "Ufr")
 
-  @from_page: (settings_dom) ->
-    prefs = window["ROOFPIG_PREF_" + settings_dom.data("pref")]
-    new Settings(settings_dom, prefs)
+  @from_page: (config_dom) ->
+    prefs = window["ROOFPIG_PREF_" + config_dom.data("pref")]
+    new Config(config_dom, prefs)
 
   flag: (name) ->
     @flags.indexOf(name) > -1
 
   _get: (name, default_value = "") ->
-    @settings_dom.data(name) || @prefs[name] || default_value
+    @config_dom.data(name) || @prefs[name] || default_value
 
-  @_parse: (settings_string) ->
+  @_parse: (config_string) ->
     result = {}
-    for segment in settings_string.split("|")
-      eq_pos = segment.indexOf("=")
-      key = segment.substring(0, eq_pos).trim()
-      value = segment.substring(eq_pos+1).trim()
+    for conf in config_string.split("|")
+      eq_pos = conf.indexOf("=")
+      key = conf.substring(0, eq_pos).trim()
+      value = conf.substring(eq_pos+1).trim()
       result[key] = value
     result

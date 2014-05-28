@@ -3,7 +3,7 @@
 #= require roofpig/InputHandler
 #= require roofpig/Move
 #= require roofpig/Pieces3D
-#= require roofpig/Settings
+#= require roofpig/Config
 
 class @Display
   @unique_id = 0
@@ -26,9 +26,9 @@ class @Display
     @id = Display.unique_id += 1
     Display.instances[@id] = this
 
-    @settings = Settings.from_page(roofpig_div)
+    @config = Config.from_page(roofpig_div)
 
-    if @settings.flag('canvas') || not webgl_works
+    if @config.flag('canvas') || not webgl_works
       @renderer = new THREE.CanvasRenderer()
     else
       @renderer = new THREE.WebGLRenderer(antialias: true)
@@ -36,17 +36,17 @@ class @Display
     @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
 
     @scene = new THREE.Scene()
-    @camera = new Camera(@settings.hover, @settings.pov)
-    @world3d = { pieces: new Pieces3D(@scene, @settings), camera: @camera }
+    @camera = new Camera(@config.hover, @config.pov)
+    @world3d = { pieces: new Pieces3D(@scene, @config), camera: @camera }
 
-    if (@settings.setup)
-      setup_alg = new Alg(@settings.setup)
+    if (@config.setup)
+      setup_alg = new Alg(@config.setup)
       until setup_alg.at_end()
         setup_alg.next_move().do(@world3d)
 
-    unless @settings.alg == ""
-      @dom_handler.add_alg_area(@settings.flag('showalg'))
-      @alg = new Alg(@settings.alg, @dom_handler).premix(@world3d)
+    unless @config.alg == ""
+      @dom_handler.add_alg_area(@config.flag('showalg'))
+      @alg = new Alg(@config.alg, @dom_handler).premix(@world3d)
 
     @changers = {}
     this.force_render()
