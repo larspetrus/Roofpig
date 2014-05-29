@@ -26,7 +26,7 @@ class @Display
     @id = Display.unique_id += 1
     Display.instances[@id] = this
 
-    @config = Config.from_page(roofpig_div)
+    @config = new Config(roofpig_div.data('config'))
 
     if @config.flag('canvas') || not webgl_works
       @renderer = new THREE.CanvasRenderer()

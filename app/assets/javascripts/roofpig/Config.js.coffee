@@ -1,8 +1,13 @@
 #= require roofpig/Colors
 
 class @Config
-  constructor: (@config_dom, baseconf_string = "") ->
-    @baseconf = Config._parse(baseconf_string)
+  constructor: (config_string) ->
+    @config   = Config._parse(config_string)
+
+    base_string = window["ROOFPIG_CONF_" + @config['base']]
+    if @config['base'] && not base_string
+      log_error("'ROOFPIG_CONF_#{@config['base']}' does not exist")
+    @base = Config._parse(base_string)
 
     @alg    = this._get("alg")
     @hover  = this._get("hover", 2.0)
@@ -11,17 +16,15 @@ class @Config
     @setup  = this._get("setup")
     @pov    = this._get("pov", "Ufr")
 
-  @from_page: (config_dom) ->
-    baseconf = window["ROOFPIG_CONF_" + config_dom.data("baseconf")]
-    new Config(config_dom, baseconf)
-
   flag: (name) ->
     @flags.indexOf(name) > -1
 
   _get: (name, default_value = "") ->
-    @config_dom.data(name) || @baseconf[name] || default_value
+    @config[name] || @base[name] || default_value
 
   @_parse: (config_string) ->
+    return {} unless config_string
+
     result = {}
     for conf in config_string.split("|")
       eq_pos = conf.indexOf("=")
