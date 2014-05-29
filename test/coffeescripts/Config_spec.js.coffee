@@ -33,13 +33,21 @@ describe "Config", ->
       expect(config.hover).to.equal("3.3")
 
     it "config overrides base", ->
-      config = new Config("hover=2.5| base=TEST")
-      expect(config.hover).to.equal("2.5")
+      expect(new Config("hover=2.5| base=TEST").hover).to.equal("2.5")
 
     it "handles non existent base", ->
-      config = new Config("hover=2.5| base=NOTHING")
-      expect(config.hover).to.equal("2.5")
+      expect(new Config("hover=2.5| base=NOTHING").hover).to.equal("2.5")
       #TODO expect error message
+
+    it "recurses", ->
+      window["ROOFPIG_CONF_T1"] = "flags=t1"
+      window["ROOFPIG_CONF_T2"] = "base=T1 | moreflags=t2"
+      expect(new Config("hover=2.5| base=T2").flags).to.equal("t1 t2")
+
+    it "breaks infinite recursion", ->
+      window["ROOFPIG_CONF_ME"] = "base=ME | flags=abc"
+      expect(new Config("hover=2.5| base=ME").flags).to.equal("abc")
+
 
   describe "@_parse", ->
     it "makes an object", ->

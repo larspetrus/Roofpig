@@ -2,25 +2,33 @@
 
 class @Config
   constructor: (config_string) ->
-    @config   = Config._parse(config_string)
+    @raw_input = Config._parse(config_string)
+    @base = this.base_config(@raw_input['base'], config_string)
 
-    base_string = window["ROOFPIG_CONF_" + @config['base']]
-    if @config['base'] && not base_string
-      log_error("'ROOFPIG_CONF_#{@config['base']}' does not exist")
-    @base = Config._parse(base_string)
-
-    @alg    = this._get("alg")
-    @hover  = this._get("hover", 2.0)
-    @flags  = (this._get("flags") + ' ' + this._get("moreflags")).trim()
-    @colors = new Colors(this._get("colored"), this._get("solved"), this._get("tweaks"), this._get("colors"))
-    @setup  = this._get("setup")
-    @pov    = this._get("pov", "Ufr")
+    @alg    = this.raw("alg")
+    @hover  = this.raw("hover", 2.0)
+    @flags  = (this.raw("flags") + ' ' + this.raw("moreflags")).trim()
+    @colors = new Colors(this.raw("colored"), this.raw("solved"), this.raw("tweaks"), this.raw("colors"))
+    @setup  = this.raw("setup")
+    @pov    = this.raw("pov", "Ufr")
 
   flag: (name) ->
     @flags.indexOf(name) > -1
 
-  _get: (name, default_value = "") ->
-    @config[name] || @base[name] || default_value
+  raw: (name, default_value = "") ->
+    @raw_input[name] || @base.raw(name) || default_value
+
+  base_config: (base_id, config_string) ->
+    base_string = window["ROOFPIG_CONF_" + base_id]
+    if base_id && not base_string
+      log_error("'ROOFPIG_CONF_#{base_id}' does not exist")
+
+    if config_string && config_string == base_string
+      log_error("#{base_string} tries to inherit from itself.")
+      base_string = null
+
+    if base_string then new Config(base_string) else { raw: -> }
+
 
   @_parse: (config_string) ->
     return {} unless config_string
