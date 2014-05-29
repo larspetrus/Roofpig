@@ -16,7 +16,7 @@ The HEAD tag of your page should look like this:
   <script src="roofpig.js"></script>
 ```
 
-To make a cube appear, put a div with the class 'roofpig' on the page:
+When you put a div with class='roofpig' on that page, a cube will then appear.
 
 ```html
   <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
@@ -35,7 +35,7 @@ Configuration
 
 Typically an animated cube shows some moves solving the cube to a desired state.
 
-The basic Roofpig usage is to (1) define that 'finished' state, and (2) the moves to get there.
+The basic Roofpig usage is to define (1) that finished state, and (2) the moves to get there.
 
 **Cubexp**
 
