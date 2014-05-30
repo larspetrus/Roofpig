@@ -33,9 +33,8 @@ class @Move
     this._do(world3d.pieces, -@turns, true)
 
   _do: (pieces3d, do_turns, animate) ->
-    animation_pieces = pieces3d.on(@side)
     pieces3d.move(@side, do_turns)
-    new MoveExecution(animation_pieces, @side.normal, do_turns * -Math.PI/2, @turn_time, animate)
+    new MoveExecution(pieces3d.on(@side), @side.normal, do_turns * -Math.PI/2, @turn_time, animate)
 
   count: -> 1
 
