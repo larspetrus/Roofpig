@@ -43,7 +43,6 @@ class @Side
     geo.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
 
     # http://stackoverflow.com/questions/20734216/when-should-i-call-geometry-computeboundingbox-etc
-    geo.computeCentroids();
     geo.computeFaceNormals();
     geo.computeBoundingSphere();
 

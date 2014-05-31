@@ -29,9 +29,9 @@ class @Display
     @config = new Config(roofpig_div.data('config'))
 
     if @config.flag('canvas') || not webgl_works
-      @renderer = new THREE.CanvasRenderer()
+      @renderer = new THREE.CanvasRenderer(alpha: true) # alpha -> transparent
     else
-      @renderer = new THREE.WebGLRenderer(antialias: true)
+      @renderer = new THREE.WebGLRenderer(antialias: true, alpha: true)
 
     @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
 
