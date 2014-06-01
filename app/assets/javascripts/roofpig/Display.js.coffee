@@ -57,7 +57,7 @@ class @Display
     this.animate()
 
 
-  # this function is executed on each animation frame
+  # this is called for each redraw
   animate: ->
     now = (new Date()).getTime()
 
@@ -76,11 +76,11 @@ class @Display
     if @changers[category] then @changers[category].finish()
     @changers[category] = changer
 
-  next: ->
+  to_next: ->
     unless @alg.at_end()
       this.add_changer('move', @alg.next_move().show_do(@world3d))
 
-  prev: ->
+  to_prev: ->
     unless @alg.at_start()
       this.add_changer('move', @alg.prev_move().show_undo(@world3d))
 
@@ -104,9 +104,9 @@ class @Display
       when 'pause'
         @alg.stop()
       when 'next'
-        this.next()
+        this.to_next()
       when 'prev'
-        this.prev()
+        this.to_prev()
       when 'reset'
         this.to_start()
 
