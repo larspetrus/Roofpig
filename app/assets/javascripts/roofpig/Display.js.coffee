@@ -1,9 +1,10 @@
 #= require roofpig/Alg
+#= require roofpig/Config
 #= require roofpig/DomHandler
 #= require roofpig/InputHandler
 #= require roofpig/Move
+#= require roofpig/OneChange
 #= require roofpig/Pieces3D
-#= require roofpig/Config
 
 class @Display
   @unique_id = 0
@@ -48,17 +49,14 @@ class @Display
       @dom_handler.add_alg_area(@config.flag('showalg'))
       @alg = new Alg(@config.alg, @dom_handler).premix(@world3d)
 
-    @changers = {}
-    this.force_render()
-
     if @id == 1
       InputHandler.set_active_display(this)
 
-    this.animate()
+    @changers = {}
+    this.animate(true)
 
 
-  # this is called for each redraw
-  animate: ->
+  animate: (first_time = false) ->  # called for each redraw
     now = (new Date()).getTime()
 
     for own category, changer of @changers
@@ -67,7 +65,7 @@ class @Display
         if changer.finished() then @changers[category] = null
         any_change = true
 
-    if any_change
+    if any_change || first_time
       @renderer.render @scene, @camera.cam
 
     requestAnimationFrame => this.animate() # request next frame
@@ -76,41 +74,20 @@ class @Display
     if @changers[category] then @changers[category].finish()
     @changers[category] = changer
 
-  to_next: ->
-    unless @alg.at_end()
-      this.add_changer('move', @alg.next_move().show_do(@world3d))
-
-  to_prev: ->
-    unless @alg.at_start()
-      this.add_changer('move', @alg.prev_move().show_undo(@world3d))
-
-  to_start: ->
-    until @alg.at_start()
-      @alg.prev_move().undo(@world3d)
-    this.force_render()
-
-  to_end: ->
-    until @alg.at_end()
-      @alg.next_move().do(@world3d)
-    this.force_render()
-
   button_click: (name, shift) ->
     switch name
       when 'play'
         unless shift
           this.add_changer('move', @alg.play(@world3d))
         else
-          this.to_end()
+          this.add_changer('move', new OneChange( => @alg.to_end(@world3d)))
       when 'pause'
         @alg.stop()
       when 'next'
-        this.to_next()
+        unless @alg.at_end()
+          this.add_changer('move', @alg.next_move().show_do(@world3d))
       when 'prev'
-        this.to_prev()
+        unless @alg.at_start()
+          this.add_changer('move', @alg.prev_move().show_undo(@world3d))
       when 'reset'
-        this.to_start()
-
-  force_render: ->
-    null_func = ->
-    true_func = -> true
-    this.add_changer('force_render', { finished: true_func, finish: null_func, update: null_func })
+        this.add_changer('move', new OneChange( => @alg.to_start(@world3d)))

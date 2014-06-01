@@ -16,35 +16,6 @@ class @Alg
     @playing = false
     this._update_dom('first time')
 
-  _pre_process: ->
-    switch @move_codes.substring(0, 6)
-      when 'shift>' then shift = 1
-      when 'shift2' then shift = 2
-      when 'shift<' then shift = 3
-
-    if shift
-      shifted_codes = ""
-      for char in @move_codes.substring(6).split('')
-        shifted_codes += Side.D.shift(char, shift) || char
-      @move_codes = shifted_codes
-
-  @_make_action: (code) ->
-    if code.indexOf('+') > -1
-      moves = (Alg._make_action(code) for code in code.split('+'))
-      new CompositeMove(moves)
-    else
-      if code.indexOf('>') > -1 || code.indexOf('<') > -1
-        new Rotation(code)
-      else
-        new Move(code)
-
-
-  premix: (world3d) ->
-    @next =  @actions.length
-    until this.at_start()
-      this.prev_move().premix(world3d)
-    this
-
   next_move: ->
     unless this.at_end()
       @next += 1
@@ -67,11 +38,25 @@ class @Alg
     @playing = false
     this._update_dom()
 
+  to_end: (world3d) ->
+    until this.at_end()
+      this.next_move().do(world3d)
+
+  to_start: (world3d) ->
+    until this.at_start()
+      this.prev_move().undo(world3d)
+
   at_start: ->
     @next == 0
 
   at_end: ->
     @next == @actions.length
+
+  premix: (world3d) ->
+    @next =  @actions.length
+    until this.at_start()
+      this.prev_move().premix(world3d)
+    this
 
   to_s: ->
     (@actions.map (move) -> move.to_s()).join(' ')
@@ -84,6 +69,28 @@ class @Alg
       if action.standard_text()
         active.push(action.standard_text())
     { past: past.join(' '), future: future.join(' ')}
+
+  _pre_process: ->
+    switch @move_codes.substring(0, 6)
+      when 'shift>' then shift = 1
+      when 'shift2' then shift = 2
+      when 'shift<' then shift = 3
+
+    if shift
+      shifted_codes = ""
+      for char in @move_codes.substring(6).split('')
+        shifted_codes += Side.D.shift(char, shift) || char
+      @move_codes = shifted_codes
+
+  @_make_action: (code) ->
+    if code.indexOf('+') > -1
+      moves = (Alg._make_action(code) for code in code.split('+'))
+      new CompositeMove(moves)
+    else
+      if code.indexOf('>') > -1 || code.indexOf('<') > -1
+        new Rotation(code)
+      else
+        new Move(code)
 
   _update_dom: (time = 'later') ->
     return unless @dom_handler

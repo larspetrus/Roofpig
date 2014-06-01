@@ -1,4 +1,5 @@
 #= require roofpig/utils
+#= require roofpig/OneChange
 
 #This is all global data and functions. Think of it as a "singleton" class.
 class @InputHandler
@@ -21,7 +22,7 @@ class @InputHandler
       this.set_active_display(new_focus)
 
     else if key == key_up_arrow
-      @active_display.to_end()
+      @active_display.add_changer('move', new OneChange( => @active_display.alg.to_end(@active_display.world3d)))
 
     else if key in button_keys
       this._fake_click_down(this._button_for(key, shift))
@@ -80,8 +81,7 @@ class @InputHandler
       @bending = true
 
   @mouse_end: (e) ->
-    @camera.bend(0, 0)
-    @active_display.force_render()
+    @active_display.add_changer('spin', new OneChange( => @camera.bend(0, 0)))
     @bending = false
 
   @mouse_move: (e) ->
@@ -90,8 +90,7 @@ class @InputHandler
       dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
       if e.shiftKey
         dy = 0
-      @camera.bend(dx, dy)
-      @active_display.force_render()
+      @active_display.add_changer('spin', new OneChange( => @camera.bend(dx, dy)))
 
   @_rotate: (axis_name, turns) ->
     angle_to_turn = -Math.PI/2 * turns
