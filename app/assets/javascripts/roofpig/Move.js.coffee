@@ -1,4 +1,4 @@
-#= require roofpig/MoveExecution
+#= require roofpig/WorldChangers
 #= require roofpig/Side
 
 class @Move

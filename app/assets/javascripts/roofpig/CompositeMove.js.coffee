@@ -1,5 +1,5 @@
 #= require roofpig/Move
-#= require roofpig/ConcurrentChangers
+#= require roofpig/WorldChangers
 
 class @CompositeMove
   constructor: (@actions) ->

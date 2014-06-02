@@ -3,8 +3,8 @@
 #= require roofpig/DomHandler
 #= require roofpig/EventHandlers
 #= require roofpig/Move
-#= require roofpig/OneChange
 #= require roofpig/Pieces3D
+#= require roofpig/WorldChangers
 
 class @Display
   @unique_id = 0
@@ -52,17 +52,17 @@ class @Display
     if @id == 1
       EventHandlers.set_active_display(this)
 
-    @changers = {}
+    @sub_changers = {}
     this.animate(true)
 
 
   animate: (first_time = false) ->  # called for each redraw
     now = (new Date()).getTime()
 
-    for own category, changer of @changers
+    for own category, changer of @sub_changers
       if changer
         changer.update(now)
-        if changer.finished() then @changers[category] = null
+        if changer.finished() then @sub_changers[category] = null
         any_change = true
 
     if any_change || first_time
@@ -71,8 +71,8 @@ class @Display
     requestAnimationFrame => this.animate() # request next frame
 
   add_changer: (category, changer) ->
-    if @changers[category] then @changers[category].finish()
-    @changers[category] = changer
+    if @sub_changers[category] then @sub_changers[category].finish()
+    @sub_changers[category] = changer
 
   button_click: (name, shift) ->
     switch name

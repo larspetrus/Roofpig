@@ -1,5 +1,5 @@
 #= require roofpig/utils
-#= require roofpig/OneChange
+#= require roofpig/WorldChangers
 
 #This is all page wide data and functions.
 class @EventHandlers
