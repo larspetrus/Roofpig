@@ -10,11 +10,11 @@ class @CubeAnimation
   @unique_id = 0
   @instances = []
 
-  next_display: ->
+  next_cube: ->
     next_id = (@id % CubeAnimation.unique_id) + 1
     CubeAnimation.instances[next_id]
 
-  previous_display: ->
+  previous_cube: ->
     prev_id = ((@id + CubeAnimation.unique_id - 2) % CubeAnimation.unique_id) + 1
     CubeAnimation.instances[prev_id]
 
@@ -50,7 +50,7 @@ class @CubeAnimation
       @alg = new Alg(@config.alg, @dom_handler).premix(@world3d)
 
     if @id == 1
-      EventHandlers.set_active_display(this)
+      EventHandlers.set_focus(this)
 
     @changers = {}
     this.animate(true)

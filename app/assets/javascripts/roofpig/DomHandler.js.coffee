@@ -1,9 +1,9 @@
 class @DomHandler
 
-  constructor: (@display_id, @div, renderer) ->
+  constructor: (@cube_id, @div, renderer) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", "Lucida Grande", sans-serif')
     this.has_focus(false)
-    @div.data('dpid', @display_id)
+    @div.data('dpid', @cube_id)
 
     renderer.setSize(@div.width(), @div.width())
     @div.append(renderer.domElement);
@@ -88,7 +88,7 @@ class @DomHandler
       button.removeClass('roofpig-button-enabled')
 
   _make_button: (text, id) ->
-    button = $("<button/>", { text: text, id: id, 'data-dpid': @display_id })
+    button = $("<button/>", { text: text, id: id, 'data-dpid': @cube_id })
     @alg_area.append(button)
 
     button.addClass('roofpig-button')

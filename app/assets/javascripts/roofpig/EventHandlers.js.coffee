@@ -4,12 +4,12 @@
 #This is all page wide data and functions.
 class @EventHandlers
 
-  @set_active_display: (new_active) ->
-    @dom_handler.has_focus(false) if @active_display
+  @set_focus: (new_focus) ->
+    @dom_handler.has_focus(false) if @focus
 
-    @active_display = new_active
-    @camera = @active_display.camera
-    @dom_handler = @active_display.dom_handler
+    @focus = new_focus
+    @camera = @focus.camera
+    @dom_handler = @focus.dom_handler
 
     @dom_handler.has_focus(true)
 
@@ -23,25 +23,25 @@ class @EventHandlers
     $("body").mousemove (e)     -> EventHandlers.mouse_move(e)
 
     $('.roofpig').click ->
-      display = CubeAnimation.instances[$(this).data('dpid')]
-      EventHandlers.set_active_display(display)
+      cube = CubeAnimation.instances[$(this).data('dpid')]
+      EventHandlers.set_focus(cube)
 
     $("button").click (e) ->
-      display = CubeAnimation.instances[$(this).data('dpid')]
-      display.button_click($(this).attr("id"), e.shiftKey)
+      cube = CubeAnimation.instances[$(this).data('dpid')]
+      cube.button_click($(this).attr("id"), e.shiftKey)
 
 
   # ---- Mouse Events ----
 
-  @mouse_down: (e, target_display_id) ->
-    if target_display_id == @active_display.id
+  @mouse_down: (e, target_cube_id) ->
+    if target_cube_id == @focus.id
       @bend_start_x = e.pageX
       @bend_start_y = e.pageY
 
       @bending = true
 
   @mouse_end: (e) ->
-    @active_display.add_changer('spin', new OneChange( => @camera.bend(0, 0)))
+    @focus.add_changer('spin', new OneChange( => @camera.bend(0, 0)))
     @bending = false
 
   @mouse_move: (e) ->
@@ -50,7 +50,7 @@ class @EventHandlers
       dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
       if e.shiftKey
         dy = 0
-      @active_display.add_changer('spin', new OneChange( => @camera.bend(dx, dy)))
+      @focus.add_changer('spin', new OneChange( => @camera.bend(dx, dy)))
 
 
   # ---- Keyboard Events ----
@@ -59,11 +59,11 @@ class @EventHandlers
     [key, shift, ctrl] = [e.keyCode, e.shiftKey, e.ctrlKey]
 
     if key == key_tab
-      new_focus = if shift then @active_display.previous_display() else @active_display.next_display()
-      this.set_active_display(new_focus)
+      new_focus = if shift then @focus.previous_cube() else @focus.next_cube()
+      this.set_focus(new_focus)
 
     else if key == key_up_arrow
-      @active_display.add_changer('move', new OneChange( => @active_display.alg.to_end(@active_display.world3d)))
+      @focus.add_changer('move', new OneChange( => @focus.alg.to_end(@focus.world3d)))
 
     else if key in button_keys
       this._fake_click_down(this._button_for(key, shift))
@@ -116,10 +116,10 @@ class @EventHandlers
 
   @_rotate: (axis_name, turns) ->
     angle_to_turn = -Math.PI/2 * turns
-    @active_display.add_changer('spin', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
+    @focus.add_changer('spin', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
 
   @_move: (side, turns) ->
-    @active_display.add_changer('move', new Move(side, turns).show_do(@active_display.world3d))
+    @focus.add_changer('move', new Move(side, turns).show_do(@focus.world3d))
 
 
   # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes

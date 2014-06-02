@@ -10,7 +10,7 @@ mock_div = {
   append: ->
 }
 
-new_display = -> new CubeAnimation(mock_div, true, true)
+new_cube = -> new CubeAnimation(mock_div, true, true)
 
 describe "CubeAnimation", ->
   beforeEach ->
@@ -18,28 +18,28 @@ describe "CubeAnimation", ->
     CubeAnimation.instances = []
 
   it "gives the keyboard focus to the first CubeAnimation created", ->
-    expect(EventHandlers.active_display).to.equal(undefined)
+    expect(EventHandlers.focus).to.equal(undefined)
 
-    d1 = new_display()
-    expect(EventHandlers.active_display).to.equal(d1)
+    c1 = new_cube()
+    expect(EventHandlers.focus).to.equal(c1)
 
-    d2 = new_display()
-    expect(EventHandlers.active_display).to.equal(d1)
+    c2 = new_cube()
+    expect(EventHandlers.focus).to.equal(c1)
 
-  it "@id, #next_display(), #previous_display()", ->
-    d1 = new_display()
-    d2 = new_display()
-    d3 = new_display()
+  it "@id, #next_cube(), #previous_cube()", ->
+    c1 = new_cube()
+    c2 = new_cube()
+    c3 = new_cube()
 
-    expect(d1.id).to.equal(1)
-    expect(d2.id).to.equal(2)
-    expect(d3.id).to.equal(3)
+    expect(c1.id).to.equal(1)
+    expect(c2.id).to.equal(2)
+    expect(c3.id).to.equal(3)
 
-    expect(d1.next_display(), 1).to.equal(d2)
-    expect(d2.next_display(), 2).to.equal(d3)
-    expect(d3.next_display(), 3).to.equal(d1)
+    expect(c1.next_cube()).to.equal(c2)
+    expect(c2.next_cube()).to.equal(c3)
+    expect(c3.next_cube()).to.equal(c1)
 
-    expect(d1.previous_display(), 4).to.equal(d3)
-    expect(d2.previous_display(), 5).to.equal(d1)
-    expect(d3.previous_display(), 6).to.equal(d2)
+    expect(c1.previous_cube()).to.equal(c3)
+    expect(c2.previous_cube()).to.equal(c1)
+    expect(c3.previous_cube()).to.equal(c2)
 
