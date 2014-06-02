@@ -16,7 +16,7 @@ class @DomHandler
     cursor = if has_it then 'pointer' else 'default'
     @div.css(border: "2px solid #{color}", cursor: cursor)
 
-  alg_changed: (playing, at_start, at_end, place_text, alg_texts) ->
+  alg_changed: (playing, at_start, at_end, count_text, alg_texts) ->
     if playing
       for button in @buttons
         if button == @play
@@ -33,19 +33,13 @@ class @DomHandler
           when @pause
             button.hide()
 
-    @active_play_or_pause = this._active_play_or_pause(playing, at_end)
+    @play_or_pause = if playing then @pause else @play
 
-    @place.html(place_text)
+    @count.html(count_text)
 
     if @alg_text
       @alg_past.text(alg_texts.past)
       @alg_future.text(" "+ alg_texts.future)
-
-  _active_play_or_pause: (playing, at_end) ->
-    if at_end
-      return { click: -> }
-
-    if playing then @pause else @play
 
   add_alg_area: (showalg) ->
     @alg_area = $("<div/>").height(@div.height() - @div.width()).width(@div.width()).css("border-top": "1px solid #ccc")
@@ -65,7 +59,7 @@ class @DomHandler
     @pause = this._make_button("Ⅱ", "pause")
     @play  = this._make_button("▶", "play")
 
-    @place = this._make_place_area()
+    @count = this._make_count_area()
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
@@ -94,7 +88,7 @@ class @DomHandler
     button.addClass('roofpig-button')
     button.css('font-size': 28*@hscale, float: 'left', height: 40*@hscale, width: 76*@scale)
 
-  _make_place_area: ->
-    place_div = $("<div/>", { id: 'place' }).css('text-align': 'right', float: 'right')
-    @alg_area.append(place_div)
-    place_div.height(40*@hscale).width(80*@scale).css("font-size", 24*@hscale)
+  _make_count_area: ->
+    count_div = $("<div/>", { id: 'count' }).css('text-align': 'right', float: 'right')
+    @alg_area.append(count_div)
+    count_div.height(40*@hscale).width(80*@scale).css("font-size", 24*@hscale)

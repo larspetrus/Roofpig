@@ -77,17 +77,15 @@ class @CubeAnimation
   button_click: (name, shift) ->
     switch name
       when 'play'
-        unless shift
-          this.add_changer('move', @alg.play(@world3d))
-        else
-          this.add_changer('move', new OneChange( => @alg.to_end(@world3d)))
+        changer = unless shift then @alg.play(@world3d) else new OneChange( => @alg.to_end(@world3d))
       when 'pause'
         @alg.stop()
       when 'next'
-        unless @alg.at_end()
-          this.add_changer('move', @alg.next_move().show_do(@world3d))
+        changer = @alg.next_move().show_do(@world3d) unless @alg.at_end()
       when 'prev'
-        unless @alg.at_start()
-          this.add_changer('move', @alg.prev_move().show_undo(@world3d))
+        changer = @alg.prev_move().show_undo(@world3d) unless @alg.at_start()
       when 'reset'
-        this.add_changer('move', new OneChange( => @alg.to_start(@world3d)))
+        changer = new OneChange( => @alg.to_start(@world3d))
+
+    if changer
+      this.add_changer('move', changer)

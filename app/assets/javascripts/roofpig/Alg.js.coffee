@@ -98,9 +98,9 @@ class @Alg
     if time == 'first time'
       @dom_handler.init_alg_text(this.standard_text().future)
 
-    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), this._place_text(), this.standard_text())
+    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), this._count_text(), this.standard_text())
 
-  _place_text: ->
+  _count_text: ->
     total = current = 0
     for move, i in @actions
       current += move.count() if @next > i

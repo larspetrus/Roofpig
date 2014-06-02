@@ -92,9 +92,9 @@ class @EventHandlers
       when key_left_arrow
         if shift then @dom_handler.reset else @dom_handler.prev
       when key_right_arrow
-        if shift then @dom_handler.active_play_or_pause else @dom_handler.next
+        if shift then @dom_handler.play_or_pause else @dom_handler.next
       when key_space
-        @dom_handler.active_play_or_pause
+        @dom_handler.play_or_pause
 
   @key_up: (e) ->
     button_key = e.keyCode in button_keys
