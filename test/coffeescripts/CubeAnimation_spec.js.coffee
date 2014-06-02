@@ -1,6 +1,6 @@
 #= require three.min
 #= require roofpig/Camera
-#= require roofpig/Display
+#= require roofpig/CubeAnimation
 #= require roofpig/EventHandlers
 
 mock_div = {
@@ -10,14 +10,14 @@ mock_div = {
   append: ->
 }
 
-new_display = -> new Display(mock_div, true, true)
+new_display = -> new CubeAnimation(mock_div, true, true)
 
-describe "Display", ->
+describe "CubeAnimation", ->
   beforeEach ->
-    Display.unique_id = 0
-    Display.instances = []
+    CubeAnimation.unique_id = 0
+    CubeAnimation.instances = []
 
-  it "gives the keyboard focus to the first Display created", ->
+  it "gives the keyboard focus to the first CubeAnimation created", ->
     expect(EventHandlers.active_display).to.equal(undefined)
 
     d1 = new_display()

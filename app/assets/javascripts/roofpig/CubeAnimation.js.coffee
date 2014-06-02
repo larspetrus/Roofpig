@@ -6,17 +6,17 @@
 #= require roofpig/Pieces3D
 #= require roofpig/WorldChangers
 
-class @Display
+class @CubeAnimation
   @unique_id = 0
   @instances = []
 
   next_display: ->
-    next_id = (@id % Display.unique_id) + 1
-    Display.instances[next_id]
+    next_id = (@id % CubeAnimation.unique_id) + 1
+    CubeAnimation.instances[next_id]
 
   previous_display: ->
-    prev_id = ((@id + Display.unique_id - 2) % Display.unique_id) + 1
-    Display.instances[prev_id]
+    prev_id = ((@id + CubeAnimation.unique_id - 2) % CubeAnimation.unique_id) + 1
+    CubeAnimation.instances[prev_id]
 
   constructor: (roofpig_div, webgl_works, canvas_works) ->
     unless canvas_works
@@ -24,8 +24,8 @@ class @Display
       roofpig_div.css(background: '#f66')
       return
 
-    @id = Display.unique_id += 1
-    Display.instances[@id] = this
+    @id = CubeAnimation.unique_id += 1
+    CubeAnimation.instances[@id] = this
 
     @config = new Config(roofpig_div.data('config'))
 

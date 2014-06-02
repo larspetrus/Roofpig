@@ -23,11 +23,11 @@ class @EventHandlers
     $("body").mousemove (e)     -> EventHandlers.mouse_move(e)
 
     $('.roofpig').click ->
-      display = Display.instances[$(this).data('dpid')]
+      display = CubeAnimation.instances[$(this).data('dpid')]
       EventHandlers.set_active_display(display)
 
     $("button").click (e) ->
-      display = Display.instances[$(this).data('dpid')]
+      display = CubeAnimation.instances[$(this).data('dpid')]
       display.button_click($(this).attr("id"), e.shiftKey)
 
 

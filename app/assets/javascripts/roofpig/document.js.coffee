@@ -15,6 +15,6 @@ $(document).ready ->
     log_error("No Canvas support in this browser. Giving up.")
 
   for roofpig_div in $('.roofpig')
-    new Display($(roofpig_div), webgl_browser, canvas_browser)
+    new CubeAnimation($(roofpig_div), webgl_browser, canvas_browser)
 
   EventHandlers.initialize()
