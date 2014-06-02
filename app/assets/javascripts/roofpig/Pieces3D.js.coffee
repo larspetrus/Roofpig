@@ -26,7 +26,7 @@ class @Pieces3D
               side.make_sticker(new_piece, mid_point, sticker)
 
               if sticker.hovers && hover > 1
-                side.make_reverse_sticker(new_piece, mid_point, sticker, hover)
+                side.make_hover_sticker(new_piece, mid_point, sticker, hover)
 
               side.make_plastic(new_piece, mid_point, colors.of('plastic'))
 
@@ -42,7 +42,7 @@ class @Pieces3D
   move: (side, turns) ->
     positive_turns = (turns + 4) % 4
     this._track_stickers(side, positive_turns)
-    this._track_pieces(positive_turns, side.cycle1, side.cycle2)
+    this._track_pieces(positive_turns, side.corner_cycle, side.edge_cycle)
 
   state: ->
     result = ""
@@ -54,10 +54,10 @@ class @Pieces3D
     for piece in this.on(side)
       piece.sticker_locations = (side.shift(item, turns) for item in piece.sticker_locations)
 
-  _track_pieces: (turns, cycle1, cycle2) ->
+  _track_pieces: (turns, corner_cycle, edge_cycle) ->
     for n in [1..turns]
-      this._permute(cycle1)
-      this._permute(cycle2)
+      this._permute(corner_cycle)
+      this._permute(edge_cycle)
 
   _permute: (p) ->
     [@at[p[0]], @at[p[1]], @at[p[2]], @at[p[3]]] = [@at[p[1]], @at[p[2]], @at[p[3]], @at[p[0]]]

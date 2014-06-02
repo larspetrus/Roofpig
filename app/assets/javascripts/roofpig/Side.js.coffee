@@ -1,8 +1,8 @@
 #= require roofpig/utils
 
 class @Side
-  constructor: (@name, @normal, @cycle1, @cycle2, also, @sticker_cycle) ->
-    @positions = @cycle1.concat(@cycle2, also) if @cycle1
+  constructor: (@name, @normal, @corner_cycle, @edge_cycle, center, @sticker_cycle) ->
+    @positions = @corner_cycle.concat(@edge_cycle, center) if @corner_cycle
 
   make_sticker: (obj_3d, piece_center, sticker) ->
     [dx, dy] = this._offsets(0.90, false)
@@ -11,7 +11,7 @@ class @Side
     if sticker.x_color
       this.make_X(obj_3d, piece_center, sticker.x_color, 1.0004, true)
 
-  make_reverse_sticker: (obj_3d, piece_center, sticker, hover) ->
+  make_hover_sticker: (obj_3d, piece_center, sticker, hover) ->
     [dx, dy] = this._offsets(0.98, true)
     obj_3d.add(this._3d_diamond(this._square_center(piece_center, hover), dx, dy, sticker.color))
 
