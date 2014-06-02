@@ -17,4 +17,4 @@ $(document).ready ->
   for roofpig_div in $('.roofpig')
     new Display($(roofpig_div), webgl_browser, canvas_browser)
 
-  InputHandler.init_event_handlers()
+  EventHandlers.initialize()

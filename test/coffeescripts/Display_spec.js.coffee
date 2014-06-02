@@ -1,7 +1,7 @@
 #= require three.min
 #= require roofpig/Camera
 #= require roofpig/Display
-#= require roofpig/InputHandler
+#= require roofpig/EventHandlers
 
 mock_div = {
   data: ->
@@ -18,13 +18,13 @@ describe "Display", ->
     Display.instances = []
 
   it "gives the keyboard focus to the first Display created", ->
-    expect(InputHandler.active_display, 1).to.equal(undefined)
+    expect(EventHandlers.active_display).to.equal(undefined)
 
     d1 = new_display()
-    expect(InputHandler.active_display, 2).to.equal(d1)
+    expect(EventHandlers.active_display).to.equal(d1)
 
     d2 = new_display()
-    expect(InputHandler.active_display, 3).to.equal(d1)
+    expect(EventHandlers.active_display).to.equal(d1)
 
   it "@id, #next_display(), #previous_display()", ->
     d1 = new_display()

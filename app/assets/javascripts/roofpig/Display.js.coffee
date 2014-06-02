@@ -1,7 +1,7 @@
 #= require roofpig/Alg
 #= require roofpig/Config
 #= require roofpig/DomHandler
-#= require roofpig/InputHandler
+#= require roofpig/EventHandlers
 #= require roofpig/Move
 #= require roofpig/OneChange
 #= require roofpig/Pieces3D
@@ -50,7 +50,7 @@ class @Display
       @alg = new Alg(@config.alg, @dom_handler).premix(@world3d)
 
     if @id == 1
-      InputHandler.set_active_display(this)
+      EventHandlers.set_active_display(this)
 
     @changers = {}
     this.animate(true)

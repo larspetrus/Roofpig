@@ -2,7 +2,7 @@
 #= require roofpig/OneChange
 
 #This is all page wide data and functions.
-class @InputHandler
+class @EventHandlers
 
   @set_active_display: (new_active) ->
     @dom_handler.has_focus(false) if @active_display
@@ -13,18 +13,18 @@ class @InputHandler
 
     @dom_handler.has_focus(true)
 
-  @init_event_handlers: () ->
-    $("body").keydown (e) -> InputHandler.key_down(e)
-    $("body").keyup (e)   -> InputHandler.key_up(e)
+  @initialize: () ->
+    $("body").keydown (e) -> EventHandlers.key_down(e)
+    $("body").keyup (e)   -> EventHandlers.key_up(e)
 
-    $(".roofpig").mousedown (e) -> InputHandler.mouse_down(e, $(this).data('dpid'))
-    $("body").mouseup (e)       -> InputHandler.mouse_end(e)
-    $("body").mouseleave (e)    -> InputHandler.mouse_end(e)
-    $("body").mousemove (e)     -> InputHandler.mouse_move(e)
+    $(".roofpig").mousedown (e) -> EventHandlers.mouse_down(e, $(this).data('dpid'))
+    $("body").mouseup (e)       -> EventHandlers.mouse_end(e)
+    $("body").mouseleave (e)    -> EventHandlers.mouse_end(e)
+    $("body").mousemove (e)     -> EventHandlers.mouse_move(e)
 
     $('.roofpig').click ->
       display = Display.instances[$(this).data('dpid')]
-      InputHandler.set_active_display(display)
+      EventHandlers.set_active_display(display)
 
     $("button").click (e) ->
       display = Display.instances[$(this).data('dpid')]
