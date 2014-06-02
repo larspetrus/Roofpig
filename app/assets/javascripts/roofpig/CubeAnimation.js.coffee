@@ -52,17 +52,17 @@ class @CubeAnimation
     if @id == 1
       EventHandlers.set_focus(this)
 
-    @changers = {}
+    @world_changers = {}
     this.animate(true)
 
 
   animate: (first_time = false) ->  # called for each redraw
     now = (new Date()).getTime()
 
-    for own category, changer of @changers
+    for own category, changer of @world_changers
       if changer
         changer.update(now)
-        if changer.finished() then @changers[category] = null
+        if changer.finished() then @world_changers[category] = null
         any_change = true
 
     if any_change || first_time
@@ -71,8 +71,8 @@ class @CubeAnimation
     requestAnimationFrame => this.animate() # request next frame
 
   add_changer: (category, changer) ->
-    if @changers[category] then @changers[category].finish()
-    @changers[category] = changer
+    if @world_changers[category] then @world_changers[category].finish()
+    @world_changers[category] = changer
 
   button_click: (name, shift) ->
     switch name
