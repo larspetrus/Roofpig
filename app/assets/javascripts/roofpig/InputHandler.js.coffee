@@ -1,9 +1,8 @@
 #= require roofpig/utils
 #= require roofpig/OneChange
 
-#This is all global data and functions. Think of it as a "singleton" class.
+#This is all page wide data and functions.
 class @InputHandler
-
 
   @set_active_display: (new_active) ->
     @dom_handler.has_focus(false) if @active_display
@@ -13,6 +12,48 @@ class @InputHandler
     @dom_handler = @active_display.dom_handler
 
     @dom_handler.has_focus(true)
+
+  @init_event_handlers: () ->
+    $("body").keydown (e) -> InputHandler.key_down(e)
+    $("body").keyup (e)   -> InputHandler.key_up(e)
+
+    $(".roofpig").mousedown (e) -> InputHandler.mouse_down(e, $(this).data('dpid'))
+    $("body").mouseup (e)       -> InputHandler.mouse_end(e)
+    $("body").mouseleave (e)    -> InputHandler.mouse_end(e)
+    $("body").mousemove (e)     -> InputHandler.mouse_move(e)
+
+    $('.roofpig').click ->
+      display = Display.instances[$(this).data('dpid')]
+      InputHandler.set_active_display(display)
+
+    $("button").click (e) ->
+      display = Display.instances[$(this).data('dpid')]
+      display.button_click($(this).attr("id"), e.shiftKey)
+
+
+  # ---- Mouse Events ----
+
+  @mouse_down: (e, target_display_id) ->
+    if target_display_id == @active_display.id
+      @bend_start_x = e.pageX
+      @bend_start_y = e.pageY
+
+      @bending = true
+
+  @mouse_end: (e) ->
+    @active_display.add_changer('spin', new OneChange( => @camera.bend(0, 0)))
+    @bending = false
+
+  @mouse_move: (e) ->
+    if @bending
+      dx = -0.02 * (e.pageX - @bend_start_x) / @dom_handler.scale
+      dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
+      if e.shiftKey
+        dy = 0
+      @active_display.add_changer('spin', new OneChange( => @camera.bend(dx, dy)))
+
+
+  # ---- Keyboard Events ----
 
   @key_down: (e) ->
     [key, shift, ctrl] = [e.keyCode, e.shiftKey, e.ctrlKey]
@@ -72,25 +113,6 @@ class @InputHandler
     unless button.attr("disabled")
       button.removeClass('roofpig-button-fake-active')
       button.click()
-
-  @mouse_down: (e, target_display_id) ->
-    if target_display_id == @active_display.id
-      @bend_start_x = e.pageX
-      @bend_start_y = e.pageY
-
-      @bending = true
-
-  @mouse_end: (e) ->
-    @active_display.add_changer('spin', new OneChange( => @camera.bend(0, 0)))
-    @bending = false
-
-  @mouse_move: (e) ->
-    if @bending
-      dx = -0.02 * (e.pageX - @bend_start_x) / @dom_handler.scale
-      dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
-      if e.shiftKey
-        dy = 0
-      @active_display.add_changer('spin', new OneChange( => @camera.bend(dx, dy)))
 
   @_rotate: (axis_name, turns) ->
     angle_to_turn = -Math.PI/2 * turns

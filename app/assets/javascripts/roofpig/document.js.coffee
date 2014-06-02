@@ -14,32 +14,7 @@ $(document).ready ->
   else
     log_error("No Canvas support in this browser. Giving up.")
 
-
   for roofpig_div in $('.roofpig')
-    new Display($(roofpig_div), webgl_browser, canvas_browser).animate()
+    new Display($(roofpig_div), webgl_browser, canvas_browser)
 
-  $('.roofpig').click ->
-    display = Display.instances[$(this).data('dpid')]
-    InputHandler.set_active_display(display)
-
-  $("button").click (e) ->
-    display = Display.instances[$(this).data('dpid')]
-    display.button_click($(this).attr("id"), e.shiftKey)
-
-  $("body").keydown (e) ->
-    InputHandler.key_down(e)
-
-  $("body").keyup (e) ->
-    InputHandler.key_up(e)
-
-  $(".roofpig").mousedown (e) ->
-    InputHandler.mouse_down(e, $(this).data('dpid'))
-
-  $("body").mouseup (e) ->
-    InputHandler.mouse_end(e)
-
-  $("body").mouseleave (e) ->
-    InputHandler.mouse_end(e)
-
-  $("body").mousemove (e) ->
-    InputHandler.mouse_move(e)
+  InputHandler.init_event_handlers()
