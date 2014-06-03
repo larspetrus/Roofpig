@@ -5,13 +5,14 @@
 class @EventHandlers
 
   @set_focus: (new_focus) ->
-    @dom_handler.has_focus(false) if @focus
+    if @focus != new_focus
+      @dom_handler.has_focus(false) if @focus
 
-    @focus = new_focus
-    @camera = @focus.camera
-    @dom_handler = @focus.dom_handler
+      @focus = new_focus
+      @camera = @focus.camera
+      @dom_handler = @focus.dom_handler
 
-    @dom_handler.has_focus(true)
+      @dom_handler.has_focus(true)
 
   @initialize: () ->
     $("body").keydown (e) -> EventHandlers.key_down(e)
