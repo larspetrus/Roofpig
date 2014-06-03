@@ -14,8 +14,8 @@ new_cube = -> new CubeAnimation(mock_div, true, true)
 
 describe "CubeAnimation", ->
   beforeEach ->
-    CubeAnimation.unique_id = 0
-    CubeAnimation.instances = []
+    CubeAnimation.last_id = 0
+    CubeAnimation.by_id = []
 
   it "gives the keyboard focus to the first CubeAnimation created", ->
     expect(EventHandlers.focus).to.equal(undefined)

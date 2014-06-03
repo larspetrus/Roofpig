@@ -3,7 +3,7 @@ class @DomHandler
   constructor: (@cube_id, @div, renderer) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", "Lucida Grande", sans-serif')
     this.has_focus(false)
-    @div.data('dpid', @cube_id)
+    @div.data('cube_id', @cube_id)
 
     renderer.setSize(@div.width(), @div.width())
     @div.append(renderer.domElement);

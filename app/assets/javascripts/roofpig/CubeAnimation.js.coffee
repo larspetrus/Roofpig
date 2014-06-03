@@ -7,16 +7,16 @@
 #= require roofpig/WorldChangers
 
 class @CubeAnimation
-  @unique_id = 0
-  @instances = []
+  @last_id = 0
+  @by_id = []
 
   next_cube: ->
-    next_id = (@id % CubeAnimation.unique_id) + 1
-    CubeAnimation.instances[next_id]
+    next_id = (@id % CubeAnimation.last_id) + 1
+    CubeAnimation.by_id[next_id]
 
   previous_cube: ->
-    prev_id = ((@id + CubeAnimation.unique_id - 2) % CubeAnimation.unique_id) + 1
-    CubeAnimation.instances[prev_id]
+    prev_id = ((@id + CubeAnimation.last_id - 2) % CubeAnimation.last_id) + 1
+    CubeAnimation.by_id[prev_id]
 
   constructor: (roofpig_div, webgl_works, canvas_works) ->
     unless canvas_works
@@ -24,8 +24,8 @@ class @CubeAnimation
       roofpig_div.css(background: '#f66')
       return
 
-    @id = CubeAnimation.unique_id += 1
-    CubeAnimation.instances[@id] = this
+    @id = CubeAnimation.last_id += 1
+    CubeAnimation.by_id[@id] = this
 
     @config = new Config(roofpig_div.data('config'))
 
@@ -88,4 +88,4 @@ class @CubeAnimation
         changer = new OneChange( => @alg.to_start(@world3d))
 
     if changer
-      this.add_changer('move', changer)
+      this.add_changer('pieces', changer)

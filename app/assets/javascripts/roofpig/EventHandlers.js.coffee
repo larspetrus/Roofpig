@@ -18,19 +18,19 @@ class @EventHandlers
     $("body").keydown (e) -> EventHandlers.key_down(e)
     $("body").keyup (e)   -> EventHandlers.key_up(e)
 
-    $(".roofpig").mousedown (e) -> EventHandlers.mouse_down(e, $(this).data('dpid'))
+    $(".roofpig").mousedown (e) -> EventHandlers.mouse_down(e, $(this).data('cube_id'))
+    $("body").mousemove (e)     -> EventHandlers.mouse_move(e)
     $("body").mouseup (e)       -> EventHandlers.mouse_end(e)
     $("body").mouseleave (e)    -> EventHandlers.mouse_end(e)
-    $("body").mousemove (e)     -> EventHandlers.mouse_move(e)
 
     $('.roofpig').click (e) ->
-      cube = CubeAnimation.instances[$(this).data('dpid')]
+      cube = CubeAnimation.by_id[$(this).data('cube_id')]
       EventHandlers.set_focus(cube)
 
     $("button").click (e) ->
-      [button_type, cube_id] = $(this).attr("id").split("-")
-      cube = CubeAnimation.instances[cube_id]
-      cube.button_click(button_type, e.shiftKey)
+      [button_name, cube_id] = $(this).attr("id").split("-")
+      cube = CubeAnimation.by_id[cube_id]
+      cube.button_click(button_name, e.shiftKey)
 
 
   # ---- Mouse Events ----
@@ -43,7 +43,7 @@ class @EventHandlers
       @bending = true
 
   @mouse_end: (e) ->
-    @focus.add_changer('spin', new OneChange( => @camera.bend(0, 0)))
+    @focus.add_changer('camera', new OneChange( => @camera.bend(0, 0)))
     @bending = false
 
   @mouse_move: (e) ->
@@ -52,7 +52,7 @@ class @EventHandlers
       dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
       if e.shiftKey
         dy = 0
-      @focus.add_changer('spin', new OneChange( => @camera.bend(dx, dy)))
+      @focus.add_changer('camera', new OneChange( => @camera.bend(dx, dy)))
 
 
   # ---- Keyboard Events ----
@@ -68,7 +68,7 @@ class @EventHandlers
       this.set_focus(new_focus)
 
     else if key == key_end || (key == key_right_arrow && shift)
-      @focus.add_changer('move', new OneChange( => @focus.alg.to_end(@focus.world3d)))
+      @focus.add_changer('pieces', new OneChange( => @focus.alg.to_end(@focus.world3d)))
 
     else if key in button_keys
       this._fake_click_down(this._button_for(key, shift))
@@ -126,10 +126,10 @@ class @EventHandlers
 
   @_rotate: (axis_name, turns) ->
     angle_to_turn = -Math.PI/2 * turns
-    @focus.add_changer('spin', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
+    @focus.add_changer('camera', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
 
   @_move: (side, turns) ->
-    @focus.add_changer('move', new Move(side, turns).show_do(@focus.world3d))
+    @focus.add_changer('pieces', new Move(side, turns).show_do(@focus.world3d))
 
 
   # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
