@@ -81,8 +81,8 @@ class @DomHandler
       button.attr("disabled", "disabled")
       button.removeClass('roofpig-button-enabled')
 
-  _make_button: (text, id) ->
-    button = $("<button/>", { text: text, id: id, 'data-dpid': @cube_id })
+  _make_button: (text, name) ->
+    button = $("<button/>", { text: text, id: "#{name}-#{@cube_id}" })
     @alg_area.append(button)
 
     button.addClass('roofpig-button')

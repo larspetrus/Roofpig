@@ -22,13 +22,14 @@ class @EventHandlers
     $("body").mouseleave (e)    -> EventHandlers.mouse_end(e)
     $("body").mousemove (e)     -> EventHandlers.mouse_move(e)
 
-    $('.roofpig').click ->
+    $('.roofpig').click (e) ->
       cube = CubeAnimation.instances[$(this).data('dpid')]
       EventHandlers.set_focus(cube)
 
     $("button").click (e) ->
-      cube = CubeAnimation.instances[$(this).data('dpid')]
-      cube.button_click($(this).attr("id"), e.shiftKey)
+      [button_type, cube_id] = $(this).attr("id").split("-")
+      cube = CubeAnimation.instances[cube_id]
+      cube.button_click(button_type, e.shiftKey)
 
 
   # ---- Mouse Events ----
@@ -56,13 +57,16 @@ class @EventHandlers
   # ---- Keyboard Events ----
 
   @key_down: (e) ->
-    [key, shift, ctrl] = [e.keyCode, e.shiftKey, e.ctrlKey]
+    if e.ctrlKey || e.metaKey
+      return true
+
+    [key, shift, alt] = [e.keyCode, e.shiftKey, e.altKey]
 
     if key == key_tab
       new_focus = if shift then @focus.previous_cube() else @focus.next_cube()
       this.set_focus(new_focus)
 
-    else if key == key_up_arrow
+    else if key == key_end || (key == key_right_arrow && shift)
       @focus.add_changer('move', new OneChange( => @focus.alg.to_end(@focus.world3d)))
 
     else if key in button_keys
@@ -79,20 +83,25 @@ class @EventHandlers
       this._rotate(axis, turns)
 
     else if key in turn_keys
-      turns = if shift then 3 else if ctrl then 2 else 1
-      this._move("#{turn_for[key]}#{turns}")
+      turns = if shift then 3 else if alt then 2 else 1
+      this._move("#{side_for[key]}#{turns}")
 
     else
-      return false
+      unhandled = true
+
+    unless unhandled
+      e.preventDefault()
+      e.stopPropagation()
+
 
   @_button_for: (key, shift) ->
     switch key
-      when key_home, key_down_arrow
+      when key_home
         @dom_handler.reset
       when key_left_arrow
-        if shift then @dom_handler.reset else @dom_handler.prev
+        unless shift then @dom_handler.prev else @dom_handler.reset
       when key_right_arrow
-        if shift then @dom_handler.play_or_pause else @dom_handler.next
+       @dom_handler.next
       when key_space
         @dom_handler.play_or_pause
 
@@ -125,6 +134,7 @@ class @EventHandlers
   # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
   key_tab = 9
   key_space = 32
+  key_end = 35
   key_home = 36
   key_left_arrow = 37
   key_up_arrow = 38
@@ -140,11 +150,11 @@ class @EventHandlers
   key_X = 88
   key_Z = 90
 
-  button_keys = [key_tab, key_space, key_home, key_left_arrow, key_right_arrow, key_down_arrow]
+  button_keys = [key_space, key_home, key_left_arrow, key_right_arrow]
   rotate_keys = [key_C, key_Z, key_A, key_D, key_S, key_X]
   turn_keys   = [key_J, key_K, key_L]
 
-  turn_for = {}
-  turn_for[key_J] = "U"
-  turn_for[key_K] = "F"
-  turn_for[key_L] = "R"
+  side_for = {}
+  side_for[key_J] = "U"
+  side_for[key_K] = "F"
+  side_for[key_L] = "R"
