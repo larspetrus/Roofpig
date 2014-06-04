@@ -4,59 +4,6 @@ class @Side
   constructor: (@name, @normal, @corner_cycle, @edge_cycle, center, @sticker_cycle) ->
     @positions = @corner_cycle.concat(@edge_cycle, center) if @corner_cycle
 
-  make_sticker: (piece_3d, sticker) ->
-    [dx, dy] = this._offsets(0.90, false)
-    piece_3d.add(this._3d_diamond(this._square_center(piece_3d.middle, 1.0002), dx, dy, sticker.color))
-
-    if sticker.x_color
-      this.make_X(piece_3d, sticker.x_color, 1.0004, true)
-
-  make_hover_sticker: (piece_3d, sticker, hover) ->
-    [dx, dy] = this._offsets(0.98, true)
-    piece_3d.add(this._3d_diamond(this._square_center(piece_3d.middle, hover), dx, dy, sticker.color))
-
-    if sticker.x_color
-      this.make_X(piece_3d, sticker.x_color, hover - 0.0002, false)
-
-  make_X: (piece_3d, color, hover, reversed) ->
-    [dx, dy] = this._offsets(0.54, reversed)
-    center = this._square_center(piece_3d.middle, hover)
-    piece_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
-    piece_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
-
-  make_plastic: (piece_3d, color) ->
-    [dx, dy] = this._offsets(1.0, true)
-    piece_3d.add(this._3d_diamond(this._square_center(piece_3d.middle, 1), dx, dy, color))
-
-  _square_center: (piece_center, distance) ->
-    v3_add(piece_center, v3_x(@normal, distance))
-
-  _3d_diamond: (stc, d1, d2, color) ->
-    this._3d_4side(v3_add(stc, d1), v3_add(stc, d2), v3_sub(stc, d1), v3_sub(stc, d2), color)
-
-  _3d_rect: (stc, d1, d2, color) ->
-    this._3d_diamond(stc, v3_add(d1, d2), v3_sub(d1, d2), color)
-
-  _3d_4side: (v1, v2, v3 ,v4, color) ->
-    geo = new THREE.Geometry();
-    geo.vertices.push(v1, v2, v3 ,v4);
-    geo.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
-
-    # http://stackoverflow.com/questions/20734216/when-should-i-call-geometry-computeboundingbox-etc
-    geo.computeFaceNormals();
-    geo.computeBoundingSphere();
-
-    new THREE.Mesh(geo, new THREE.MeshBasicMaterial(color: color))
-
-  _offsets: (sticker_size, reversed) ->
-    axis2 = v3(@normal.y, @normal.z, @normal.x)
-    axis3 = v3(@normal.z, @normal.x, @normal.y)
-    flip = (@normal.y + @normal.z + @normal.x) * (if reversed then -1.0 else 1.0)
-
-    dx = v3_add(axis2, axis3).multiplyScalar(sticker_size * flip)
-    dy = v3_sub(axis2, axis3).multiplyScalar(sticker_size)
-    [dx, dy]
-
   @by_name: (name) ->
     all[name]
 
