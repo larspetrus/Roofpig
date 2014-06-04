@@ -11,15 +11,15 @@ Download the minified roofpig.js library and include it in your html.
 The HEAD tag of your page should look like this:
 
 ```html
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="three.min.js"></script>
-  <script src="roofpig.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="three.min.js"></script>
+<script src="roofpig.min.js"></script>
 ```
 
 A cube will then appear in all divs with class='roofpig' on that page.
 
 ```html
-  <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
+<div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
 ```
 
 
@@ -34,7 +34,7 @@ Configuration
 Use data-config to configure the cube. Here is a full example:
 
 ```html
-  <div class=roofpig data-config="solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y|alg=R U' F+B' R2 F'+B U' R'" style="width=140px; height=160px;"></div>
+<div class=roofpig data-config="solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y|alg=R U' F+B' R2 F'+B U' R'" style="width=140px; height=160px;"></div>
 ```
 
 As you can see, the individual config properties are separated by |. Let's go over the different ones.
@@ -57,7 +57,9 @@ The standard slices and turns change the names of the cube sides. If you want th
 
 Slice moves can be done by combining regular moves. So for M, use L'+R, E is D'+U and S is F'+B.
 
-To display cube rotations - which you can also think of as moving the "camera" - there are some Roofpig specific inventions: R> rotates the cube the same way as an R move, except for the entire cube. R>> corresponds to R2, and R< and R<< to R' and RZ. This means F> is the same as B<.
+To display cube rotations - which you can also think of as moving the "camera" - there is some Roofpig specific notation: R> rotates the cube the same way as an R move, but moves the whole cube. R>> corresponds to R2, and R< and R<< to R' and RZ. This means F> is the same as B<.
+
+Try it here: http://jsfiddle.net/Lar5/2xAVX/5/
 
 **Defining the 'finished' state**
 
