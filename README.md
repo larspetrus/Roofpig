@@ -6,17 +6,17 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 Usage
 -----
 
-Download the minified roofpig.js library and include it in your html. Alternatively hotlink it from Github.
+Download the minified roofpig.js library and include it in your html.
 
 The HEAD tag of your page should look like this:
 
 ```html
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="three.min.js"></script>
-  <script src="roofpig.js"></script>
+  <script src="roofpig.min.js"></script>
 ```
 
-When you put a div with class='roofpig' on that page, a cube will then appear.
+A cube will then appear in all divs with class='roofpig' on that page.
 
 ```html
   <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
@@ -25,11 +25,39 @@ When you put a div with class='roofpig' on that page, a cube will then appear.
 
 **Dependencies**
 
-Roofpig very much needs jQuery and three.js to work!
+Roofpig needs jQuery and three.js to work.
 
 
 Configuration
 -------------
+
+Use data-config to configure the cube. Here is a full example:
+
+```html
+  <div class=roofpig data-config="solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y|alg=R U' F+B' R2 F'+B U' R'" style="width=140px; height=160px;"></div>
+```
+
+As you can see, the individual config properties are separated by |. Let's go over the different ones.
+
+**Algorithms**
+
+Roofpig supports most standard cube notation, and some inventions of its own.
+
+*FBUDRL*
+
+F, F', F2, B, B' B2, U, etc works like they should. F2 turns clockwise, FZ counter clockwise FZ. You can also use F² instead of F2, if you prefer the cute approach.
+
+*Standard slices and turns*
+
+The M, E, and S slice moves works, as do the x, y and z whole cube turns.
+
+*Side name preserving slices and turns.*
+
+The standard slices and turns change the names of the cube sides. If you want the red side to be "U" throughout, there are other ways.
+
+Slice moves can be done by combining regular moves. So for M, use L'+R, E is D'+U and S is F'+B.
+
+To display cube rotations - which you can also think of as moving the "camera" - there are some Roofpig specific inventions: R> rotates the cube the same way as an R move, except for the entire cube. R>> corresponds to R2, and R< and R<< to R' and RZ. This means F> is the same as B<.
 
 **Defining the 'finished' state**
 
