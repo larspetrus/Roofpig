@@ -4,29 +4,29 @@ class @Side
   constructor: (@name, @normal, @corner_cycle, @edge_cycle, center, @sticker_cycle) ->
     @positions = @corner_cycle.concat(@edge_cycle, center) if @corner_cycle
 
-  make_sticker: (obj_3d, piece_center, sticker) ->
+  make_sticker: (piece_3d, sticker) ->
     [dx, dy] = this._offsets(0.90, false)
-    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1.0002), dx, dy, sticker.color))
+    piece_3d.add(this._3d_diamond(this._square_center(piece_3d.middle, 1.0002), dx, dy, sticker.color))
 
     if sticker.x_color
-      this.make_X(obj_3d, piece_center, sticker.x_color, 1.0004, true)
+      this.make_X(piece_3d, sticker.x_color, 1.0004, true)
 
-  make_hover_sticker: (obj_3d, piece_center, sticker, hover) ->
+  make_hover_sticker: (piece_3d, sticker, hover) ->
     [dx, dy] = this._offsets(0.98, true)
-    obj_3d.add(this._3d_diamond(this._square_center(piece_center, hover), dx, dy, sticker.color))
+    piece_3d.add(this._3d_diamond(this._square_center(piece_3d.middle, hover), dx, dy, sticker.color))
 
     if sticker.x_color
-      this.make_X(obj_3d, piece_center, sticker.x_color, hover - 0.0002, false)
+      this.make_X(piece_3d, sticker.x_color, hover - 0.0002, false)
 
-  make_X: (obj_3d, piece_center, color, hover, reversed) ->
+  make_X: (piece_3d, color, hover, reversed) ->
     [dx, dy] = this._offsets(0.54, reversed)
-    center = this._square_center(piece_center, hover)
-    obj_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
-    obj_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
+    center = this._square_center(piece_3d.middle, hover)
+    piece_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
+    piece_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
 
-  make_plastic: (obj_3d, piece_center, color) ->
+  make_plastic: (piece_3d, color) ->
     [dx, dy] = this._offsets(1.0, true)
-    obj_3d.add(this._3d_diamond(this._square_center(piece_center, 1), dx, dy, color))
+    piece_3d.add(this._3d_diamond(this._square_center(piece_3d.middle, 1), dx, dy, color))
 
   _square_center: (piece_center, distance) ->
     v3_add(piece_center, v3_x(@normal, distance))

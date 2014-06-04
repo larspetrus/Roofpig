@@ -14,27 +14,24 @@ class @Pieces3D
       for y_side in [Side.F, mid_slice, Side.B]
         for z_side in [Side.U, mid_slice, Side.D]
           name = standard_piece_name(x_side, y_side, z_side)
-          new_piece = new THREE.Object3D()
-          new_piece.name = name
-          new_piece.sticker_locations = name.split('')
+          new_3d_piece = new THREE.Object3D()
+          new_3d_piece.name = name
+          new_3d_piece.sticker_locations = name.split('')
+          new_3d_piece.middle = v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
 
-          mid_point = this._piece_center(x_side, y_side, z_side)
           for side in [x_side, y_side, z_side]
             unless side == mid_slice
-              sticker = colors.to_draw(name, side)
+              sticker_look = colors.to_draw(name, side)
 
-              side.make_sticker(new_piece, mid_point, sticker)
+              side.make_sticker(new_3d_piece, sticker_look)
 
-              if sticker.hovers && hover > 1
-                side.make_hover_sticker(new_piece, mid_point, sticker, hover)
+              if sticker_look.hovers && hover > 1
+                side.make_hover_sticker(new_3d_piece, sticker_look, hover)
 
-              side.make_plastic(new_piece, mid_point, colors.of('plastic'))
+              side.make_plastic(new_3d_piece, colors.of('plastic'))
 
-          this[name] = @at[name] = new_piece
-          scene.add(new_piece)
-
-  _piece_center: (x_side, y_side, z_side) ->
-    v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
+          this[name] = @at[name] = new_3d_piece
+          scene.add(new_3d_piece)
 
   on: (side) ->
     (@at[position] for position in side.positions)
