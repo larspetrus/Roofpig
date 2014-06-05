@@ -45,7 +45,7 @@ Roofpig supports most standard cube notation, and some inventions of its own.
 
 *FBUDRL*
 
-F, F', F2, B, B' B2, U, etc works like they should. F2 turns clockwise, FZ counter clockwise FZ. You can also use F² instead of F2, if you prefer the cute approach.
+F, F', F2, B, B' B2, U, etc works like they should. F2 turns clockwise, F2' or FZ is F2 counter clockwise. You can also use F² for F2.
 
 *Standard slices and turns*
 
