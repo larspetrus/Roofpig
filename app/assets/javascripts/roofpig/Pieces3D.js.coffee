@@ -59,27 +59,27 @@ class @Pieces3D
           scene.add(new_3d_piece)
 
   _add_sticker: (side, piece_3d, sticker) ->
-    [dx, dy] = this._offsets(side, 0.90, false)
+    [dx, dy] = this._offsets(side.normal, 0.90, false)
     piece_3d.add(this._3d_diamond(this._square_center(side, piece_3d.middle, 1.0002), dx, dy, sticker.color))
 
     if sticker.x_color
       this._add_X(side, piece_3d, sticker.x_color, 1.0004, true)
 
   _add_hover_sticker: (side, piece_3d, sticker, hover) ->
-    [dx, dy] = this._offsets(side, 0.98, true)
+    [dx, dy] = this._offsets(side.normal, 0.98, true)
     piece_3d.add(this._3d_diamond(this._square_center(side, piece_3d.middle, hover), dx, dy, sticker.color))
 
     if sticker.x_color
       this._add_X(side, piece_3d, sticker.x_color, hover - 0.0002, false)
 
   _add_X: (side, piece_3d, color, hover, reversed) ->
-    [dx, dy] = this._offsets(side, 0.54, reversed)
+    [dx, dy] = this._offsets(side.normal, 0.54, reversed)
     center = this._square_center(side, piece_3d.middle, hover)
     piece_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
     piece_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
 
   _add_plastic: (side, piece_3d, color) ->
-    [dx, dy] = this._offsets(side, 1.0, true)
+    [dx, dy] = this._offsets(side.normal, 1.0, true)
     piece_3d.add(this._3d_diamond(this._square_center(side, piece_3d.middle, 1), dx, dy, color))
 
   _square_center: (side, piece_center, distance) ->
@@ -102,10 +102,10 @@ class @Pieces3D
 
     new THREE.Mesh(geo, new THREE.MeshBasicMaterial(color: color))
 
-  _offsets: (side, sticker_size, reversed) ->
-    axis2 = v3(side.normal.y, side.normal.z, side.normal.x)
-    axis3 = v3(side.normal.z, side.normal.x, side.normal.y)
-    flip = (side.normal.y + side.normal.z + side.normal.x) * (if reversed then -1.0 else 1.0)
+  _offsets: (axis1, sticker_size, reversed) ->
+    axis2 = v3(axis1.y, axis1.z, axis1.x)
+    axis3 = v3(axis1.z, axis1.x, axis1.y)
+    flip = (axis1.y + axis1.z + axis1.x) * (if reversed then -1.0 else 1.0)
 
     dx = v3_add(axis2, axis3).multiplyScalar(sticker_size * flip)
     dy = v3_sub(axis2, axis3).multiplyScalar(sticker_size)
