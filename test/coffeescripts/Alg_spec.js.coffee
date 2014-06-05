@@ -61,6 +61,7 @@ describe "Alg", ->
     expect(alg.standard_text()).to.deep.equal(past:"F U+D'", future: "L2 R' L2 D")
 
   it "handles 'shift'", ->
-    expect(new Alg("shift> U F2 D' LZ").to_s(), 1).to.equal("U L2 D' BZ")
-    expect(new Alg("shift2 U F2 D' LZ").to_s(), 2).to.equal("U B2 D' RZ")
-    expect(new Alg("shift< U F2 D' LZ").to_s(), 3).to.equal("U R2 D' FZ")
+    expect(new Alg("shift> U F2 D' LZ").to_s()).to.equal("U L2 D' BZ")
+    expect(new Alg("shift2 U F2 D' LZ").to_s()).to.equal("U B2 D' RZ")
+    expect(new Alg("shift< U F2 D' LZ").to_s()).to.equal("U R2 D' FZ")
+    expect(-> new Alg("shift< U F2 M").to_s()).to.throw("M, E, S, x, y or z can't be shifted.")

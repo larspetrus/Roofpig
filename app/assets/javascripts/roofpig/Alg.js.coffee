@@ -79,6 +79,8 @@ class @Alg
     if shift
       shifted_codes = ""
       for char in @move_codes.substring(6).split('')
+        if char in ['M','E','S','x','y','z']
+          throw new Error("M, E, S, x, y or z can't be shifted.")
         shifted_codes += Side.D.shift(char, shift) || char
       @move_codes = shifted_codes
 

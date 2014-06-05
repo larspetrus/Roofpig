@@ -12,6 +12,12 @@ describe "Rotation", ->
       expect(-> Rotation._parse_code("Q>")).to.throw("Invalid Rotation code 'Q>'")
       expect(-> Rotation._parse_code("U<>")).to.throw("Invalid Rotation code 'U<>'")
 
+    it "does no slices etc", ->
+      expect(-> Rotation._parse_code("M>")).to.throw("Invalid Rotation code 'M>'")
+      expect(-> Rotation._parse_code("S>")).to.throw("Invalid Rotation code 'S>'")
+      expect(-> Rotation._parse_code("E>")).to.throw("Invalid Rotation code 'E>'")
+
+
   describe "#constructor", ->
     it "set the right attributes", ->
       time = 200

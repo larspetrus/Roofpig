@@ -19,6 +19,12 @@ describe "Move", ->
       expect(-> Move._parse_code("Q2")).to.throw("Invalid Move code 'Q2'")
       expect(-> Move._parse_code("U0")).to.throw("Invalid Move code 'U0'")
 
+    it "Does slices etc", ->
+      expect(Move._parse_code("M") ).to.have.members([Side.M, 1])
+      expect(Move._parse_code("E2")).to.have.members([Side.E, 2])
+      expect(Move._parse_code("S'")).to.have.members([Side.S,-1])
+
+
   describe "#constructor", ->
     it "set the right attributes", ->
       u1 = new Move("U")

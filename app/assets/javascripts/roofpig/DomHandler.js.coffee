@@ -63,7 +63,7 @@ class @DomHandler
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
-  LUCIDA_WIDTHS = {'+': 100, ' ':40, "'":29, '2':80, '²':53, 'U':87, 'D':94, 'L':67, 'R':80, 'F':68, 'B':73}
+  LUCIDA_WIDTHS = {M:108, '+':100, w:98, D:94, U:87, 2:80, R:80, x:78, Z:77, B:73, z:73, F:68, E:68, S:68, L:67, y:65, '²':53, ' ':40, "'":29}
   init_alg_text: (text) ->
     if @alg_text
       width = 0
