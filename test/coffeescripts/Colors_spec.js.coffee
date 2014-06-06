@@ -1,35 +1,35 @@
 #= require three.min
 #= require roofpig/Colors
-#= require roofpig/Side
+#= require ../../app/assets/javascripts/roofpig/Layer.js.coffee
 
 describe "Colors", ->
   describe "of", ->
     it "has default values", ->
       colors = new Colors("", "", "")
-      expect(colors.of(Side.R)).to.equal('#0d0')
-      expect(colors.of(Side.L)).to.equal('#07f')
-      expect(colors.of(Side.F)).to.equal('red')
-      expect(colors.of(Side.B)).to.equal('orange')
-      expect(colors.of(Side.U)).to.equal('yellow')
-      expect(colors.of(Side.D)).to.equal('#eee'  )
+      expect(colors.of(Layer.R)).to.equal('#0d0')
+      expect(colors.of(Layer.L)).to.equal('#07f')
+      expect(colors.of(Layer.F)).to.equal('red')
+      expect(colors.of(Layer.B)).to.equal('orange')
+      expect(colors.of(Layer.U)).to.equal('yellow')
+      expect(colors.of(Layer.D)).to.equal('#eee'  )
       expect(colors.of('solved')).to.equal('#444')
       expect(colors.of('ignored')).to.equal('#888')
 
-      expect(colors.of('L')).to.equal(colors.of(Side.L))
-      expect(colors.of('F')).to.equal(colors.of(Side.F))
+      expect(colors.of('L')).to.equal(colors.of(Layer.L))
+      expect(colors.of('F')).to.equal(colors.of(Layer.F))
 
       expect(-> colors.of('UNKNOWN')).to.throw(Error)
     
     it "can change colors", ->
       colors = new Colors("", "", "", "R:O L:#abc solved:R p:#123")
 
-      expect(colors.of(Side.R)).to.equal('orange')
-      expect(colors.of(Side.L)).to.equal('#abc')
+      expect(colors.of(Layer.R)).to.equal('orange')
+      expect(colors.of(Layer.L)).to.equal('#abc')
       expect(colors.of('solved')).to.equal('red')
       expect(colors.of('plastic')).to.equal('#123')
 
-      expect(colors.of(Side.U)).to.equal('yellow')
-      expect(colors.of(Side.D)).to.equal('#eee'  )
+      expect(colors.of(Layer.U)).to.equal('yellow')
+      expect(colors.of(Layer.D)).to.equal('#eee'  )
 
   describe "#to_draw", ->
     it "is colored by default", ->
@@ -69,7 +69,7 @@ describe "Colors", ->
       it "overrides colored and solved", ->
         colors = new Colors("U*", "D*", "L:U  R:D")
 
-        expect(colors.to_draw('U', Side.U).color).to.equal(colors.of(Side.L))
-        expect(colors.to_draw('D', Side.D).color).to.equal(colors.of(Side.R))
+        expect(colors.to_draw('U', Layer.U).color).to.equal(colors.of(Layer.L))
+        expect(colors.to_draw('D', Layer.D).color).to.equal(colors.of(Layer.R))
 
 

@@ -26,7 +26,7 @@ class @Colors
         when 'X', 'x'
           result.x_color = {X: 'black', x: 'white'}[tweak]
         else
-          if Side.by_name(tweak)
+          if Layer.by_name(tweak)
             result.color = this.of(tweak)
           else
             log_error("Unknown tweak: '#{tweak}'")

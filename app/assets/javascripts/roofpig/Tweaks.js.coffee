@@ -1,5 +1,5 @@
 #= require roofpig/utils
-#= require roofpig/Side
+#= require roofpig/Layer
 #= require roofpig/Cubexp
 
 class @Tweaks
@@ -27,7 +27,7 @@ class @Tweaks
     match[side_name(side)] || []
 
   _add: (piece, side, code) ->
-    if Side.by_name(side) # not lower case
+    if Layer.by_name(side) # not lower case
       @tweaks[piece] ?= {}
       @tweaks[piece][side] ?= []
       @tweaks[piece][side].push(code)

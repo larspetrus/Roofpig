@@ -33,7 +33,7 @@ describe "v3", ->
       standard_piece_name('R', 'F').should.equal("FR")
       standard_piece_name('R', 'F', 'D').should.equal("DFR")
 
-    it "handles Side objects", ->
+    it "handles Layer objects", ->
       standard_piece_name({name: 'F'}, {name: 'R'}).should.equal("FR")
 
     it "ignores non official Sides", ->
@@ -47,7 +47,7 @@ describe "v3", ->
         expect(standardize_name("x UD")).to.equal("U")
 
   describe "#side_name", ->
-    it "works with strings, Side objects and nulls", ->
+    it "works with strings, Layer objects and nulls", ->
       expect(side_name("F")).to.equal("F")
       expect(side_name({name: "D"})).to.equal("D")
       expect(side_name()).to.equal("")

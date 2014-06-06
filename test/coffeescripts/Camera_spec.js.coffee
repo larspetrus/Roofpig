@@ -3,12 +3,12 @@
 
 describe "Camera", ->
   it "_POVs", ->
-    Un = Side.U.normal
-    Dn = Side.D.normal
-    Fn = Side.F.normal
-    Bn = Side.B.normal
-    Rn = Side.R.normal
-    Ln = Side.L.normal
+    Un = Layer.U.normal
+    Dn = Layer.D.normal
+    Fn = Layer.F.normal
+    Bn = Layer.B.normal
+    Rn = Layer.R.normal
+    Ln = Layer.L.normal
 
     expect(Camera._POVs.Ufr).to.deep.equal({pos: v3(-25, 25, 25), up: Un, zn: Un, yn: Fn, xn: Rn} )
     expect(Camera._POVs.uFr).to.deep.equal({pos: v3(-25, 25, 25), up: Fn, zn: Fn, yn: Rn, xn: Un} )

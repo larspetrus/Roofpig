@@ -1,4 +1,4 @@
-#= require roofpig/Side
+#= require roofpig/Layer
 #= require roofpig/utils
 
 # Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc are the 3D models for those pieces
@@ -7,13 +7,13 @@ class @Pieces3D
     @at = {}
     this.make_stickers(scene, config.hover, config.colors)
 
-  on: (side) ->
-    (@at[position] for position in side.positions)
+  on: (layer) ->
+    (@at[position] for position in layer.positions)
 
-  move: (side, turns) ->
+  move: (layer, turns) ->
     positive_turns = (turns + 4) % 4
-    this._track_stickers(side, positive_turns)
-    this._track_pieces(positive_turns, side.corner_cycle, side.edge_cycle)
+    this._track_stickers(layer, positive_turns)
+    this._track_pieces(positive_turns, layer.corner_cycle, layer.edge_cycle)
 
   state: ->
     result = ""
@@ -21,9 +21,9 @@ class @Pieces3D
       result += this[piece].sticker_locations.join('') + ' '
     result
 
-  _track_stickers: (side, turns) ->
-    for piece in this.on(side)
-      piece.sticker_locations = (side.shift(item, turns) for item in piece.sticker_locations)
+  _track_stickers: (layer, turns) ->
+    for piece in this.on(layer)
+      piece.sticker_locations = (layer.shift(item, turns) for item in piece.sticker_locations)
 
   _track_pieces: (turns, corner_cycle, edge_cycle) ->
     for n in [1..turns]
@@ -38,9 +38,9 @@ class @Pieces3D
   make_stickers: (scene, hover, colors) ->
     slice = { normal: v3(0.0, 0.0, 0.0) }
 
-    for x_side in [Side.R, slice, Side.L]
-      for y_side in [Side.F, slice, Side.B]
-        for z_side in [Side.U, slice, Side.D]
+    for x_side in [Layer.R, slice, Layer.L]
+      for y_side in [Layer.F, slice, Layer.B]
+        for z_side in [Layer.U, slice, Layer.D]
           name = standard_piece_name(x_side, y_side, z_side)
           new_3d_piece = new THREE.Object3D()
           new_3d_piece.name = name

@@ -34,15 +34,15 @@ describe "Alg", ->
     expect(alone_alg.to_s()).to.equal("U F2 D' LZ")
 
   it "builds the right action objects", ->
-    action_should_be(new Alg("F2").actions[0], Move, Side.F, 2)
+    action_should_be(new Alg("F2").actions[0], Move, Layer.F, 2)
 
-    action_should_be(new Alg("R<").actions[0], Rotation, Side.R, -1)
+    action_should_be(new Alg("R<").actions[0], Rotation, Layer.R, -1)
     
     compound = new Alg("L'+F>>").actions[0]
     expect(compound instanceof CompositeMove).to.be.true
     expect(compound.actions.length).to.equal(2)
-    action_should_be(compound.actions[0], Move, Side.L, -1)
-    action_should_be(compound.actions[1], Rotation, Side.F, 2)
+    action_should_be(compound.actions[0], Move, Layer.L, -1)
+    action_should_be(compound.actions[1], Rotation, Layer.F, 2)
 
     the_x = new Alg("x").actions[0]
     expect(the_x instanceof CompositeMove).to.be.true
@@ -50,9 +50,9 @@ describe "Alg", ->
     expect(the_x.count()).to.equal(1)
     expect(the_x.to_s()).to.equal("(R M' L')")
     expect(the_x.actions.length).to.equal(3)
-    action_should_be(the_x.actions[0], Move, Side.R, 1)
-    action_should_be(the_x.actions[1], Move, Side.M, -1)
-    action_should_be(the_x.actions[2], Move, Side.L, -1)
+    action_should_be(the_x.actions[0], Move, Layer.R, 1)
+    action_should_be(the_x.actions[1], Move, Layer.M, -1)
+    action_should_be(the_x.actions[2], Move, Layer.L, -1)
 
   it "_count_text", ->
     alg = new Alg("F L> D'+U R+R>")
@@ -88,7 +88,7 @@ describe "Alg", ->
     expect(-> new Alg("shift< U F2 M").to_s()).to.throw("M, E, S, x, y or z can't be shifted.")
 
 
-action_should_be = (action, klass, side, turns) ->
+action_should_be = (action, klass, layer, turns) ->
   expect(action instanceof klass, action.to_s()).to.be.true
-  expect(action.side, action.to_s()).to.equal(side)
+  expect(action.layer, action.to_s()).to.equal(layer)
   expect(action.turns, action.to_s()).to.equal(turns)

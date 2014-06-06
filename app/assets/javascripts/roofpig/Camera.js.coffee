@@ -1,5 +1,5 @@
 #= require roofpig/utils
-#= require roofpig/Side
+#= require roofpig/Layer
 
 class @Camera
   DIST = 25
@@ -64,11 +64,11 @@ class @Camera
 
   @_POVs = do ->
     result = {}
-    for z in [Side.U, Side.D]
+    for z in [Layer.U, Layer.D]
       [zu, zl, zn] = [z.name, z.name.toLowerCase(), z.normal.clone()]
-      for y in [Side.F, Side.B]
+      for y in [Layer.F, Layer.B]
         [yu, yl, yn] = [y.name, y.name.toLowerCase(), y.normal.clone()]
-        for x in [Side.R, Side.L]
+        for x in [Layer.R, Layer.L]
           [xu, xl, xn] = [x.name, x.name.toLowerCase(), x.normal.clone()]
 
           pos = v3(xn.x, yn.y, zn.z).multiplyScalar(DIST)
