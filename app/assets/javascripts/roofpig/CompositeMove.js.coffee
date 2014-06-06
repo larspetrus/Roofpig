@@ -2,7 +2,7 @@
 #= require roofpig/WorldChangers
 
 class @CompositeMove
-  constructor: (@actions) ->
+  constructor: (@actions, @official_text = null) ->
 
   do: (world3d) ->
     new ConcurrentChangers( (@actions.map (action) -> action.do(world3d)) )
@@ -20,6 +20,8 @@ class @CompositeMove
     new ConcurrentChangers( (@actions.map (action) -> action.show_undo(world3d)) )
 
   count: ->
+    return 1 if @official_text
+
     result = 0
     for action in @actions
       result += action.count()
@@ -28,9 +30,8 @@ class @CompositeMove
   to_s: ->
     "(#{(@actions.map (action) -> action.to_s()).join(' ')})"
 
-  standard_text: ->
-    printables = []
-    for action in @actions
-      if action.standard_text()
-        printables.push(action.standard_text())
-    printables.join('+')
+  display_text: ->
+    return @official_text if @official_text
+
+    display_texts = @actions.map (action) -> action.display_text()
+    (text for text in display_texts when text).join('+')

@@ -61,13 +61,13 @@ class @Alg
   to_s: ->
     (@actions.map (move) -> move.to_s()).join(' ')
 
-  standard_text: ->
+  display_text: ->
     active = past = []
     future = []
     for action, i in @actions
       if @next == i then active = future
-      if action.standard_text()
-        active.push(action.standard_text())
+      if action.display_text()
+        active.push(action.display_text())
     { past: past.join(' '), future: future.join(' ')}
 
   _pre_process: ->
@@ -88,6 +88,15 @@ class @Alg
     if code.indexOf('+') > -1
       moves = (Alg._make_action(code) for code in code.split('+'))
       new CompositeMove(moves)
+
+    else if code[0] in ['x', 'y', 'z']
+      turns = Move.parse_turns(code.substring(1))
+      [t1, t2] = {'-2': ['Z', '2'], '-1':["'", ''], 1:['', "'"], 2: ['2', 'Z']}[turns]
+      moves = switch code[0]
+        when 'x' then [new Move("R"+t1), new Move("M"+t2), new Move("L"+t2)]
+        when 'y' then [new Move("U"+t1), new Move("E"+t2), new Move("D"+t2)]
+        when 'z' then [new Move("F"+t1), new Move("S"+t1), new Move("B"+t2)]
+      new CompositeMove(moves, code)
     else
       if code.indexOf('>') > -1 || code.indexOf('<') > -1
         new Rotation(code)
@@ -98,9 +107,9 @@ class @Alg
     return unless @dom_handler
 
     if time == 'first time'
-      @dom_handler.init_alg_text(this.standard_text().future)
+      @dom_handler.init_alg_text(this.display_text().future)
 
-    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), this._count_text(), this.standard_text())
+    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), this._count_text(), this.display_text())
 
   _count_text: ->
     total = current = 0

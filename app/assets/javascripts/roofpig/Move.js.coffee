@@ -1,3 +1,4 @@
+#= require three.min
 #= require roofpig/WorldChangers
 #= require roofpig/Side
 
@@ -8,14 +9,18 @@ class @Move
     @turn_time = 200 * (1 + Math.abs(@turns))
 
   @_parse_code: (code) ->
-    turns = switch code.substring(1)
+    turns = Move.parse_turns(code.substring(1))
+    side = Side.by_name(code[0])
+    unless side && turns
+      throw new Error("Invalid Move code '#{code}'")
+    [side, turns]
+
+  @parse_turns: (tcode) ->
+    switch tcode
       when "1", ""   then 1
       when "2", "²"  then 2
       when "3", "'"  then -1
       when "Z", "2'" then -2
-    unless (side = Side.by_name(code[0])) && turns
-      throw new Error("Invalid Move code '#{code}'")
-    [side, turns]
 
   do: (world3d) ->
     this._do(world3d.pieces, @turns, false)
@@ -47,5 +52,5 @@ class @Move
 
     "#{@side.name}#{turn_code}"
 
-  standard_text: ->
+  display_text: ->
     this.to_s().replace('Z', '2')

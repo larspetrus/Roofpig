@@ -45,4 +45,4 @@ class @Rotation
 
     "#{@side.name}#{turn_code}"
 
-  standard_text: -> ''
+  display_text: -> ''
