@@ -1,3 +1,4 @@
+#= require three.min
 #= require roofpig/Move
 #= require roofpig/Rotation
 #= require roofpig/CompositeMove

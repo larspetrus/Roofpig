@@ -1,4 +1,3 @@
-#= require three.min
 #= require roofpig/WorldChangers
 #= require roofpig/Layer
 
