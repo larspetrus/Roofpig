@@ -90,3 +90,7 @@ o F*. A whole layer. "U*" is the same as "U UB UBL UBR UF UFL UFR UL UR"
 o F-. Everything but these sides. "U-" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur". "ULB-" is "D DF DFR DR F FR R" (the DFR 2x2x2 block).
 
 o f. A whole side. "u" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur".
+
+o *. The whole cube. Only useful for filtering (see below)
+
+o Filtering. You can add a filter to only select certain piece types the the shorthands. c = corners, e = edges and m = middles. Like this: "U*/c" is all the corners in the U layer, or "UBL UBR UFL UFR". u/me is "U Ub Uf Ul Ur". You get the idea.
