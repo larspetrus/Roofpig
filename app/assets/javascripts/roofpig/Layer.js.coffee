@@ -18,7 +18,7 @@ class @Layer
   @D: new Layer('D', v3( 0, 0,-1), ['DFR','DFL','DBL','DBR'],['DF','DL','DB','DR'], ['D'], F:'L', L:'B', B:'R', R:'F', U:'U', D:'D')
 
   @M: new Layer('M', @L.normal, ['UF', 'UB', 'DB', 'DF'], ['U', 'B', 'D', 'F'], [], @L.sticker_cycle)
-  @E: new Layer('E', @D.normal, ['FL', 'FR', 'BR', 'BL'], ['F', 'R', 'B', 'L'], [], @D.sticker_cycle)
+  @E: new Layer('E', @D.normal, ['BL', 'BR', 'FR', 'FL'], ['L', 'B', 'R', 'F'], [], @D.sticker_cycle)
   @S: new Layer('S', @F.normal, ['DL', 'DR', 'UR', 'UL'], ['L', 'D', 'R', 'U'], [], @F.sticker_cycle)
 
   shift: (side_name, turns) ->
