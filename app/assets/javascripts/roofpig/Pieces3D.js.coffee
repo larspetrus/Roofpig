@@ -13,7 +13,7 @@ class @Pieces3D
   move: (layer, turns) ->
     positive_turns = (turns + 4) % 4
     this._track_stickers(layer, positive_turns)
-    this._track_pieces(positive_turns, layer.corner_cycle, layer.edge_cycle)
+    this._track_pieces(positive_turns, layer.cycle1, layer.cycle2)
 
   state: ->
     result = ""
@@ -25,10 +25,10 @@ class @Pieces3D
     for piece in this.on(layer)
       piece.sticker_locations = (layer.shift(item, turns) for item in piece.sticker_locations)
 
-  _track_pieces: (turns, corner_cycle, edge_cycle) ->
+  _track_pieces: (turns, cycle1, cycle2) ->
     for n in [1..turns]
-      this._permute(corner_cycle)
-      this._permute(edge_cycle)
+      this._permute(cycle1)
+      this._permute(cycle2)
 
   _permute: (p) ->
     [@at[p[0]], @at[p[1]], @at[p[2]], @at[p[3]]] = [@at[p[1]], @at[p[2]], @at[p[3]], @at[p[0]]]

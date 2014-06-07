@@ -54,6 +54,15 @@ describe "Alg", ->
     action_should_be(the_x.actions[1], Move, Layer.M, -1)
     action_should_be(the_x.actions[2], Move, Layer.L, -1)
 
+    wide_r = new Alg("Uw2").actions[0]
+    expect(wide_r instanceof CompositeMove).to.be.true
+    expect(wide_r.display_text()).to.equal("Uw2")
+    expect(wide_r.count()).to.equal(1)
+    expect(wide_r.to_s()).to.equal("(U2 EZ)")
+    expect(wide_r.actions.length).to.equal(2)
+    action_should_be(wide_r.actions[0], Move, Layer.U, 2)
+    action_should_be(wide_r.actions[1], Move, Layer.E, -2)
+
   it "_count_text", ->
     alg = new Alg("F L> D'+U R+R>")
     expect(alg._count_text()).to.equal('0/4')

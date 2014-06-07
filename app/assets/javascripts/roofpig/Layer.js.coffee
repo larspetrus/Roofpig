@@ -1,8 +1,8 @@
 #= require roofpig/utils
 
-class @.Layer
-  constructor: (@name, @normal, @corner_cycle, @edge_cycle, center, @sticker_cycle) ->
-    @positions = @corner_cycle.concat(@edge_cycle, center)
+class @Layer
+  constructor: (@name, @normal, @cycle1, @cycle2, uncycled, @sticker_cycle) ->
+    @positions = @cycle1.concat(@cycle2, uncycled)
 
   @by_name: (name) ->
     all[name]
@@ -19,7 +19,7 @@ class @.Layer
 
   @M: new Layer('M', @L.normal, ['UF', 'UB', 'DB', 'DF'], ['U', 'B', 'D', 'F'], [], @L.sticker_cycle)
   @E: new Layer('E', @D.normal, ['FL', 'FR', 'BR', 'BL'], ['F', 'R', 'B', 'L'], [], @D.sticker_cycle)
-  @S: new Layer('S', @F.normal, ['UL', 'UR', 'DR', 'DL'], ['U', 'R', 'D', 'L'], [], @F.sticker_cycle)
+  @S: new Layer('S', @F.normal, ['DL', 'DR', 'UR', 'UL'], ['L', 'D', 'R', 'U'], [], @F.sticker_cycle)
 
   shift: (side_name, turns) ->
     return null unless @sticker_cycle[side_name]

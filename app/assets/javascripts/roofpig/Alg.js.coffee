@@ -97,8 +97,21 @@ class @Alg
         when 'y' then [new Move("U"+t1), new Move("E"+t2), new Move("D"+t2)]
         when 'z' then [new Move("F"+t1), new Move("S"+t1), new Move("B"+t2)]
       new CompositeMove(moves, code)
+
+    else if code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B']
+      turns = Move.parse_turns(code.substring(2))
+      [t1, t2] = {'-2': ['Z', '2'], '-1':["'", ''], 1:['', "'"], 2: ['2', 'Z']}[turns]
+      moves = switch code[0]
+        when 'R' then [new Move("R"+t1), new Move("M"+t2)]
+        when 'L' then [new Move("L"+t1), new Move("M"+t1)]
+        when 'U' then [new Move("U"+t1), new Move("E"+t2)]
+        when 'D' then [new Move("D"+t1), new Move("E"+t1)]
+        when 'F' then [new Move("F"+t1), new Move("S"+t1)]
+        when 'B' then [new Move("B"+t1), new Move("S"+t2)]
+      new CompositeMove(moves, code)
+
     else
-      if code.indexOf('>') > -1 || code.indexOf('<') > -1
+      if /[><]/.test(code)
         new Rotation(code)
       else
         new Move(code)
