@@ -6,9 +6,7 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 Usage
 -----
 
-Download the minified roofpig.js library and include it in your html.
-
-The HEAD tag of your page should look like this:
+Download the minified roofpig.js library from XXX and three.min.js from YYY, and include it in the HEAD tag of your html like this:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -16,12 +14,11 @@ The HEAD tag of your page should look like this:
 <script src="roofpig.min.js"></script>
 ```
 
-A cube will then appear in all divs with class='roofpig' on that page.
+Then for a cube to appear on the page, you only need to make a div with class='roofpig', and some configuration in a data-config attribute.
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
 ```
-
 
 **Dependencies**
 
@@ -31,17 +28,21 @@ Roofpig needs jQuery and three.js to work.
 Configuration
 -------------
 
-Use data-config to configure the cube. Here is a full example:
+Here is a fully configured example cube:
 
 ```html
 <div class=roofpig style="width=140px; height=160px;"
-  data-config="solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y|alg=R U' F+B' R2 F'+B U' R'">
+  data-config="alg=R U' F+B' R2 F'+B U' R'|solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y">
 </div>
 ```
 
-As you can see, the individual config properties are separated by |. Let's go over the different ones.
+As you can see, the data-config format is "prop1=something|prop2=something else|prop99=blah".
 
-**Algorithms**
+The valid properties are: *alg, base, colored, colors, flags, hover, moreflags, pov, setup, solved, tweaks*, but we'll go over them in a logical order.
+
+**1. Algorithms**
+
+Properties: *alg, flags:showalg*
 
 *Standard notation*
 
@@ -60,7 +61,9 @@ So Roofpig has "soft" rotations - which you can also think of as moving the "cam
 
 Roofpig also allows combining moves. So you can do orientation safe slice moves like this: M = L'+R, E = D'+U and S = F'+B. And the 'w' moves like this: Rw = R>+L, Lw = L>+R, Uw = U>+D, Dw = D>+U, Fw=F>+B, Bw=B>+F
 
-I could write much more, but trying things out in JSFiddle is probably more useful. Note that you can change the GTML and click Run to see what happens. Here: http://jsfiddle.net/Lar5/MfpVf/
+If you combine moves that can't be done in parallell, like L+U or Rw+Fw2, horrible and amusing things will happen
+
+I could write much more, but trying things out in JSFiddle is probably more useful. Note that you can change the HTML and click Run to experiment. Here: http://jsfiddle.net/Lar5/MfpVf/
 
 **Defining the 'finished' state**
 
