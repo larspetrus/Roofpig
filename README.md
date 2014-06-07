@@ -53,7 +53,7 @@ Layer(s): F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw.
 Turns: 2, ', 2'. You can also use ², Z, 1 and 3.
 
 
-*Roofpig addons*
+*Roofpig extras*
 
 The standard slice and turn moves change the names of the cube sides. This is really impractical if you have a solution in FBRLUD and want to insert rotations to show off the interesting parts.
 
@@ -65,13 +65,28 @@ If you combine moves that can't be done in parallell, like L+U or Rw+Fw2, horrib
 
 I could write much more, but trying things out in JSFiddle is probably more useful. Note that you can change the HTML and click Run to experiment. Here: http://jsfiddle.net/Lar5/MfpVf/
 
-**Defining the 'finished' state**
+**2. Defining the 'solved' cube**
 
-Typically an animated cube shows some moves solving the cube to a desired state.
+Properties: *colored, solved, tweaks, setup*
 
-The basic Roofpig usage is to define (1) that finished state, and (2) the moves to get there.
+So we need to define how the cube looks when the alg has been performed. By default, it will be a regular full 6 color cube. But you can also mark some parts as 'solved' (dark gray) or 'ignored' (light gray), move things around and more.
 
-**Cubexp**
+But first we need to talk about Cubexp.
 
-For many of the config parameters, we need to say which of the 54 stickers it applies to. For that task, I have developed a little shorthand language that is a bit similar to Regexps, but vastly less generic and scalable. 
+**2.1 Cubexp**
 
+To configure, we often need to define sets of stickers. So I invented a little shorthand language for that. I named it "Cubexp", since it's kinda similar to (but also very different from) Regexp.
+
+Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. It does nothing else.
+
+The simplest format is listing pieces. The whole U layer can be selected like this: "U UB UBL UBR UF UFL UFR UL UR". UBL selects all the stickers on the UBL corner piece. Listing more pieces adds to the selection. Note that U is the center piece.
+
+To select individual stickers on a piece, use upper case and lower case letters. So the U *side* can be selected like this: "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur".
+
+This would be enough to define anything. But it would also be no fun. So we have some shorthand formats.
+
+o F*. A whole layer. "U*" is the same as "U UB UBL UBR UF UFL UFR UL UR"
+
+o F-. Everything but these sides. "U-" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur". "ULB-" is "D DF DFR DR F FR R" (the DFR 2x2x2 block).
+
+o f. A whole side. "u" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur".
