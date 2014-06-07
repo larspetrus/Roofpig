@@ -34,32 +34,33 @@ Configuration
 Use data-config to configure the cube. Here is a full example:
 
 ```html
-<div class=roofpig data-config="solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y|alg=R U' F+B' R2 F'+B U' R'" style="width=140px; height=160px;"></div>
+<div class=roofpig style="width=140px; height=160px;"
+  data-config="solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y|alg=R U' F+B' R2 F'+B U' R'">
+</div>
 ```
 
 As you can see, the individual config properties are separated by |. Let's go over the different ones.
 
 **Algorithms**
 
-Roofpig supports most standard cube notation, and some inventions of its own.
+*Standard notation*
 
-*FBUDRL*
+Roofpig supports (almost) all standard cube notation. 
 
-F, F', F2, B, B' B2, U, etc works like they should. F2 turns clockwise, F2' or FZ is F2 counter clockwise. You can also use F² for F2.
+Layer(s): F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw.
 
-*Standard slices and turns*
+Turns: 2, ', 2'. You can also use ², Z, 1 and 3.
 
-The M, E, and S slice moves works, as do the x, y and z whole cube turns.
 
-*Side name preserving slices and turns.*
+*Roofpig addons*
 
-The standard slices and turns change the names of the cube sides. If you want the red side to be "U" throughout, there are other ways.
+The standard slice and turn moves change the names of the cube sides. This is really impractical if you have a solution in FBRLUD and want to insert rotations to show off the interesting parts.
 
-Slice moves can be done by combining regular moves. So for M, use L'+R, E is D'+U and S is F'+B.
+So Roofpig has "soft" rotations - which you can also think of as moving the "camera". R> rotates the whole cube the same way as an R move. R>> corresponds to R2, and R< and R<< to R' and RZ. Yes, F> is the same as B<.
 
-To display cube rotations - which you can also think of as moving the "camera" - there is some Roofpig specific notation: R> rotates the cube the same way as an R move, but moves the whole cube. R>> corresponds to R2, and R< and R<< to R' and RZ. This means F> is the same as B<.
+Roofpig also allows combining moves. So you can do orientation safe slice moves like this: M = L'+R, E = D'+U and S = F'+B. And the 'w' moves like this: Rw = R>+L, Lw = L>+R, Uw = U>+D, Dw = D>+U, Fw=F>+B, Bw=B>+F
 
-Try it here: http://jsfiddle.net/Lar5/2xAVX/5/
+I could write much more, but trying things out in JSFiddle is probably more useful. Note that you can change the GTML and click Run to see what happens. Here: http://jsfiddle.net/Lar5/MfpVf/
 
 **Defining the 'finished' state**
 
