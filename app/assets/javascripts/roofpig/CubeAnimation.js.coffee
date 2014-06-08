@@ -9,6 +9,7 @@
 class @CubeAnimation
   @last_id = 0
   @by_id = []
+  @webgl_cubes = 0
 
   next_cube: ->
     next_id = (@id % CubeAnimation.last_id) + 1
@@ -29,9 +30,10 @@ class @CubeAnimation
 
     @config = new Config(roofpig_div.data('config'))
 
-    if @config.flag('canvas') || not webgl_works
+    if @config.flag('canvas') || not webgl_works || CubeAnimation.webgl_cubes >= 16
       @renderer = new THREE.CanvasRenderer(alpha: true) # alpha -> transparent
     else
+      CubeAnimation.webgl_cubes += 1
       @renderer = new THREE.WebGLRenderer(antialias: true, alpha: true)
 
     @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
