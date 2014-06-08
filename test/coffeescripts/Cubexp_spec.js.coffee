@@ -12,21 +12,21 @@ describe "Cubexp", ->
       expect(exp(null).matches).to.deep.equal(exp("").matches)
 
     it "Shorthand syntax", ->
-      expect(exp("UFR*").matches).to.deep.equal(exp("UFR UF UR FR U F R").matches)
-
       expect(exp("U*").matches).to.deep.equal(exp("U UB UBL UBR UF UFL UFR UL UR").matches)
       expect(exp("F*").matches).to.deep.equal(exp("DF DFL DFR F FL FR UF UFL UFR").matches)
+      expect(exp("UF*").matches).to.deep.equal(exp("U UB UBL UBR UL UR DF DFL DFR F FL FR UF UFL UFR").matches)
 
       expect(exp("B-").matches).to.deep.equal(exp("D DF DFL DFR DL DR F FL FR L R U UF UFL UFR UL UR").matches)
       expect(exp("BF-").matches).to.deep.equal(exp("D DL DR L R U UL UR").matches)
       expect(exp("BL-").matches).to.deep.equal(exp("D DF DFR DR F FR R U UF UFR UR").matches)
+      expect(exp("DLB-").matches).to.deep.equal(exp("UFR UF UR FR U F R").matches)
 
       expect(exp("*").matches).to.deep.equal(exp("B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR").matches)
 
       expect(exp("f").matches).to.deep.equal(exp("dF dFl dFr F Fl Fr uF uFl uFr").matches)
 
     it "type filter syntax", ->
-      expect(exp("UFR*/e").matches).to.deep.equal(exp("UF UR FR").matches)
+      expect(exp("DBL-/e").matches).to.deep.equal(exp("UF UR FR").matches)
 
       expect(exp("U*/c").matches).to.deep.equal(exp("UBL UBR UFL UFR").matches)
       expect(exp("F*/cm").matches).to.deep.equal(exp("DFL DFR F UFL UFR").matches)
@@ -39,11 +39,10 @@ describe "Cubexp", ->
 
     it "permuted names", ->
       expect(exp("FRU").matches).to.deep.equal(exp("UFR").matches)
-      expect(exp("FUR LF").matches).to.deep.equal(exp("UFR FL").matches)
-      expect(exp("FRU*").matches).to.deep.equal(exp("UFR UF UR FR U F R").matches)
+      expect(exp("Fur LF").matches).to.deep.equal(exp("uFr FL").matches)
 
     it "ignores ill formed expressions", ->
-      expect(exp("UF*").matches).to.deep.equal(exp("").matches)
+      expect(exp("Kraken").matches).to.deep.equal(exp("").matches)
 
     it "selections accumulate", ->
       expect(exp("Ufr ufR").matches).to.deep.equal(exp("UfR").matches)
@@ -81,7 +80,7 @@ describe "Cubexp", ->
 
   describe "@selected_pieces", ->
     it "returns the selected pieces", ->
-      expect(exp("UFR*/e DL").selected_pieces()).to.deep.equal(["DL", "FR", "UF", "UR"])
+      expect(exp("DBL-/e DL").selected_pieces()).to.deep.equal(["DL", "FR", "UF", "UR"])
 
     it "recognizes individual stickers", ->
       expect(exp("UfR Dl").selected_pieces()).to.deep.equal(["Dl", "UfR"])

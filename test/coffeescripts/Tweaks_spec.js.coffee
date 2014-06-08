@@ -16,10 +16,12 @@ describe "Tweaks", ->
     tweaks = new Tweaks("XYZ")
 
   it "handles Cubexps", ->
-    tweaks = new Tweaks("X:UFR*")
+    tweaks = new Tweaks("X:DBL-")
     expect(tweaks.for_sticker('UFR', 'R')).to.deep.equal(['X'])
     expect(tweaks.for_sticker('UF',  'U')).to.deep.equal(['X'])
     expect(tweaks.for_sticker('F',   'F')).to.deep.equal(['X'])
+    expect(tweaks.for_sticker('DFR', 'F')).to.deep.equal([])
+    expect(tweaks.for_sticker('D',    'D')).to.deep.equal([])
 
 #  it "'last wins'", ->
 #    tweaks = new Tweaks("F:U* R:L*")

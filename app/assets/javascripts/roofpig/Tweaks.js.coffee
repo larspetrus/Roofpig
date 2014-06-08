@@ -27,7 +27,7 @@ class @Tweaks
     match[side_name(side)] || []
 
   _add: (piece, side, code) ->
-    if Layer.by_name(side) # not lower case
+    if Layer.side_by_name(side) # not lower case
       @tweaks[piece] ?= {}
       @tweaks[piece][side] ?= []
       @tweaks[piece][side].push(code)

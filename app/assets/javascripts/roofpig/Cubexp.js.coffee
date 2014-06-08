@@ -16,21 +16,18 @@ class @Cubexp
       switch exp.type
         when 'XYZ'
           this._add_match(exp.piece, exp.type_filter, exp.sides)
-        when 'XYZ*'
-          [s1, s2, s3] = exp.piece.split('')
-          for piece in [s1+s2+s3, s1+s2, s1+s3, s2+s3, s1, s2, s3]
-            this._add_match(piece, exp.type_filter)
         when 'X-'
           for piece in PIECE_NAMES
             excluded = false
-            for side in exp.sides.split('')
+            for side in exp.piece.split('')
               excluded ||= piece.indexOf(side) > -1
             unless excluded
               this._add_match(piece, exp.type_filter)
         when 'X*'
           for piece in PIECE_NAMES
-            if piece.indexOf(exp.piece[0]) > -1
-              this._add_match(piece, exp.type_filter)
+            for side in exp.piece.split('')
+              if piece.indexOf(side) > -1
+                this._add_match(piece, exp.type_filter)
         when '*'
           for piece in PIECE_NAMES
             this._add_match(piece, exp.type_filter)
@@ -66,12 +63,12 @@ class @Cubexp
     [exp, result.type_filter] = expression.split('/')
     result.piece = standardize_name(exp.toUpperCase())
 
-    switch exp[exp.length - 1]
+    last_char = exp[exp.length - 1]
+    switch last_char
       when "*"
-        result.type = ['*', 'X*', '', 'XYZ*'][exp.length - 1]
+        result.type = if exp == '*' then '*' else 'X*'
       when "-"
         result.type = 'X-'
-        result.sides = standardize_name(exp) # removes the '-'
       else
         if exp == result.piece.toLowerCase()
           result.type = 'x'
