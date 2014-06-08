@@ -94,3 +94,7 @@ o f. A whole side. "u" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur".
 o *. The whole cube. Only useful for filtering (see below)
 
 o Filtering. You can add a filter to only select certain piece types the the shorthands. c = corners, e = edges and m = middles. Like this: "U*/c" is all the corners in the U layer, or "UBL UBR UFL UFR". u/me is "U Ub Uf Ul Ur". You get the idea.
+
+Cubexp JS Fiddle here: http://jsfiddle.net/Lar5/2xAVX/
+
+
