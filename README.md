@@ -75,22 +75,33 @@ But first we need to talk about Cubexp.
 
 **2.1 Cubexp**
 
-To configure, we often need to define sets of stickers. So I invented a little shorthand language for that. I named it "Cubexp", since it's kinda similar to (but also very different from) Regexp.
+To configure, we often need to define sets of stickers. So I invented a little language for that. I named it "Cubexp", since it's kinda similar to (but also very different from) Regexp.
 
-Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. It does nothing else.
+Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. They do nothing else.
 
 The simplest format is listing pieces. The whole U layer can be selected like this: "U UB UBL UBR UF UFL UFR UL UR". UBL selects all the stickers on the UBL corner piece. Listing more pieces adds to the selection. Note that U is the center piece.
 
 To select individual stickers on a piece, use upper case and lower case letters. So the U *side* can be selected like this: "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur".
 
-This would be enough to define anything. But it would also be no fun. So we have some shorthand formats.
+This would be enough to define anything. It would also be tedious. So we have some shorthand formats.
 
-o F*. A whole layer. "U*" is the same as "U UB UBL UBR UF UFL UFR UL UR"
+o F*. Whole layers. "U*" is the same as "U UB UBL UBR UF UFL UFR UL UR". "UF*" adds "DF DFL DFR F FL FR" to that.
 
-o F-. Everything but these sides. "U-" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur". "ULB-" is "D DF DFR DR F FR R" (the DFR 2x2x2 block).
+o F-. Everything *not* in these layers. "U-" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur". "ULB-" is "D DF DFR DR F FR R" (the DFR 2x2x2 block).
 
 o f. A whole side. "u" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur".
 
-o *. The whole cube. Only useful for filtering (see below)
+o *. The whole cube. Useful for filtering (see below)
 
 o Filtering. You can add a filter to only select certain piece types the the shorthands. c = corners, e = edges and m = middles. Like this: "U*/c" is all the corners in the U layer, or "UBL UBR UFL UFR". u/me is "U Ub Uf Ul Ur". You get the idea.
+
+Cubexp JS Fiddle here: http://jsfiddle.net/Lar5/2xAVX/
+
+
+**2.2 Setting up cube stickers.
+
+Now that we know Cubexps, we can set things up.
+
+The main parameters for this are *solved* and *colored*. *solved* stickers will be dark grey. *colored* stickers will have their normal colors. Any others will be the light gray os 'ignored'. Any sticker both in *solved* and *colored* will be *solved*.
+
+
