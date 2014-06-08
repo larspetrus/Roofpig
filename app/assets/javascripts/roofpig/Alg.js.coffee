@@ -84,31 +84,30 @@ class @Alg
         shifted_codes += Layer.D.shift(char, shift) || char
       @move_codes = shifted_codes
 
+  turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
   @_make_action: (code) ->
     if code.indexOf('+') > -1
       moves = (Alg._make_action(code) for code in code.split('+'))
       new CompositeMove(moves)
 
     else if code[0] in ['x', 'y', 'z']
-      turns = Move.parse_turns(code.substring(1))
-      [t1, t2] = {'-2': ['Z', '2'], '-1':["'", ''], 1:['', "'"], 2: ['2', 'Z']}[turns]
+      [t1, t2] = turn_codes[Move.parse_turns(code.substring(1))]
       moves = switch code[0]
-        when 'x' then [new Move("R"+t1), new Move("M"+t2), new Move("L"+t2)]
-        when 'y' then [new Move("U"+t1), new Move("E"+t2), new Move("D"+t2)]
-        when 'z' then [new Move("F"+t1), new Move("S"+t1), new Move("B"+t2)]
-      new CompositeMove(moves, code)
+        when 'x' then ["R"+t1, "M"+t2, "L"+t2]
+        when 'y' then ["U"+t1, "E"+t2, "D"+t2]
+        when 'z' then ["F"+t1, "S"+t1, "B"+t2]
+      new CompositeMove([new Move(moves[0]), new Move(moves[1]), new Move(moves[2])], code)
 
     else if code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B']
-      turns = Move.parse_turns(code.substring(2))
-      [t1, t2] = {'-2': ['Z', '2'], '-1':["'", ''], 1:['', "'"], 2: ['2', 'Z']}[turns]
+      [t1, t2] = turn_codes[Move.parse_turns(code.substring(2))]
       moves = switch code[0]
-        when 'R' then [new Move("R"+t1), new Move("M"+t2)]
-        when 'L' then [new Move("L"+t1), new Move("M"+t1)]
-        when 'U' then [new Move("U"+t1), new Move("E"+t2)]
-        when 'D' then [new Move("D"+t1), new Move("E"+t1)]
-        when 'F' then [new Move("F"+t1), new Move("S"+t1)]
-        when 'B' then [new Move("B"+t1), new Move("S"+t2)]
-      new CompositeMove(moves, code)
+        when 'R' then ["R"+t1, "M"+t2]
+        when 'L' then ["L"+t1, "M"+t1]
+        when 'U' then ["U"+t1, "E"+t2]
+        when 'D' then ["D"+t1, "E"+t1]
+        when 'F' then ["F"+t1, "S"+t1]
+        when 'B' then ["B"+t1, "S"+t2]
+      new CompositeMove([new Move(moves[0]), new Move(moves[1])], code)
 
     else
       if /[><]/.test(code)
