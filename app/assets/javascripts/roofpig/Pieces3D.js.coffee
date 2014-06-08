@@ -53,7 +53,7 @@ class @Pieces3D
 
               this._add_sticker(side, new_3d_piece, sticker_look)
               this._add_hover_sticker(side, new_3d_piece, sticker_look, hover) if sticker_look.hovers && hover > 1
-              this._add_plastic(side, new_3d_piece, colors.of('plastic'))
+              this._add_cube(side, new_3d_piece, colors.of('cube'))
 
           this[name] = @at[name] = new_3d_piece
           scene.add(new_3d_piece)
@@ -78,7 +78,7 @@ class @Pieces3D
     piece_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
     piece_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
 
-  _add_plastic: (side, piece_3d, color) ->
+  _add_cube: (side, piece_3d, color) ->
     [dx, dy] = this._offsets(side.normal, 1.0, true)
     piece_3d.add(this._3d_diamond(this._square_center(side, piece_3d.middle, 1), dx, dy, color))
 

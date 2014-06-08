@@ -41,10 +41,10 @@ class @Colors
   DEFAULT_COLORS = {G:'#0d0', B:'#07f', R:'red', O:'orange', Y:'yellow', W:'#eee'}
   @_set_colors: (overrides) ->
     dc = DEFAULT_COLORS
-    result = {R:dc.G, L:dc.B, F:dc.R, B:dc.O, U:dc.Y, D:dc.W, solved:'#444', ignored:'#888', plastic:'black'}
+    result = {R:dc.G, L:dc.B, F:dc.R, B:dc.O, U:dc.Y, D:dc.W, solved:'#444', ignored:'#888', cube:'black'}
 
     for override in overrides.split(' ')
       [type, color] = override.split(':')
-      type = {s:'solved', i:'ignored', p:'plastic'}[type] || type
+      type = {s:'solved', i:'ignored', c:'cube'}[type] || type
       result[type] = DEFAULT_COLORS[color] || color
     result

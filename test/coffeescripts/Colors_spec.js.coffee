@@ -21,12 +21,12 @@ describe "Colors", ->
       expect(-> colors.of('UNKNOWN')).to.throw(Error)
     
     it "can change colors", ->
-      colors = new Colors("", "", "", "R:O L:#abc solved:R p:#123")
+      colors = new Colors("", "", "", "R:O L:#abc solved:R c:#123")
 
       expect(colors.of(Layer.R)).to.equal('orange')
       expect(colors.of(Layer.L)).to.equal('#abc')
       expect(colors.of('solved')).to.equal('red')
-      expect(colors.of('plastic')).to.equal('#123')
+      expect(colors.of('cube')).to.equal('#123')
 
       expect(colors.of(Layer.U)).to.equal('yellow')
       expect(colors.of(Layer.D)).to.equal('#eee'  )
