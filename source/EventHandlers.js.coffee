@@ -6,13 +6,13 @@ class @EventHandlers
 
   @set_focus: (new_focus) ->
     if @focus != new_focus
-      @dom_handler.has_focus(false) if @focus
+      @dom.has_focus(false) if @focus
 
       @focus = new_focus
       @camera = @focus.camera
-      @dom_handler = @focus.dom_handler
+      @dom = @focus.dom
 
-      @dom_handler.has_focus(true)
+      @dom.has_focus(true)
 
   @initialize: () ->
     $("body").keydown (e) -> EventHandlers.key_down(e)
@@ -48,8 +48,8 @@ class @EventHandlers
 
   @mouse_move: (e) ->
     if @bending
-      dx = -0.02 * (e.pageX - @bend_start_x) / @dom_handler.scale
-      dy = -0.02 * (e.pageY - @bend_start_y) / @dom_handler.scale
+      dx = -0.02 * (e.pageX - @bend_start_x) / @dom.scale
+      dy = -0.02 * (e.pageY - @bend_start_y) / @dom.scale
       if e.shiftKey
         dy = 0
       @focus.add_changer('camera', new OneChange( => @camera.bend(dx, dy)))
@@ -98,13 +98,13 @@ class @EventHandlers
   @_button_for: (key, shift) ->
     switch key
       when key_home
-        @dom_handler.reset
+        @dom.reset
       when key_left_arrow
-        unless shift then @dom_handler.prev else @dom_handler.reset
+        unless shift then @dom.prev else @dom.reset
       when key_right_arrow
-       @dom_handler.next
+       @dom.next
       when key_space
-        @dom_handler.play_or_pause
+        @dom.play_or_pause
 
   @key_up: (e) ->
     button_key = e.keyCode in button_keys

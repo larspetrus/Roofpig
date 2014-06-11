@@ -29,7 +29,7 @@ describe "Alg", ->
     expect(alg.at_start()).to.be.false
     expect(alg.at_end()).to.be.true
 
-  it "doesn't need a DomHandler", ->
+  it "doesn't need a Dom", ->
     alone_alg = new Alg("U F2 D' LZ", null)
     expect(alone_alg.to_s()).to.equal("U F2 D' LZ")
 

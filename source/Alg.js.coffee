@@ -3,7 +3,7 @@
 #= require roofpig/CompositeMove
 
 class @Alg
-  constructor: (@move_codes, @dom_handler) ->
+  constructor: (@move_codes, @dom) ->
     if not @move_codes || @move_codes == ""
       throw new Error("Invalid alg: '#{@move_codes}'")
     this._pre_process()
@@ -116,12 +116,12 @@ class @Alg
         new Move(code)
 
   _update_dom: (time = 'later') ->
-    return unless @dom_handler
+    return unless @dom
 
     if time == 'first time'
-      @dom_handler.init_alg_text(this.display_text().future)
+      @dom.init_alg_text(this.display_text().future)
 
-    @dom_handler.alg_changed(@playing, this.at_start(), this.at_end(), this._count_text(), this.display_text())
+    @dom.alg_changed(@playing, this.at_start(), this.at_end(), this._count_text(), this.display_text())
 
   _count_text: ->
     total = current = 0

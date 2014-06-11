@@ -1,6 +1,6 @@
 #= require roofpig/Alg
 #= require roofpig/Config
-#= require roofpig/DomHandler
+#= require roofpig/Dom
 #= require roofpig/EventHandlers
 #= require roofpig/Move
 #= require roofpig/Pieces3D
@@ -36,7 +36,7 @@ class @CubeAnimation
       CubeAnimation.webgl_cubes += 1
       @renderer = new THREE.WebGLRenderer(antialias: true, alpha: true)
 
-    @dom_handler = new DomHandler(@id, roofpig_div, @renderer)
+    @dom = new Dom(@id, roofpig_div, @renderer)
 
     @scene = new THREE.Scene()
     @camera = new Camera(@config.hover, @config.pov)
@@ -48,8 +48,8 @@ class @CubeAnimation
         setup_alg.next_move().do(@world3d)
 
     unless @config.alg == ""
-      @dom_handler.add_alg_area(@config.flag('showalg'))
-      @alg = new Alg(@config.alg, @dom_handler).premix(@world3d)
+      @dom.add_alg_area(@config.flag('showalg'))
+      @alg = new Alg(@config.alg, @dom).premix(@world3d)
 
     if @id == 1
       EventHandlers.set_focus(this)

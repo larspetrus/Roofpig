@@ -1,4 +1,4 @@
-class @DomHandler
+class @Dom
 
   constructor: (@cube_id, @div, renderer) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", "Lucida Grande", sans-serif')
