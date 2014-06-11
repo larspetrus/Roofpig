@@ -34,7 +34,11 @@ class @Rotation
   _do: (camera, do_turns, animate) ->
     new CameraMovement(camera, @layer.normal, do_turns * Math.PI/2, @turn_time, animate)
 
-  count: -> 0
+  count: (count_rotations) ->
+    if count_rotations
+      1
+    else
+      0
 
   to_s: ->
     turn_code = switch @turns
@@ -45,4 +49,8 @@ class @Rotation
 
     "#{@layer.name}#{turn_code}"
 
-  display_text: -> ''
+  display_text: (algdisplay) ->
+    if algdisplay.rotations
+      this.to_s()
+    else
+      ''

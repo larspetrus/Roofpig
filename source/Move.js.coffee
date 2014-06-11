@@ -1,5 +1,6 @@
 #= require roofpig/WorldChangers
 #= require roofpig/Layer
+#= require roofpig/Move
 
 class @Move
   constructor: (code) ->
@@ -40,7 +41,7 @@ class @Move
     pieces3d.move(@layer, do_turns)
     new MoveExecution(pieces3d.on(@layer), @layer.normal, do_turns * -Math.PI/2, @turn_time, animate)
 
-  count: -> 1
+  count: (count_rotations) -> 1
 
   to_s: ->
     turn_code = switch @turns
@@ -51,5 +52,10 @@ class @Move
 
     "#{@layer.name}#{turn_code}"
 
-  display_text: ->
-    this.to_s().replace('Z', '2')
+  @displayify: (move_text, algdisplay) ->
+    result = move_text.replace('Z', algdisplay.Zcode)
+    result = result.replace('2', '²') if algdisplay.fancy2s
+    result
+
+  display_text: (algdisplay) ->
+    Move.displayify(this.to_s(), algdisplay)

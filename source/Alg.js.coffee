@@ -3,7 +3,7 @@
 #= require roofpig/CompositeMove
 
 class @Alg
-  constructor: (@move_codes, @dom) ->
+  constructor: (@move_codes, @algdisplay, @dom) ->
     if not @move_codes || @move_codes == ""
       throw new Error("Invalid alg: '#{@move_codes}'")
     this._pre_process()
@@ -66,8 +66,9 @@ class @Alg
     future = []
     for action, i in @actions
       if @next == i then active = future
-      if action.display_text()
-        active.push(action.display_text())
+      text = action.display_text(@algdisplay)
+      if text
+        active.push(text)
     { past: past.join(' '), future: future.join(' ')}
 
   _pre_process: ->
@@ -125,7 +126,8 @@ class @Alg
 
   _count_text: ->
     total = current = 0
-    for move, i in @actions
-      current += move.count() if @next > i
-      total += move.count()
+    for action, i in @actions
+      count = action.count(@algdisplay.rotations)
+      current += count if @next > i
+      total += count
     "#{current}/#{total}"

@@ -1,5 +1,6 @@
 #= require three.min
 #= require roofpig/Alg
+#= require roofpig/Config
 
 describe "Alg", ->
   describe "#constructor", ->
@@ -46,7 +47,6 @@ describe "Alg", ->
 
     the_x = new Alg("x").actions[0]
     expect(the_x instanceof CompositeMove).to.be.true
-    expect(the_x.display_text()).to.equal("x")
     expect(the_x.count()).to.equal(1)
     expect(the_x.to_s()).to.equal("(R M' L')")
     expect(the_x.actions.length).to.equal(3)
@@ -56,39 +56,69 @@ describe "Alg", ->
 
     wide_r = new Alg("Uw2").actions[0]
     expect(wide_r instanceof CompositeMove).to.be.true
-    expect(wide_r.display_text()).to.equal("Uw2")
     expect(wide_r.count()).to.equal(1)
     expect(wide_r.to_s()).to.equal("(U2 EZ)")
     expect(wide_r.actions.length).to.equal(2)
     action_should_be(wide_r.actions[0], Move, Layer.U, 2)
     action_should_be(wide_r.actions[1], Move, Layer.E, -2)
 
-  it "_count_text", ->
-    alg = new Alg("F L> D'+U R+R>")
-    expect(alg._count_text()).to.equal('0/4')
+  describe "#_count_text", ->
+    it "ignoring rotations", ->
+      alg = new Alg("F L> D'+U R+R>", new Config("").algdisplay)
+      expect(alg._count_text()).to.equal('0/4')
 
-    alg.next_move()
-    expect(alg._count_text()).to.equal('1/4')
+      alg.next_move()
+      expect(alg._count_text()).to.equal('1/4')
 
-    alg.next_move()
-    expect(alg._count_text()).to.equal('1/4')
+      alg.next_move()
+      expect(alg._count_text()).to.equal('1/4')
 
-    alg.next_move()
-    expect(alg._count_text()).to.equal('3/4')
+      alg.next_move()
+      expect(alg._count_text()).to.equal('3/4')
 
-    alg.next_move()
-    expect(alg._count_text()).to.equal('4/4')
+      alg.next_move()
+      expect(alg._count_text()).to.equal('4/4')
 
-  it "#display_text", ->
-    alg = new Alg("F R> U+D' L2 R' LZ D+D>")
-    expect(alg.display_text()).to.deep.equal(past:"", future: "F U+D' L2 R' L2 D")
+    it "counting rotations", ->
+      alg = new Alg("F L> D'+U R+R>", new Config("algdisplay=rotations").algdisplay)
+      expect(alg._count_text()).to.equal('0/6')
 
-    alg.next_move()
-    expect(alg.display_text()).to.deep.equal(past:"F", future: "U+D' L2 R' L2 D")
+      alg.next_move()
+      expect(alg._count_text()).to.equal('1/6')
 
-    alg.next_move()
-    alg.next_move()
-    expect(alg.display_text()).to.deep.equal(past:"F U+D'", future: "L2 R' L2 D")
+      alg.next_move()
+      expect(alg._count_text()).to.equal('2/6')
+
+      alg.next_move()
+      expect(alg._count_text()).to.equal('4/6')
+
+      alg.next_move()
+      expect(alg._count_text()).to.equal('6/6')
+
+  describe "#display_text", ->
+    it "separates past and future moves", ->
+      alg = new Alg("F R> U+D' L2 R' LZ D+D>", new Config("").algdisplay)
+      expect(alg.display_text()).to.deep.equal(past:"", future: "F U+D' L2 R' L2 D")
+
+      alg.next_move()
+      expect(alg.display_text()).to.deep.equal(past:"F", future: "U+D' L2 R' L2 D")
+
+      alg.next_move()
+      alg.next_move()
+      expect(alg.display_text()).to.deep.equal(past:"F U+D'", future: "L2 R' L2 D")
+
+    it "uses algdisplay", ->
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=Z").algdisplay)
+      expect(alg.display_text().future).to.equal("F U2+D' LZ D")
+
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=2p").algdisplay)
+      expect(alg.display_text().future).to.equal("F U2+D' L2' D")
+
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=fancy2s").algdisplay)
+      expect(alg.display_text().future).to.equal("F U²+D' L² D")
+
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=rotations").algdisplay)
+      expect(alg.display_text().future).to.equal("F R> U2+D' F<< L2 D+D>")
 
   it "handles 'shift'", ->
     expect(new Alg("shift> U F2 D' LZ").to_s()).to.equal("U L2 D' BZ")

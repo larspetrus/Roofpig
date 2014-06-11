@@ -54,10 +54,11 @@ describe "Move", ->
     expect(new Move("UZ").to_s()).to.equal("UZ")
 
   it "#display_text", ->
-    expect(new Move("U1").display_text()).to.equal("U")
-    expect(new Move("U2").display_text()).to.equal("U2")
-    expect(new Move("U3").display_text()).to.equal("U'")
-    expect(new Move("UZ").display_text()).to.equal("U2")
+    expect(new Move("U1").display_text({Zcode: "2"})).to.equal("U")
+    expect(new Move("U2").display_text({Zcode: "2"})).to.equal("U2")
+    expect(new Move("U3").display_text({Zcode: "2"})).to.equal("U'")
+    expect(new Move("UZ").display_text({Zcode: "2"})).to.equal("U2")
+    expect(new Move("UZ").display_text({Zcode: "Z"})).to.equal("UZ")
 
   it "#count", ->
     expect(new Move("U2").count()).to.equal(1)

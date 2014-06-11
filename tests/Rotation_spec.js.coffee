@@ -43,7 +43,9 @@ describe "Rotation", ->
       expect(uz.turn_time).to.equal(3*time)
 
   it "#display_text", ->
-    expect(new Rotation("U>").display_text()).to.equal('')
+    expect(new Rotation("U>").display_text({})).to.equal('')
+    expect(new Rotation("U>").display_text({rotations: true})).to.equal('U>')
 
   it "#count", ->
-    expect(new Rotation("U>>").count()).to.equal(0)
+    expect(new Rotation("U>>").count(false)).to.equal(0)
+    expect(new Rotation("U>>").count(true)).to.equal(1)
