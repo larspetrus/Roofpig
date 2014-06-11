@@ -100,7 +100,7 @@ class @Pieces3D
     geo.computeFaceNormals();
     geo.computeBoundingSphere();
 
-    new THREE.Mesh(geo, new THREE.MeshBasicMaterial(color: color, overdraw: 0.5))
+    new THREE.Mesh(geo, new THREE.MeshBasicMaterial(color: color, overdraw: 0.8))
 
   _offsets: (axis1, sticker_size, reversed) ->
     axis2 = v3(axis1.y, axis1.z, axis1.x)
