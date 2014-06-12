@@ -37,7 +37,7 @@ As you can see, the data-config format is "prop1=something|prop2=something else|
 
 The valid properties are: *alg, base, colored, colors, flags, hover, moreflags, pov, setup, solved, tweaks*, but we'll go over them in a logical order.
 
-###2.1 Algorithms
+###2.1 Algorithm
 
 Properties: *alg, flags:showalg*
 
@@ -97,8 +97,41 @@ Cubexp JS Fiddle: http://jsfiddle.net/Lar5/2xAVX/
 
 ####Setting up cube stickers.
 
-Now that we know Cubexps, we can set things up.
+Now that we know Cubexps, we can set up cubes!
 
-The main parameters for this are *solved* and *colored*. *solved* stickers will be dark grey. *colored* stickers will have their normal colors. Any others will be the light gray os 'ignored'. Any sticker both in *solved* and *colored* will be *solved*.
+#####solved and colored
+The main parameters for this are *solved* and *colored*. *solved* stickers will be dark grey. *colored* stickers will have their normal colors. Any others will be the light gray as 'ignored'. *solved* trumps *colored*.
+
+Solved and colored JSFiddle: http://jsfiddle.net/Lar5/tE83s/
+
+#####setupmoves and tweaks
+If just coloring stickers shades of gray on the solved cube is not enough, there are two parameters.
+
+*setupmoves* describe how to get from a solved cube to the cube you want finishing the alg will be. So "setupmoves=L' B' R B L B' R' B" gives a cube with 3 permuted corners.
+
+*tweaks* is the free form tool, where you can set any sticker to any color - AND MORE! "tweaks=F:RF" sets both stickers on the FR edge to the F color. "tweaks=R:Ubl" sets only the U sticker on the UBL corner to the R color. On top of colors, you can also but Xes on stickers like this: tweaks="X:Ub x:Ul:
+
+The JSFiddle is extra useful for this stuff: TODO
+
+###2.3 The other parameters
+
+####2.3.1 hover
+####2.3.1 flags
+####2.3.1 colors
+
+By default, 
+
+####2.3.1 pov
+
+By default the Point Of View is on the UFR corner, with U on top. To look at DFL with F on top, use "pov=Fdl"
+
+####2.3.1 algdisplay
+
+This defines how algs are display if the showalg flag is set. Much like flags, it's a free form string, where we look for certain commands:
+fancy2s - Double moves are written F² rather than F2.
+rotations - Displays the Roofpig rotations. By default they are not displayed.
+2p - Display counter clockwise double moves as 2'
+Z - Display counter clockwise double moves as Z
 
 
+###2.4 base - how not to repeat yourself.
