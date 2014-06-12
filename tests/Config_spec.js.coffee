@@ -17,6 +17,13 @@ describe "Config", ->
     expect(config.flag("fast")).to.be.true
     expect(config.flag("slow")).to.be.false
 
+  it "hover aliases", ->
+    expect(new Config("").hover).to.equal(2.0)
+    expect(new Config("hover=3.14").hover).to.equal('3.14')
+    expect(new Config("hover=none").hover).to.equal(1.0)
+    expect(new Config("hover=near").hover).to.equal(2.0)
+    expect(new Config("hover=far" ).hover).to.equal(7.1)
+
   describe "base", ->
     window["ROOFPIG_CONF_TEST"] = "hover=3.3"
 

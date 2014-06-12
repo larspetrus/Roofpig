@@ -6,12 +6,12 @@ class @Config
     @base = this.base_config(@raw_input['base'], config_string)
 
     @alg       = this.raw("alg")
-    @hover     = this.raw("hover", 2.0)
+    @hover     = this._hover()
     @flags     = this.raw("flags")
     @colors    = new Colors(this.raw("colored"), this.raw("solved"), this.raw("tweaks"), this.raw("colors"))
     @setup     = this.raw("setupmoves")
     @pov       = this.raw("pov", "Ufr")
-    @algdisplay= this._alg_display(this.raw("algdisplay"))
+    @algdisplay= this._alg_display()
 
   flag: (name) ->
     @flags.indexOf(name) > -1
@@ -30,13 +30,24 @@ class @Config
 
     if base_string then new Config(base_string) else { raw: -> }
 
-  _alg_display: (algdisplay) ->
+  _hover: ->
+    raw_hover = this.raw("hover", "near")
+    switch raw_hover
+      when 'none' then 1.0
+      when 'near' then 2.0
+      when 'far' then 7.1
+      else
+        raw_hover
+
+
+  _alg_display: () ->
+    ad = this.raw("algdisplay")
     result = {}
-    result.fancy2s = algdisplay.indexOf('fancy2s') > -1
-    result.rotations = algdisplay.indexOf('rotations') > -1
+    result.fancy2s = ad.indexOf('fancy2s') > -1
+    result.rotations = ad.indexOf('rotations') > -1
     result.Zcode = "2"
-    result.Zcode = "2'" if algdisplay.indexOf('2p') > -1
-    result.Zcode = "Z"  if algdisplay.indexOf('Z') > -1
+    result.Zcode = "2'" if ad.indexOf('2p') > -1
+    result.Zcode = "Z"  if ad.indexOf('Z') > -1
     result
 
   @_parse: (config_string) ->
