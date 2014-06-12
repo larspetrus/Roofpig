@@ -4,12 +4,11 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 
 ##1. Usage
 
-Download the minified roofpig.js library from XXX and three.min.js from YYY, and include it in the HEAD tag of your html like this:
+Get the combined roofpig and three library from XXX, and include it in the HEAD tag of your html pages like this:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="three.min.js"></script>
-<script src="roofpig.min.js"></script>
+<script src="roofpig_and_three.min.js"></script>
 ```
 
 Then for a cube to appear on the page, you only need to make a div with class='roofpig', and some configuration in a data-config attribute.
@@ -20,7 +19,7 @@ Then for a cube to appear on the page, you only need to make a div with class='r
 
 **Dependencies**
 
-Roofpig needs jQuery and three.js to work.
+Roofpig needs jQuery, three.js and a modern canvas enabled browser to work.
 
 
 ##2. Configuration
