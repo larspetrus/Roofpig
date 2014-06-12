@@ -115,10 +115,16 @@ The JSFiddle is extra useful for this stuff: TODO
 ###2.3 The other parameters
 
 ####2.3.1 hover
+
+How far out do the hidden side stickers hover away from the cube? Numbers from 1.1 to around 8 are useful, but you can also use the aliases 'none', 'near' and 'far'.
+
 ####2.3.1 flags
 ####2.3.1 colors
 
-By default, 
+By default, Roofpig uses the colors I like: R=green, L=blue, F=red, B=orange, U=yellow, D=white. To set that using this parameter, you'd use "colors=R:G L:B F:R B:O U:Y D:W". To set L to red is "L:R". I hope the pattern is clear. Aside from the short color names G, B, R, O, Y and W, you can also use any CSS color, such as 'pink', #77f or #3d3dff.
+
+JSFiddle: XXX 
+
 
 ####2.3.1 pov
 
@@ -127,10 +133,10 @@ By default the Point Of View is on the UFR corner, with U on top. To look at DFL
 ####2.3.1 algdisplay
 
 This defines how algs are display if the showalg flag is set. Much like flags, it's a free form string, where we look for certain commands:
-fancy2s - Double moves are written F² rather than F2.
-rotations - Displays the Roofpig rotations. By default they are not displayed.
-2p - Display counter clockwise double moves as 2'
-Z - Display counter clockwise double moves as Z
+- fancy2s - Double moves are written F² rather than F2.
+- rotations - Displays the Roofpig rotations. By default they are not displayed.
+- 2p - Display counter clockwise double moves as 2'
+- Z - Display counter clockwise double moves as Z
 
 
 ###2.4 base - how not to repeat yourself.
