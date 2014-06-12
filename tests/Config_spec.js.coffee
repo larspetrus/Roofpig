@@ -11,18 +11,11 @@ describe "Config", ->
 
     expect(empty_config.colors).to.exist
 
-  describe "flags", ->
-    it "recognizes flags", ->
-      config = new Config("flags=fast shiny")
-      expect(config.flags).to.equal("fast shiny")
-      expect(config.flag("fast")).to.be.true
-      expect(config.flag("slow")).to.be.false
-
-    it "handles moreflags", ->
-      config = new Config("flags=fast| moreflags=shiny")
-      expect(config.flags).to.equal("fast shiny")
-      expect(config.flag("fast")).to.be.true
-      expect(config.flag("slow")).to.be.false
+  it "recognizes flags", ->
+    config = new Config("flags=fast shiny")
+    expect(config.flags).to.equal("fast shiny")
+    expect(config.flag("fast")).to.be.true
+    expect(config.flag("slow")).to.be.false
 
   describe "base", ->
     window["ROOFPIG_CONF_TEST"] = "hover=3.3"
@@ -40,9 +33,11 @@ describe "Config", ->
       #TODO expect error message
 
     it "recurses", ->
-      window["ROOFPIG_CONF_T1"] = "flags=t1"
-      window["ROOFPIG_CONF_T2"] = "base=T1 | moreflags=t2"
-      expect(new Config("hover=2.5| base=T2").flags).to.equal("t1 t2")
+      window["ROOFPIG_CONF_ROOT"] = "flags=t1"
+      window["ROOFPIG_CONF_BASE"] = "base=ROOT | pov=t2"
+      leaf_config = new Config("hover=2.5| base=BASE")
+      expect(leaf_config.flags).to.equal("t1")
+      expect(leaf_config.pov).to.equal("t2")
 
     it "breaks infinite recursion", ->
       window["ROOFPIG_CONF_ME"] = "base=ME | flags=abc"

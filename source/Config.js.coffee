@@ -7,7 +7,7 @@ class @Config
 
     @alg       = this.raw("alg")
     @hover     = this.raw("hover", 2.0)
-    @flags     = (this.raw("flags") + ' ' + this.raw("moreflags")).trim()
+    @flags     = this.raw("flags")
     @colors    = new Colors(this.raw("colored"), this.raw("solved"), this.raw("tweaks"), this.raw("colors"))
     @setup     = this.raw("setup")
     @pov       = this.raw("pov", "Ufr")

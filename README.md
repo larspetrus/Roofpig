@@ -35,7 +35,7 @@ Here is a fully configured example cube:
 
 As you can see, the data-config format is "prop1=something|prop2=something else|prop99=blah".
 
-The valid properties are: *alg, base, colored, colors, flags, hover, moreflags, pov, setup, solved, tweaks*, but we'll go over them in a logical order.
+The valid properties are: *alg, algdisplay, base, colored, colors, flags, hover, pov, setup, solved, tweaks*, but we'll go over them in a logical order.
 
 ###2.1 Algorithm
 
