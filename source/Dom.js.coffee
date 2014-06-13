@@ -46,10 +46,10 @@ class @Dom
     @div.append(@alg_area)
 
     if showalg
-      @alg_text = $("<div/>").width(@div.width()).css('background-color': "#eee", 'margin-bottom': '2px')
+      @alg_text = $("<div/>").width(@div.width()).addClass("roofpig-algtext")
       @alg_area.append(@alg_text)
 
-      @alg_past = $("<span/>").css('background-color': "#ff9")
+      @alg_past = $("<span/>").addClass("roofpig-past-algtext")
       @alg_future = $("<span/>")
       @alg_text.append(@alg_past, @alg_future)
 
@@ -89,6 +89,6 @@ class @Dom
     button.css('font-size': 28*@hscale, float: 'left', height: 40*@hscale, width: 76*@scale)
 
   _make_count_area: ->
-    count_div = $("<div/>", { id: 'count' }).css('text-align': 'right', float: 'right')
+    count_div = $("<div/>", { id: "count-#{@cube_id}" }).css('text-align': 'right', float: 'right')
     @alg_area.append(count_div)
     count_div.height(40*@hscale).width(80*@scale).css("font-size", 24*@hscale)
