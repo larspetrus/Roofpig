@@ -106,9 +106,9 @@ Solved and colored JSFiddle: http://jsfiddle.net/Lar5/tE83s/
 #####setupmoves and tweaks
 If just coloring stickers shades of gray on the solved cube is not enough, there are two parameters.
 
-*setupmoves* describe how to get from a solved cube to the cube you want finishing the alg will be. So "setupmoves=L' B' R B L B' R' B" gives a cube with 3 permuted corners.
+- *setupmoves* describe how to get from a solved cube to the cube you want finishing the alg will be. So "setupmoves=L' B' R B L B' R' B" gives a cube with 3 permuted corners.
 
-*tweaks* is the free form tool, where you can set any sticker to any color - AND MORE! "tweaks=F:RF" sets both stickers on the FR edge to the F color. "tweaks=R:Ubl" sets only the U sticker on the UBL corner to the R color. On top of colors, you can also but Xes on stickers like this: tweaks="X:Ub x:Ul:
+- *tweaks* is the free form tool, where you can set any sticker to any color - AND MORE! "tweaks=F:RF" sets both stickers on the FR edge to the F color. "tweaks=R:Ubl" sets only the U sticker on the UBL corner to the R color. On top of colors, you can also but Xes on stickers like this: tweaks="X:Ub x:Ul:
 
 The JSFiddle is extra useful for this stuff: TODO
 
@@ -119,6 +119,11 @@ The JSFiddle is extra useful for this stuff: TODO
 How far out do the hidden side stickers hover away from the cube? Numbers from 1.1 to around 8 are useful, but you can also use the aliases 'none', 'near' and 'far'.
 
 ####2.3.1 flags
+
+Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
+- *showalg* - Display the alg, according to the *algdisplay* setting.
+- *canvas* - Use regular 2D canvas to draw instead of WebGL.
+
 ####2.3.1 colors
 
 By default, Roofpig uses the colors I like: R=green, L=blue, F=red, B=orange, U=yellow, D=white. To set that using this parameter, you'd use "colors=R:G L:B F:R B:O U:Y D:W". To set L to red is "L:R". I hope the pattern is clear. Aside from the short color names G, B, R, O, Y and W, you can also use any CSS color, such as 'pink', #77f or #3d3dff.
@@ -133,10 +138,11 @@ By default the Point Of View is on the UFR corner, with U on top. To look at DFL
 ####2.3.1 algdisplay
 
 This defines how algs are display if the showalg flag is set. Much like flags, it's a free form string, where we look for certain commands:
-- fancy2s - Double moves are written F² rather than F2.
-- rotations - Displays the Roofpig rotations. By default they are not displayed.
-- 2p - Display counter clockwise double moves as 2'
-- Z - Display counter clockwise double moves as Z
+- *fancy2s* - Double moves are written F² rather than F2.
+- *rotations* - Displays the Roofpig rotations. By default they are not displayed.
+- *2p* - Display counter clockwise double moves as 2'
+- *Z* - Display counter clockwise double moves as Z
 
 
 ###2.4 base - how not to repeat yourself.
+
