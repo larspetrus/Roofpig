@@ -41,59 +41,59 @@ class @Pieces3D
     for x_side in [Layer.R, slice, Layer.L]
       for y_side in [Layer.F, slice, Layer.B]
         for z_side in [Layer.U, slice, Layer.D]
-          name = standard_piece_name(x_side, y_side, z_side)
-          new_3d_piece = new THREE.Object3D()
-          new_3d_piece.name = name
-          new_3d_piece.sticker_locations = name.split('')
-          new_3d_piece.middle = v3(x_side.normal.x, y_side.normal.y, z_side.normal.z).multiplyScalar(2)
+          piece = this._new_piece(x_side, y_side, z_side)
 
           for side in [x_side, y_side, z_side]
             unless side == slice
-              sticker_look = colors.to_draw(name, side)
+              sticker_look = colors.to_draw(piece.name, side)
 
-              this._add_sticker(side, new_3d_piece, sticker_look)
-              this._add_hover_sticker(side, new_3d_piece, sticker_look, hover) if sticker_look.hovers && hover > 1
-              this._add_cube(side, new_3d_piece, colors.of('cube'))
+              this._add_sticker(side, piece, sticker_look)
+              this._add_hover_sticker(side, piece, sticker_look, hover) if sticker_look.hovers && hover > 1
+              this._add_cubeside(side, piece, colors.of('cube'))
 
-          this[name] = @at[name] = new_3d_piece
-          scene.add(new_3d_piece)
+          this[piece.name] = @at[piece.name] = piece
+          scene.add(piece)
+
+  _new_piece: (x_side, y_side, z_side) ->
+    new_piece = new THREE.Object3D()
+    new_piece.name = standard_piece_name(x_side, y_side, z_side)
+    new_piece.sticker_locations = new_piece.name.split('')
+    new_piece.middle = v3(2*x_side.normal.x, 2*y_side.normal.y, 2*z_side.normal.z)
+    new_piece
 
   _add_sticker: (side, piece_3d, sticker) ->
     [dx, dy] = this._offsets(side.normal, 0.90, false)
-    piece_3d.add(this._3d_diamond(this._square_center(side, piece_3d.middle, 1.0002), dx, dy, sticker.color))
+    piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, 1.0002), dx, dy, sticker.color))
 
     if sticker.x_color
       this._add_X(side, piece_3d, sticker.x_color, 1.0004, true)
 
   _add_hover_sticker: (side, piece_3d, sticker, hover) ->
     [dx, dy] = this._offsets(side.normal, 0.98, true)
-    piece_3d.add(this._3d_diamond(this._square_center(side, piece_3d.middle, hover), dx, dy, sticker.color))
+    piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, hover), dx, dy, sticker.color))
 
     if sticker.x_color
       this._add_X(side, piece_3d, sticker.x_color, hover - 0.0002, false)
 
-  _add_X: (side, piece_3d, color, hover, reversed) ->
-    [dx, dy] = this._offsets(side.normal, 0.54, reversed)
-    center = this._square_center(side, piece_3d.middle, hover)
-    piece_3d.add(this._3d_rect(center, dx, v3_x(dy, 0.14), color))
-    piece_3d.add(this._3d_rect(center, v3_x(dx, 0.14), dy, color))
-
-  _add_cube: (side, piece_3d, color) ->
+  _add_cubeside: (side, piece_3d, color) ->
     [dx, dy] = this._offsets(side.normal, 1.0, true)
-    piece_3d.add(this._3d_diamond(this._square_center(side, piece_3d.middle, 1), dx, dy, color))
+    piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, 1), dx, dy, color))
+
+  _add_X: (side, piece_3d, color, distance, reversed) ->
+    [dx, dy] = this._offsets(side.normal, 0.54, reversed)
+    center = this._square_center(side, piece_3d.middle, distance)
+    piece_3d.add(this._rect(center, dx, v3_x(dy, 0.14), color))
+    piece_3d.add(this._rect(center, v3_x(dx, 0.14), dy, color))
 
   _square_center: (side, piece_center, distance) ->
     v3_add(piece_center, v3_x(side.normal, distance))
 
-  _3d_diamond: (stc, d1, d2, color) ->
-    this._3d_4side(v3_add(stc, d1), v3_add(stc, d2), v3_sub(stc, d1), v3_sub(stc, d2), color)
+  _rect: (center, d1, d2, color) ->
+    this._diamond(center, v3_add(d1, d2), v3_sub(d1, d2), color)
 
-  _3d_rect: (stc, d1, d2, color) ->
-    this._3d_diamond(stc, v3_add(d1, d2), v3_sub(d1, d2), color)
-
-  _3d_4side: (v1, v2, v3 ,v4, color) ->
+  _diamond: (center, d1, d2, color) ->
     geo = new THREE.Geometry();
-    geo.vertices.push(v1, v2, v3 ,v4);
+    geo.vertices.push(v3_add(center, d1), v3_add(center, d2), v3_sub(center, d1), v3_sub(center, d2));
     geo.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3));
 
     # http://stackoverflow.com/questions/20734216/when-should-i-call-geometry-computeboundingbox-etc
@@ -110,4 +110,3 @@ class @Pieces3D
     dx = v3_add(axis2, axis3).multiplyScalar(sticker_size * flip)
     dy = v3_sub(axis2, axis3).multiplyScalar(sticker_size)
     [dx, dy]
-
