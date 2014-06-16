@@ -1,17 +1,18 @@
 #RoofPig
 
-Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. It is used in the Real World on my site http://lar5.com/cube/
+Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. You can see it used on my site http://lar5.com/cube/
 
 ##1. Usage
 
-Get the combined roofpig and three library from XXX, and include it in the HEAD tag of your html pages like this:
+Get roofpig_and_three.min.js and roofpig.css from https://github.com/larspetrus/Roofpig/tree/master/download. Then include them (and jQuery) in the HEAD tag of your html pages like this:
 
 ```html
+<link rel="stylesheet" href="roofpig.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="roofpig_and_three.min.js"></script>
 ```
 
-Then for a cube to appear on the page, you only need to make a div with class='roofpig', and some configuration in a data-config attribute.
+To make a cube to appear on the page, you only need to make a div with class='roofpig', and configuration in a data-config attribute.
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
@@ -24,7 +25,7 @@ Roofpig needs jQuery, three.js and a modern canvas enabled browser to work.
 
 ##2. Configuration
 
-Here is a fully configured example cube:
+This makes a fully configured example cube:
 
 ```html
 <div class=roofpig style="width=140px; height=160px;"
@@ -40,7 +41,7 @@ Valid properties are: *alg, algdisplay, base, colored, colors, flags, hover, pov
 
 Properties: *alg, flags:showalg*
 
-The algorithm to animate is defined like this: *alg=R F' x2 R D Lw'*. It handles the usual notation and then some. If no alg is given, the cube will appear without the playback buttons.
+The algorithm to animate is defined like this: *alg=R F' x2 R D Lw'*. It handles standard cube notation and then some. If no alg is given, the cube will appear without the playback buttons.
 
 ####Standard notation
 
