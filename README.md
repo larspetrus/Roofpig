@@ -29,7 +29,7 @@ This makes a fully configured example cube:
 
 ```html
 <div class=roofpig style="width=140px; height=160px;"
-  data-config="alg=R U' F+B' R2 F'+B U' R'|solved=UR-|colored=U U-|colors=F:B B:G U:R D:O R:W L:Y">
+  data-config="alg=R U' F+B' R2 F'+B U' R'|solved=UR-|colored=U U-|colors=F:b B:g U:r D:o R:w L:y">
 </div>
 ```
 

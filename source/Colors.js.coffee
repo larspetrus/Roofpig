@@ -38,10 +38,10 @@ class @Colors
       throw new Error("Unknown sticker type '#{sticker_type}'")
     @side_colors[type]
 
-  DEFAULT_COLORS = {G:'#0d0', B:'#07f', R:'red', O:'orange', Y:'yellow', W:'#eee'}
+  DEFAULT_COLORS = {g:'#0d0', b:'#07f', r:'red', o:'orange', y:'yellow', w:'#eee'}
   @_set_colors: (overrides) ->
     dc = DEFAULT_COLORS
-    result = {R:dc.G, L:dc.B, F:dc.R, B:dc.O, U:dc.Y, D:dc.W, solved:'#444', ignored:'#888', cube:'black'}
+    result = {R:dc.g, L:dc.b, F:dc.r, B:dc.o, U:dc.y, D:dc.w, solved:'#444', ignored:'#888', cube:'black'}
 
     for override in overrides.split(' ')
       [type, color] = override.split(':')
