@@ -108,13 +108,13 @@ If just coloring stickers shades of gray on the solved cube is not enough, there
 - *setupmoves* describe how to get from a solved cube to the cube you want finishing the alg will be. So "setupmoves=L' B' R B L B' R' B" gives a cube with 3 permuted corners.
 - *tweaks* is the free form tool, where you can set any sticker to any color - AND MORE! "tweaks=F:RF" sets both stickers on the FR edge to the F color. "tweaks=R:Ubl" sets only the U sticker on the UBL corner to the R color. On top of colors, you can also but Xes on stickers like this: tweaks="X:Ub x:Ul:
 
-The JSFiddle is extra useful for this stuff: TODO
+The JSFiddle is extra useful for this stuff: http://jsfiddle.net/Lar5/JFgQg/
 
-###2.3 The other parameters
+###2.3 Other parameters
 
 ####2.3.1 hover
 
-How far out do the hidden side stickers hover away from the cube? Numbers from 1.1 to around 8 are useful, but you can also use the aliases 'none', 'near' and 'far'.
+How far out do the hidden side stickers hover away from the cube? Numbers from 1.1 to around 8 are useful, but you can also use the aliases 'none', 'near' and 'far'. Solved and ignored stickers don't hover.
 
 ####2.3.1 flags
 
@@ -124,7 +124,7 @@ Things that can only be on or off are set to "ON" by mentioning them in this fre
 
 ####2.3.1 colors
 
-By default, Roofpig uses the colors I like: R=green, L=blue, F=red, B=orange, U=yellow, D=white. To set that using this parameter, you'd use "colors=R:G L:B F:R B:O U:Y D:W". To set L to red is "L:R". I hope the pattern is clear. Aside from the short color names G, B, R, O, Y and W, you can also use any CSS color, such as 'pink', #77f or #3d3dff.
+By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or "colors=R:g L:b F:r B:o U:y D:w" as it would be written in this notation. Aside from 'g' for green etc, you can also use any CSS color, like 'pink', '&#35;77f' or '&#35;3d3dff' etc.
 
 JSFiddle: XXX 
 
@@ -141,11 +141,11 @@ This defines how algs are display if the showalg flag is set. Much like flags, i
 - *Z* - Display counter clockwise double moves as Z
 
 
-###2.4 base - defining defaults.
+###2.4 base - sharing defaults.
 
-By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to specify that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change.
+By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to repeat that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change!"
 
-You simply put the common part in a Javascript variably, named starting with **"ROOFPIG_CONF_"**.
+You simply put the common part in a Javascript variable, named starting with **"ROOFPIG_CONF_"**.
 
 ```html
 <script>
@@ -155,4 +155,4 @@ You simply put the common part in a Javascript variably, named starting with **"
 <div class=roofpig data-config="base=F5|alg=R' U' R U L U' R' U R+L'"></div>
 ```
 
-This shares it within a page. To share across a whole site, you can put some **"ROOFPIG_CONF_"**'s in a .js file that you include everywhere.
+This shares it within a page. To share between pages, put some **"ROOFPIG_CONF_"**'s in a common .js file.
