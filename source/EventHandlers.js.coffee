@@ -128,8 +128,8 @@ class @EventHandlers
     angle_to_turn = -Math.PI/2 * turns
     @focus.add_changer('camera', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
 
-  @_move: (side, turns) ->
-    @focus.add_changer('pieces', new Move(side, turns).show_do(@focus.world3d))
+  @_move: (code) ->
+    @focus.add_changer('pieces', new Move(code).show_do(@focus.world3d))
 
 
   # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
