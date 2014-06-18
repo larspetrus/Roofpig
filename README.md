@@ -12,7 +12,7 @@ Get roofpig_and_three.min.js and roofpig.css from https://github.com/larspetrus/
 <script src="roofpig_and_three.min.js"></script>
 ```
 
-To make a cube to appear on the page, you only need to make a div with class='roofpig', and configuration in a data-config attribute.
+To make a cube to appear on the page, make a div with class='roofpig', and configuration in a data-config attribute.
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
@@ -141,11 +141,11 @@ This defines how algs are display if the showalg flag is set. Much like flags, i
 - *Z* - Display counter clockwise double moves as Z
 
 
-###2.4 base - sharing defaults.
+###2.4 base - sharing configs.
 
 By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to repeat that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change!"
 
-You simply put the common part in a Javascript variable, named starting with **"ROOFPIG_CONF_"**.
+Any Javascript variable, named starting with **"ROOFPIG_CONF_"**, can be used as base.
 
 ```html
 <script>
@@ -155,4 +155,6 @@ You simply put the common part in a Javascript variable, named starting with **"
 <div class=roofpig data-config="base=F5|alg=R' U' R U L U' R' U R+L'"></div>
 ```
 
-This shares it within a page. To share between pages, put some **"ROOFPIG_CONF_"**'s in a common .js file.
+Properties in data-config override the "inherited" ones from the base. You can chain **base**s to form an elaborate hierarchy if you're into that kind of complexity.
+
+To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a common .js file.
