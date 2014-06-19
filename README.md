@@ -7,7 +7,6 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 Get roofpig_and_three.min.js from https://github.com/larspetrus/Roofpig/tree/master/. Include it (and jQuery) in your HTML HEAD tags like so:
 
 ```html
-<link rel="stylesheet" href="roofpig.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="roofpig_and_three.min.js"></script>
 ```
@@ -155,6 +154,6 @@ Any Javascript variable, named starting with **"ROOFPIG_CONF_"**, can be used as
 <div class=roofpig data-config="base=F5|alg=R' U' R U L U' R' U R+L'"></div>
 ```
 
-Properties in data-config override the "inherited" ones from the base. You can chain **base**s to form an elaborate hierarchy if you're into that kind of complexity.
+Properties in data-config override the "inherited" ones from the base. You can chain **base**'s to form an elaborate hierarchy if you're into that kind of complexity.
 
 To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a common .js file.
