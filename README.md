@@ -113,7 +113,7 @@ The JSFiddle is extra useful for this stuff: http://jsfiddle.net/Lar5/JFgQg/
 
 ####'hover'
 
-How far out do the hidden side stickers hover away from the cube? Numbers from 1.1 to around 8 are useful, but you can also use the aliases 'none', 'near' and 'far'. Solved and ignored stickers don't hover.
+How far out do the hidden side stickers hover away from the cube? 1 means 'not at all'. 10 means 'too far'. It's easiest to use the aliases 'none', 'near' and 'far' (1, 2 and 7.1). Solved and ignored stickers don't hover.
 
 ####'flags'
 
@@ -123,7 +123,7 @@ Things that can only be on or off are set to "ON" by mentioning them in this fre
 
 ####'colors'
 
-By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or "colors=R:g L:b F:r B:o U:y D:w" as it would be written in this notation. Aside from 'g' for green etc, you can also use any CSS color, like 'pink', '&#35;77f' or '&#35;3d3dff' etc.
+By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or "colors=R:g L:b F:r B:o U:y D:w" in this notation. Aside from 'g' for green etc, you can also use any CSS color, like 'pink', '&#35;77f' or '&#35;3d3dff' etc.
 
 JSFiddle: XXX 
 
@@ -133,9 +133,9 @@ By default the Point Of View is on the UFR corner, with U on top. To look at DFL
 
 ####'algdisplay'
 
-This defines how algs are display if the showalg flag is set. Much like flags, it's a free form string, where we look for certain commands:
+This defines how algs are written if the showalg flag is set. Much like flags, it's a free form string, where we look for certain commands:
 - *fancy2s* - Double moves are written F² rather than F2.
-- *rotations* - Displays the Roofpig rotations. By default they are not displayed.
+- *rotations* - Displays the Roofpig rotations (R>, U<< etc) . By default they are not displayed.
 - *2p* - Display counter clockwise double moves as 2'
 - *Z* - Display counter clockwise double moves as Z
 
@@ -157,3 +157,19 @@ Any Javascript variable, named starting with **"ROOFPIG_CONF_"**, can be used as
 Properties in data-config override the "inherited" ones from the base. You can chain **base**'s to form an elaborate hierarchy if you're into that kind of complexity.
 
 To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a common .js file.
+
+###3. Working with the code
+
+I wrote this as a Rails project, since that's the way I know to do web programming. It's slightly monstrous to have the whole project in git, but on the plus side it does work.
+
+To run it
+- Download and install [Rails](http://rubyonrails.org/)
+- cd to .../Roofpig/rails_project
+- > **rails server**
+
+Now you should get a demo page on **http://localhost:3000/** and the test suite on **http://localhost:3500/**. Have fun!
+
+
+##4. What's a Roofpig anyway?
+
+https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s
