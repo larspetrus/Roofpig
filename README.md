@@ -4,7 +4,7 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 
 ##1. Usage
 
-Get roofpig_and_three.min.js and roofpig.css from https://github.com/larspetrus/Roofpig/tree/master/download. Then include them (and jQuery) in the HEAD tag of your html pages like this:
+Get roofpig_and_three.min.js from https://github.com/larspetrus/Roofpig/tree/master/. Include it (and jQuery) in your HTML HEAD tags like so:
 
 ```html
 <link rel="stylesheet" href="roofpig.css">
@@ -112,27 +112,27 @@ The JSFiddle is extra useful for this stuff: http://jsfiddle.net/Lar5/JFgQg/
 
 ###2.3 Other parameters
 
-####2.3.1 hover
+####'hover'
 
 How far out do the hidden side stickers hover away from the cube? Numbers from 1.1 to around 8 are useful, but you can also use the aliases 'none', 'near' and 'far'. Solved and ignored stickers don't hover.
 
-####2.3.1 flags
+####'flags'
 
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
 - *showalg* - Display the alg, according to the *algdisplay* setting.
 - *canvas* - Use regular 2D canvas to draw instead of WebGL.
 
-####2.3.1 colors
+####'colors'
 
 By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or "colors=R:g L:b F:r B:o U:y D:w" as it would be written in this notation. Aside from 'g' for green etc, you can also use any CSS color, like 'pink', '&#35;77f' or '&#35;3d3dff' etc.
 
 JSFiddle: XXX 
 
-####2.3.1 pov
+####'pov'
 
 By default the Point Of View is on the UFR corner, with U on top. To look at DFL with F on top, use "pov=Fdl"
 
-####2.3.1 algdisplay
+####'algdisplay'
 
 This defines how algs are display if the showalg flag is set. Much like flags, it's a free form string, where we look for certain commands:
 - *fancy2s* - Double moves are written F² rather than F2.
