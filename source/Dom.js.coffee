@@ -63,11 +63,13 @@ class @Dom
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
-  LUCIDA_WIDTHS = {M:108, '+':100, w:98, D:94, U:87, 2:80, R:80, x:78, Z:77, B:73, z:73, F:68, E:68, S:68, L:67, y:65, '²':53, ' ':40, "'":29}
+  LUCIDA_WIDTHS = {M:108, '+':100, '>':100, '<':100, w:98, D:94, U:87, 2:80, R:80, x:78, Z:77, B:73, z:73, F:68, E:68, S:68, L:67, y:65, '²':53, ' ':40, "'":29}
   init_alg_text: (text) ->
     if @alg_text
       width = 0
-      width += LUCIDA_WIDTHS[char] for char in text.split('')
+      for char in text.split('')
+        width += LUCIDA_WIDTHS[char] || 80
+        unless LUCIDA_WIDTHS[char] then log_error("Unknown char width: '#{char}'")
 
       font_size = 24 * @scale * Math.min(1, 1970/width)
       @alg_text.height(1.2 * font_size).css("font-size": font_size)
