@@ -111,6 +111,8 @@ The JSFiddle is extra useful for this stuff: http://jsfiddle.net/Lar5/JFgQg/
 
 ###2.3 Other parameters
 
+JSFiddle: http://jsfiddle.net/Lar5/9vq68/ 
+
 ####'hover'
 
 How far out do the hidden side stickers hover away from the cube? 1 means 'not at all'. 10 means 'too far'. It's easiest to use the aliases 'none', 'near' and 'far' (1, 2 and 7.1). Solved and ignored stickers don't hover.
@@ -125,7 +127,6 @@ Things that can only be on or off are set to "ON" by mentioning them in this fre
 
 By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or "colors=R:g L:b F:r B:o U:y D:w" in this notation. Aside from 'g' for green etc, you can also use any CSS color, like 'pink', '&#35;77f' or '&#35;3d3dff' etc.
 
-JSFiddle: XXX 
 
 ####'pov'
 
@@ -133,7 +134,7 @@ By default the Point Of View is on the UFR corner, with U on top. To look at DFL
 
 ####'algdisplay'
 
-This defines how algs are written if the showalg flag is set. Much like flags, it's a free form string, where we look for certain commands:
+This defines how algs are written (if 'showalg' is on). Much like flags, it's a free form string, where we look for certain commands:
 - *fancy2s* - Double moves are written F² rather than F2.
 - *rotations* - Displays the Roofpig rotations (R>, U<< etc) . By default they are not displayed.
 - *2p* - Display counter clockwise double moves as 2'
@@ -144,7 +145,7 @@ This defines how algs are written if the showalg flag is set. Much like flags, i
 
 By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to repeat that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change!"
 
-Any Javascript variable, named starting with **"ROOFPIG_CONF_"**, can be used as base.
+Javascript variables, named starting with **"ROOFPIG_CONF_"**, can be used as base.
 
 ```html
 <script>
@@ -165,11 +166,11 @@ I wrote this as a Rails project, since that's the way I know to do web programmi
 To run it
 - Download and install [Rails](http://rubyonrails.org/)
 - cd to .../Roofpig/rails_project
-- > **rails server**
+- Start Rails with 'rails server'
 
-Now you should get a demo page on **http://localhost:3000/** and the test suite on **http://localhost:3500/**. Have fun!
+You should get a demo page on **http://localhost:3000/** and the test suite on **http://localhost:3500/**. Have fun!
 
 
 ##4. What's a Roofpig anyway?
 
-https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s
+["Most unexpected!"](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
