@@ -52,8 +52,8 @@ roofpig_css = """
     height: 20px;
     width: 20px;
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 2px;
+    top: 3px;
 
     color: #ddd;
     text-align: center;
