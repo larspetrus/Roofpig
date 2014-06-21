@@ -77,6 +77,7 @@ roofpig_css = """
     width: 130px;
 
     font-size: 10px;
+    text-align: left;
     background-color: rgba(255, 255, 255, 0.94);
     border: 1px solid #aaa;
     padding: 0 4px 4px 4px;
