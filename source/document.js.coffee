@@ -74,8 +74,6 @@ roofpig_css = """
   .roofpig-help {
     position: absolute;
     top: -1px;
-    left: 50%;
-    margin-left: -70px;
     width: 130px;
 
     font-size: 10px;

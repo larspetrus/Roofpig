@@ -71,6 +71,8 @@ class @EventHandlers
                  "<div/><span>Tab</span> - Next Cube</div>")
 
     cube.dom.div.append(@help)
+    @help.css(right: "#{(cube.dom.div.width()-@help.outerWidth())/2}px")
+
 
 
   # ---- Keyboard Events ----
