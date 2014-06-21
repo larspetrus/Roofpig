@@ -32,10 +32,15 @@ class @EventHandlers
       cube = CubeAnimation.by_id[cube_id]
       cube.button_click(button_name, e.shiftKey)
 
-
-  # ---- Mouse Events ----
+    $('.roofpig-help-button').click (e) ->
+      [_, cube_id] = $(this).attr("id").split("-")
+      EventHandlers.show_help(CubeAnimation.by_id[cube_id])
 
   @mouse_down: (e, target_cube_id) ->
+    if @help
+      @help.remove()
+      @help = null
+    
     if target_cube_id == @focus.id
       @bend_start_x = e.pageX
       @bend_start_y = e.pageY
@@ -55,9 +60,27 @@ class @EventHandlers
       @focus.add_changer('camera', new OneChange( => @camera.bend(dx, dy)))
 
 
+  @show_help: (cube) ->
+    @help = $("<div/>").addClass('roofpig-help')
+    @help.append($("<div>Keyboard shortcuts</div>").css('text-align': 'center', 'font-weight': 'bold'),
+                 "<div><span>→</span> - Next move</div>",
+                 "<div/><span>←</span> - Previous move</div>",
+                 "<div/><span>⇧</span>+<span>→</span> - To end</div>",
+                 "<div/><span>⇧</span>+<span>←</span> - To start</div>",
+                 "<div/>Space bar - Play/Pause</div>",
+                 "<div/><span>Tab</span> - Next Cube</div>")
+
+    cube.dom.div.append(@help)
+
+
   # ---- Keyboard Events ----
 
   @key_down: (e) ->
+    if @help
+      @help.remove()
+      @help = null
+      help_toggled = true
+
     if e.ctrlKey || e.metaKey
       return true
 
@@ -86,6 +109,9 @@ class @EventHandlers
     else if key in turn_keys
       turns = if shift then 3 else if alt then 2 else 1
       this._move("#{side_for[key]}#{turns}")
+
+    else if key == key_question
+      this.show_help(@focus) unless help_toggled
 
     else
       unhandled = true
@@ -150,6 +176,7 @@ class @EventHandlers
   key_S = 83
   key_X = 88
   key_Z = 90
+  key_question = 191
 
   button_keys = [key_space, key_home, key_left_arrow, key_right_arrow]
   rotate_keys = [key_C, key_Z, key_A, key_D, key_S, key_X]

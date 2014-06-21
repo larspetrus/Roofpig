@@ -42,6 +42,8 @@ class @Dom
       @alg_future.text(" "+ alg_texts.future)
 
   add_alg_area: (showalg) ->
+    @div.append($("<div/>", text: '?', id: "help-#{@cube_id}").addClass('roofpig-help-button'))
+
     @alg_area = $("<div/>").height(@div.height() - @div.width()).width(@div.width()).css("border-top": "1px solid #ccc")
     @div.append(@alg_area)
 

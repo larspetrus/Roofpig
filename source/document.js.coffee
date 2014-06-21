@@ -50,11 +50,52 @@ roofpig_css = """
   .roofpig-past-algtext {
     background-color: #ff9;
   }
+
+  .roofpig-help-button {
+    font-size: 14px;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+
+    color: #ddd;
+    text-align: center;
+
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+  }
+  .roofpig-help-button:hover {
+    color: black;
+    background-color: rgba(220, 220, 220, 0.7);
+  }
+
+  .roofpig-help {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    margin-left: -70px;
+    width: 130px;
+
+    font-size: 10px;
+    background-color: rgba(255, 255, 255, 0.94);
+    border: 1px solid #aaa;
+    padding: 0 4px 4px 4px;
+  }
+  .roofpig-help div {
+    margin: 2px 0;
+  }
+  .roofpig-help span {
+    font-size: 11px;
+    padding: 0 2px;
+    background-color: #ddd;
+  }
 </style>
 """
 
 $(document).ready ->
-  console.log("Roofpig version 0.9.6 (@@BUILT_WHEN@@). Expecting jQuery 1.11.1 and Three.js 67.")
+  console.log("Roofpig version 0.9.7 (@@BUILT_WHEN@@). Expecting jQuery 1.11.1 and Three.js 67.")
   console.log("jQuery version", $.fn.jquery)
 
   $('head').append(roofpig_css)
