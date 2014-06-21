@@ -9,20 +9,16 @@ roofpig_css = """
     font-weight: normal;
     font-style: normal;
     padding: 0;
-    -moz-box-shadow: inset 0px 1px 0px 0px #{shadow};
-    -webkit-box-shadow: inset 0px 1px 0px 0px #{shadow};
     box-shadow: inset 0px 1px 0px 0px #{shadow};
     background-color: #{light};
     border: 1px solid #dcdcdc;
     outline: none;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
     border-radius: 2px;
     text-indent: 0;
     display: inline-block;
     text-decoration: none;
     text-align: center;
-    text-shadow: 1px 1px 0px #{shadow};
+    text-shadow: 1px 1px 0 #{shadow};
   }
 
   .roofpig-button-enabled {
@@ -61,9 +57,6 @@ roofpig_css = """
 
     color: #ddd;
     text-align: center;
-
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
     border-radius: 8px;
   }
   .roofpig-help-button:hover {
