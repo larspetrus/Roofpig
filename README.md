@@ -1,6 +1,6 @@
 #RoofPig
 
-Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. You can see it used on my site http://lar5.com/cube/
+Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. See it in use on http://lar5.com/cube/
 
 ##1. Usage
 
@@ -11,16 +11,11 @@ Get roofpig_and_three.min.js from https://github.com/larspetrus/Roofpig/tree/mas
 <script src="roofpig_and_three.min.js"></script>
 ```
 
-To make a cube to appear on the page, make a div with class='roofpig', and configuration in a data-config attribute.
+To make a cube appear on the page, make a div with `class='roofpig'`, with configuration in a data-config attribute.
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
 ```
-
-**Dependencies**
-
-Roofpig needs jQuery, three.js and a modern canvas enabled browser to work.
-
 
 ##2. Configuration
 
@@ -34,7 +29,7 @@ This makes a fully configured example cube:
 
 As you can see, the data-config format is *"prop1=something|prop2=something else|prop99=blah"*.
 
-Valid properties are: *alg, algdisplay, base, colored, colors, flags, hover, pov, setup, solved, tweaks*, but we'll go over them in a logical order.
+Valid properties are: *alg, algdisplay, base, colored, colors, flags, hover, pov, setup, solved, speed, tweaks*, but we'll go over them in a logical order.
 
 ###2.1 Algorithm
 
@@ -117,6 +112,10 @@ JSFiddle: http://jsfiddle.net/Lar5/9vq68/
 
 How far out do the hidden side stickers hover away from the cube? 1 means 'not at all'. 10 means 'too far'. It's easiest to use the aliases 'none', 'near' and 'far' (1, 2 and 7.1). Solved and ignored stickers don't hover.
 
+####'speed'
+
+Number of milliseconds for a turn. Defaults to 200.
+
 ####'flags'
 
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
@@ -136,9 +135,9 @@ By default the Point Of View is on the UFR corner, with U on top. To look at DFL
 
 This defines how algs are written (if 'showalg' is on). Much like flags, it's a free form string, where we look for certain commands:
 - *fancy2s* - Double moves are written F² rather than F2.
-- *rotations* - Displays the Roofpig rotations (R>, U<< etc) . By default they are not displayed.
-- *2p* - Display counter clockwise double moves as 2'
-- *Z* - Display counter clockwise double moves as Z
+- *rotations* - Displays the Roofpig rotations (R>, U<< etc) . Off by default.
+- *2p* - Display counter clockwise double moves as 2'. Just 2 by default.
+- *Z* - Display counter clockwise double moves as Z.
 
 
 ###2.4 base - sharing configs.
