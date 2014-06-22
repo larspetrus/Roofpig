@@ -1,10 +1,10 @@
 #= require roofpig/Layer
 
 class @Rotation
-  constructor: (code) ->
+  constructor: (code, @world3d, @speed = 200) ->
     [@layer, @turns] = Rotation._parse_code(code)
 
-    @turn_time = 200 * (1 + Math.abs(@turns))
+    @turn_time = @speed * (1 + Math.abs(@turns))
 
   @_parse_code: (code) ->
     turns = switch code.substring(1)
@@ -16,23 +16,23 @@ class @Rotation
       throw new Error("Invalid Rotation code '#{code}'")
     [layer, turns]
 
-  do: (world3d) ->
-    this._do(world3d.camera, @turns, false)
+  do: ->
+    this._do(@turns, false)
 
-  undo: (world3d) ->
-    this._do(world3d.camera, -@turns, false)
+  undo: ->
+    this._do(-@turns, false)
 
-  premix: (world3d) ->
+  premix: ->
     # No Rotations in premix
 
-  show_do: (world3d) ->
-    this._do(world3d.camera, @turns, true)
+  show_do: ->
+    this._do(@turns, true)
 
-  show_undo: (world3d) ->
-    this._do(world3d.camera, -@turns, true)
+  show_undo: ->
+    this._do(-@turns, true)
 
-  _do: (camera, do_turns, animate) ->
-    new CameraMovement(camera, @layer.normal, do_turns * Math.PI/2, @turn_time, animate)
+  _do: (do_turns, animate) ->
+    new CameraMovement(@world3d.camera, @layer.normal, do_turns * Math.PI/2, @turn_time, animate)
 
   count: (count_rotations) ->
     if count_rotations

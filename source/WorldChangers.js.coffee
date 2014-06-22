@@ -92,7 +92,7 @@ class @ConcurrentChangers
 
 
 class @AlgAnimation
-  constructor: (@alg, @world3d) ->
+  constructor: (@alg) ->
     this._next_alg_move()
 
   update: (now) ->
@@ -113,7 +113,7 @@ class @AlgAnimation
     if @alg.at_end() || not @alg.playing
       @_finished = true
     else
-      @changer = @alg.next_move().show_do(@world3d)
+      @changer = @alg.next_move().show_do()
 
 
 

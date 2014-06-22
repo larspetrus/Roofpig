@@ -3,10 +3,10 @@
 #= require roofpig/Move
 
 class @Move
-  constructor: (code) ->
+  constructor: (code, @world3d, @speed = 200) ->
     [@layer, @turns] = Move._parse_code(code)
 
-    @turn_time = 200 * (1 + Math.abs(@turns))
+    @turn_time = @speed * (1 + Math.abs(@turns))
 
   @_parse_code: (code) ->
     turns = Move.parse_turns(code.substring(1))
@@ -22,24 +22,24 @@ class @Move
       when "3", "'"  then -1
       when "Z", "2'" then -2
 
-  do: (world3d) ->
-    this._do(world3d.pieces, @turns, false)
+  do: ->
+    this._do(@turns, false)
 
-  undo: (world3d) ->
-    this._do(world3d.pieces, -@turns, false)
+  undo: ->
+    this._do(-@turns, false)
 
-  premix: (world3d) ->
-    this.undo(world3d)
+  premix: ->
+    this.undo()
 
-  show_do: (world3d) ->
-    this._do(world3d.pieces, @turns, true)
+  show_do: ->
+    this._do(@turns, true)
 
-  show_undo: (world3d) ->
-    this._do(world3d.pieces, -@turns, true)
+  show_undo: ->
+    this._do( -@turns, true)
 
-  _do: (pieces3d, do_turns, animate) ->
-    pieces3d.move(@layer, do_turns)
-    new MoveExecution(pieces3d.on(@layer), @layer.normal, do_turns * -Math.PI/2, @turn_time, animate)
+  _do: (do_turns, animate) ->
+    @world3d.pieces.move(@layer, do_turns)
+    new MoveExecution(@world3d.pieces.on(@layer), @layer.normal, do_turns * -Math.PI/2, @turn_time, animate)
 
   count: (count_rotations) -> 1
 

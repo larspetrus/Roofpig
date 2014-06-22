@@ -63,8 +63,10 @@ describe "Alg", ->
     action_should_be(wide_r.actions[1], Move, Layer.E, -2)
 
   describe "#_count_text", ->
+    world = null
+
     it "ignoring rotations", ->
-      alg = new Alg("F L> D'+U R+R>", new Config("").algdisplay)
+      alg = new Alg("F L> D'+U R+R>", world, new Config("").algdisplay)
       expect(alg._count_text()).to.equal('0/4')
 
       alg.next_move()
@@ -80,7 +82,7 @@ describe "Alg", ->
       expect(alg._count_text()).to.equal('4/4')
 
     it "counting rotations", ->
-      alg = new Alg("F L> D'+U R+R>", new Config("algdisplay=rotations").algdisplay)
+      alg = new Alg("F L> D'+U R+R>", world, new Config("algdisplay=rotations").algdisplay)
       expect(alg._count_text()).to.equal('0/6')
 
       alg.next_move()
@@ -96,8 +98,10 @@ describe "Alg", ->
       expect(alg._count_text()).to.equal('6/6')
 
   describe "#display_text", ->
+    world = null
+
     it "separates past and future moves", ->
-      alg = new Alg("F R> U+D' L2 R' LZ D+D>", new Config("").algdisplay)
+      alg = new Alg("F R> U+D' L2 R' LZ D+D>", world, new Config("").algdisplay)
       expect(alg.display_text()).to.deep.equal(past:"", future: "F U+D' L2 R' L2 D")
 
       alg.next_move()
@@ -108,16 +112,16 @@ describe "Alg", ->
       expect(alg.display_text()).to.deep.equal(past:"F U+D'", future: "L2 R' L2 D")
 
     it "uses algdisplay", ->
-      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=Z").algdisplay)
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=Z").algdisplay)
       expect(alg.display_text().future).to.equal("F U2+D' LZ D")
 
-      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=2p").algdisplay)
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=2p").algdisplay)
       expect(alg.display_text().future).to.equal("F U2+D' L2' D")
 
-      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=fancy2s").algdisplay)
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=fancy2s").algdisplay)
       expect(alg.display_text().future).to.equal("F U²+D' L² D")
 
-      alg = new Alg("F R> U2+D' F<< LZ D+D>", new Config("algdisplay=rotations").algdisplay)
+      alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=rotations").algdisplay)
       expect(alg.display_text().future).to.equal("F R> U2+D' F<< L2 D+D>")
 
   it "handles 'shift'", ->

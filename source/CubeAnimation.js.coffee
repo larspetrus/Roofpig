@@ -43,13 +43,13 @@ class @CubeAnimation
     @world3d = { pieces: new Pieces3D(@scene, @config), camera: @camera }
 
     if (@config.setup)
-      setup_alg = new Alg(@config.setup)
+      setup_alg = new Alg(@config.setup, @world3d)
       until setup_alg.at_end()
-        setup_alg.next_move().do(@world3d)
+        setup_alg.next_move().do()
 
     unless @config.alg == ""
       @dom.add_alg_area(@config.flag('showalg'))
-      @alg = new Alg(@config.alg, @config.algdisplay, @dom).premix(@world3d)
+      @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @dom).premix()
 
     if @id == 1
       EventHandlers.set_focus(this)

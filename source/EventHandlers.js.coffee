@@ -14,7 +14,7 @@ class @EventHandlers
 
       @dom.has_focus(true)
 
-  @initialize: () ->
+  @initialize: ->
     $("body").keydown (e) -> EventHandlers.key_down(e)
     $("body").keyup (e)   -> EventHandlers.key_up(e)
 
@@ -157,7 +157,7 @@ class @EventHandlers
     @focus.add_changer('camera', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
 
   @_move: (code) ->
-    @focus.add_changer('pieces', new Move(code).show_do(@focus.world3d))
+    @focus.add_changer('pieces', new Move(code, @focus.world3d, 200).show_do())
 
 
   # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes

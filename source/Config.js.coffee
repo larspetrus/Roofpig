@@ -6,12 +6,13 @@ class @Config
     @base = this.base_config(@raw_input['base'], config_string)
 
     @alg       = this.raw("alg")
-    @hover     = this._hover()
-    @flags     = this.raw("flags")
-    @colors    = new Colors(this.raw("colored"), this.raw("solved"), this.raw("tweaks"), this.raw("colors"))
-    @setup     = this.raw("setupmoves")
-    @pov       = this.raw("pov", "Ufr")
     @algdisplay= this._alg_display()
+    @colors    = new Colors(this.raw("colored"), this.raw("solved"), this.raw("tweaks"), this.raw("colors"))
+    @flags     = this.raw("flags")
+    @hover     = this._hover()
+    @pov       = this.raw("pov", "Ufr")
+    @setup     = this.raw("setupmoves")
+    @speed     = this.raw("speed", 200)
 
   flag: (name) ->
     @flags.indexOf(name) > -1
@@ -40,7 +41,7 @@ class @Config
         raw_hover
 
 
-  _alg_display: () ->
+  _alg_display: ->
     ad = this.raw("algdisplay")
     result = {}
     result.fancy2s = ad.indexOf('fancy2s') > -1
