@@ -70,7 +70,7 @@ roofpig_css = """
 .roofpig-help {
   position: absolute;
   top: -1px;
-  width: 130px;
+  white-space: nowrap;
 
   font-size: 10px;
   text-align: left;
