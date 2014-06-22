@@ -41,6 +41,26 @@ class @Dom
       @alg_past.text(alg_texts.past)
       @alg_future.text(" "+ alg_texts.future)
 
+  show_help: ->
+    @help = $("<div/>").addClass('roofpig-help')
+    @help.append($("<div>Keyboard shortcuts</div>").css('text-align': 'center', 'font-weight': 'bold'),
+      "<div><span>→</span> - Next move</div>",
+      "<div/><span>←</span> - Previous move</div>",
+      "<div/><span>⇧</span>+<span>→</span> - To end</div>",
+      "<div/><span>⇧</span>+<span>←</span> - To start</div>",
+      "<div/>Space bar - Play/Pause</div>",
+      "<div/><span>Tab</span> - Next Cube</div>")
+
+    @div.append(@help)
+    @help.css(right: "#{(@div.width()-@help.outerWidth())/2}px")
+
+  remove_help: ->
+    if @help
+      @help.remove()
+      @help = null
+      was_removed = true
+    was_removed
+
   add_alg_area: (showalg) ->
     @div.append($("<div/>", text: '?', id: "help-#{@cube_id}").addClass('roofpig-help-button'))
 

@@ -34,12 +34,10 @@ class @EventHandlers
 
     $('.roofpig-help-button').click (e) ->
       [_, cube_id] = $(this).attr("id").split("-")
-      EventHandlers.show_help(CubeAnimation.by_id[cube_id])
+      CubeAnimation.by_id[cube_id].dom.show_help()
 
   @mouse_down: (e, target_cube_id) ->
-    if @help
-      @help.remove()
-      @help = null
+    @dom.remove_help()
     
     if target_cube_id == @focus.id
       @bend_start_x = e.pageX
@@ -60,28 +58,10 @@ class @EventHandlers
       @focus.add_changer('camera', new OneChange( => @camera.bend(dx, dy)))
 
 
-  @show_help: (cube) ->
-    @help = $("<div/>").addClass('roofpig-help')
-    @help.append($("<div>Keyboard shortcuts</div>").css('text-align': 'center', 'font-weight': 'bold'),
-                 "<div><span>→</span> - Next move</div>",
-                 "<div/><span>←</span> - Previous move</div>",
-                 "<div/><span>⇧</span>+<span>→</span> - To end</div>",
-                 "<div/><span>⇧</span>+<span>←</span> - To start</div>",
-                 "<div/>Space bar - Play/Pause</div>",
-                 "<div/><span>Tab</span> - Next Cube</div>")
-
-    cube.dom.div.append(@help)
-    @help.css(right: "#{(cube.dom.div.width()-@help.outerWidth())/2}px")
-
-
-
   # ---- Keyboard Events ----
 
   @key_down: (e) ->
-    if @help
-      @help.remove()
-      @help = null
-      help_toggled = true
+    help_toggled = @dom.remove_help()
 
     if e.ctrlKey || e.metaKey
       return true
@@ -113,7 +93,7 @@ class @EventHandlers
       this._move("#{side_for[key]}#{turns}")
 
     else if key == key_question
-      this.show_help(@focus) unless help_toggled
+      @focus.dom.show_help() unless help_toggled
 
     else
       unhandled = true
