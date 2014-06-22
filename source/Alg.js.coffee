@@ -3,7 +3,7 @@
 #= require roofpig/CompositeMove
 
 class @Alg
-  constructor: (@move_codes, @world3d, @algdisplay, @dom) ->
+  constructor: (@move_codes, @world3d, @algdisplay, @speed, @dom) ->
     if not @move_codes || @move_codes == ""
       throw new Error("Invalid alg: '#{@move_codes}'")
     this._pre_process()
@@ -88,7 +88,7 @@ class @Alg
   turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
   _make_action: (code) ->
     if code.indexOf('+') > -1
-      moves = (this._make_action(code, @world3d) for code in code.split('+'))
+      moves = (this._make_action(code) for code in code.split('+'))
       new CompositeMove(moves)
 
     else if code[0] in ['x', 'y', 'z']
@@ -97,7 +97,7 @@ class @Alg
         when 'x' then ["R"+t1, "M"+t2, "L"+t2]
         when 'y' then ["U"+t1, "E"+t2, "D"+t2]
         when 'z' then ["F"+t1, "S"+t1, "B"+t2]
-      new CompositeMove([new Move(moves[0], @world3d), new Move(moves[1], @world3d), new Move(moves[2], @world3d)], code)
+      new CompositeMove([this._new_move(moves[0]), this._new_move(moves[1]), this._new_move(moves[2])], code)
 
     else if code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B']
       [t1, t2] = turn_codes[Move.parse_turns(code.substring(2))]
@@ -108,13 +108,16 @@ class @Alg
         when 'D' then ["D"+t1, "E"+t1]
         when 'F' then ["F"+t1, "S"+t1]
         when 'B' then ["B"+t1, "S"+t2]
-      new CompositeMove([new Move(moves[0], @world3d), new Move(moves[1], @world3d)], code)
+      new CompositeMove([this._new_move(moves[0]), this._new_move(moves[1])], code)
 
     else
       if /[><]/.test(code)
-        new Rotation(code, @world3d)
+        new Rotation(code, @world3d, @speed)
       else
-        new Move(code, @world3d)
+        this._new_move(code)
+
+  _new_move: (code) ->
+    new Move(code, @world3d, @speed)
 
   _update_dom: (time = 'later') ->
     return unless @dom

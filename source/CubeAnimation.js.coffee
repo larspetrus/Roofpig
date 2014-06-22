@@ -46,7 +46,7 @@ class @CubeAnimation
 
     unless @config.alg == ""
       @dom.add_alg_area(@config.flag('showalg'))
-      @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @dom).premix()
+      @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @config.speed, @dom).premix()
 
     if @id == 1
       EventHandlers.set_focus(this)

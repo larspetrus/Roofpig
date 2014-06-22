@@ -4,20 +4,20 @@
 class @CompositeMove
   constructor: (@actions, @official_text = null) ->
 
-  do: (world3d) ->
-    new ConcurrentChangers( (@actions.map (action) -> action.do(world3d)) )
+  do: ->
+    new ConcurrentChangers( (@actions.map (action) -> action.do()) )
 
-  undo: (world3d) ->
-    new ConcurrentChangers( (@actions.map (action) -> action.undo(world3d)) )
+  undo: ->
+    new ConcurrentChangers( (@actions.map (action) -> action.undo()) )
 
-  premix: (world3d) ->
-    new ConcurrentChangers( (@actions.map (action) -> action.premix(world3d)) )
+  premix: ->
+    new ConcurrentChangers( (@actions.map (action) -> action.premix()) )
 
-  show_do: (world3d) ->
-    new ConcurrentChangers( (@actions.map (action) -> action.show_do(world3d)) )
+  show_do: ->
+    new ConcurrentChangers( (@actions.map (action) -> action.show_do()) )
 
-  show_undo: (world3d) ->
-    new ConcurrentChangers( (@actions.map (action) -> action.show_undo(world3d)) )
+  show_undo: ->
+    new ConcurrentChangers( (@actions.map (action) -> action.show_undo()) )
 
   count: (count_rotations) ->
     return 1 if @official_text
