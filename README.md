@@ -27,7 +27,7 @@ This makes a fully configured example cube:
 </div>
 ```
 
-As you can see, the data-config format is *"prop1=something|prop2=something else|prop99=blah"*.
+As you can see, the data-config format is `"prop1=something|prop2=something else|prop99=blah"`.
 
 Valid properties are: *alg, algdisplay, base, colored, colors, flags, hover, pov, setup, solved, speed, tweaks*, but we'll go over them in a logical order.
 
@@ -35,7 +35,7 @@ Valid properties are: *alg, algdisplay, base, colored, colors, flags, hover, pov
 
 Properties: *alg, flags:showalg*
 
-The algorithm to animate is defined like this: *alg=R F' x2 R D Lw'*. It handles standard cube notation and then some. If no alg is given, the cube will appear without the playback buttons.
+The algorithm to animate is defined like this: `alg=R F' x2 R D Lw'`. It handles standard cube notation and then some. If no alg is given, the cube will appear without the playback buttons.
 
 ####Standard notation
 
@@ -99,8 +99,8 @@ Solved and colored JSFiddle: http://jsfiddle.net/Lar5/tE83s/
 #####setupmoves and tweaks
 If just coloring stickers shades of gray on the solved cube is not enough, there are two parameters.
 
-- *setupmoves* describe how to get from a solved cube to the cube you want finishing the alg will be. So "setupmoves=L' B' R B L B' R' B" gives a cube with 3 permuted corners.
-- *tweaks* is the free form tool, where you can set any sticker to any color - AND MORE! "tweaks=F:RF" sets both stickers on the FR edge to the F color. "tweaks=R:Ubl" sets only the U sticker on the UBL corner to the R color. On top of colors, you can also but Xes on stickers like this: tweaks="X:Ub x:Ul:
+- *setupmoves* describe how to get from a solved cube to the cube you want finishing the alg will be. So `setupmoves=L' B' R B L B' R' B` gives a cube with 3 permuted corners.
+- *tweaks* is the free form tool, where you can set any sticker to any color - AND MORE! `tweaks=F:RF` sets both stickers on the FR edge to the F color. "tweaks=R:Ubl" sets only the U sticker on the UBL corner to the R color. On top of colors, you can also but Xes on stickers like this: tweaks="X:Ub x:Ul:
 
 The JSFiddle is extra useful for this stuff: http://jsfiddle.net/Lar5/JFgQg/
 
@@ -124,7 +124,7 @@ Things that can only be on or off are set to "ON" by mentioning them in this fre
 
 ####'colors'
 
-By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or "colors=R:g L:b F:r B:o U:y D:w" in this notation. Aside from 'g' for green etc, you can also use any CSS color, like 'pink', '&#35;77f' or '&#35;3d3dff' etc.
+By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f` or `&#35;3d3dff` etc.
 
 
 ####'pov'
@@ -167,7 +167,7 @@ To run it
 - cd to .../Roofpig/rails_project
 - Start Rails with 'rails server'
 
-You should get a demo page on **http://localhost:3000/** and the test suite on **http://localhost:3500/**. Have fun!
+You should get a demo page on `http://localhost:3000/` and the test suite on `http://localhost:3500/`. Have fun!
 
 
 ##4. What's a Roofpig anyway?
