@@ -42,10 +42,7 @@ class @CubeAnimation
     @camera = new Camera(@config.hover, @config.pov)
     @world3d = { pieces: new Pieces3D(@scene, @config), camera: @camera }
 
-    if (@config.setup)
-      setup_alg = new Alg(@config.setup, @world3d)
-      until setup_alg.at_end()
-        setup_alg.next_move().do()
+    if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
 
     unless @config.alg == ""
       @dom.add_alg_area(@config.flag('showalg'))

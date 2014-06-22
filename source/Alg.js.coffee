@@ -11,7 +11,7 @@ class @Alg
     @actions = []
     for code in @move_codes.split(' ')
       if code.length > 0
-        @actions.push(Alg._make_action(code, @world3d))
+        @actions.push(this._make_action(code))
     @next = 0
     @playing = false
     this._update_dom('first time')
@@ -86,9 +86,9 @@ class @Alg
       @move_codes = shifted_codes
 
   turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
-  @_make_action: (code, world3d) ->
+  _make_action: (code) ->
     if code.indexOf('+') > -1
-      moves = (Alg._make_action(code, world3d) for code in code.split('+'))
+      moves = (this._make_action(code, @world3d) for code in code.split('+'))
       new CompositeMove(moves)
 
     else if code[0] in ['x', 'y', 'z']
@@ -97,7 +97,7 @@ class @Alg
         when 'x' then ["R"+t1, "M"+t2, "L"+t2]
         when 'y' then ["U"+t1, "E"+t2, "D"+t2]
         when 'z' then ["F"+t1, "S"+t1, "B"+t2]
-      new CompositeMove([new Move(moves[0], world3d), new Move(moves[1], world3d), new Move(moves[2], world3d)], code)
+      new CompositeMove([new Move(moves[0], @world3d), new Move(moves[1], @world3d), new Move(moves[2], @world3d)], code)
 
     else if code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B']
       [t1, t2] = turn_codes[Move.parse_turns(code.substring(2))]
@@ -108,13 +108,13 @@ class @Alg
         when 'D' then ["D"+t1, "E"+t1]
         when 'F' then ["F"+t1, "S"+t1]
         when 'B' then ["B"+t1, "S"+t2]
-      new CompositeMove([new Move(moves[0], world3d), new Move(moves[1], world3d)], code)
+      new CompositeMove([new Move(moves[0], @world3d), new Move(moves[1], @world3d)], code)
 
     else
       if /[><]/.test(code)
-        new Rotation(code, world3d)
+        new Rotation(code, @world3d)
       else
-        new Move(code, world3d)
+        new Move(code, @world3d)
 
   _update_dom: (time = 'later') ->
     return unless @dom
