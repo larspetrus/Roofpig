@@ -78,21 +78,20 @@ To select individual stickers on a piece, use upper case and lower case letters.
 
 This would be enough to define anything. It would also be tedious. So we have some shorthand formats.
 
-- __F*__. Whole layers. __U*__ is the same as **"U UB UBL UBR UF UFL UFR UL UR"**. __UF*__ adds **"DF DFL DFR F FL FR"** to that.
-- __F-__. Everything *not* in these layers. **U-** is the same as **"U Ub Ubl Ubr Uf Ufl Ufr Ul Ur"**. **ULB-** is **"D DF DFR DR F FR R"** (the DFR 2x2x2 block).
-- __f__. A whole side. "u" is the same as "U Ub Ubl Ubr Uf Ufl Ufr Ul Ur".
+- __F*__. Whole layers. __U*__ is the same as `U UB UBL UBR UF UFL UFR UL UR`. `UF*` adds `DF DFL DFR F FL FR` to that.
+- __F-__. Everything *not* in these layers. `U-` is the same as `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`. `ULB-` is `D DF DFR DR F FR R` (the DFR 2x2x2 block).
+- __f__. A whole side. `u` is the same as `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`.
 - __*__. The whole cube. Useful for filtering (see below)
-- __Filtering__. You can filter any shorthand to only select certain piece types. c = corners, e = edges and m = middles. Like this: **U*/c** is all the corners in the U layer, or **"UBL UBR UFL UFR"**. u/me is **"U Ub Uf Ul Ur"**. You get the idea.
+- __Filtering__. You can filter any shorthand to only select some piece types. c = corners, e = edges and m = 'middles'. Like this: `U*/c` is all the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. You get the idea.
 
-Cubexp JS Fiddle: http://jsfiddle.net/Lar5/2xAVX/
-
+[Cubexp JS Fiddle](http://jsfiddle.net/Lar5/2xAVX/)
 
 ####Setting up cube stickers.
 
-Now that we know Cubexps, we can set up cubes!
+Now that we know Cubexps, we can make cubes!
 
 #####solved and colored
-The main parameters for this are *solved* and *colored*. *solved* stickers will be dark grey. *colored* stickers will have their normal colors. Any others will be the light gray as 'ignored'. *solved* trumps *colored*.
+The main parameters for this are the *solved* and *colored* Cubexps. *solved* stickers will be dark grey. *colored* stickers will have their normal colors. Any others will be the light gray as 'ignored'. *solved* trumps *colored*.
 
 Solved and colored JSFiddle: http://jsfiddle.net/Lar5/tE83s/
 
@@ -102,7 +101,7 @@ If just coloring stickers shades of gray on the solved cube is not enough, there
 - *setupmoves* describe how to get from a solved cube to the cube you want finishing the alg will be. So `setupmoves=L' B' R B L B' R' B` gives a cube with 3 permuted corners.
 - *tweaks* is the free form tool, where you can set any sticker to any color - AND MORE! `tweaks=F:RF` sets both stickers on the FR edge to the F color. "tweaks=R:Ubl" sets only the U sticker on the UBL corner to the R color. On top of colors, you can also but Xes on stickers like this: tweaks="X:Ub x:Ul:
 
-The JSFiddle is extra useful for this stuff: http://jsfiddle.net/Lar5/JFgQg/
+The JSFiddle is better than words: http://jsfiddle.net/Lar5/JFgQg/
 
 ###2.3 Other parameters
 
@@ -110,7 +109,7 @@ JSFiddle: http://jsfiddle.net/Lar5/9vq68/
 
 ####'hover'
 
-How far out do the hidden side stickers hover away from the cube? 1 means 'not at all'. 10 means 'too far'. It's easiest to use the aliases 'none', 'near' and 'far' (1, 2 and 7.1). Solved and ignored stickers don't hover.
+How far out do the 'peek' stickers hover away from the cube? 1 means 'not at all'. 10 means 'too far'. It's easiest to use the aliases 'none', 'near' and 'far' (1, 2 and 7.1). Solved and ignored stickers don't hover.
 
 ####'speed'
 
