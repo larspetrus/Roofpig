@@ -1,6 +1,6 @@
 #RoofPig
 
-Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. See it in use on http://lar5.com/cube/
+Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. You can see it in use on http://lar5.com/cube/, or [play around with some demos](http://jsfiddle.net/Lar5/86L4C/). 
 
 ##1. Usage
 
@@ -46,13 +46,13 @@ Layer(s): **F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw**.
 Turns: **2, ', 2'**. You can also use **², Z, 1** and **3**.
 
 
-####Roofpig extras
+####Extra Roofpig notation
 
-The standard slice and turn moves change the names of the cube sides. This is really impractical if you have a solution in **FBRLUD** and want to show the interesting parts to the user.
+Standard slice and turn moves change the side names. This is really impractical if you have a solution in **FBRLUD** and want to insert some rotations.
 
-So Roofpig has "soft" rotations - which you can also think of as moving the "camera". **R>** rotates the whole cube like an **R** move. **R>>** corresponds to **R2**, **R<** and **R<<** to **R'** and **RZ**. Yes, **F>** is the same as **B<**.
+So Roofpig has "non destructive" rotations. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` corresponds to `R2`, `R<` and `R<<` to `R'` and `RZ`. Yes, `F>` is the same as `B<`.
 
-Roofpig also allows combining moves. So you can do orientation safe slice moves like this: M = **L'+R**, E = **D'+U** and S = **F'+B**. And the 'w' moves like this: Rw = **R>+L**, Lw = **L>+R**, Uw = **U>+D**, Dw = **D>+U**, Fw = **F>+B**, Bw = **B>+F**
+Roofpig also allows combining moves. So you can do orientation safe slice moves like this: `M` = `L'+R`, `E` = `D'+U` and `S` = `F'+B`. And the 'w' moves like this: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, `Dw` = `D>+U`, `Fw` = `F>+B`, `Bw` = `B>+F`
 
 If you combine moves that can't be done in parallell, like **L+U** or **Rw+Fw2**, horrible and amusing things will happen
 
@@ -64,7 +64,7 @@ Properties: *colored, solved, tweaks, setup*
 
 So we need to define how the cube looks when the alg has been performed. By default, it will be a regular full 6 color cube. But you can also mark some parts as 'solved' (dark gray) or 'ignored' (light gray), move things around and more.
 
-But first we need to talk about Cubexp.
+But first we need to talk about Cubexps!
 
 ####Cubexps
 
@@ -72,9 +72,9 @@ We often need to define sets of stickers. So I invented the "Cubexp" language to
 
 Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. They do nothing else.
 
-The simplest format is listing pieces. **UBL** selects all the stickers on the UBL corner piece. This selects the whole U layer: **"U UB UBL UBR UF UFL UFR UL UR"**. Listing more pieces adds to the selection. Note that **U** is the center piece in Cubex, not the side or layer.
+The simplest format is listing pieces. `UBL` selects all the stickers on the UBL corner piece. This selects the whole U layer: `U UB UBL UBR UF UFL UFR UL UR`. Listing more pieces adds to the selection. Note that `U` is the center sticker here, not the side or layer.
 
-To select individual stickers on a piece, use upper case and lower case letters. So the U *side* can be selected like this: **"U Ub Ubl Ubr Uf Ufl Ufr Ul Ur"**.
+To select individual stickers on a piece, use upper and lower case letters. So the U *side* can be selected like this: `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`.
 
 This would be enough to define anything. It would also be tedious. So we have some shorthand formats.
 
@@ -123,7 +123,7 @@ Things that can only be on or off are set to "ON" by mentioning them in this fre
 
 ####'colors'
 
-By default, the colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f` or `&#35;3d3dff` etc.
+Default colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f`, `&#35;3d3dff` etc.
 
 
 ####'pov'
@@ -132,7 +132,7 @@ By default the Point Of View is on the UFR corner, with U on top. To look at DFL
 
 ####'algdisplay'
 
-This defines how algs are written (if 'showalg' is on). Much like flags, it's a free form string, where we look for certain commands:
+This defines how algs are written (if `showalg` is on). Much like flags, it's a free form string, where we look for certain words:
 - *fancy2s* - Double moves are written F² rather than F2.
 - *rotations* - Displays the Roofpig rotations (R>, U<< etc) . Off by default.
 - *2p* - Display counter clockwise double moves as 2'. Just 2 by default.
