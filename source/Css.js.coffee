@@ -23,29 +23,36 @@ class @Css
   text-align: center;
   text-shadow: 1px 1px 0 #{shadow};
 }
-
 .roofpig-button-enabled {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #{light}), color-stop(1, #{dark}));
   background: -moz-linear-gradient(center top, #{light} 5%, #{dark} 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{light}', endColorstr='#{dark}');
 }
-
 .roofpig-button-enabled:hover {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #{dark}), color-stop(1, #{light}));
   background: -moz-linear-gradient(center top, #{dark} 5%, #{light} 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{dark}', endColorstr='#{light}');
 }
-
 .roofpig-button-enabled:active, .roofpig-button-fake-active {
   position: relative;
   top: 2px;
 }
 
+.roofpig-count {
+  font-weight: normal;
+  font-style: normal;
+  color: black;
+  text-align: right;
+  float: right;
+}
+
 .roofpig-algtext {
   background-color: #eee;
   margin-bottom: 2px;
+  font-weight: normal;
+  font-style: normal;
+  color: black;
 }
-
 .roofpig-past-algtext {
   background-color: #ff9;
 }
