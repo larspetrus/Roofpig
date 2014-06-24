@@ -1,6 +1,5 @@
-#= require roofpig/WorldChangers
 #= require roofpig/Layer
-#= require roofpig/Move
+#= require roofpig/changers/MoveExecution
 
 class @Move
   constructor: (code, @world3d, @speed = 200) ->

@@ -1,4 +1,5 @@
 #= require roofpig/Layer
+#= require roofpig/changers/CameraMovement
 
 class @Rotation
   constructor: (code, @world3d, @speed = 200) ->

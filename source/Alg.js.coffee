@@ -1,6 +1,7 @@
 #= require roofpig/Move
 #= require roofpig/Rotation
 #= require roofpig/CompositeMove
+#= require roofpig/changers/AlgAnimation
 
 class @Alg
   constructor: (@move_codes, @world3d, @algdisplay, @speed, @dom) ->
