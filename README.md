@@ -2,6 +2,8 @@
 
 Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. You can see it in use on http://lar5.com/cube/, or [play around with some demos](http://jsfiddle.net/Lar5/86L4C/). 
 
+It should work on most [any modern browser](http://caniuse.com/canvas).
+
 ##1. Usage
 
 Get [`roofpig_and_three.min.js`](https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js). Include it, and jQuery v 1.11.1 in your HTML HEAD tags:
