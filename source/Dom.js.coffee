@@ -106,13 +106,13 @@ class @Dom
       button.removeClass('roofpig-button-enabled')
 
   _make_button: (text, name) ->
-    button = $("<button/>", { text: text, id: "#{name}-#{@cube_id}" })
+    button = $("<button/>", text: text, id: "#{name}-#{@cube_id}")
     @alg_area.append(button)
 
     button.addClass('roofpig-button')
     button.css('font-size': 28*@hscale, float: 'left', height: 40*@hscale, width: 76*@scale)
 
   _make_count_area: ->
-    count_div = $("<div/>", { id: "count-#{@cube_id}" }).css('text-align': 'right', float: 'right')
+    count_div = $("<div/>", id: "count-#{@cube_id}").addClass('roofpig-count')
     @alg_area.append(count_div)
     count_div.height(40*@hscale).width(80*@scale).css("font-size", 24*@hscale)
