@@ -4,7 +4,7 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 
 ##1. Usage
 
-Get roofpig_and_three.min.js from https://github.com/larspetrus/Roofpig/tree/master/. Include it, and jQuery v 1.11.1 in your HTML HEAD tags like so:
+Get [`roofpig_and_three.min.js`[(https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js). Include it, and jQuery v 1.11.1 in your HTML HEAD tags:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -62,7 +62,7 @@ I could write much more, but trying things out in JSFiddle is probably more usef
 
 Properties: `colored`, `solved`, `tweaks`, `setup`
 
-In Roofpig, you define how the cube looks when the alg has been performed. **Not** what it looks like mixed. By default, it will be a regular full 6 color cube. But you can also mark some parts as 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and put **X**es.
+In Roofpig, you define how the cube will look when the alg has been performed. Not what it looks like mixed. By default, it will be a regular full 6 color cube. But you can also mark some parts as 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and put **X**es.
 
 But first we need to talk about Cubexps.
 
@@ -82,26 +82,27 @@ This would be enough to define any set of stickers. It would also be tedious and
 - __F-__. Everything *not* in these layers. `U-` is everything but the U layer. `ULB-` is `D DF DFR DR F FR R` (the DFR 2x2x2 block).
 - __f__. A whole side. `u` is the same as `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`.
 - __*__. The whole cube. Useful for filtering (see below)
-- __Filtering__. You can filter any shorthand to only some piece types. c = corners, e = edges and m = 'middles'. Like this: `U*/c` is all the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. You get the idea.
+- __Filtering__. You can filter any shorthand to only some piece types. `c` = corners, `e` = edges and `m` = 'middles'. Like this: `U*/c` is all the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. You get the idea.
 
 [Cubexp JS Fiddle](http://jsfiddle.net/Lar5/2xAVX/)
 
 ####Setting up cube stickers.
 
-Now that we know Cubexps, we can make cubes!
+Now that we know Cubexps, we can make cubes.
 
 #####solved and colored
-The main parameters for this are the `solved` and `colored` Cubexps. *solved* stickers will be dark grey. `colored` stickers will have their normal colors. Any others will be the light gray as 'ignored'. `solved` trumps `colored`.
+The main parameters for this are the `solved` and `colored` Cubexps. `solved` stickers will be dark grey. `colored` stickers will have their normal colors, but any others will be the light gray as 'ignored'. `solved` trumps `colored`.
 
-Solved and colored JSFiddle: http://jsfiddle.net/Lar5/tE83s/
+`Solved` and `colored` JSFiddle: http://jsfiddle.net/Lar5/tE83s/
 
 #####setupmoves and tweaks
-If just coloring stickers shades of gray on the solved cube is not enough, there are two parameters.
+If marking stickers 'solved' and 'ignored' is not enough, you need to use these.
 
-- `setupmoves` describe how to get from a solved cube to the cube you want finishing the alg will be. So `setupmoves=L' B' R B L B' R' B` gives a cube with 3 permuted corners.
-- `tweaks` is the free form tool, where you can set any sticker to any color - AND MORE! `tweaks=F:RF` sets both stickers on the FR edge to the F color. `tweaks=R:Ubl` sets only the U sticker on the UBL corner to the R color. On top of colors, you can also put **X** es on stickers like this: `tweaks=X:Ub x:Ul`:
+- `setupmoves` applies some moves to the cube. For example `setupmoves=L' B' R B L B' R' B`permutes 3 corners.
+- `tweaks` is the free form tool, that can set any sticker to any color - AND MORE! `tweaks=F:RF` sets both stickers on the FR edge to the F color. `tweaks=R:Ubl` sets only the U sticker on the UBL corner to the R color.
+Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`:
 
-Don't work too hard trying to understand that text. Try the [Demo](http://jsfiddle.net/Lar5/JFgQg/) instead.
+Don't work too hard trying to understand that text. Look at the [Demo](http://jsfiddle.net/Lar5/JFgQg/) instead.
 
 ###2.3 Other parameters
 
@@ -118,8 +119,8 @@ Number of milliseconds for a turn. Defaults to 200.
 ####'flags'
 
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
-- *showalg* - Display the alg, according to the *algdisplay* setting.
-- *canvas* - Use regular 2D canvas to draw instead of WebGL.
+- `showalg` - Display the alg, according to the *algdisplay* setting.
+- `canvas` - Use regular 2D canvas to draw instead of WebGL.
 
 ####'colors'
 
@@ -128,7 +129,7 @@ Default colors are R - green, L - blue, F - red, B - orange, U - yellow, and D -
 
 ####'pov'
 
-By default the Point Of View is on the UFR corner, with U on top. To look at DFL with F on top, use "pov=Fdl"
+By default the Point Of View is on the UFR corner, with U on top. Or `Ufr` in this notation. To face DFL with F on top, use `pov=Fdl`.
 
 ####'algdisplay'
 
