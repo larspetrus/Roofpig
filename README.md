@@ -6,24 +6,26 @@ It should work on most [any modern browser](http://caniuse.com/canvas).
 
 ##1. Usage
 
-All you need is one file and a web server. Get [`roofpig_and_three.min.js`](https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js). Include it, and jQuery v 1.11.1 in your HTML pages:
+All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js) on the server. Include it, and jQuery v 1.11.1 in your HTML pages:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="roofpig_and_three.min.js"></script>
 ```
 
-To make a cube appear on the page, make a div with `class='roofpig'` and configuration in a data-config attribute.
+To put a cube on the page, make a div with `class='roofpig'`. Configuration goes in a `data-config` attribute. Probably set height and width.
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
 ```
 
+That's all there is to it!
+
 ##2. data-config
 
-The data-config format is `property1=something|prop2=something else | prop99=blah`. You don't *have* to give height and width, but you almost always want to.
+The data-config format is `property1=something|prop2=something else | prop99=blah`.
 
-This makes a fully configured example cube:
+This is a fully configured example cube:
 
 ```html
 <div class=roofpig style="width=140px; height=160px;"
@@ -46,11 +48,9 @@ Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U,
 
 ####Extra Roofpig notation
 
-Standard slice and turn moves change the side names. This is really impractical if you have a solution in **FBRLUD** and want to insert some rotations.
+Roofpig adds "non destructive" rotations, that turns the cube while preserving the side names. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` corresponds to `R2`, `R<` and `R<<` to `R'` and `R2'`. Yes, `F>` is the same as `B<`.
 
-So Roofpig has "non destructive" rotations. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` corresponds to `R2`, `R<` and `R<<` to `R'` and `RZ`. Yes, `F>` is the same as `B<`.
-
-Roofpig also allows combining moves. So you can do orientation safe slice moves like this: `M` = `L'+R`, `E` = `D'+U` and `S` = `F'+B`. And the 'w' moves like this: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, `Dw` = `D>+U`, `Fw` = `F>+B`, `Bw` = `B>+F`. If you combine moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, horrible and amusing things will happen.
+Roofpig also allows combining moves. So you can do orientation safe slice moves like this: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves like this: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, `Dw` = `D>+U`, `Fw` = `F>+B`, `Bw` = `B>+F`. If you combine moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, horrible and amusing things will happen.
 
 I could write much more, but trying things out in JSFiddle is probably more useful. Note that you can change the HTML and click Run to experiment. Here: http://jsfiddle.net/Lar5/MfpVf/
 
@@ -58,7 +58,7 @@ I could write much more, but trying things out in JSFiddle is probably more usef
 
 Properties: `colored`, `solved`, `tweaks`, `setup`
 
-In Roofpig, you define how the cube will look when the alg has been performed. By default, it will be a regular full 6 color cube. But you can also mark some parts as 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**es.
+In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also mark some parts as 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**es.
 
 But first we need to talk about Cubexps.
 
@@ -76,55 +76,55 @@ This would be enough to define any set of stickers. It would also be tedious and
 - __F-__. Everything *not* in these layers. `U-` is everything but the U layer. `ULB-` is the pieces not in U, L or B, which are `D DF DFR DR F FR R` (the DFR 2x2x2 block).
 - __f__. A whole *side*. `u` is the same as `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`.
 - __*__. The whole cube. Useful for filtering (see below)
-- __Filtering__. You can filter any shorthand to only some piece types. `c` = corners, `e` = edges and `m` = 'middles'. Like this: `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. You get the idea.
+- __Filtering__. All expressions can be filtered by piece types. `c` = corners, `e` = edges and `m` = 'middles'. Like this: `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. You get the idea.
 
-[Cubexp JS Fiddle](http://jsfiddle.net/Lar5/2xAVX/)
+[Cubexp Demo](http://jsfiddle.net/Lar5/2xAVX/)
 
 Now that we know Cubexps, we can make cubes.
 
 ####`solved` and `colored`
 
-The main parameters for this are the `solved` and `colored` Cubexps. `solved` stickers will be dark grey. `colored` stickers will have their normal colors, but any others will be the light gray as 'ignored'. `solved` trumps `colored`.
+The main parameters for this are the `solved` and `colored` Cubexps. `solved` stickers will be dark grey. `colored` stickers will have normal colors. Anything not `solved` or `colored` will be light gray as 'ignored'. `solved` trumps `colored`.
 
-`Solved` and `colored` JSFiddle: http://jsfiddle.net/Lar5/tE83s/
+[`Solved` and `colored` demo](http://jsfiddle.net/Lar5/tE83s/)
 
 ####`setupmoves` and `tweaks`
-If marking stickers 'solved' and 'ignored' is not enough, you need to use these.
+When marking stickers 'solved' and 'ignored' is not enough, you need to use these.
 
 - `setupmoves` applies some moves to the cube. For example `setupmoves=L' B' R B L B' R' B`permutes 3 corners.
 - `tweaks` is the free form tool, that can set any sticker to any color - AND MORE! `tweaks=F:RF` sets both stickers on the FR edge to the F color. `tweaks=R:Ubl` sets only the U sticker on the UBL corner to the R color.
 Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`:
 
-Don't work too hard trying to understand that text. Look at the [Demo](http://jsfiddle.net/Lar5/JFgQg/) instead.
+The [Demo](http://jsfiddle.net/Lar5/JFgQg/) is easier to understand than the text.
 
 ###2.3 Other parameters
 
-[Misc parameters Demo](http://jsfiddle.net/Lar5/9vq68/)
+[Other parameters Demo](http://jsfiddle.net/Lar5/9vq68/)
 
-####'hover'
+####`hover`
 
 How far out do the 'peek' stickers hover away from the cube? 1 means 'not at all'. 10 means 'too far'. It's easiest to use the aliases 'none', 'near' and 'far' (1, 2 and 7.1). Solved and ignored stickers don't hover.
 
-####'speed'
+####`speed`
 
 Number of milliseconds for a turn. Defaults to 200.
 
-####'flags'
+####`flags`
 
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
 - `showalg` - Display the alg, according to the *algdisplay* setting.
 - `canvas` - Use regular 2D canvas to draw instead of WebGL.
 
-####'colors'
+####`colors`
 
 Default colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f`, `&#35;3d3dff` etc.
 
 
-####'pov'
+####`pov`
 
 By default the Point Of View is on the UFR corner, with U on top. Or `Ufr` in this notation. To face DFL with F on top, use `pov=Fdl`.
 
-####'algdisplay'
+####`algdisplay`
 
 This defines how algs are written (if `showalg` is on). Much like flags, it's a free form string, where we look for certain words:
 - `fancy2s` - Double moves are written F² rather than F2.
@@ -133,7 +133,7 @@ This defines how algs are written (if `showalg` is on). Much like flags, it's a 
 - `Z` - Display counter clockwise double moves as Z.
 
 
-###2.4 base - sharing configs.
+###2.4 `base` - sharing configs.
 
 By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to repeat that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change!"
 
@@ -153,9 +153,10 @@ To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a commo
 
 ###3. Working with the code
 
-I wrote this as a Rails project, since that's the way I know to do web programming. It's slightly monstrous to have the whole project in git, but on the plus side it does work.
+I wrote this in a Rails project, since that's how I usually do web programming. It's slightly monstrous to have the whole project in git, but on the plus side it does work.
 
 To run it
+- Clone the github repository to your computer.
 - Download and install [Rails](http://rubyonrails.org/)
 - cd to .../Roofpig/rails_project
 - Start Rails with 'rails server'
@@ -169,6 +170,4 @@ You should get a demo page on `http://localhost:3000/` and the test suite on `ht
 
 ##5. Version history
 
-####1.0
-
-Released June xx 2014.
+*1.0* June xx 2014.
