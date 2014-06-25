@@ -6,14 +6,14 @@ It should work on most [any modern browser](http://caniuse.com/canvas).
 
 ##1. Usage
 
-All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js) on the server. Include it, and jQuery v 1.11.1 in your HTML pages:
+All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js) on your server. Include it, and jQuery 1.11.1 in your HTML:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="roofpig_and_three.min.js"></script>
 ```
 
-To put a cube on the page, make a div with `class='roofpig'`. Configuration goes in a `data-config` attribute. Probably set height and width.
+To put a cube on the page, make a `div` with `class='roofpig'`. Configuration goes in a `data-config` attribute. Set height and width.
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
@@ -23,7 +23,7 @@ That's all there is to it!
 
 ##2. data-config
 
-The data-config format is `property1=something|prop2=something else | prop99=blah`.
+In `data-config` you set values to properties. The format is `property1=something|prop2=something else | prop99=blah`.
 
 This is a fully configured example cube:
 
@@ -52,13 +52,13 @@ Roofpig adds "non destructive" rotations, that turns the cube while preserving t
 
 Roofpig also allows combining moves. So you can do orientation safe slice moves like this: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves like this: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, `Dw` = `D>+U`, `Fw` = `F>+B`, `Bw` = `B>+F`. If you combine moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, horrible and amusing things will happen.
 
-I could write much more, but trying things out in JSFiddle is probably more useful. Note that you can change the HTML and click Run to experiment. Here: http://jsfiddle.net/Lar5/MfpVf/
+I could write much more, but trying things out in [this demo](http://jsfiddle.net/Lar5/MfpVf/) is probably more useful.
 
 ###2.2 The Cube
 
 Properties: `colored`, `solved`, `tweaks`, `setup`
 
-In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also mark some parts as 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**es.
+In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**es.
 
 But first we need to talk about Cubexps.
 
@@ -72,7 +72,7 @@ The simplest format is listing pieces. `UBL` is all the stickers on the UBL corn
 
 This would be enough to define any set of stickers. It would also be tedious and hard to read. So there are shorthand expressions.
 
-- __F*__. Whole layers. `U*` is the whole U layer (`U UB UBL UBR UF UFL UFR UL UR`). `UF*` is the whole U and F layers.
+- __F*__. Whole layer(s). `U*` is the U layer (`U UB UBL UBR UF UFL UFR UL UR`). `UF*` is the whole U and F layers.
 - __F-__. Everything *not* in these layers. `U-` is everything but the U layer. `ULB-` is the pieces not in U, L or B, which are `D DF DFR DR F FR R` (the DFR 2x2x2 block).
 - __f__. A whole *side*. `u` is the same as `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`.
 - __*__. The whole cube. Useful for filtering (see below)
@@ -80,7 +80,7 @@ This would be enough to define any set of stickers. It would also be tedious and
 
 [Cubexp Demo](http://jsfiddle.net/Lar5/2xAVX/)
 
-Now that we know Cubexps, we can make cubes.
+Now that we know Cubexps, we can make cubes!
 
 ####`solved` and `colored`
 
