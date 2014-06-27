@@ -39,7 +39,7 @@ Valid properties are: `alg`, `algdisplay`, `base`, `colored`, `colors`, `flags`,
 
 Properties: `alg`, `flags:showalg`
 
-The algorithm to animate is defined like this: `alg=R F' x2 R D Lw'`. It handles standard cube notation and then some. If no alg is given, the playback buttons don't appear.
+Define the animated algorithm like this: `alg=R F' x2 R D Lw'`. It handles standard cube notation and then some. If no alg is given, the playback buttons don't appear.
 
 ####Standard notation
 
@@ -48,11 +48,11 @@ Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U,
 
 ####Extra Roofpig notation
 
-Roofpig adds "non destructive" rotations, that turns the cube while preserving the side names. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` corresponds to `R2`, `R<` and `R<<` to `R'` and `R2'`. Yes, `F>` is the same as `B<`.
+Roofpig adds "non destructive" rotations, that turns the cube while preserving the side names. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` is a double turn, `R<` and `R<<` the same in the opposite direction. This means `F>` is the same as `B<`.
 
-Roofpig also allows combining moves. So you can do orientation safe slice moves like this: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves like this: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, `Dw` = `D>+U`, `Fw` = `F>+B`, `Bw` = `B>+F`. If you combine moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, horrible and amusing things will happen.
+Roofpig also allows combining moves. Using **+**. Orientation safe slice moves: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, etc. Whole cube: `U+E'+D'`. Combining moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, will make horrible and amusing things happen.
 
-I could write much more, but trying things out in [this demo](http://jsfiddle.net/Lar5/MfpVf/) is probably more useful.
+[Alg notation demo](http://jsfiddle.net/Lar5/MfpVf/)
 
 ###2.2 The Cube
 
@@ -60,7 +60,7 @@ Properties: `colored`, `solved`, `tweaks`, `setup`
 
 In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**es.
 
-But first we need to talk about Cubexps.
+But first we must talk about Cubexps.
 
 ####Cubexps
 
@@ -68,9 +68,9 @@ We often need to define sets of stickers. So I made a tiny language to simply de
 
 Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. They do nothing else.
 
-The simplest format is listing pieces. `UBL` is all the stickers on the UBL corner piece. This is the whole U layer: `U UB UBL UBR UF UFL UFR UL UR`. Note that `U` is the center sticker, not the side or layer. For individual stickers, `UbL` is only the U and L stickers on UBL. So `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur` is the U *side*.
+The simplest format is listing pieces. `UBL` is all the stickers on the UBL corner piece. 'F' is the F side center sticker. This Cubexp is the whole U layer: `U UB UBL UBR UF UFL UFR UL UR`. For individual stickers, `UbL` is only the U and L stickers on UBL. So `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur` is the U *side*.
 
-This would be enough to define any set of stickers. It would also be tedious and hard to read. So there are shorthand expressions.
+This would be enough to define any set of stickers. It would also be tedious to write and hard to read. So there are shorthand expressions.
 
 - __F*__. Whole layer(s). `U*` is the U layer (`U UB UBL UBR UF UFL UFR UL UR`). `UF*` is the whole U and F layers.
 - __F-__. Everything *not* in these layers. `U-` is everything but the U layer. `ULB-` is the pieces not in U, L or B, which are `D DF DFR DR F FR R` (the DFR 2x2x2 block).
