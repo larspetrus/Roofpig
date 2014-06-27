@@ -48,7 +48,7 @@ class @Dom
       "<div/><span>←</span> - Previous move</div>",
       "<div/><span>⇧</span>+<span>→</span> - To end</div>",
       "<div/><span>⇧</span>+<span>←</span> - To start</div>",
-      "<div/>Space bar - Play/Pause</div>",
+      "<div/><span>&nbsp;space&nbsp;</span> - Play/Pause</div>",
       "<div/><span>Tab</span> - Next Cube</div>")
 
     @div.append(@help)
