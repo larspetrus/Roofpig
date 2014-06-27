@@ -1,6 +1,6 @@
-#RoofPig
+#Roofpig
 
-Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. You can see it in use on http://lar5.com/cube/, or [play around with some demos](http://jsfiddle.net/Lar5/86L4C/). 
+Roofpig is an animated, programmable and interactive Rubik's Cube for the modern web. It uses WebGL or plain Canvas (by way of [three.js](http://threejs.org/)) and is written in CoffeeScript. You can see it in use on http://lar5.com/cube/, or [play with demos](http://jsfiddle.net/Lar5/86L4C/). 
 
 It should work on most [any modern browser](http://caniuse.com/canvas).
 
@@ -78,7 +78,7 @@ This would be enough to define any set of stickers. It would also be tedious and
 - __*__. The whole cube. Useful for filtering (see below)
 - __Filtering__. All expressions can be filtered by piece types. `c` = corners, `e` = edges and `m` = 'middles'. Like this: `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. You get the idea.
 
-[Cubexp Demo](http://jsfiddle.net/Lar5/2xAVX/)
+[Cubexp demo](http://jsfiddle.net/Lar5/2xAVX/)
 
 Now that we know Cubexps, we can make cubes!
 
@@ -95,7 +95,7 @@ When marking stickers 'solved' and 'ignored' is not enough, you need to use thes
 - `tweaks` is the free form tool, that can set any sticker to any color - AND MORE! `tweaks=F:RF` sets both stickers on the FR edge to the F color. `tweaks=R:Ubl` sets only the U sticker on the UBL corner to the R color.
 Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`:
 
-The [Demo](http://jsfiddle.net/Lar5/JFgQg/) is easier to understand than the text.
+[`setupmoves` and `tweaks` demo](http://jsfiddle.net/Lar5/JFgQg/) (clearer than the text)
 
 ###2.3 Other parameters
 
@@ -103,7 +103,7 @@ The [Demo](http://jsfiddle.net/Lar5/JFgQg/) is easier to understand than the tex
 
 ####`hover`
 
-How far out do the 'peek' stickers hover away from the cube? 1 means 'not at all'. 10 means 'too far'. It's easiest to use the aliases 'none', 'near' and 'far' (1, 2 and 7.1). Solved and ignored stickers don't hover.
+How far out do the 'peek' stickers hover away from the cube? `1` is 'not at all'. `10` is 'too far'. It's easiest to use the aliases `none`, `near` and `far` (1, 2 and 7.1). Solved and ignored stickers don't hover.
 
 ####`speed`
 
@@ -112,7 +112,7 @@ Number of milliseconds for a turn. Defaults to 200.
 ####`flags`
 
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
-- `showalg` - Display the alg, according to the *algdisplay* setting.
+- `showalg` - Display the alg, according to the `algdisplay` setting.
 - `canvas` - Use regular 2D canvas to draw instead of WebGL.
 
 ####`colors`
