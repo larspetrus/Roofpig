@@ -56,7 +56,7 @@ Roofpig also allows combining moves. Using **+**. Orientation safe slice moves: 
 
 Properties: `colored`, `solved`, `tweaks`, `setup`
 
-In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**es.
+In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**-es.
 
 But first we must talk about Cubexps.
 
@@ -66,7 +66,7 @@ We often need to define sets of stickers. So I made a tiny language to simply de
 
 Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. They do nothing else.
 
-The simplest format is listing pieces. `UBL` is all the stickers on the UBL corner piece. 'F' is the F side center sticker. This Cubexp is the whole U layer: `U UB UBL UBR UF UFL UFR UL UR`. For individual stickers, `UbL` is only the U and L stickers on UBL. So `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur` is the U *side*.
+The simplest format is listing pieces. `UBL` is all the stickers on the UBL corner piece. `F` is the F side center sticker. This Cubexp is the whole U layer: `U UB UBL UBR UF UFL UFR UL UR`. For individual stickers, `UbL` is only the U and L stickers on UBL. So `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur` is the U *side*.
 
 This would be enough to define any set of stickers. It would also be tedious to write and hard to read. So there are shorthand expressions.
 
@@ -74,7 +74,7 @@ This would be enough to define any set of stickers. It would also be tedious to 
 - __F-__. Everything *not* in these layers. `U-` is everything but the U layer. `ULB-` is the pieces not in U, L or B, which are `D DF DFR DR F FR R` (the DFR 2x2x2 block).
 - __f__. A whole *side*. `u` is the same as `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`.
 - __*__. The whole cube. Useful for filtering (see below)
-- __Filtering__. All expressions can be filtered by piece types. `c` = corners, `e` = edges and `m` = 'middles'. Like this: `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. You get the idea.
+- __Filtering__. All expressions can be filtered by piece types. `c` = corners, `e` = edges and `m` = 'middles'. So `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. Check the demo for more.
 
 [Cubexp demo](http://jsfiddle.net/Lar5/2xAVX/)
 
@@ -100,30 +100,23 @@ Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`:
 [Other parameters Demo](http://jsfiddle.net/Lar5/9vq68/)
 
 ####`hover`
-
 How far out do the 'peek' stickers hover away from the cube? `1` is 'not at all'. `10` is 'too far'. It's easiest to use the aliases `none`, `near` and `far` (1, 2 and 7.1). Solved and ignored stickers don't hover.
 
 ####`speed`
-
 Number of milliseconds for a turn. Defaults to 400. Double turns take 1.5x longer.
 
 ####`flags`
-
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
 - `showalg` - Display the alg, according to the `algdisplay` setting.
 - `canvas` - Use regular 2D canvas to draw instead of WebGL.
 
 ####`colors`
-
 Default colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f`, `&#35;3d3dff` etc.
 
-
 ####`pov`
-
 By default the Point Of View is on the UFR corner, with U on top. Or `Ufr` in this notation. To face DFL with F on top, use `pov=Fdl`.
 
 ####`algdisplay`
-
 This defines how algs are written (if `showalg` is on). Much like flags, it's a free form string, where we look for certain words:
 - `fancy2s` - Double moves are written F² rather than F2.
 - `rotations` - Displays the Roofpig rotations (R>, U<< etc) . Off by default.
@@ -135,7 +128,7 @@ This defines how algs are written (if `showalg` is on). Much like flags, it's a 
 
 By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to repeat that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change!"
 
-Javascript variables, named starting with **"ROOFPIG_CONF_"**, can be used as base.
+Use Javascript variables, named starting with **"ROOFPIG_CONF_"**, as base.
 
 ```html
 <script>
@@ -145,7 +138,7 @@ Javascript variables, named starting with **"ROOFPIG_CONF_"**, can be used as ba
 <div class=roofpig data-config="base=F5|alg=R' U' R U L U' R' U R+L'"></div>
 ```
 
-Properties in data-config override the "inherited" ones from the base. You can chain **base**'s to form an elaborate hierarchy if you're into that kind of complexity.
+Properties in data-config override those "inherited" from the base. One `base` can refer to another `base` to form an elaborate hierarchy if you're into that kind of complexity.
 
 To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a common .js file.
 
