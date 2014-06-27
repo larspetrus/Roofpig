@@ -2,7 +2,8 @@
 #= require roofpig/changers/ConcurrentChangers
 
 class @CompositeMove
-  constructor: (@moves, @official_text = null) ->
+  constructor: (move_codes, world3d, speed, @official_text = null) ->
+    @moves = (new Move(code, world3d, speed) for code in move_codes.split('+'))
 
   do: ->
     new ConcurrentChangers( (@moves.map (move) -> move.do()) )

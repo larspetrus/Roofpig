@@ -88,33 +88,29 @@ class @Alg
   turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
   _make_move: (code) ->
     if code.indexOf('+') > -1
-      moves = (this._make_move(code) for code in code.split('+'))
-      new CompositeMove(moves)
+      new CompositeMove(code, @world3d, @speed)
 
     else if code[0] in ['x', 'y', 'z']
       [t1, t2] = turn_codes[Move.parse_turns(code.substring(1))]
       moves = switch code[0]
-        when 'x' then ["R"+t1, "M"+t2, "L"+t2]
-        when 'y' then ["U"+t1, "E"+t2, "D"+t2]
-        when 'z' then ["F"+t1, "S"+t1, "B"+t2]
-      new CompositeMove([this._new_move(moves[0]), this._new_move(moves[1]), this._new_move(moves[2])], code)
+        when 'x' then "R#{t1}+M#{t2}+L#{t2}"
+        when 'y' then "U#{t1}+E#{t2}+D#{t2}"
+        when 'z' then "F#{t1}+S#{t1}+B#{t2}"
+      new CompositeMove(moves, @world3d, @speed, code)
 
     else if code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B']
       [t1, t2] = turn_codes[Move.parse_turns(code.substring(2))]
       moves = switch code[0]
-        when 'R' then ["R"+t1, "M"+t2]
-        when 'L' then ["L"+t1, "M"+t1]
-        when 'U' then ["U"+t1, "E"+t2]
-        when 'D' then ["D"+t1, "E"+t1]
-        when 'F' then ["F"+t1, "S"+t1]
-        when 'B' then ["B"+t1, "S"+t2]
-      new CompositeMove([this._new_move(moves[0]), this._new_move(moves[1])], code)
+        when 'R' then "R#{t1}+M#{t2}"
+        when 'L' then "L#{t1}+M#{t1}"
+        when 'U' then "U#{t1}+E#{t2}"
+        when 'D' then "D#{t1}+E#{t1}"
+        when 'F' then "F#{t1}+S#{t1}"
+        when 'B' then "B#{t1}+S#{t2}"
+      new CompositeMove(moves, @world3d, @speed, code)
 
     else
-      this._new_move(code)
-
-  _new_move: (code) ->
-    new Move(code, @world3d, @speed)
+      new Move(code, @world3d, @speed)
 
   _update_dom: (time = 'later') ->
     return unless @dom
