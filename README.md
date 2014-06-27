@@ -13,23 +13,21 @@ All you need is one file and a web server. Put [`roofpig_and_three.min.js`](http
 <script src="roofpig_and_three.min.js"></script>
 ```
 
-To put a cube on the page, make a `div` with `class='roofpig'`. Configuration goes in a `data-config` attribute. Set height and width.
+To put a cube on the page, make a `div` with `class='roofpig'`. Configuration goes in a `data-config` attribute. Set height and width in CSS. **That's it!**
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
 ```
 
-That's all there is to it!
-
 ##2. data-config
 
-In `data-config` you set values to properties. The format is `property1=something|prop2=something else | prop99=blah`.
+In `data-config` you set values to properties. The format is `property1=value|prop2=other value | prop99=you get the idea`.
 
 This is a fully configured example cube:
 
 ```html
-<div class=roofpig style="width=140px; height=160px;"
-  data-config="alg=L' U2 L U2 R U' L' U L+R'|solved=UR-|colored=U U-|colors=F:b B:g U:r D:o R:w L:y">
+<div class=roofpig style="width:140px; height:160px;"
+  data-config="alg=L' U2 L U2 R U' L' U L+R'|solved=U-/ce|colors=F:b B:g U:r D:o R:w L:y">
 </div>
 ```
 
@@ -107,7 +105,7 @@ How far out do the 'peek' stickers hover away from the cube? `1` is 'not at all'
 
 ####`speed`
 
-Number of milliseconds for a turn. Defaults to 200.
+Number of milliseconds for a turn. Defaults to 400. Double turns take 1.5x longer.
 
 ####`flags`
 
