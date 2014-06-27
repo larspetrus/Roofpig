@@ -1,25 +1,27 @@
 #= require roofpig/Layer
+#= require roofpig/changers/CameraMovement
 #= require roofpig/changers/MoveExecution
 
 class @Move
   constructor: (code, @world3d, @speed = 200) ->
-    [@layer, @turns] = Move._parse_code(code)
-
+    [@layer, @turns, @is_rotation] = Move._parse_code(code)
     @turn_time = @speed * (1 + Math.abs(@turns))
 
   @_parse_code: (code) ->
     turns = Move.parse_turns(code.substring(1))
-    side = Layer.by_name(code[0])
-    unless side && turns
+    is_rotation = code.substring(1) in [">", ">>", "<", "<<"]
+    layer = Layer.by_name(code[0])
+
+    unless layer && turns
       throw new Error("Invalid Move code '#{code}'")
-    [side, turns]
+    [layer, turns, is_rotation]
 
   @parse_turns: (tcode) ->
     switch tcode
-      when "1", ""   then 1
-      when "2", "²"  then 2
-      when "3", "'"  then -1
-      when "Z", "2'" then -2
+      when "1",  "", ">" then  1
+      when "2", "²",">>" then  2
+      when "3", "'", "<" then -1
+      when "Z","2'","<<" then -2
 
   do: ->
     this._do(@turns, false)
@@ -28,7 +30,8 @@ class @Move
     this._do(-@turns, false)
 
   premix: ->
-    this.undo()
+    unless @is_rotation
+      this.undo()
 
   show_do: ->
     this._do(@turns, true)
@@ -37,19 +40,19 @@ class @Move
     this._do( -@turns, true)
 
   _do: (do_turns, animate) ->
-    @world3d.pieces.move(@layer, do_turns)
-    new MoveExecution(@world3d.pieces.on(@layer), @layer.normal, do_turns * -Math.PI/2, @turn_time, animate)
+    if @is_rotation
+      new CameraMovement(@world3d.camera, @layer.normal, do_turns * Math.PI/2, @turn_time, animate)
+    else
+      @world3d.pieces.move(@layer, do_turns)
+      new MoveExecution(@world3d.pieces.on(@layer), @layer.normal, do_turns * -Math.PI/2, @turn_time, animate)
 
-  count: (count_rotations) -> 1
+  count: (count_rotations) ->
+    return 1 if count_rotations || not @is_rotation
+    0
 
   to_s: ->
-    turn_code = switch @turns
-      when  1 then ""
-      when  2 then "2"
-      when -1 then "'"
-      when -2 then "Z"
-
-    "#{@layer.name}#{turn_code}"
+    turn_codes = { true: { 1: '>', 2: '>>', '-1': '<', '-2': '<<'}, false: { 1: '', 2: '2', '-1': "'", '-2': 'Z'}}
+    "#{@layer.name}#{turn_codes[@is_rotation][@turns]}"
 
   @displayify: (move_text, algdisplay) ->
     result = move_text.replace('Z', algdisplay.Zcode)
@@ -57,4 +60,5 @@ class @Move
     result
 
   display_text: (algdisplay) ->
-    Move.displayify(this.to_s(), algdisplay)
+    return Move.displayify(this.to_s(), algdisplay) if algdisplay.rotations || not @is_rotation
+    ''

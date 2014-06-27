@@ -1,5 +1,4 @@
 #= require roofpig/Move
-#= require roofpig/Rotation
 #= require roofpig/CompositeMove
 #= require roofpig/changers/AlgAnimation
 
@@ -9,10 +8,10 @@ class @Alg
       throw new Error("Invalid alg: '#{@move_codes}'")
     this._pre_process()
 
-    @actions = []
+    @moves = []
     for code in @move_codes.split(' ')
       if code.length > 0
-        @actions.push(this._make_action(code))
+        @moves.push(this._make_move(code))
     @next = 0
     @playing = false
     this._update_dom('first time')
@@ -22,13 +21,13 @@ class @Alg
       @next += 1
       if this.at_end() then @playing = false
       this._update_dom()
-      @actions[@next-1]
+      @moves[@next-1]
 
   prev_move: ->
     unless this.at_start()
       @next -= 1
       this._update_dom()
-      @actions[@next]
+      @moves[@next]
 
   play: ->
     @playing = true
@@ -51,23 +50,23 @@ class @Alg
     @next == 0
 
   at_end: ->
-    @next == @actions.length
+    @next == @moves.length
 
   premix: ->
-    @next =  @actions.length
+    @next =  @moves.length
     until this.at_start()
       this.prev_move().premix()
     this
 
   to_s: ->
-    (@actions.map (move) -> move.to_s()).join(' ')
+    (@moves.map (move) -> move.to_s()).join(' ')
 
   display_text: ->
     active = past = []
     future = []
-    for action, i in @actions
+    for move, i in @moves
       if @next == i then active = future
-      text = action.display_text(@algdisplay)
+      text = move.display_text(@algdisplay)
       if text
         active.push(text)
     { past: past.join(' '), future: future.join(' ')}
@@ -87,9 +86,9 @@ class @Alg
       @move_codes = shifted_codes
 
   turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
-  _make_action: (code) ->
+  _make_move: (code) ->
     if code.indexOf('+') > -1
-      moves = (this._make_action(code) for code in code.split('+'))
+      moves = (this._make_move(code) for code in code.split('+'))
       new CompositeMove(moves)
 
     else if code[0] in ['x', 'y', 'z']
@@ -112,10 +111,7 @@ class @Alg
       new CompositeMove([this._new_move(moves[0]), this._new_move(moves[1])], code)
 
     else
-      if /[><]/.test(code)
-        new Rotation(code, @world3d, @speed)
-      else
-        this._new_move(code)
+      this._new_move(code)
 
   _new_move: (code) ->
     new Move(code, @world3d, @speed)
@@ -130,8 +126,8 @@ class @Alg
 
   _count_text: ->
     total = current = 0
-    for action, i in @actions
-      count = action.count(@algdisplay.rotations)
+    for move, i in @moves
+      count = move.count(@algdisplay.rotations)
       current += count if @next > i
       total += count
     "#{current}/#{total}"

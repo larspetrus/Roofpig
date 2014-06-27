@@ -2,11 +2,10 @@
 #= require roofpig/Config
 #= require roofpig/CompositeMove
 #= require roofpig/Move
-#= require roofpig/Rotation
 
 describe "CompositeMove", ->
   it "works", ->
-    cm = new CompositeMove([new Move("L"), new Rotation("F>"), new Move("R")])
+    cm = new CompositeMove([new Move("L"), new Move("F>"), new Move("R")])
     expect(cm.to_s()).to.equal("(L F> R)")
     expect(cm.display_text({})).to.equal("L+R")
     expect(cm.count()).to.equal(2)
