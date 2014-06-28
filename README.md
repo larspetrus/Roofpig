@@ -42,9 +42,9 @@ Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U,
 Roofpig adds "non destructive" rotations, that turns the cube while preserving the side names. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` is a double turn, `R<` and `R<<` the same in the opposite direction. This means `F>` is the same as `B<`.
 
 #####Combination notation
-Roofpig also allows combining moves. Using **+**. Orientation safe slice moves: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, etc. Whole cube: `U+E'+D'`. Combining moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, will make horrible and amusing things happen.
+Roofpig also allows combining moves. Using **+**. Side safe slice moves: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, etc. Whole cube: `y`=`U+E'+D'`. Combining moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, will make horrible and amusing things happen.
 
-[Alg notation demo](http://jsfiddle.net/Lar5/MfpVf/)
+[**Alg notation demo**](http://jsfiddle.net/Lar5/MfpVf/)
 
 ###2.2 The Cube
 In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**-es.
@@ -66,14 +66,14 @@ This would be enough to define any set of stickers. It would also be tedious to 
 - __*__. The whole cube. Useful for filtering (see below)
 - __Filtering__. All expressions can be filtered by piece types. `c` = corners, `e` = edges and `m` = 'middles'. So `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. The demo has more.
 
-[Cubexp demo](http://jsfiddle.net/Lar5/2xAVX/)
+[**Cubexp demo**](http://jsfiddle.net/Lar5/2xAVX/)
 
 Now that we know Cubexps, we can make cubes!
 
 #####`solved` and `colored`
 The main parameters for this are the `solved` and `colored` Cubexps. `solved` stickers will be dark grey. `colored` stickers will have normal colors. Anything not `solved` or `colored` will be light gray as 'ignored'. `solved` trumps `colored`.
 
-[`Solved` and `colored` demo](http://jsfiddle.net/Lar5/tE83s/)
+[**`Solved` and `colored` demo**](http://jsfiddle.net/Lar5/tE83s/)
 
 #####`setupmoves` and `tweaks`
 When marking stickers 'solved' and 'ignored' is not enough, you need to use these.
@@ -86,7 +86,7 @@ Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`
 
 ###2.3 Other parameters
 
-[Other parameters Demo](http://jsfiddle.net/Lar5/9vq68/)
+[**Other parameters Demo**](http://jsfiddle.net/Lar5/9vq68/)
 
 #####`hover`
 How far out do the 'peek' stickers hover away from the cube? `1` is 'not at all'. `10` is 'too far'. It's easiest to use the aliases `none`, `near` and `far` (1, 2 and 7.1). Solved and ignored stickers don't hover.
@@ -143,7 +143,7 @@ You should get a demo page on `http://localhost:3000/` and the test suite on `ht
 
 
 ##4. What's a Roofpig anyway?
-["Most unexpected!"](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
+[**"Most unexpected!"**](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
 
 ##5. Version history
 *1.0* June xx 2014.
