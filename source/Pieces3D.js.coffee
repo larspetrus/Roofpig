@@ -36,7 +36,7 @@ class @Pieces3D
   # ========= The 3D Factory =========
 
   make_stickers: (scene, hover, colors) ->
-    slice = { normal: v3(0.0, 0.0, 0.0) }
+    slice = { normal: v3(0.0, 0.0, 0.0), name: '-' }
 
     for x_side in [Layer.R, slice, Layer.L]
       for y_side in [Layer.F, slice, Layer.B]
@@ -56,7 +56,7 @@ class @Pieces3D
 
   _new_piece: (x_side, y_side, z_side) ->
     new_piece = new THREE.Object3D()
-    new_piece.name = standard_piece_name(x_side, y_side, z_side)
+    new_piece.name = standardize_name(x_side.name + y_side.name + z_side.name)
     new_piece.sticker_locations = new_piece.name.split('')
     new_piece.middle = v3(2*x_side.normal.x, 2*y_side.normal.y, 2*z_side.normal.z)
     new_piece

@@ -10,17 +10,14 @@
 
 # --- Piece names ---
 
-@standard_piece_name = (sides...) ->
-  side_names = sides.map (side) -> side_name(side)
-
-  name = ""
-  for ordered_side in ['U', 'D', 'F', 'B', 'R', 'L']
-    if ordered_side in side_names
-      name += ordered_side
-  name
-
 @standardize_name = (name) ->
-  standard_piece_name(name[0], name[1], name[2])
+  sides = [name[0], name[1], name[2]]
+
+  result = ""
+  for ordered_side in ['U', 'D', 'F', 'B', 'R', 'L']
+    if ordered_side in sides
+      result += ordered_side
+  result
 
 @side_name = (side) ->
   if side then side.name || side else ""

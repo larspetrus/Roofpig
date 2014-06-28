@@ -27,20 +27,8 @@ describe "v3", ->
     expect(half.y).to.equal(whole.y/2)
     expect(half.z).to.equal(whole.z/2)
 
-  describe "#standard_piece_name", ->
-    it "returns the right names, independent of order", ->
-      standard_piece_name('F', 'R').should.equal("FR")
-      standard_piece_name('R', 'F').should.equal("FR")
-      standard_piece_name('R', 'F', 'D').should.equal("DFR")
-
-    it "handles Layer objects", ->
-      standard_piece_name({name: 'F'}, {name: 'R'}).should.equal("FR")
-
-    it "ignores non official Sides", ->
-      expect(standard_piece_name('F', 'Bob', 'R')).to.equal("FR")
-
   describe "#standardize_name", ->
-      it "works", ->
+      it "ignores non side names, and only looks at 3 first characters", ->
         expect(standardize_name("LDF")).to.equal("DFL")
         expect(standardize_name("LdF")).to.equal("FL")
         expect(standardize_name("RDFL")).to.equal("DFR")
