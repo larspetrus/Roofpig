@@ -6,7 +6,6 @@ class @Alg
   constructor: (@move_codes, @world3d, @algdisplay, @speed, @dom) ->
     if not @move_codes || @move_codes == ""
       throw new Error("Invalid alg: '#{@move_codes}'")
-    this._pre_process()
 
     @moves = []
     for code in @move_codes.split(' ')
@@ -69,20 +68,6 @@ class @Alg
       if text
         active.push(text)
     { past: past.join(' '), future: future.join(' ')}
-
-  _pre_process: ->
-    switch @move_codes.substring(0, 6)
-      when 'shift>' then shift = 1
-      when 'shift2' then shift = 2
-      when 'shift<' then shift = 3
-
-    if shift
-      shifted_codes = ""
-      for char in @move_codes.substring(6).split('')
-        if char in ['M','E','S','x','y','z']
-          throw new Error("M, E, S, x, y or z can't be shifted.")
-        shifted_codes += Layer.D.shift(char, shift) || char
-      @move_codes = shifted_codes
 
   turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
   _make_move: (code) ->

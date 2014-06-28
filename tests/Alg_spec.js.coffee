@@ -124,13 +124,6 @@ describe "Alg", ->
       alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=rotations").algdisplay)
       expect(alg.display_text().future).to.equal("F R> U2+D' F<< L2 D+D>")
 
-  it "handles 'shift'", ->
-    expect(new Alg("shift> U F2 D' LZ").to_s()).to.equal("U L2 D' BZ")
-    expect(new Alg("shift2 U F2 D' LZ").to_s()).to.equal("U B2 D' RZ")
-    expect(new Alg("shift< U F2 D' LZ").to_s()).to.equal("U R2 D' FZ")
-    expect(-> new Alg("shift< U F2 M").to_s()).to.throw("M, E, S, x, y or z can't be shifted.")
-
-
 move_should_be = (move, layer, turns, is_rotation = false) ->
   expect(move.layer, move.to_s()).to.equal(layer)
   expect(move.turns, move.to_s()).to.equal(turns)
