@@ -7,7 +7,7 @@ class @CompositeMove
 
   do:       -> new ConcurrentChangers( (@moves.map (move) -> move.do()) )
   undo:     -> new ConcurrentChangers( (@moves.map (move) -> move.undo()) )
-  premix:   -> new ConcurrentChangers( (@moves.map (move) -> move.premix()) )
+  mix:      -> new ConcurrentChangers( (@moves.map (move) -> move.mix()) )
   show_do:  -> new ConcurrentChangers( (@moves.map (move) -> move.show_do()) )
   show_undo:-> new ConcurrentChangers( (@moves.map (move) -> move.show_undo()) )
 

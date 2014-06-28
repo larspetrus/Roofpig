@@ -29,7 +29,7 @@ class @Move
   undo: ->
     this._do(-@turns, false)
 
-  premix: ->
+  mix: ->
     unless @is_rotation
       this.undo()
 

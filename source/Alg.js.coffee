@@ -52,11 +52,10 @@ class @Alg
   at_end: ->
     @next == @moves.length
 
-  premix: ->
+  mix: ->
     @next =  @moves.length
     until this.at_start()
-      this.prev_move().premix()
-    this
+      this.prev_move().mix()
 
   to_s: ->
     (@moves.map (move) -> move.to_s()).join(' ')
