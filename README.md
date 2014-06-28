@@ -5,7 +5,7 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 It should work on most [any modern browser](http://caniuse.com/canvas).
 
 ##1. Usage
-All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js) on your server. Include it, and jQuery 1.11.1 in your HTML:
+All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://raw.githubusercontent.com/larspetrus/Roofpig/master/roofpig_and_three.min.js) on your server. Include it, and jQuery 1.11.1 in your HTML:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -146,4 +146,4 @@ You should get a demo page on `http://localhost:3000/` and the test suite on `ht
 [**"Most unexpected!"**](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
 
 ##5. Version history
-*1.0* June xx 2014.
+*1.0* June 28 2014.
