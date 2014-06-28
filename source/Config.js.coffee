@@ -40,7 +40,6 @@ class @Config
       else
         raw_hover
 
-
   _alg_display: ->
     ad = this.raw("algdisplay")
     result = {}

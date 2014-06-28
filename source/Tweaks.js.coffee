@@ -9,25 +9,25 @@ class @Tweaks
     return unless expressions
 
     for expression in expressions.split(" ")
-      [tweak_codes, sides] = expression.split(':')
-      continue unless sides
+      [what, where] = expression.split(':')
+      continue unless where
 
-      if tweak_codes.length == 1
-        for piece_exp in new Cubexp(sides).selected_pieces()
+      if what.length == 1
+        for piece_exp in new Cubexp(where).selected_pieces()
           for side in piece_exp.split('')
-            this._add(piece_exp.toUpperCase(), side, tweak_codes)
+            this._add(piece_exp.toUpperCase(), side, what)
       else
-        piece = standardize_name(sides.toUpperCase())
-        for side, i in sides.split('')
-          this._add(piece, side, tweak_codes[i])
+        piece = standardize_name(where.toUpperCase())
+        for side, i in where.split('')
+          this._add(piece, side, what[i])
 
 
   for_sticker: (piece, side) ->
     match = @tweaks[standardize_name(piece)] || {}
     match[side_name(side)] || []
 
-  _add: (piece, side, code) ->
+  _add: (piece, side, what) ->
     if Layer.side_by_name(side) # not lower case
       @tweaks[piece] ?= {}
       @tweaks[piece][side] ?= []
-      @tweaks[piece][side].push(code)
+      @tweaks[piece][side].push(what)

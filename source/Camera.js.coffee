@@ -2,15 +2,14 @@
 #= require roofpig/Layer
 
 class @Camera
-  DIST = 25
+  DISTANCE = 25
 
   constructor: (hover, @pov_code) ->
-    @cam = new THREE.PerspectiveCamera(this._view_angle(hover, DIST), 1, 1, 100)
+    @cam = new THREE.PerspectiveCamera(this._view_angle(hover, DISTANCE), 1, 1, 100)
     this.to_pov()
 
   to_pov: ->
     pov = Camera._POVs[@pov_code]
-
     unless pov
       pov = Camera._POVs.Ufr
       log_error("Invalid POV '#{@pov_code}'. Using Ufr")
@@ -71,7 +70,7 @@ class @Camera
         for x in [Layer.R, Layer.L]
           [xu, xl, xn] = [x.name, x.name.toLowerCase(), x.normal.clone()]
 
-          pos = v3(xn.x, yn.y, zn.z).multiplyScalar(DIST)
+          pos = v3(xn.x, yn.y, zn.z).multiplyScalar(DISTANCE)
           parity = xn.x * yn.y * zn.z
 
           Camera._set_perms(result, zu, yl, xl, Camera._flip({ pos: pos, up: zn, zn: zn, yn: yn, xn: xn }, parity))

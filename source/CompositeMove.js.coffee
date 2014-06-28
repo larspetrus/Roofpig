@@ -5,20 +5,11 @@ class @CompositeMove
   constructor: (move_codes, world3d, speed, @official_text = null) ->
     @moves = (new Move(code, world3d, speed) for code in move_codes.split('+'))
 
-  do: ->
-    new ConcurrentChangers( (@moves.map (move) -> move.do()) )
-
-  undo: ->
-    new ConcurrentChangers( (@moves.map (move) -> move.undo()) )
-
-  premix: ->
-    new ConcurrentChangers( (@moves.map (move) -> move.premix()) )
-
-  show_do: ->
-    new ConcurrentChangers( (@moves.map (move) -> move.show_do()) )
-
-  show_undo: ->
-    new ConcurrentChangers( (@moves.map (move) -> move.show_undo()) )
+  do:       -> new ConcurrentChangers( (@moves.map (move) -> move.do()) )
+  undo:     -> new ConcurrentChangers( (@moves.map (move) -> move.undo()) )
+  premix:   -> new ConcurrentChangers( (@moves.map (move) -> move.premix()) )
+  show_do:  -> new ConcurrentChangers( (@moves.map (move) -> move.show_do()) )
+  show_undo:-> new ConcurrentChangers( (@moves.map (move) -> move.show_undo()) )
 
   count: (count_rotations) ->
     return 1 if @official_text

@@ -29,17 +29,16 @@ class @EventHandlers
 
     $("button").click (e) ->
       [button_name, cube_id] = $(this).attr("id").split("-")
-      cube = CubeAnimation.by_id[cube_id]
-      cube.button_click(button_name, e.shiftKey)
+      CubeAnimation.by_id[cube_id].button_click(button_name, e.shiftKey)
 
     $('.roofpig-help-button').click (e) ->
       [_, cube_id] = $(this).attr("id").split("-")
       CubeAnimation.by_id[cube_id].dom.show_help()
 
-  @mouse_down: (e, target_cube_id) ->
+  @mouse_down: (e, clicked_cube_id) ->
     @dom.remove_help()
     
-    if target_cube_id == @focus.id
+    if clicked_cube_id == @focus.id
       @bend_start_x = e.pageX
       @bend_start_y = e.pageY
 

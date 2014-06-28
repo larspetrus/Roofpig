@@ -16,8 +16,8 @@ class @Dom
     cursor = if has_it then 'pointer' else 'default'
     @div.css(border: "2px solid #{color}", cursor: cursor)
 
-  alg_changed: (playing, at_start, at_end, count_text, alg_texts) ->
-    if playing
+  alg_changed: (is_playing, at_start, at_end, count_text, alg_texts) ->
+    if is_playing
       for button in @buttons
         if button == @play
           button.hide()
@@ -33,7 +33,7 @@ class @Dom
           when @pause
             button.hide()
 
-    @play_or_pause = if playing then @pause else @play
+    @play_or_pause = if is_playing then @pause else @play
 
     @count.html(count_text)
 
@@ -43,13 +43,15 @@ class @Dom
 
   show_help: ->
     @help = $("<div/>").addClass('roofpig-help')
-    @help.append($("<div>Keyboard shortcuts</div>").css('text-align': 'center', 'font-weight': 'bold'),
+    @help.append(
+      $("<div>Keyboard shortcuts</div>").css('text-align': 'center', 'font-weight': 'bold'),
       "<div><span>→</span> - Next move</div>",
       "<div/><span>←</span> - Previous move</div>",
       "<div/><span>⇧</span>+<span>→</span> - To end</div>",
       "<div/><span>⇧</span>+<span>←</span> - To start</div>",
       "<div/><span>&nbsp;space&nbsp;</span> - Play/Pause</div>",
-      "<div/><span>Tab</span> - Next Cube</div>")
+      "<div/><span>Tab</span> - Next Cube</div>"
+    )
 
     @div.append(@help)
     @help.css(right: "#{(@div.width()-@help.outerWidth())/2}px")
@@ -96,9 +98,9 @@ class @Dom
       font_size = 24 * @scale * Math.min(1, 1970/width)
       @alg_text.height(1.2 * font_size).css("font-size": font_size)
 
-  _show: (button, active) ->
+  _show: (button, enabled) ->
     button.show()
-    if active
+    if enabled
       button.removeAttr("disabled")
       button.addClass('roofpig-button-enabled')
     else
