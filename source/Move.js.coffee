@@ -3,9 +3,9 @@
 #= require roofpig/changers/MoveExecution
 
 class @Move
-  constructor: (code, @world3d, @speed = 200) ->
+  constructor: (code, @world3d, @speed = 400) ->
     [@layer, @turns, @is_rotation] = Move._parse_code(code)
-    @turn_time = @speed * (1 + Math.abs(@turns))
+    @turn_time = @speed/2 * (1 + Math.abs(@turns))
 
   @_parse_code: (code) ->
     turns = Move.parse_turns(code.substring(1))

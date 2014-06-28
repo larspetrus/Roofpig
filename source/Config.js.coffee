@@ -12,7 +12,7 @@ class @Config
     @hover     = this._hover()
     @pov       = this.raw("pov", "Ufr")
     @setup     = this.raw("setupmoves")
-    @speed     = this.raw("speed", 200)
+    @speed     = this.raw("speed", 400)
 
   flag: (name) ->
     @flags.indexOf(name) > -1
