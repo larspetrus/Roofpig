@@ -74,7 +74,7 @@ This would be enough to define any set of stickers. It would also be tedious to 
 - __F-__. Everything *not* in these layers. `U-` is everything but the U layer. `ULB-` is the pieces not in U, L or B, which are `D DF DFR DR F FR R` (the DFR 2x2x2 block).
 - __f__. A whole *side*. `u` is the same as `U Ub Ubl Ubr Uf Ufl Ufr Ul Ur`.
 - __*__. The whole cube. Useful for filtering (see below)
-- __Filtering__. All expressions can be filtered by piece types. `c` = corners, `e` = edges and `m` = 'middles'. So `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. Check the demo for more.
+- __Filtering__. All expressions can be filtered by piece types. `c` = corners, `e` = edges and `m` = 'middles'. So `U*/c` is the corners in the U layer, or `UBL UBR UFL UFR`. `u/me` is `U Ub Uf Ul Ur`. The demo has more.
 
 [Cubexp demo](http://jsfiddle.net/Lar5/2xAVX/)
 
@@ -89,9 +89,9 @@ The main parameters for this are the `solved` and `colored` Cubexps. `solved` st
 ####`setupmoves` and `tweaks`
 When marking stickers 'solved' and 'ignored' is not enough, you need to use these.
 
-- `setupmoves` applies some moves to the cube. For example `setupmoves=L' B' R B L B' R' B`permutes 3 corners.
+- `setupmoves` applies some moves to the cube. For example `setupmoves=L' B' R B L B' R' B` permutes 3 corners.
 - `tweaks` is the free form tool, that can set any sticker to any color - AND MORE! `tweaks=F:RF` sets both stickers on the FR edge to the F color. `tweaks=R:Ubl` sets only the U sticker on the UBL corner to the R color.
-Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`:
+Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`
 
 [`setupmoves` and `tweaks` demo](http://jsfiddle.net/Lar5/JFgQg/) (clearer than the text)
 
@@ -128,7 +128,7 @@ This defines how algs are written (if `showalg` is on). Much like flags, it's a 
 
 By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to repeat that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change!"
 
-Use Javascript variables, named starting with **"ROOFPIG_CONF_"**, as base.
+You can use Javascript variables, named starting with **"ROOFPIG_CONF_"**, as base.
 
 ```html
 <script>
@@ -144,11 +144,11 @@ To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a commo
 
 ###3. Working with the code
 
-I wrote this in a Rails project, since that's how I usually do web programming. It's slightly monstrous to have the whole project in git, but on the plus side it does work.
+I wrote this in a Rails project, since that's how I usually do web programming. Maybe a little crazy to have the whole project in git, but it does **work**!
 
 To run it
 - Clone the github repository to your computer.
-- Download and install [Rails](http://rubyonrails.org/)
+- Download and install [Rails](http://rubyonrails.org/).
 - cd to .../Roofpig/rails_project
 - Start Rails with 'rails server'
 
