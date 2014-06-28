@@ -5,7 +5,6 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 It should work on most [any modern browser](http://caniuse.com/canvas).
 
 ##1. Usage
-
 All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://github.com/larspetrus/Roofpig/tree/master/roofpig_and_three.min.js) on your server. Include it, and jQuery 1.11.1 in your HTML:
 
 ```html
@@ -20,7 +19,6 @@ To put a cube on the page, make a `div` with `class='roofpig'`. Configuration go
 ```
 
 ##2. data-config
-
 In `data-config` you set values to properties. The format is `property1=value|prop2=other value | prop99=you get the idea`.
 
 This is a fully configured example cube:
@@ -33,35 +31,27 @@ This is a fully configured example cube:
 
 Valid properties are: `alg`, `algdisplay`, `base`, `colored`, `colors`, `flags`, `hover`, `pov`, `setup`, `solved`, `speed`, `tweaks`. We'll go over them in a logical order.
 
-###2.1 The Algorithm.
+###2.1 The Algorithm. `alg`.
+Define the animated algorithm like this: `alg=R F' x2 R D Lw'`. It handles standard cube notation and some more. If no alg is given, the playback buttons don't appear.
 
-Properties: `alg`, `flags:showalg`
-
-Define the animated algorithm like this: `alg=R F' x2 R D Lw'`. It handles standard cube notation and then some. If no alg is given, the playback buttons don't appear.
-
-####Standard notation
-
+#####Standard notation
 Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw**. Turns: **2, ', 2'**. You can also use **², Z, 1** and **3**.
 
 
-####Extra Roofpig notation
-
+#####Rotation notation
 Roofpig adds "non destructive" rotations, that turns the cube while preserving the side names. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` is a double turn, `R<` and `R<<` the same in the opposite direction. This means `F>` is the same as `B<`.
 
+#####Combination notation
 Roofpig also allows combining moves. Using **+**. Orientation safe slice moves: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, etc. Whole cube: `U+E'+D'`. Combining moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, will make horrible and amusing things happen.
 
 [Alg notation demo](http://jsfiddle.net/Lar5/MfpVf/)
 
 ###2.2 The Cube
-
-Properties: `colored`, `solved`, `tweaks`, `setup`
-
 In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**-es.
 
 But first we must talk about Cubexps.
 
-####Cubexps
-
+#####Cubexps
 We often need to define sets of stickers. So I made a tiny language to simply describe logical groups of stickers.
 
 Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. They do nothing else.
@@ -80,13 +70,12 @@ This would be enough to define any set of stickers. It would also be tedious to 
 
 Now that we know Cubexps, we can make cubes!
 
-####`solved` and `colored`
-
+#####`solved` and `colored`
 The main parameters for this are the `solved` and `colored` Cubexps. `solved` stickers will be dark grey. `colored` stickers will have normal colors. Anything not `solved` or `colored` will be light gray as 'ignored'. `solved` trumps `colored`.
 
 [`Solved` and `colored` demo](http://jsfiddle.net/Lar5/tE83s/)
 
-####`setupmoves` and `tweaks`
+#####`setupmoves` and `tweaks`
 When marking stickers 'solved' and 'ignored' is not enough, you need to use these.
 
 - `setupmoves` applies some moves to the cube. For example `setupmoves=L' B' R B L B' R' B` permutes 3 corners.
@@ -99,24 +88,24 @@ Aside from colors, you can also put **X** es on stickers: `tweaks=X:Ub x:Ul`
 
 [Other parameters Demo](http://jsfiddle.net/Lar5/9vq68/)
 
-####`hover`
+#####`hover`
 How far out do the 'peek' stickers hover away from the cube? `1` is 'not at all'. `10` is 'too far'. It's easiest to use the aliases `none`, `near` and `far` (1, 2 and 7.1). Solved and ignored stickers don't hover.
 
-####`speed`
+#####`speed`
 Number of milliseconds for a turn. Defaults to 400. Double turns take 1.5x longer.
 
-####`flags`
+#####`flags`
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
 - `showalg` - Display the alg, according to the `algdisplay` setting.
 - `canvas` - Use regular 2D canvas to draw instead of WebGL.
 
-####`colors`
-Default colors are R - green, L - blue, F - red, B - orange, U - yellow, and D - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f`, `&#35;3d3dff` etc.
+#####`colors`
+Default colors are **R** - green, **L** - blue, **F** - red, **B** - orange, **U** - yellow, and **D** - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f`, `&#35;3d3dff` etc.
 
-####`pov`
+#####`pov`
 By default the Point Of View is on the UFR corner, with U on top. Or `Ufr` in this notation. To face DFL with F on top, use `pov=Fdl`.
 
-####`algdisplay`
+#####`algdisplay`
 This defines how algs are written (if `showalg` is on). Much like flags, it's a free form string, where we look for certain words:
 - `fancy2s` - Double moves are written F² rather than F2.
 - `rotations` - Displays the Roofpig rotations (R>, U<< etc) . Off by default.
@@ -125,7 +114,6 @@ This defines how algs are written (if `showalg` is on). Much like flags, it's a 
 
 
 ###2.4 `base` - sharing configs.
-
 By now you may be asking, "But Lars, what if I use the Japanese color scheme? Do I really have to repeat that in each and every cube config?". To that I say, "No, dear infomercial plant, Roofpig has a simple way to share common config, which both cuts down on repetition and makes the common parts easy and safe to change!"
 
 You can use Javascript variables, named starting with **"ROOFPIG_CONF_"**, as base.
@@ -143,7 +131,6 @@ Properties in data-config override those "inherited" from the base. One `base` c
 To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a common .js file.
 
 ###3. Working with the code
-
 I wrote this in a Rails project, since that's how I usually do web programming. Maybe a little crazy to have the whole project in git, but it does **work**!
 
 To run it
@@ -156,9 +143,7 @@ You should get a demo page on `http://localhost:3000/` and the test suite on `ht
 
 
 ##4. What's a Roofpig anyway?
-
 ["Most unexpected!"](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
 
 ##5. Version history
-
 *1.0* June xx 2014.
