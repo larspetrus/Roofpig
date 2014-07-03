@@ -30,7 +30,8 @@ class @CubeAnimation
 
     @config = new Config(roofpig_div.data('config'))
 
-    if @config.flag('canvas') || not webgl_works || CubeAnimation.webgl_cubes >= 16
+    use_canvas = @config.flag('canvas') || not webgl_works || CubeAnimation.webgl_cubes >= 16
+    if use_canvas
       @renderer = new THREE.CanvasRenderer(alpha: true) # alpha -> transparent
     else
       CubeAnimation.webgl_cubes += 1
@@ -40,7 +41,7 @@ class @CubeAnimation
 
     @scene = new THREE.Scene()
     @camera = new Camera(@config.hover, @config.pov)
-    @world3d = { pieces: new Pieces3D(@scene, @config), camera: @camera }
+    @world3d = { pieces: new Pieces3D(@scene, @config, use_canvas), camera: @camera }
 
     if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
 

@@ -3,8 +3,13 @@
 
 # Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc are the 3D models for those pieces
 class @Pieces3D
-  constructor: (scene, config) ->
+  TINY = 0.0005
+
+  constructor: (scene, config, @use_canvas) ->
     @at = {}
+    @cube_surfaces = if @use_canvas then [true] else [true, false]
+    @sticker_size  = if @use_canvas then 0.84 else 0.90
+    @hover_size    = if @use_canvas then 0.91 else 0.97
     this.make_stickers(scene, config.hover, config.colors)
 
   on: (layer) ->
@@ -62,22 +67,23 @@ class @Pieces3D
     new_piece
 
   _add_sticker: (side, piece_3d, sticker) ->
-    [dx, dy] = this._offsets(side.normal, 0.90, false)
-    piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, 1.0002), dx, dy, sticker.color))
+    [dx, dy] = this._offsets(side.normal, @sticker_size, false)
+    piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, 1+TINY), dx, dy, sticker.color))
 
     if sticker.x_color
-      this._add_X(side, piece_3d, sticker.x_color, 1.0004, true)
+      this._add_X(side, piece_3d, sticker.x_color, 1+2*TINY, true)
 
   _add_hover_sticker: (side, piece_3d, sticker, hover) ->
-    [dx, dy] = this._offsets(side.normal, 0.98, true)
+    [dx, dy] = this._offsets(side.normal, @hover_size, true)
     piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, hover), dx, dy, sticker.color))
 
     if sticker.x_color
-      this._add_X(side, piece_3d, sticker.x_color, hover - 0.0002, false)
+      this._add_X(side, piece_3d, sticker.x_color, hover-TINY, false)
 
   _add_cubeside: (side, piece_3d, color) ->
-    [dx, dy] = this._offsets(side.normal, 1.0, true)
-    piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, 1), dx, dy, color))
+    for reversed in @cube_surfaces
+      [dx, dy] = this._offsets(side.normal, 1.0, reversed)
+      piece_3d.add(this._diamond(this._square_center(side, piece_3d.middle, 1), dx, dy, color))
 
   _add_X: (side, piece_3d, color, distance, reversed) ->
     [dx, dy] = this._offsets(side.normal, 0.54, reversed)
