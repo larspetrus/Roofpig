@@ -3,7 +3,7 @@
 
 # Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc are the 3D models for those pieces
 class @Pieces3D
-  TINY = 0.0005
+  TINY = 0.0030
 
   constructor: (scene, config, @use_canvas) ->
     @at = {}
