@@ -96,13 +96,19 @@ class @Alg
     else
       new Move(code, @world3d, @speed)
 
+  side_drift: ->
+    result = {U:'U', D:'D', L:'L', R:'R', F:'F', B:'B'}
+    @next =  @moves.length
+    until this.at_start()
+      this.prev_move().track_drift(result)
+    result
+
   _update_dom: (time = 'later') ->
-    return unless @dom
+    if @dom
+      if time == 'first time'
+        @dom.init_alg_text(this.display_text().future)
 
-    if time == 'first time'
-      @dom.init_alg_text(this.display_text().future)
-
-    @dom.alg_changed(@playing, this.at_start(), this.at_end(), this._count_text(), this.display_text())
+      @dom.alg_changed(@playing, this.at_start(), this.at_end(), this._count_text(), this.display_text())
 
   _count_text: ->
     total = current = 0

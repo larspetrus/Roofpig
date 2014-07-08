@@ -124,6 +124,14 @@ describe "Alg", ->
       alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=rotations").algdisplay)
       expect(alg.display_text().future).to.equal("F R> U2+D' F<< L2 D+D>")
 
+  it "#side_drift", ->
+    world = null
+    expect(new Alg("F", world, "").side_drift()).to.deep.equal(U:'U', D:'D', L:'L', R:'R', F:'F', B:'B')
+    expect(new Alg("M", world, "").side_drift()).to.deep.equal(U:'B', D:'F', L:'L', R:'R', F:'U', B:'D')
+    expect(new Alg("M z",world,"").side_drift()).to.deep.equal(U:'L', D:'R', L:'F', R:'B', F:'U', B:'D')
+    expect(new Alg("MZ", world,"").side_drift()).to.deep.equal(U:'D', D:'U', L:'L', R:'R', F:'B', B:'F')
+
+
 move_should_be = (move, layer, turns, is_rotation = false) ->
   expect(move.layer, move.to_s()).to.equal(layer)
   expect(move.turns, move.to_s()).to.equal(turns)
