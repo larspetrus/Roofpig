@@ -5,10 +5,10 @@ class @AlgAnimation
   update: (now) ->
     return if @_finished
 
-    if @changer.finished()
+    if @move_changer.finished()
       this._next_alg_move()
 
-    @changer.update(now)
+    @move_changer.update(now)
 
   finish: ->
     # API creep
@@ -20,4 +20,4 @@ class @AlgAnimation
     if @alg.at_end() || not @alg.playing
       @_finished = true
     else
-      @changer = @alg.next_move().show_do()
+      @move_changer = @alg.next_move().show_do()
