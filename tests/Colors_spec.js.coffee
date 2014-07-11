@@ -72,4 +72,10 @@ describe "Colors", ->
         expect(colors.to_draw('U', Layer.U).color).to.equal(colors.of(Layer.L))
         expect(colors.to_draw('D', Layer.D).color).to.equal(colors.of(Layer.R))
 
-
+  it "#adjust_for", ->
+    colors = new Colors("", "", "")
+    [oldR, oldL, oldF, oldB, oldU, oldD] = [colors.of('R'), colors.of('L'), colors.of('F'), colors.of('B'),
+                                            colors.of('U'), colors.of('D')]
+    colors.adjust_for({U: 'D', D: 'U', R: 'L', L: 'R', F: 'F', B: 'B'})
+    expect(colors.of('F'), 1).to.equal(oldF)
+    expect(colors.of('R'), 22).to.equal(oldL)

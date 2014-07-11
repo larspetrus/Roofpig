@@ -4,12 +4,10 @@
 class @Camera
   DISTANCE = 25
 
-  constructor: (hover, @pov_code) ->
+  constructor: (hover, pov_code) ->
     @cam = new THREE.PerspectiveCamera(this._view_angle(hover, DISTANCE), 1, 1, 100)
-    this.to_pov()
 
-  to_pov: ->
-    pov = Camera._POVs[@pov_code]
+    pov = Camera._POVs[pov_code]
     unless pov
       pov = Camera._POVs.Ufr
       log_error("Invalid POV '#{@pov_code}'. Using Ufr")

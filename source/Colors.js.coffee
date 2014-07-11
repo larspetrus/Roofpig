@@ -38,6 +38,11 @@ class @Colors
       throw new Error("Unknown sticker type '#{sticker_type}'")
     @side_colors[type]
 
+  adjust_for: (drift) ->
+    sc = @side_colors
+    [sc.U, sc.D, sc.R, sc.L, sc.F, sc.B] = [sc[drift.U], sc[drift.D], sc[drift.R], sc[drift.L], sc[drift.F],
+                                            sc[drift.B]]
+
   DEFAULT_COLORS = {g:'#0d0', b:'#07f', r:'red', o:'orange', y:'yellow', w:'#eee'}
   @_set_colors: (overrides) ->
     dc = DEFAULT_COLORS

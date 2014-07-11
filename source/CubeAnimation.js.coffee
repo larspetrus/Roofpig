@@ -41,13 +41,18 @@ class @CubeAnimation
 
     @scene = new THREE.Scene()
     @camera = new Camera(@config.hover, @config.pov)
-    @world3d = { pieces: new Pieces3D(@scene, @config, use_canvas), camera: @camera }
-
-    if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
-
-    unless @config.alg == ""
+    if @config.alg == ""
+      @world3d = { camera: @camera, pieces: new Pieces3D(@scene, @config, use_canvas)}
+      if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
+    else
+      @world3d = { camera: @camera }
       @dom.add_alg_area(@config.flag('showalg'))
       @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @config.speed, @dom)
+
+      @config.colors.adjust_for(@alg.side_drift())
+      @world3d.pieces = new Pieces3D(@scene, @config, use_canvas)
+
+      if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
       @alg.mix()
 
     if @id == 1
