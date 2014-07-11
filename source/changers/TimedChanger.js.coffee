@@ -32,5 +32,10 @@ class @TimedChanger # Base class
     @_finished
 
   _make_change: (to_time) ->
-    this.do_change(to_time - @last_time)
+    this.do_change(this._ease(to_time) - this._ease(@last_time))
     @last_time = to_time
+
+  # Ease in/out makes the movement look natural
+  _ease: (a_time) ->
+    x = (a_time - @start_time) / @duration
+    x * x * (2 - x * x)

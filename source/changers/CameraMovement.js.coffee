@@ -7,5 +7,5 @@ class @CameraMovement extends TimedChanger
     unless animate
       this.finish()
 
-  do_change: (time_diff) ->
-    @camera.rotate(@axis, time_diff * @angle_to_turn / @duration)
+  do_change: (completion_diff) ->
+    @camera.rotate(@axis, completion_diff * @angle_to_turn)

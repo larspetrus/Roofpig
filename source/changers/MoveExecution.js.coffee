@@ -7,11 +7,9 @@ class @MoveExecution extends TimedChanger
     unless animate
       this.finish()
 
-  do_change: (time_diff) ->
-    angle_diff = time_diff * @angle_to_turn / @duration
-
+  do_change: (completion_diff) ->
     for piece in @pieces
-      this._rotateAroundWorldAxis(piece, angle_diff)
+      this._rotateAroundWorldAxis(piece, completion_diff * @angle_to_turn)
 
   # Rotate an object around an arbitrary axis in world space #adapted from http://stackoverflow.com/questions/11119753/how-to-rotate-a-object-on-axis-world-three-js
   _rotateAroundWorldAxis: (object, radians) ->
