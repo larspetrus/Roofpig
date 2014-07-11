@@ -133,13 +133,20 @@ To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a commo
 ###3. Working with the code
 I wrote this in a Rails project, since that's how I usually do web programming. Maybe a little crazy to have the whole project in git, but it does **work**!
 
-To run it
+####To run it
+
 - Clone the github repository to your computer.
 - Download and install [Rails](http://rubyonrails.org/).
 - cd to .../Roofpig/rails_project
-- Start Rails with 'rails server'
+- Start Rails with `rails server`
 
-You should get a demo page on `http://localhost:3000/` and the test suite on `http://localhost:3500/`. Have fun!
+You should get a demo page on [http://localhost:3000/](http://localhost:3000/)
+
+
+####To test it
+
+- Start test server with `rake konacha:serve`, then visit [http://localhost:3500/](http://localhost:3500/)
+- Or, run the tests on the command line `rake konacha:run`
 
 
 ##4. What's a Roofpig anyway?
