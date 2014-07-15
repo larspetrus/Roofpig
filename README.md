@@ -151,6 +151,3 @@ You should get a demo page on [http://localhost:3000/](http://localhost:3000/)
 
 ##4. What's a Roofpig anyway?
 [**"Most unexpected!"**](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
-
-##5. Version history
-*1.0* June 28 2014.
