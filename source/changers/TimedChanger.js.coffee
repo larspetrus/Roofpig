@@ -27,6 +27,7 @@ class @TimedChanger # Base class
     unless this.finished()
       this._make_change(@start_time + @duration)
       @_finished = true
+      this._realign()
 
   finished: ->
     @_finished

@@ -19,3 +19,5 @@ class @MoveExecution extends TimedChanger
 
     object.matrix = rotWorldMatrix
     object.rotation.setFromRotationMatrix(object.matrix)
+
+  _realign: ->

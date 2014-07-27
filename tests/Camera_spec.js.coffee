@@ -28,3 +28,20 @@ describe "Camera", ->
     expect(Camera._POVs.Ufr.zn).to.not.equal(Un)
     expect(Camera._POVs.Ufr.yn).to.not.equal(Fn)
     expect(Camera._POVs.Ufr.xn).to.not.equal(Rn)
+
+  it "#to_position", ->
+    camera = new Camera(1.0, 'Ufr')
+    camera.rotate(v3(1, 0, 0), 0.001)
+
+    expect(camera.cam.position.y).to.not.equal(25) # confirm we're out of position
+
+    camera.to_position()
+
+    expect_v3(camera.cam.position, -25, 25, 25)
+    expect_v3(camera.cam.up, 0, 0, 1)
+    expect_v3(camera.user_dir.dr, -1, 0, 0)
+    expect_v3(camera.user_dir.dl, 0, 1, 0)
+    expect_v3(camera.user_dir.up, 0, 0, 1)
+
+expect_v3 = (actual, x, y, z) ->
+  expect(actual.toArray().join()).to.equal([x, y, z].join(), 999)

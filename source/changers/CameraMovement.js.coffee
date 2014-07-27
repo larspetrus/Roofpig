@@ -9,3 +9,6 @@ class @CameraMovement extends TimedChanger
 
   do_change: (completion_diff) ->
     @camera.rotate(@axis, completion_diff * @angle_to_turn)
+
+  _realign: ->
+    @camera.to_position()

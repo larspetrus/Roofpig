@@ -28,6 +28,10 @@ class @Camera
       v.applyAxisAngle(axis, angle)
     this._cam_moved()
 
+  to_position: ->
+    for v in [@cam.position, @cam.up, @user_dir.dl, @user_dir.dr, @user_dir.up]
+      [v.x, v.y, v.z] = [Math.round(v.x), Math.round(v.y), Math.round(v.z)]
+    
   bend: (dx, dy) ->
     v1 = v3_x(@user_dir.up, dx)
     v2 = v3_sub(@user_dir.dr, @user_dir.dl).normalize().multiplyScalar(dy)
