@@ -21,3 +21,8 @@ class @MoveExecution extends TimedChanger
     object.rotation.setFromRotationMatrix(object.matrix)
 
   _realign: ->
+    p2 = Math.PI / 2
+    for piece in @pieces
+      r = piece.rotation
+      [r.x, r.y, r.z] = [Math.round(r.x / p2) * p2, Math.round(r.y / p2) * p2, Math.round(r.z / p2) * p2]
+
