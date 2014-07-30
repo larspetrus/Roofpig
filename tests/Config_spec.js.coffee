@@ -1,5 +1,10 @@
 #= require roofpig/Config
 
+errors = []
+
+@log_error = (text) ->
+  errors.push(text)
+
 describe "Config", ->
   it "has defaults", ->
     empty_config = new Config("")
@@ -23,6 +28,11 @@ describe "Config", ->
     expect(new Config("hover=none").hover).to.equal(1.0)
     expect(new Config("hover=near").hover).to.equal(2.0)
     expect(new Config("hover=far" ).hover).to.equal(7.1)
+
+  it "detects illegal parameters", ->
+    config = new Config("shower=100% | hover=8")
+    expect(errors.join()).to.equal("Unknown config parameter 'shower' ignored")
+    expect(config.hover).to.equal('8')
 
   describe "base", ->
     window["ROOFPIG_CONF_TEST"] = "hover=3.3"
