@@ -3,16 +3,15 @@
 
 mock_scene    = { add: -> }
 
-mock_config = {
-  hover: 1.0,
-  colors: {
-    to_draw: -> { hovers: true, color: 'red'}
-    of: -> 'black'
-  }
+mock_colors = {
+  to_draw: ->
+    { hovers: true, color: 'red'}
+  of: ->
+    'black'
 }
 describe "Pieces3D", ->
   it ".make_stickers() creates Pieces3D.UBL, Pieces3D.UL, Pieces3D.F etc", ->
-    pieces = new Pieces3D(mock_scene, mock_config)
+    pieces = new Pieces3D(mock_scene, 1, mock_colors)
 
     for piece in [pieces.UBL, pieces.UL, pieces.U]
       expect(piece).to.be.defined
@@ -22,7 +21,7 @@ describe "Pieces3D", ->
 
   describe "keeps track of pieces and stickers", ->
     it "for regular moves", ->
-      pieces = new Pieces3D(mock_scene, mock_config)
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
 
       expect(pieces.at.UFR.name).to.equal('UFR')
       expect(pieces.at.DR.name).to.equal('DR')
@@ -43,7 +42,7 @@ describe "Pieces3D", ->
       expect(pieces.UBL.sticker_locations.join('')).to.equal('UFR')
 
     it "for slice moves", ->
-      pieces = new Pieces3D(mock_scene, mock_config)
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
 
       pieces.move(Layer.M, 1)
 
@@ -64,7 +63,7 @@ describe "Pieces3D", ->
   it "#solved", ->
     solved = 'B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR '
 
-    pieces = new Pieces3D(mock_scene, mock_config)
+    pieces = new Pieces3D(mock_scene, 1, mock_colors)
     expect(pieces.state()).to.equal(solved)
 
     pieces.move(Layer.R, 2)

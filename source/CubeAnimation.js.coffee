@@ -40,20 +40,17 @@ class @CubeAnimation
     @dom = new Dom(@id, roofpig_div, @renderer)
 
     @scene = new THREE.Scene()
-    @camera = new Camera(@config.hover, @config.pov)
+    @world3d = { camera: new Camera(@config.hover, @config.pov) }
     if @config.alg == ""
-      @world3d = { camera: @camera, pieces: new Pieces3D(@scene, @config, use_canvas)}
-      if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
+      @alg = { mix: -> }
     else
-      @world3d = { camera: @camera }
       @dom.add_alg_area(@config.flag('showalg'))
       @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @config.speed, @dom)
-
       @config.colors.adjust_for(@alg.side_drift())
-      @world3d.pieces = new Pieces3D(@scene, @config, use_canvas)
 
-      if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
-      @alg.mix()
+    @world3d.pieces = new Pieces3D(@scene, @config.hover, @config.colors, use_canvas)
+    if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
+    @alg.mix()
 
     if @id == 1
       EventHandlers.set_focus(this)
@@ -72,7 +69,7 @@ class @CubeAnimation
         any_change = true
 
     if any_change || first_time
-      @renderer.render @scene, @camera.cam
+      @renderer.render @scene, @world3d.camera.cam
 
     requestAnimationFrame => this.animate() # request next frame
 

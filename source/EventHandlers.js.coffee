@@ -9,7 +9,7 @@ class @EventHandlers
       @dom.has_focus(false) if @focus
 
       @focus = new_focus
-      @camera = @focus.camera
+      @camera = @focus.world3d.camera
       @dom = @focus.dom
 
       @dom.has_focus(true)

@@ -5,12 +5,12 @@
 class @Pieces3D
   TINY = 0.0030
 
-  constructor: (scene, config, @use_canvas) ->
+  constructor: (scene, hover, colors, @use_canvas) ->
     @at = {}
     @cube_surfaces = if @use_canvas then [true] else [true, false]
     @sticker_size  = if @use_canvas then 0.84 else 0.90
     @hover_size    = if @use_canvas then 0.91 else 0.97
-    this.make_stickers(scene, config.hover, config.colors)
+    this.make_stickers(scene, hover, colors)
 
   on: (layer) ->
     (@at[position] for position in layer.positions)
