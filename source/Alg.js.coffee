@@ -4,9 +4,6 @@
 
 class @Alg
   constructor: (@move_codes, @world3d, @algdisplay, @speed, @dom) ->
-    if not @move_codes || @move_codes == ""
-      throw new Error("Invalid alg: '#{@move_codes}'")
-
     @moves = []
     for code in @move_codes.split(' ')
       if code.length > 0
@@ -96,15 +93,18 @@ class @Alg
     else
       new Move(code, @world3d, @speed)
 
-  side_drift: ->
-    result = {U:'U', D:'D', L:'L', R:'R', F:'F', B:'B'}
+  @side_drift: (moves) ->
+    new Alg(moves, null, "")._side_drift()
+
+  _side_drift: ->
+    drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
     @next =  @moves.length
     until this.at_start()
-      this.prev_move().track_drift(result)
-    result
+      this.prev_move().track_drift(drift)
+    drift     # How to think about this: The 'real' U side is now on drift.U
 
   _update_dom: (time = 'later') ->
-    if @dom
+    if @dom && @moves.length > 0
       if time == 'first time'
         @dom.init_alg_text(this.display_text().future)
 

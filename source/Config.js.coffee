@@ -1,3 +1,4 @@
+#= require roofpig/Alg
 #= require roofpig/Colors
 
 class @Config
@@ -7,9 +8,9 @@ class @Config
 
     @alg = this.raw(ALG)
     @algdisplay= this._alg_display()
-    @colors = new Colors(this.raw(COLORED), this.raw(SOLVED), this.raw(TWEAKS), this.raw(COLORS))
+    @colors = new Colors(Alg.side_drift(@alg), this.raw(COLORED), this.raw(SOLVED), this.raw(TWEAKS), this.raw(COLORS))
     @flags = this.raw(FLAGS)
-    @hover     = this._hover()
+    @hover = this._hover()
     @pov = this.raw(POV, "Ufr")
     @setup = this.raw(SETUPMOVES)
     @speed = this.raw(SPEED, 400)

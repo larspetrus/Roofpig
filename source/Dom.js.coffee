@@ -1,6 +1,6 @@
 class @Dom
 
-  constructor: (@cube_id, @div, renderer) ->
+  constructor: (@cube_id, @div, renderer, make_alg_area, showalg) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", "Lucida Grande", sans-serif')
     this.has_focus(false)
     @div.data('cube_id', @cube_id)
@@ -10,6 +10,9 @@ class @Dom
 
     @scale = @div.width()/400
     @hscale = Math.max(@scale, 15.0/40) # Minimum height -> readable text
+
+    if make_alg_area
+      this.add_alg_area(showalg)
 
   has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'

@@ -9,8 +9,9 @@ describe "Alg", ->
       expect(new Alg(" U F2  D' LZ  ").to_s()).to.equal("U F2 D' LZ")
       expect(new Alg("F D+U'").to_s()).to.equal("F (D U')")
 
-    it "fails empty alg", ->
-      expect(-> new Alg("")).to.throw("Invalid alg: ''")
+    it "handles empty alg", ->
+      expect(new Alg("").at_start()).to.be.true
+      expect(new Alg("").at_end()).to.be.true
 
   it "keeps track of moves", ->
     alg = new Alg('F D')
@@ -124,13 +125,16 @@ describe "Alg", ->
       alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=rotations").algdisplay)
       expect(alg.display_text().future).to.equal("F R> U2+D' F<< L2 D+D>")
 
-  it "#side_drift", ->
+  it "#_side_drift", ->
     world = null
-    expect(new Alg("F", world, "").side_drift()).to.deep.equal(U:'U', D:'D', L:'L', R:'R', F:'F', B:'B')
-    expect(new Alg("M", world, "").side_drift()).to.deep.equal(U:'B', D:'F', L:'L', R:'R', F:'U', B:'D')
-    expect(new Alg("M z",world,"").side_drift()).to.deep.equal(U:'L', D:'R', L:'F', R:'B', F:'U', B:'D')
-    expect(new Alg("MZ", world,"").side_drift()).to.deep.equal(U:'D', D:'U', L:'L', R:'R', F:'B', B:'F')
+    expect(new Alg("F", world, "")._side_drift()).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
+    expect(new Alg("M", world, "")._side_drift()).to.deep.equal(U: 'B', D: 'F', L: 'L', R: 'R', F: 'U', B: 'D')
+    expect(new Alg("M z", world, "")._side_drift()).to.deep.equal(U: 'L', D: 'R', L: 'F', R: 'B', F: 'U', B: 'D')
+    expect(new Alg("MZ", world, "")._side_drift()).to.deep.equal(U: 'D', D: 'U', L: 'L', R: 'R', F: 'B', B: 'F')
 
+  it "@side_drift", ->
+    expect(Alg.side_drift("F")).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
+    expect(Alg.side_drift("M")).to.deep.equal(U: 'B', D: 'F', L: 'L', R: 'R', F: 'U', B: 'D')
 
 move_should_be = (move, layer, turns, is_rotation = false) ->
   expect(move.layer, move.to_s()).to.equal(layer)
