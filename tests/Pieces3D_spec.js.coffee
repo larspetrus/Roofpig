@@ -1,7 +1,7 @@
 #= require three.min
 #= require roofpig/Pieces3D
 
-mock_scene    = { add: -> }
+mock_scene = { add: -> }
 
 mock_colors = {
   to_draw: ->
@@ -30,9 +30,9 @@ describe "Pieces3D", ->
 
       pieces.move(Layer.R, 1)
 
-      expect(pieces.at.UFR.name).to.equal('DFR')
+      expect(pieces.at.UFR.name).to.equal('DFR') #The DFR piece is now in the UFR position
       expect(pieces.at.DR.name).to.equal('BR')
-      expect(pieces.DFR.sticker_locations.join('')).to.equal('FUR')
+      expect(pieces.DFR.sticker_locations.join('')).to.equal('FUR') # The D sticker of the DFR piece is on the F side. F is on U. R is on R.
       expect(pieces.BR.sticker_locations.join('')).to.equal('DR')
 
       pieces.move(Layer.U, 2)

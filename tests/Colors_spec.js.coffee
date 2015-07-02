@@ -1,6 +1,6 @@
 #= require three.min
 #= require roofpig/Colors
-#= require ../../app/assets/javascripts/roofpig/Layer.js.coffee
+#= require roofpig/Layer
 
 nodrift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
 
@@ -13,15 +13,16 @@ describe "Colors", ->
       expect(colors.of(Layer.F)).to.equal('red')
       expect(colors.of(Layer.B)).to.equal('orange')
       expect(colors.of(Layer.U)).to.equal('yellow')
-      expect(colors.of(Layer.D)).to.equal('#eee'  )
+      expect(colors.of(Layer.D)).to.equal('#eee')
       expect(colors.of('solved')).to.equal('#444')
       expect(colors.of('ignored')).to.equal('#888')
 
       expect(colors.of('L')).to.equal(colors.of(Layer.L))
       expect(colors.of('F')).to.equal(colors.of(Layer.F))
 
-      expect(-> colors.of('UNKNOWN')).to.throw(Error)
-    
+      expect(->
+        colors.of('UNKNOWN')).to.throw(Error)
+
     it "can change colors", ->
       colors = new Colors(nodrift, "", "", "", "R:o L:#abc solved:r c:#123")
 
@@ -31,34 +32,34 @@ describe "Colors", ->
       expect(colors.of('cube')).to.equal('#123')
 
       expect(colors.of(Layer.U)).to.equal('yellow')
-      expect(colors.of(Layer.D)).to.equal('#eee'  )
+      expect(colors.of(Layer.D)).to.equal('#eee')
 
   describe "#to_draw", ->
     it "is colored by default", ->
       colors = new Colors(nodrift, "", "")
-      expect(colors.to_draw('UFR','F')).to.deep.equal(color: colors.of('F'), hovers: true)
+      expect(colors.to_draw('UFR', 'F')).to.deep.equal(color: colors.of('F'), hovers: true)
       expect(colors.to_draw('DB', 'B')).to.deep.equal(color: colors.of('B'), hovers: true)
-      expect(colors.to_draw('L',  'L')).to.deep.equal(color: colors.of('L'), hovers: true)
+      expect(colors.to_draw('L', 'L')).to.deep.equal(color: colors.of('L'), hovers: true)
 
     it "colors only specified stickers", ->
       colors = new Colors(nodrift, "U*", "")
-      expect(colors.to_draw('UFR','F')).to.deep.equal(color: colors.of('F'), hovers: true)
+      expect(colors.to_draw('UFR', 'F')).to.deep.equal(color: colors.of('F'), hovers: true)
       expect(colors.to_draw('DB', 'B')).to.deep.equal(color: colors.of('ignored'), hovers: false)
-      expect(colors.to_draw('L',  'L')).to.deep.equal(color: colors.of('ignored'), hovers: false)
+      expect(colors.to_draw('L', 'L')).to.deep.equal(color: colors.of('ignored'), hovers: false)
 
     it "solved overrides colored", ->
       colors = new Colors(nodrift, "U*", "F*")
-      expect(colors.to_draw('UFR','F')).to.deep.equal(color: colors.of('solved'), hovers: false)
+      expect(colors.to_draw('UFR', 'F')).to.deep.equal(color: colors.of('solved'), hovers: false)
       expect(colors.to_draw('UR', 'U')).to.deep.equal(color: colors.of('U'), hovers: true)
-      expect(colors.to_draw('F',  'F')).to.deep.equal(color: colors.of('solved'), hovers: false)
-      expect(colors.to_draw('L',  'L')).to.deep.equal(color: colors.of('ignored'), hovers: false)
+      expect(colors.to_draw('F', 'F')).to.deep.equal(color: colors.of('solved'), hovers: false)
+      expect(colors.to_draw('L', 'L')).to.deep.equal(color: colors.of('ignored'), hovers: false)
 
     it "last tweak color wins", ->
       colors = new Colors(nodrift, "*", "", "R:U* L:F*")
       expect(colors.to_draw('D', 'D')).to.deep.equal(color: colors.of('D'), hovers: true) #untweaked
       expect(colors.to_draw('U', 'U')).to.deep.equal(color: colors.of('R'), hovers: true) #tweaked
       expect(colors.to_draw('F', 'F')).to.deep.equal(color: colors.of('L'), hovers: true) #tweaked
-      expect(colors.to_draw('UF','U')).to.deep.equal(color: colors.of('L'), hovers: true) #double tweaked
+      expect(colors.to_draw('UF', 'U')).to.deep.equal(color: colors.of('L'), hovers: true) #double tweaked
 
     describe "tweaks", ->
       it "sets X and colors", ->

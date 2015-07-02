@@ -1,5 +1,5 @@
 #= require three.min
-#= require ../../app/assets/javascripts/roofpig/Layer.js.coffee
+#= require roofpig/Layer
 
 describe "Layer", ->
   it "#shift", ->
