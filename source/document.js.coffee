@@ -1,7 +1,7 @@
 #= require roofpig/Css
 
 $(document).ready ->
-  console.log("Roofpig version 1.2 (@@BUILT_WHEN@@). Expecting jQuery 1.11.1 and Three.js 67.")
+  console.log("Roofpig version 1.2 (@@BUILT_WHEN@@). Expecting jQuery 1.11.3 and Three.js 67.")
   console.log("jQuery version", $.fn.jquery)
 
   $('head').append(Css.CODE)
