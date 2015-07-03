@@ -39,12 +39,14 @@ class @CubeAnimation
 
     @dom = new Dom(@id, roofpig_div, @renderer, @config.alg != "", @config.flag('showalg'))
     @scene = new THREE.Scene()
-    @world3d = { camera: new Camera(@config.hover, @config.pov), pieces: new Pieces3D(@scene, @config.hover,
-      @config.colors, use_canvas) }
+    @world3d =
+      camera: new Camera(@config.hover, @config.pov),
+      pieces: new Pieces3D(@scene, @config.hover, @config.colors, use_canvas)
+
     @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @config.speed, @dom)
 
     if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
-    @alg.mix()
+    @alg.mix() unless @config.flag('startsolved')
 
     if @id == 1
       EventHandlers.set_focus(this)

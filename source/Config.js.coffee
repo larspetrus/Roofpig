@@ -66,6 +66,7 @@ class @Config
 
     result
 
-PROPERTIES = [ALG = 'alg', BASE = 'base', ALGDISPLAY = 'algdisplay', COLORED = 'colored', COLORS = "colors",
-  FLAGS = 'flags',
-  HOVER = 'hover', POV = 'pov', SETUPMOVES = 'setupmoves', SOLVED = 'solved', SPEED = 'speed', TWEAKS = 'tweaks']
+PROPERTIES = [
+  ALG = 'alg', BASE = 'base', ALGDISPLAY = 'algdisplay', COLORED = 'colored', COLORS = "colors", FLAGS = 'flags',
+  HOVER = 'hover', POV = 'pov', SETUPMOVES = 'setupmoves', SOLVED = 'solved', SPEED = 'speed', TWEAKS = 'tweaks'
+]

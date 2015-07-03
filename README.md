@@ -47,7 +47,7 @@ Roofpig also allows combining moves. Using **+**. Side safe slice moves: `M` = `
 [**Alg notation demo**](http://jsfiddle.net/Lar5/MfpVf/)
 
 ###2.2 The Cube
-In Roofpig, you define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**-es.
+In Roofpig, you normally define how the cube will look after the alg is done. By default, it's a fully colored cube. You can also make parts 'solved' (dark gray) or 'ignored' (light gray), move pieces, recolor stickers and sprinkle out **X**-es.
 
 But first we must talk about Cubexps.
 
@@ -98,6 +98,7 @@ Number of milliseconds for a turn. Defaults to 400. Double turns take 1.5x longe
 Things that can only be on or off are set to "ON" by mentioning them in this free form text field. Current flags are 
 - `showalg` - Display the alg, according to the `algdisplay` setting.
 - `canvas` - Use regular 2D canvas to draw instead of WebGL.
+- `startsolved` - Start out with a solved cube, instead of with the reverse alg applied.
 
 #####`colors`
 Default colors are **R** - green, **L** - blue, **F** - red, **B** - orange, **U** - yellow, and **D** - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f`, `&#35;3d3dff` etc.

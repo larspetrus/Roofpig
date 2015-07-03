@@ -6,6 +6,25 @@
           width: 160px;
           height: 180px;
       }
+
+      .rp170 {
+          width: 170px;
+          height: 203px;
+      }
+
+      .rp250 {
+          width: 250px;
+          height: 299px;
+      }
+
+      .rp440 {
+          width: 440px;
+          height: 499px;
+      }
+
+      .left {
+          float: left;
+      }
   </style>
 
   <script>
@@ -18,9 +37,9 @@
 <h1>RoofPig sample zoo.</h1>
 
 <body>
-  <div class="roofpig" style="height:299px; width: 250px; float: left;" data-config="base=P1|solved=UFR*|tweaks=XxX:UFR BBB:UBR|flags=showalg|alg=D'+D> R>+R' D R' D' R2|algdisplay=fancy2s Z"></div>
-  <div class="roofpig" style="height:199px; width: 160px; float: left;" data-config="base=P1|flags=canvas showalg|alg=L2 R U2+DZ|pov=dbR"></div>
-  <div class="roofpig" style="height:499px; width: 440px; float: left;" data-config="base=P1|hover=far|flags=showalg|alg=L2 D U2 B2 L B> U'+U> F U' F U' F' L> U>> U' F2 UZ R2 U F R' F' R F' R2 F R' F R F' R2 F D R2 D' R' D R D' R' D R' D' R2|algdisplay=fancy2s 2p"></div>
+<div class="roofpig rp250 left" data-config="base=P1|solved=UFR*|tweaks=XxX:UFR BBB:UBR|flags=showalg|alg=D'+D> R>+R' D R' D' R2|algdisplay=fancy2s Z"></div>
+<div class="roofpig rp170 left" data-config="base=P1|flags=canvas showalg startsolved|alg=F L F U' R U F2 L2 U' L' B D' B' L2 U|pov=dbR"></div>
+<div class="roofpig rp440 left" data-config="base=P1|hover=far|flags=showalg|alg=L2 D U2 B2 L B> U'+U> F U' F U' F' L> U>> U' F2 UZ R2 U F R' F' R F' R2 F R' F R F' R2 F D R2 D' R' D R D' R' D R' D' R2|algdisplay=fancy2s 2p"></div>
 
 <div>
   <table>
