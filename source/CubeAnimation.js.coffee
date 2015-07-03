@@ -25,34 +25,39 @@ class @CubeAnimation
       roofpig_div.css(background: '#f66')
       return
 
-    @id = CubeAnimation.last_id += 1
-    CubeAnimation.by_id[@id] = this
+    try
+      @id = CubeAnimation.last_id += 1
+      CubeAnimation.by_id[@id] = this
 
-    @config = new Config(roofpig_div.data('config'))
+      @config = new Config(roofpig_div.data('config'))
 
-    use_canvas = @config.flag('canvas') || not webgl_works || CubeAnimation.webgl_cubes >= 16
-    if use_canvas
-      @renderer = new THREE.CanvasRenderer(alpha: true) # alpha -> transparent
-    else
-      CubeAnimation.webgl_cubes += 1
-      @renderer = new THREE.WebGLRenderer(antialias: true, alpha: true)
+      use_canvas = @config.flag('canvas') || not webgl_works || CubeAnimation.webgl_cubes >= 16
+      if use_canvas
+        @renderer = new THREE.CanvasRenderer(alpha: true) # alpha -> transparent
+      else
+        CubeAnimation.webgl_cubes += 1
+        @renderer = new THREE.WebGLRenderer(antialias: true, alpha: true)
 
-    @dom = new Dom(@id, roofpig_div, @renderer, @config.alg != "", @config.flag('showalg'))
-    @scene = new THREE.Scene()
-    @world3d =
-      camera: new Camera(@config.hover, @config.pov),
-      pieces: new Pieces3D(@scene, @config.hover, @config.colors, use_canvas)
+      @dom = new Dom(@id, roofpig_div, @renderer, @config.alg != "", @config.flag('showalg'))
+      @scene = new THREE.Scene()
+      @world3d =
+        camera: new Camera(@config.hover, @config.pov),
+        pieces: new Pieces3D(@scene, @config.hover, @config.colors, use_canvas)
 
-    @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @config.speed, @dom)
+      @alg = new Alg(@config.alg, @world3d, @config.algdisplay, @config.speed, @dom)
 
-    if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
-    @alg.mix() unless @config.flag('startsolved')
+      if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
+      @alg.mix() unless @config.flag('startsolved')
 
-    if @id == 1
-      EventHandlers.set_focus(this)
+      if @id == 1
+        EventHandlers.set_focus(this)
 
-    @changers = {}
-    this.animate(true)
+      @changers = {}
+      this.animate(true)
+    catch e
+      roofpig_div.html(e.message)
+      roofpig_div.css(background: '#f66')
+
 
 
   animate: (first_time = false) ->  # called for each redraw

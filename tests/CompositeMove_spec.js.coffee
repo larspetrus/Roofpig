@@ -21,3 +21,7 @@ describe "CompositeMove", ->
     expect(xz.display_text(new Config("").algdisplay)).to.equal("x2")
     expect(xz.display_text(new Config("algdisplay=fancy2s").algdisplay)).to.equal("x²")
     expect(xz.display_text(new Config("algdisplay=2p").algdisplay)).to.equal("x2'")
+
+  it "detects impossible move combinations", ->
+    expect(-> new CompositeMove("L+F", {}, 200)).to.throw("Impossible Move combination 'L+F'")
+    expect(-> new CompositeMove("U>+L", {}, 200)).to.not.throw(Error)

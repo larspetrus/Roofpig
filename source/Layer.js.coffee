@@ -30,5 +30,12 @@ class @Layer
       result = @sticker_cycle[result]
     result
 
+  on_same_axis_as: (other_layer) ->
+    same_zeroes = 0
+    for axis in ['x', 'y', 'z']
+      if @normal[axis] == 0 && other_layer.normal[axis] == 0
+        same_zeroes++
+    same_zeroes == 2
+
   all = { R: @R, L: @L, F: @F, B: @B, D: @D, U: @U,    M: @M, E: @E, S:@S }
   sides = { R: @R, L: @L, F: @F, B: @B, D: @D, U: @U}

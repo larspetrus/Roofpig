@@ -11,3 +11,9 @@ describe "Layer", ->
     expect(Layer.F.shift('Q', 1)).to.be.null
     expect(-> Layer.F.shift('F', 0)).to.throw(Error)
 
+  it "on_same_axis_as", ->
+    expect(Layer.F.on_same_axis_as(Layer.B)).to.be.true
+    expect(Layer.F.on_same_axis_as(Layer.F)).to.be.true
+    expect(Layer.F.on_same_axis_as(Layer.U)).to.be.false
+    expect(Layer.M.on_same_axis_as(Layer.L)).to.be.true
+    expect(Layer.M.on_same_axis_as(Layer.B)).to.be.false

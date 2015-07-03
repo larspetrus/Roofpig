@@ -5,6 +5,12 @@ class @CompositeMove
   constructor: (move_codes, world3d, speed, @official_text = null) ->
     @moves = (new Move(code, world3d, speed) for code in move_codes.split('+'))
 
+    real_moves = (move for move in @moves when not move.is_rotation)
+    for other_move in real_moves[1..]
+      unless real_moves[0].layer.on_same_axis_as(other_move.layer)
+        throw new Error("Impossible Move combination '#{move_codes}'")
+
+
   do:       -> new ConcurrentChangers( (@moves.map (move) -> move.do()) )
   undo:     -> new ConcurrentChangers( (@moves.map (move) -> move.undo()) )
   mix:      -> new ConcurrentChangers( (@moves.map (move) -> move.mix()) )
