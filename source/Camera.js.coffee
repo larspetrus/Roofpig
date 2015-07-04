@@ -37,7 +37,7 @@ class @Camera
     v2 = v3_sub(@user_dir.dr, @user_dir.dl).normalize().multiplyScalar(dy)
     axis = v3_add(v1, v2).normalize()
 
-    @cam.position = @unbent_position.clone()
+    @cam.position.copy(@unbent_position)
     @cam.up = @unbent_up.clone()
     for v in [@cam.position, @cam.up]
       v.applyAxisAngle(axis, Math.sqrt(dx*dx + dy*dy))

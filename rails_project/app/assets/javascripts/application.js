@@ -15,4 +15,6 @@
 //= require turbolinks
 
 //= require three.min
+//= require Projector
+//= require CanvasRenderer
 //= require roofpig
