@@ -22,4 +22,7 @@ $(document).ready ->
   for roofpig_div in $('.roofpig')
     new CubeAnimation($(roofpig_div), webgl_browser, canvas_browser)
 
-  EventHandlers.initialize()
+  if $('.roofpig').size()
+    EventHandlers.initialize()
+  else
+    console.log("No Roofpig divs found.")
