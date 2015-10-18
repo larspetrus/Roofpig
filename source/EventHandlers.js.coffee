@@ -3,49 +3,62 @@
 
 #This is all page wide data and functions.
 class @EventHandlers
+  @initialized = false
 
   @set_focus: (new_focus) ->
-    if @focus != new_focus
-      @dom.has_focus(false) if @focus
+    if @_focus != new_focus
+      @dom.has_focus(false) if @_focus
 
-      @focus = new_focus
-      @camera = @focus.world3d.camera
-      @dom = @focus.dom
+      @_focus = new_focus
+      unless @focus().is_null
+        @camera = @_focus.world3d.camera
+        @dom = @_focus.dom
 
-      @dom.has_focus(true)
+        @dom.has_focus(true)
+
+  NO_FOCUS = {
+    add_changer: -> {}
+    is_null: true
+  }
+  @focus: ->
+    @_focus || NO_FOCUS
 
   @initialize: ->
-    $("body").keydown (e) -> EventHandlers.key_down(e)
-    $("body").keyup (e)   -> EventHandlers.key_up(e)
+    return if @initialized
 
-    $(".roofpig").mousedown (e) -> EventHandlers.mouse_down(e, $(this).data('cube_id'))
-    $("body").mousemove (e)     -> EventHandlers.mouse_move(e)
-    $("body").mouseup (e)       -> EventHandlers.mouse_end(e)
-    $("body").mouseleave (e)    -> EventHandlers.mouse_end(e)
+    $('body').keydown (e) -> EventHandlers.key_down(e)
+    $('body').keyup   (e) -> EventHandlers.key_up(e)
 
-    $('.roofpig').click (e) ->
-      cube = CubeAnimation.by_id[$(this).data('cube_id')]
-      EventHandlers.set_focus(cube)
+    $(document).on('mousedown', '.roofpig', (e) -> EventHandlers.mouse_down(e, $(this).data('cube-id')))
+    $('body').mousemove  (e) -> EventHandlers.mouse_move(e)
+    $('body').mouseup    (e) -> EventHandlers.mouse_end(e)
+    $('body').mouseleave (e) -> EventHandlers.mouse_end(e)
 
-    $("button").click (e) ->
-      [button_name, cube_id] = $(this).attr("id").split("-")
-      CubeAnimation.by_id[cube_id].button_click(button_name, e.shiftKey)
+    $(document).on('click', '.roofpig', (e) ->
+      cube = CubeAnimation.by_id[$(this).data('cube-id')]
+      EventHandlers.set_focus(cube))
 
-    $('.roofpig-help-button').click (e) ->
-      [_, cube_id] = $(this).attr("id").split("-")
-      CubeAnimation.by_id[cube_id].dom.show_help()
+    $(document).on('click', '.roofpig button', (e) ->
+      [button_name, cube_id] = $(this).attr('id').split('-')
+      CubeAnimation.by_id[cube_id].button_click(button_name, e.shiftKey))
+
+    $(document).on('click', '.roofpig-help-button', (e) ->
+      [_, cube_id] = $(this).attr('id').split('-')
+      CubeAnimation.by_id[cube_id].dom.show_help())
+
+    @initialized = true
 
   @mouse_down: (e, clicked_cube_id) ->
     @dom.remove_help()
     
-    if clicked_cube_id == @focus.id
+    if clicked_cube_id == @focus().id
       @bend_start_x = e.pageX
       @bend_start_y = e.pageY
 
       @bending = true
 
   @mouse_end: (e) ->
-    @focus.add_changer('camera', new OneChange( => @camera.bend(0, 0)))
+    @focus().add_changer('camera', new OneChange( => @camera.bend(0, 0)))
     @bending = false
 
   @mouse_move: (e) ->
@@ -54,12 +67,14 @@ class @EventHandlers
       dy = -0.02 * (e.pageY - @bend_start_y) / @dom.scale
       if e.shiftKey
         dy = 0
-      @focus.add_changer('camera', new OneChange( => @camera.bend(dx, dy)))
+      @focus().add_changer('camera', new OneChange( => @camera.bend(dx, dy)))
 
 
   # ---- Keyboard Events ----
 
   @key_down: (e) ->
+    return if @focus().is_null
+
     help_toggled = @dom.remove_help()
 
     if e.ctrlKey || e.metaKey
@@ -67,12 +82,19 @@ class @EventHandlers
 
     [key, shift, alt] = [e.keyCode, e.shiftKey, e.altKey]
 
-    if key == key_tab
-      new_focus = if shift then @focus.previous_cube() else @focus.next_cube()
+    if key in turn_keys
+      turns = if shift then 3 else if alt then 2 else 1
+      this._move("#{side_for[key]}#{turns}")
+
+    else if alt
+      unhandled = true
+
+    else if key == key_tab
+      new_focus = if shift then @focus().previous_cube() else @focus().next_cube()
       this.set_focus(new_focus)
 
     else if key == key_end || (key == key_right_arrow && shift)
-      @focus.add_changer('pieces', new OneChange( => @focus.alg.to_end(@focus.world3d)))
+      @focus().add_changer('pieces', new OneChange( => @focus().alg.to_end(@focus().world3d)))
 
     else if key in button_keys
       this._fake_click_down(this._button_for(key, shift))
@@ -87,12 +109,8 @@ class @EventHandlers
         when key_Z, key_D, key_X then -1
       this._rotate(axis, turns)
 
-    else if key in turn_keys
-      turns = if shift then 3 else if alt then 2 else 1
-      this._move("#{side_for[key]}#{turns}")
-
     else if key == key_question
-      @focus.dom.show_help() unless help_toggled
+      @focus().dom.show_help() unless help_toggled
 
     else
       unhandled = true
@@ -133,10 +151,10 @@ class @EventHandlers
 
   @_rotate: (axis_name, turns) ->
     angle_to_turn = -Math.PI/2 * turns
-    @focus.add_changer('camera', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
+    @focus().add_changer('camera', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
 
   @_move: (code) ->
-    @focus.add_changer('pieces', new Move(code, @focus.world3d, 200).show_do())
+    @focus().add_changer('pieces', new Move(code, @focus().world3d, 200).show_do())
 
 
   # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
