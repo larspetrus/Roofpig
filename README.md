@@ -39,7 +39,7 @@ Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U,
 
 
 #####Rotation notation
-Roofpig adds "non destructive" rotations, that turns the cube while preserving the side names. You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` is a double turn, `R<` and `R<<` the same in the opposite direction. This means `F>` is the same as `B<`.
+Roofpig adds "non destructive" rotations, that turns the cube while preserving the side names (in contrast, inserting `x2` changes all following moves). You can think of them as moving the "camera". `R>` rotates the whole cube like an `R` move. `R>>` is a double turn, `R<` and `R<<` the same in the opposite direction. This means `F>` is the same as `B<`.
 
 #####Combination notation
 Roofpig also allows combining moves. Using **+**. Side safe slice moves: `M` = `L'+R`, `E` = `D'+U`, and `S` = `F'+B`. 'w' moves: `Rw` = `R>+L`, `Lw` = `L>+R`, `Uw` = `U>+D`, etc. Whole cube: `y`=`U+E'+D'`. Combining moves that can't be done in parallel, like `L+U` or `Rw+Fw2`, will make horrible and amusing things happen.
@@ -101,7 +101,7 @@ Things that can only be on or off are set to "ON" by mentioning them in this fre
 - `startsolved` - Start out with a solved cube, instead of with the reverse alg applied.
 
 #####`colors`
-Default colors are **R** - green, **L** - blue, **F** - red, **B** - orange, **U** - yellow, and **D** - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `&#35;77f`, `&#35;3d3dff` etc.
+Default colors are **R** - green, **L** - blue, **F** - red, **B** - orange, **U** - yellow, and **D** - white. Or `colors=R:g L:b F:r B:o U:y D:w` in this notation. Aside from 'g' for green etc, you can also use any CSS color, like `pink`, `#77f`, `#3d3dff` etc.
 
 #####`pov`
 By default the Point Of View is on the UFR corner, with U on top. Or `Ufr` in this notation. To face DFL with F on top, use `pov=Fdl`.
