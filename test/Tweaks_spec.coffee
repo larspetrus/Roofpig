@@ -1,5 +1,5 @@
 #= require three.min
-#= require roofpig/Tweaks
+#= require Tweaks
 
 describe "Tweaks", ->
   it "#for_sticker", ->

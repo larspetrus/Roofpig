@@ -1,4 +1,4 @@
-#= require roofpig/changers/TimedChanger
+#= require changers/TimedChanger
 
 describe "TimedChanger", ->
   it "easing starts and ends properly", ->

@@ -1,6 +1,6 @@
 #= require three.min
-#= require roofpig/Colors
-#= require roofpig/Layer
+#= require Colors
+#= require Layer
 
 nodrift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
 

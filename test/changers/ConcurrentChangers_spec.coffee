@@ -1,4 +1,4 @@
-#= require roofpig/changers/ConcurrentChangers
+#= require changers/ConcurrentChangers
 
 describe "ConcurrentChangers", ->
   it "#finished", ->

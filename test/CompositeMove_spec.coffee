@@ -1,7 +1,7 @@
 #= require three.min
-#= require roofpig/Config
-#= require roofpig/CompositeMove
-#= require roofpig/Move
+#= require Config
+#= require CompositeMove
+#= require Move
 
 describe "CompositeMove", ->
   it "works", ->

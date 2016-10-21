@@ -1,5 +1,5 @@
 #= require three.min
-#= require roofpig/Camera
+#= require Camera
 
 describe "Camera", ->
   it "_POVs", ->

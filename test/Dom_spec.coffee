@@ -1,4 +1,4 @@
-#= require roofpig/Dom
+#= require Dom
 
 #TODO: Make selenium work somehow. 'rake konacha:run' shows errors.
 

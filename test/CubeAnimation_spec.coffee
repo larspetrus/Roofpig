@@ -1,8 +1,8 @@
 #= require three.min
 #= require jquery-1.11.3.min.js
-#= require roofpig/Camera
-#= require roofpig/CubeAnimation
-#= require roofpig/EventHandlers
+#= require Camera
+#= require CubeAnimation
+#= require EventHandlers
 
 mock_div = {
   data: ->

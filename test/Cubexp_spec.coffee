@@ -1,4 +1,4 @@
-#= require roofpig/Cubexp
+#= require Cubexp
 
 exp = (e) -> new Cubexp(e)
 

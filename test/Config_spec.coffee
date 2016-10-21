@@ -1,4 +1,4 @@
-#= require roofpig/Config
+#= require Config
 
 errors = []
 

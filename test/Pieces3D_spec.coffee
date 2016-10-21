@@ -1,5 +1,5 @@
 #= require three.min
-#= require roofpig/Pieces3D
+#= require Pieces3D
 
 mock_scene = { add: -> }
 

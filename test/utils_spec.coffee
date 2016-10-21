@@ -1,5 +1,5 @@
 #= require three.min.js
-#= require roofpig/utils
+#= require <utils.coffee>
 
 describe "v3", ->
   it "#constructor", ->

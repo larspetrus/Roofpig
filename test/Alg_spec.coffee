@@ -1,6 +1,6 @@
 #= require three.min
-#= require roofpig/Alg
-#= require roofpig/Config
+#= require Alg
+#= require Config
 
 describe "Alg", ->
   describe "#constructor", ->

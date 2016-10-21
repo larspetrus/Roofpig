@@ -53,34 +53,35 @@ var rename = require("gulp-rename");
 var glob   = require("glob");
 //var sourcemaps = require('gulp-sourcemaps');
 
-var test_js_dir = 'local/test_js/';
+var js_dir = 'local/test_js/';
+var test_js_dir = js_dir+'test/';
 
 gulp.task('clean-js', function() {
-  return del(test_js_dir +'**/*');
+  return del(js_dir+'**/*');
 });
 
 gulp.task('compile-test', ['clean-js'], function() {
-  return gulp.src('tests/**/*.coffee')
+  return gulp.src('test/**/*.coffee')
 //    .pipe(sourcemaps.init())
     .pipe(coffee({bare: true}).on('error', gutil.log))
 //    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(test_js_dir + 'tests'));
+    .pipe(gulp.dest(test_js_dir));
 });
 
 gulp.task('compile-src', ['clean-js'], function() {
   return gulp.src('src/**/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
-    .pipe(gulp.dest(test_js_dir + 'src'));
+    .pipe(gulp.dest(js_dir+'src'));
 });
 
 gulp.task('test', ['compile-test', 'compile-src'], function(){
-  var test_section = '';
-  glob.sync(test_js_dir + 'tests/**/*.js', {}).forEach(function(test_file){
-    test_section += '<script src="'+test_file+'"></script>\n';
+  var test_html = '';
+  glob.sync(test_js_dir+'**/*.js', {}).forEach(function(test_file){
+    test_html += '<script src="'+test_file+'"></script>\n';
   });
 
   return gulp.src('misc/rptest_template.html')
-    .pipe(replace('@@TEST_FILES_GO_HERE@@', test_section))
+    .pipe(replace('@@TEST_FILES_GO_HERE@@', test_html))
     .pipe(rename('rptest.html'))
     .pipe(gulp.dest('.'));
 });

@@ -1,5 +1,4 @@
-#= require three.min
-#= require roofpig/Layer
+#= require Layer
 
 describe "Layer", ->
   it "#shift", ->
