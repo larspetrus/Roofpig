@@ -17,7 +17,6 @@ var build_dir = 'local/build/';
 var rp_js_file = 'roofpig.js';
 var extras_file = '3extras.js';
 var release_file = 'roofpig_and_three.min.js';
-var libs = "./rails_project/app/assets/javascripts/";
 
 // ------------- BUILD -----
 
@@ -26,7 +25,7 @@ gulp.task('clean-build', function() {
 });
 
 gulp.task('build-rp', ['clean-build'], function() {
-  return gulp.src('./src/**/*.coffee')
+  return gulp.src('src/**/*.coffee')
     .pipe(cofcon('roofpig.coffee'))
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(replace('@@BUILT_WHEN@@', dateFormat(new Date(), "yyyy-mm-dd HH:MM")))
@@ -34,15 +33,15 @@ gulp.task('build-rp', ['clean-build'], function() {
     .pipe(gulp.dest(build_dir));
 });
 
-gulp.task('build-3extras', ['clean-build'], function() {
-  return gulp.src([libs+'Projector.js', libs+'CanvasRenderer.js'])
+gulp.task('build-3x', ['clean-build'], function() {
+  return gulp.src(['lib/Projector.js', 'lib/CanvasRenderer.js'])
     .pipe(uglify())
     .pipe(concat(extras_file))
     .pipe(gulp.dest(build_dir));
 });
 
-gulp.task('build', ['build-rp', 'build-3extras'], function() {
-  gulp.src([libs+'three.min.js', build_dir + extras_file, build_dir + rp_js_file])
+gulp.task('build', ['build-rp', 'build-3x'], function() {
+  gulp.src(['lib/three.min.js', build_dir + extras_file, build_dir + rp_js_file])
     .pipe(concat(release_file))
     .pipe(gulp.dest(build_dir));
 });
@@ -61,7 +60,7 @@ gulp.task('clean-js', function() {
 });
 
 gulp.task('compile-test', ['clean-js'], function() {
-  return gulp.src('./tests/**/*.coffee')
+  return gulp.src('tests/**/*.coffee')
 //    .pipe(sourcemaps.init())
     .pipe(coffee({bare: true}).on('error', gutil.log))
 //    .pipe(sourcemaps.write())
@@ -69,7 +68,7 @@ gulp.task('compile-test', ['clean-js'], function() {
 });
 
 gulp.task('compile-src', ['clean-js'], function() {
-  return gulp.src('./src/**/*.coffee')
+  return gulp.src('src/**/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(gulp.dest(test_js_dir + 'src'));
 });
@@ -80,8 +79,8 @@ gulp.task('test', ['compile-test', 'compile-src'], function(){
     test_section += '<script src="'+test_file+'"></script>\n';
   });
 
-  return gulp.src('./test_template.html')
+  return gulp.src('misc/rptest_template.html')
     .pipe(replace('@@TEST_FILES_GO_HERE@@', test_section))
-    .pipe(rename('rptests.html'))
+    .pipe(rename('rptest.html'))
     .pipe(gulp.dest('.'));
 });
