@@ -15,5 +15,11 @@
 /rails_project/log/*.log
 /rails_project/tmp
 
-#Idea project stuff
+# Node modules
+/node_modules
+
+#Local build/test files
+/local
+
+# Idea project stuff
 .idea
