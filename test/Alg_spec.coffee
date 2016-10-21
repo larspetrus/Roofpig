@@ -136,7 +136,7 @@ describe "Alg", ->
     expect(Alg.side_drift("F")).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
     expect(Alg.side_drift("M")).to.deep.equal(U: 'B', D: 'F', L: 'L', R: 'R', F: 'U', B: 'D')
 
-move_should_be = (move, layer, turns, is_rotation = false) ->
-  expect(move.layer, move.to_s()).to.equal(layer)
-  expect(move.turns, move.to_s()).to.equal(turns)
-  expect(move.is_rotation, move.to_s()).to.equal(is_rotation)
+  move_should_be = (move, layer, turns, is_rotation = false) ->
+    expect(move.layer, move.to_s()).to.equal(layer)
+    expect(move.turns, move.to_s()).to.equal(turns)
+    expect(move.is_rotation, move.to_s()).to.equal(is_rotation)

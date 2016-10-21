@@ -71,8 +71,8 @@ describe "Move", ->
     expect(new Move("U>>").count(false)).to.equal(0)
     expect(new Move("U>>").count(true)).to.equal(1)
 
-move_should_be = (move, layer, turns, is_rotation, turn_time) ->
-  expect(move.layer, move.to_s()).to.equal(layer)
-  expect(move.turns, move.to_s()).to.equal(turns)
-  expect(move.is_rotation, move.to_s()).to.equal(is_rotation)
-  expect(move.turn_time, move.to_s()).to.equal(turn_time)
+  move_should_be = (move, layer, turns, is_rotation, turn_time) ->
+    expect(move.layer, move.to_s()).to.equal(layer)
+    expect(move.turns, move.to_s()).to.equal(turns)
+    expect(move.is_rotation, move.to_s()).to.equal(is_rotation)
+    expect(move.turn_time, move.to_s()).to.equal(turn_time)
