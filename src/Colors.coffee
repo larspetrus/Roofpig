@@ -2,7 +2,7 @@
 #= require Cubexp
 #= require Tweaks
 
-class @Colors
+class Colors
 
   constructor: (side_drift, colored, solved, tweaks, colors = "") ->
     @colored = new Cubexp(this._undrift(colored, side_drift) || "*")

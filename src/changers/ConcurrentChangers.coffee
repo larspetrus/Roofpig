@@ -1,4 +1,4 @@
-class @ConcurrentChangers
+class ConcurrentChangers
   constructor: (@sub_changers) ->
 
   update: (now) ->

@@ -1,7 +1,7 @@
 #= require utils
 #= require Layer
 
-class @Camera
+class Camera
   DISTANCE = 25
 
   constructor: (hover, pov_code) ->

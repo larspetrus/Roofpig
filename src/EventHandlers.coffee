@@ -2,7 +2,7 @@
 #= require OneChange
 
 #This is all page wide data and functions.
-class @EventHandlers
+class EventHandlers
   @initialized = false
 
   @set_focus: (new_focus) ->

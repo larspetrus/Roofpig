@@ -1,7 +1,7 @@
-#= require utils
+#= require <utils.coffee>
 
 #Named in flawed analogy with Regexp
-class @Cubexp
+class Cubexp
 
   PIECE_NAMES = ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
 

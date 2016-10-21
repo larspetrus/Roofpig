@@ -1,4 +1,4 @@
-class @Dom
+class Dom
 
   constructor: (@cube_id, @div, renderer, make_alg_area, showalg) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", "Lucida Grande", sans-serif')

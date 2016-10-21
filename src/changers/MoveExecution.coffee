@@ -1,6 +1,6 @@
 #= require TimedChanger
 
-class @MoveExecution extends TimedChanger
+class MoveExecution extends TimedChanger
   constructor: (@pieces, @axis, @angle_to_turn, turn_time, animate) ->
     super(turn_time)
 

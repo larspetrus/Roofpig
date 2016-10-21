@@ -1,5 +1,5 @@
 
-class @Css
+class Css
   light = "#ededed"
   dark  = "#bbb"
   shadow= "#ffffff"

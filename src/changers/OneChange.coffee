@@ -1,4 +1,4 @@
-class @OneChange
+class OneChange
   constructor: (@action) ->
 
   update: (now) ->

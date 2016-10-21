@@ -10,7 +10,7 @@
 
 
 
-class @TimedChanger # Base class
+class TimedChanger # Base class
   constructor: (@duration) ->
     @start_time = (new Date()).getTime()
     @last_time = @start_time

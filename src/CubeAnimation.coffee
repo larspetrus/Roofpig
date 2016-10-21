@@ -6,7 +6,7 @@
 #= require Pieces3D
 #= require OneChange
 
-class @CubeAnimation
+class CubeAnimation
   @last_id = 0
   @by_id = {}
   @webgl_cubes = 0

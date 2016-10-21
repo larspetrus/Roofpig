@@ -1,4 +1,4 @@
-class @AlgAnimation
+class AlgAnimation
   constructor: (@alg) ->
     this._next_alg_move()
 

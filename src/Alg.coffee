@@ -2,7 +2,7 @@
 #= require CompositeMove
 #= require AlgAnimation
 
-class @Alg
+class Alg
   constructor: (@move_codes, @world3d, @algdisplay, @speed, @dom) ->
     @moves = []
     for code in @move_codes.split(' ')

@@ -1,7 +1,7 @@
 #= require Alg
 #= require Colors
 
-class @Config
+class Config
   constructor: (config_string) ->
     @raw_input = Config._parse(config_string)
     @base = this.base_config(@raw_input[BASE], config_string)

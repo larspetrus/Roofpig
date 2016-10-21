@@ -2,7 +2,7 @@
 #= require Layer
 #= require Cubexp
 
-class @Tweaks
+class Tweaks
 
   constructor: (expressions) ->
     @tweaks = {}

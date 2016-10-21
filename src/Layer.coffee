@@ -1,6 +1,6 @@
-#= require utils
+#= require <utils.coffee>
 
-class @Layer
+class Layer
   constructor: (@name, @normal, @cycle1, @cycle2, uncycled, @sticker_cycle) ->
     @positions = @cycle1.concat(@cycle2, uncycled)
 

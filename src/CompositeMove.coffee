@@ -1,7 +1,7 @@
 #= require Move
 #= require ConcurrentChangers
 
-class @CompositeMove
+class CompositeMove
   constructor: (move_codes, world3d, speed, @official_text = null) ->
     @moves = (new Move(code, world3d, speed) for code in move_codes.split('+'))
 

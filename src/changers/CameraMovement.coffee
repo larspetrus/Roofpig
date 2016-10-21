@@ -1,6 +1,6 @@
 #= require TimedChanger
 
-class @CameraMovement extends TimedChanger
+class CameraMovement extends TimedChanger
   constructor: (@camera, @axis, @angle_to_turn, turn_time, animate) ->
     super(turn_time)
 

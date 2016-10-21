@@ -2,7 +2,7 @@
 #= require CameraMovement
 #= require MoveExecution
 
-class @Move
+class Move
   constructor: (code, @world3d, @speed = 400) ->
     [@layer, @turns, @is_rotation] = Move._parse_code(code)
     @turn_time = @speed/2 * (1 + Math.abs(@turns))
