@@ -132,23 +132,18 @@ Properties in data-config override those "inherited" from the base. One `base` c
 To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a common .js file.
 
 ###3. Working with the code
-I wrote this in a Rails project, since that's how I usually do web programming. Maybe a little crazy to have the whole project in git, but it does **work**!
+I'll have beginner friendly instructions up as soon as I've tried them out, but with any NPM/Gulp skills, it should be easy to get working.
 
-####To run it
+####Building it
 
-- Clone the github repository to your computer.
-- Download and install [Rails](http://rubyonrails.org/).
-- cd to .../Roofpig/rails_project
-- Start Rails with `rails server`
+`gulp build` on the command line creates a `roofpig_and_three.min.js` file in `local/build/`
 
-You should get a demo page on [http://localhost:3000/](http://localhost:3000/)
+`misc/demo_local.html` is a demo page using the built file. `misc/demo.html` is the same demo using the official release file. 
 
 
-####To test it
+####Testing
 
-- Start test server with `rake konacha:serve`, then visit [http://localhost:3500/](http://localhost:3500/)
-- Or, run the tests on the command line `rake konacha:run`
-
+`gulp test` makes the `rptest.html` file for running the tests in a browser. `open rptest.html` is one way.
 
 ##4. What's a Roofpig anyway?
 [**"Most unexpected!"**](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
