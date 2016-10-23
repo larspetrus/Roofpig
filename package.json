@@ -26,6 +26,7 @@
     "chai": "3.5.0",
     "dateformat": "1.0.12",
     "del": "2.2.2",
+    "glob": "7.1.1",
     "gulp": "3.9.1",
     "gulp-coffee": "2.3.2",
     "gulp-coffeescript-concat": "0.1.3",
