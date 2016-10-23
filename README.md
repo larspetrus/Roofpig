@@ -132,7 +132,12 @@ Properties in data-config override those "inherited" from the base. One `base` c
 To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a common .js file.
 
 ###3. Working with the code
-I'll have beginner friendly instructions up as soon as I've tried them out, but with any NPM/Gulp skills, it should be easy to get working.
+1. Install Node and NPM - https://docs.npmjs.com/getting-started/installing-node
+2. Clone/download this Github repository, and `cd` to the resulting directory
+3. `npm install`
+4. `sudo npm install -g gulp`
+
+Now the gulp task below should work. Let me know if it doesn't.
 
 ####Building it
 
