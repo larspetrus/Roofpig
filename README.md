@@ -11,12 +11,19 @@ All you need is one file and a web server. Put [`roofpig_and_three.min.js`](http
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="roofpig_and_three.min.js"></script>
 ```
-
+#####Static creation
 To put a cube on the page, make a `div` with `class='roofpig'`. Configuration goes in a `data-config` attribute. Set height and width in CSS. **That's it!**
 
 ```html
 <div class=roofpig data-config="alg=R U R' U R U2 R'"></div>
 ```
+
+#####Dynamic creation
+To create a cube dynamically under a parent div, call `CubeAnimation.create_in_dom(parent_div, config, div_attributes)`, where `config` is the  `data-config` and `div_attributes` is what it sounds like.
+```html
+CubeAnimation.create_in_dom('#show-alg', "alg=R U R' U R U2 R'", "class='my-roofpig'");
+```
+
 
 ##2. data-config
 In `data-config` you set values to properties. The format is `property1=value|prop2=other value | prop99=you get the idea`.
@@ -52,7 +59,7 @@ In Roofpig, you normally define how the cube will look after the alg is done. By
 But first we must talk about Cubexps.
 
 #####Cubexps
-We often need to define sets of stickers. So I made a tiny language to simply describe logical groups of stickers.
+We often need to define sets of stickers. So I made a tiny language to simply describe groups of stickers.
 
 Cubexps do one thing: Define a set stickers, out of the 54 on a cube. That's it. They do nothing else.
 
