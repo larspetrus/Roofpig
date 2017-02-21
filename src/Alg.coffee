@@ -93,6 +93,28 @@ class Alg
     else
       new Move(code, @world3d, @speed)
 
+  unhand: ->
+    drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
+    colors = new Colors(drift, "", "")
+
+    result = []
+    for move in @moves
+      drifted_move = this.fwd_drift(move.as_brdflu(), drift)
+      result.push(drifted_move)
+      move.track_fwd_drift(drift)
+    result.join(' ').replace(/[ ]+/g, ' ').replace(/^ +| +$/g, '')
+
+  fwd_drift: (code, side_drift) ->
+    return code unless code
+
+    inverted_drift = {}
+    for own key, value of side_drift
+      inverted_drift[value] = key
+      inverted_drift[value.toLowerCase()] = key.toLowerCase()
+
+    ((inverted_drift[char] || char) for char in code.split('')).join('')
+
+
   @side_drift: (moves) ->
     new Alg(moves, null, "")._side_drift()
 

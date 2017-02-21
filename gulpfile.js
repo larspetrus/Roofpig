@@ -80,6 +80,8 @@ gulp.task('test', ['compile-test', 'compile-src'], function(){
     test_html += '<script src="'+test_file+'"></script>\n';
   });
 
+  console.log("\nTests generated. `open rptest.html` can run them!\n")
+
   return gulp.src('misc/rptest_template.html')
     .pipe(replace('@@TEST_FILES_GO_HERE@@', test_html))
     .pipe(rename('rptest.html'))

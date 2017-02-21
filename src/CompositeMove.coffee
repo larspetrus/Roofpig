@@ -20,6 +20,9 @@ class CompositeMove
   track_drift: (side_drift) ->
     move.track_drift(side_drift) for move in @moves
 
+  track_fwd_drift: (side_drift) ->
+    move.track_fwd_drift(side_drift) for move in @moves
+
   count: (count_rotations) ->
     return 1 if @official_text
 
@@ -30,6 +33,15 @@ class CompositeMove
 
   to_s: ->
     "(#{(@moves.map (move) -> move.to_s()).join(' ')})"
+
+  as_brdflu: ->
+    result = (@moves.map (move) -> move.as_brdflu()).join(' ').split(' ').sort().join(' ')
+
+    for side in ['B', 'R', 'D', 'F', 'L', 'U']
+      result = result.replace("#{side} #{side}'", "")
+      result = result.replace("#{side}2 #{side}2", "")
+    result.replace(/[ ]+/g, ' ').replace(/^ +| +$/g, '')
+
 
   display_text: (algdisplay) ->
     if @official_text

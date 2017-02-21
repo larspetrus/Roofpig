@@ -71,6 +71,14 @@ describe "Move", ->
     expect(new Move("U>>").count(false)).to.equal(0)
     expect(new Move("U>>").count(true)).to.equal(1)
 
+  it "#as_brdflu", ->
+    expect(new Move("U2").as_brdflu()).to.equal("U2")
+    expect(new Move("M").as_brdflu()).to.equal("L' R")
+    expect(new Move("M2").as_brdflu()).to.equal("L2 R2")
+    expect(new Move("M'").as_brdflu()).to.equal("L R'")
+    expect(new Move("E").as_brdflu()).to.equal("D' U")
+    expect(new Move("S").as_brdflu()).to.equal("B F'")
+
   move_should_be = (move, layer, turns, is_rotation, turn_time) ->
     expect(move.layer, move.to_s()).to.equal(layer)
     expect(move.turns, move.to_s()).to.equal(turns)

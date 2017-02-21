@@ -40,6 +40,26 @@ class Move
           if location == cycle[i]
             side_drift[side] = cycle[(i+@turns+4)% 4]
 
+  track_fwd_drift: (side_drift) ->
+    for cycle in [@layer.cycle1, @layer.cycle2] when cycle[0].length == 1 # center cycle
+      for side, location of side_drift
+        for i in [0..3]
+          if location == cycle[i]
+            side_drift[side] = cycle[(i-@turns+4)% 4]
+
+  as_brdflu: ->
+    return '' if @is_rotation
+
+    standard_turn_codes = { 1: '', 2: '2', '-1': "'", '-2': '2'}
+    t1 = standard_turn_codes[@turns]
+    t2 = standard_turn_codes[-@turns]
+
+    switch @layer
+      when Layer.M then "L#{t2} R#{t1}"
+      when Layer.E then "D#{t2} U#{t1}"
+      when Layer.S then "B#{t1} F#{t2}"
+      else this.to_s().replace('Z', '2')
+
   show_do: ->
     this._do(@turns, true)
 

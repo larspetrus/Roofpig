@@ -25,3 +25,13 @@ describe "CompositeMove", ->
   it "detects impossible move combinations", ->
     expect(-> new CompositeMove("L+F", {}, 200)).to.throw("Impossible Move combination 'L+F'")
     expect(-> new CompositeMove("U>+L", {}, 200)).to.not.throw(Error)
+
+  it "#as_brdflu", ->
+    expect(new CompositeMove("R+M'").as_brdflu()).to.equal("L")    # Rw
+    expect(new CompositeMove("R+M'+L'").as_brdflu()).to.equal("")  # x
+    expect(new CompositeMove("U'+E+D").as_brdflu()).to.equal("")  # y'
+    expect(new CompositeMove("U2+E2+D2").as_brdflu()).to.equal("")  # y2
+    expect(new CompositeMove("B'+S").as_brdflu()).to.equal("F'")  # Bw'
+    expect(new CompositeMove("B2+S2").as_brdflu()).to.equal("F2")  # Bw2
+    expect(new CompositeMove("R2+M2+L2").as_brdflu()).to.equal("")  # x
+    expect(new CompositeMove("U>+L").as_brdflu()).to.equal("L")

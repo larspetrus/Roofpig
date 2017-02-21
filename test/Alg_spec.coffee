@@ -136,6 +136,24 @@ describe "Alg", ->
     expect(Alg.side_drift("F")).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
     expect(Alg.side_drift("M")).to.deep.equal(U: 'B', D: 'F', L: 'L', R: 'R', F: 'U', B: 'D')
 
+  it "unhand", ->
+    expect(new Alg("F L2", null, "").unhand()).to.equal("F L2")
+    expect(new Alg("M", null, "").unhand()).to.equal("L' R")
+    expect(new Alg("Uw", null, "").unhand()).to.equal("D")
+    expect(new Alg("F Uw F", null, "").unhand()).to.equal("F D R")
+    expect(new Alg("F Uw M", null, "").unhand()).to.equal("F D F' B")
+    expect(new Alg("x2", null, "").unhand()).to.equal("")
+
+    expect(new Alg("F x F y F z F", null, "").unhand()).to.equal("F D R R")
+
+    # real algs from the wild
+    expect(new Alg("Rw U' L' D L U Rw' B'", null, "").unhand()).to.equal("L F' L' B L F L' B'")
+    expect(new Alg("x2 y' Lw' U x z' L U L2 U' z' U R U' R' U R' U' R U2 L U L' U2 L' U' L U' L' U L y L' U' L U R2 U' R' U' R U R U R U' R", null, "").unhand()).to.equal("B' L U B U2 B' D F D' F' D F' D' F D2 B D B' D2 B' D' B D' B' D B R' D' R D L2 D' L' D' L D L D L D' L")
+
+    # weird cases
+    expect(new Alg("F y L2", null, "").unhand()).to.equal("F F2")
+
+
   move_should_be = (move, layer, turns, is_rotation = false) ->
     expect(move.layer, move.to_s()).to.equal(layer)
     expect(move.turns, move.to_s()).to.equal(turns)
