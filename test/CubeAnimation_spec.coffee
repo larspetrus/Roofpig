@@ -1,5 +1,5 @@
 #= require three.min
-#= require jquery-1.11.3.min.js
+#= require jquery-1.12.4.min.js
 #= require Camera
 #= require CubeAnimation
 #= require EventHandlers
