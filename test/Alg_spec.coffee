@@ -39,7 +39,7 @@ describe "Alg", ->
     move_should_be(new Alg("F2").moves[0], Layer.F, 2)
 
     move_should_be(new Alg("R<").moves[0], Layer.R, -1, true)
-    
+
     compound = new Alg("L'+F>>").moves[0]
     expect(compound instanceof CompositeMove).to.be.true
     expect(compound.moves.length).to.equal(2)
@@ -55,13 +55,21 @@ describe "Alg", ->
     move_should_be(the_x.moves[1], Layer.M, -1)
     move_should_be(the_x.moves[2], Layer.L, -1)
 
-    wide_r = new Alg("Uw2").moves[0]
-    expect(wide_r instanceof CompositeMove).to.be.true
-    expect(wide_r.count()).to.equal(1)
-    expect(wide_r.to_s()).to.equal("(U2 EZ)")
-    expect(wide_r.moves.length).to.equal(2)
-    move_should_be(wide_r.moves[0], Layer.U, 2)
-    move_should_be(wide_r.moves[1], Layer.E, -2)
+    wide_u = new Alg("Uw2").moves[0]
+    expect(wide_u instanceof CompositeMove).to.be.true
+    expect(wide_u.count()).to.equal(1)
+    expect(wide_u.to_s()).to.equal("(U2 EZ)")
+    expect(wide_u.moves.length).to.equal(2)
+    move_should_be(wide_u.moves[0], Layer.U, 2)
+    move_should_be(wide_u.moves[1], Layer.E, -2)
+
+    wide_u2 = new Alg("u2").moves[0]
+    expect(wide_u2 instanceof CompositeMove).to.be.true
+    expect(wide_u2.count()).to.equal(1)
+    expect(wide_u2.to_s()).to.equal("(U2 EZ)")
+    expect(wide_u2.moves.length).to.equal(2)
+    move_should_be(wide_u2.moves[0], Layer.U, 2)
+    move_should_be(wide_u2.moves[1], Layer.E, -2)
 
   describe "#_count_text", ->
     world = null
@@ -149,6 +157,7 @@ describe "Alg", ->
     # real algs from the wild
     expect(new Alg("Rw U' L' D L U Rw' B'", null, "").unhand()).to.equal("L F' L' B L F L' B'")
     expect(new Alg("x2 y' Lw' U x z' L U L2 U' z' U R U' R' U R' U' R U2 L U L' U2 L' U' L U' L' U L y L' U' L U R2 U' R' U' R U R U R U' R", null, "").unhand()).to.equal("B' L U B U2 B' D F D' F' D F' D' F D2 B D B' D2 B' D' B D' B' D B R' D' R D L2 D' L' D' L D L D L D' L")
+    expect(new Alg("R' U R2 D r' U2 r D' R2 U' R", null, "").unhand()).to.equal("R' U R2 D L' B2 L D' R2 U' R")
 
     # weird cases
     expect(new Alg("F y L2", null, "").unhand()).to.equal("F F2")

@@ -79,19 +79,22 @@ class Alg
         when 'z' then "F#{t1}+S#{t1}+B#{t2}"
       new CompositeMove(moves, @world3d, @speed, code)
 
-    else if code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B']
-      [t1, t2] = turn_codes[Move.parse_turns(code.substring(2))]
-      moves = switch code[0]
-        when 'R' then "R#{t1}+M#{t2}"
-        when 'L' then "L#{t1}+M#{t1}"
-        when 'U' then "U#{t1}+E#{t2}"
-        when 'D' then "D#{t1}+E#{t1}"
-        when 'F' then "F#{t1}+S#{t1}"
-        when 'B' then "B#{t1}+S#{t2}"
-      new CompositeMove(moves, @world3d, @speed, code)
-
     else
-      new Move(code, @world3d, @speed)
+      last_char_index = 2 if (code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
+      last_char_index = 1 if (code[0] in ['u', 'd', 'l', 'r', 'f', 'b'])
+      if last_char_index
+        [t1, t2] = turn_codes[Move.parse_turns(code.substring(last_char_index))]
+        moves = switch code[0].toUpperCase()
+          when 'R' then "R#{t1}+M#{t2}"
+          when 'L' then "L#{t1}+M#{t1}"
+          when 'U' then "U#{t1}+E#{t2}"
+          when 'D' then "D#{t1}+E#{t1}"
+          when 'F' then "F#{t1}+S#{t1}"
+          when 'B' then "B#{t1}+S#{t2}"
+        new CompositeMove(moves, @world3d, @speed, code)
+
+      else
+        new Move(code, @world3d, @speed)
 
   unhand: ->
     drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
