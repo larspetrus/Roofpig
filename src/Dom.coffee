@@ -104,10 +104,10 @@ class Dom
   _show: (button, enabled) ->
     button.show()
     if enabled
-      button.removeAttr("disabled")
+      button.prop("disabled", false)
       button.addClass('roofpig-button-enabled')
     else
-      button.attr("disabled", "disabled")
+      button.prop("disabled", true)
       button.removeClass('roofpig-button-enabled')
 
   _make_button: (text, name) ->

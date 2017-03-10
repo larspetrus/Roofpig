@@ -5,10 +5,10 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 It should work on most [any modern browser](http://caniuse.com/canvas).
 
 ##1. Usage
-All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://raw.githubusercontent.com/larspetrus/Roofpig/master/roofpig_and_three.min.js) on your server. Include it, and jQuery 1.11.3 in your HTML:
+All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://raw.githubusercontent.com/larspetrus/Roofpig/master/roofpig_and_three.min.js) on your server. Include it, and jQuery 3.1.1 in your HTML:
 
 ```html
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="roofpig_and_three.min.js"></script>
 ```
 #####Static creation
@@ -42,7 +42,7 @@ Valid properties are: `alg`, `algdisplay`, `base`, `colored`, `colors`, `flags`,
 Define the animated algorithm like this: `alg=R F' x2 R D Lw'`. It handles standard cube notation and some more. If no alg is given, the playback buttons don't appear.
 
 #####Standard notation
-Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw**. Turns: **2, ', 2'**. You can also use **², Z, 1** and **3**.
+Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw, f, b, r, l, u, d**. Turns: **2, ', 2'**. You can also use **², Z, 1** and **3**.
 
 
 #####Rotation notation
