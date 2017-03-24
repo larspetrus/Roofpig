@@ -76,7 +76,7 @@ describe "Colors", ->
         expect(colors.to_draw('D', Layer.D).color).to.equal(colors.of(Layer.R))
 
   describe "side drift adjustments", ->
-    z_drift = {U: 'L', D: 'R', R: 'U', L: 'D', F: 'F', B: 'B'}
+    z_drift = {L: 'U', R: 'D', U: 'R', D: 'L', F: 'F', B: 'B'}
 
     it "side colors", ->
       plain_colors = new Colors(nodrift, "", "", "")

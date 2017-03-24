@@ -97,17 +97,17 @@ class Alg
         new Move(code, @world3d, @speed)
 
   unhand: ->
-    drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
+    drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'} # drift.U says what center is on U
     colors = new Colors(drift, "", "")
 
     result = []
     for move in @moves
-      drifted_move = this.fwd_drift(move.as_brdflu(), drift)
+      drifted_move = this.drift(move.as_brdflu(), drift)
       result.push(drifted_move)
-      move.track_fwd_drift(drift)
+      move.track_drift(drift)
     result.join(' ').replace(/[ ]+/g, ' ').replace(/^ +| +$/g, '')
 
-  fwd_drift: (code, side_drift) ->
+  drift: (code, side_drift) ->
     return code unless code
 
     inverted_drift = {}
@@ -123,10 +123,9 @@ class Alg
 
   _side_drift: ->
     drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
-    @next =  @moves.length
-    until this.at_start()
-      this.prev_move().track_drift(drift)
-    drift     # How to think about this: The 'real' U side is now on drift.U
+    for move in @moves
+      move.track_drift(drift)
+    drift
 
   _update_dom: (time = 'later') ->
     if @dom && @moves.length > 0

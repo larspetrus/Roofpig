@@ -42,7 +42,7 @@ Valid properties are: `alg`, `algdisplay`, `base`, `colored`, `colors`, `flags`,
 Define the animated algorithm like this: `alg=R F' x2 R D Lw'`. It handles standard cube notation and some more. If no alg is given, the playback buttons don't appear.
 
 #####Standard notation
-Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw, f, b, r, l, u, d**. Turns: **2, ', 2'**. You can also use **², Z, 1** and **3**.
+Roofpig supports (almost) all standard cube notation. Layer(s): **F, B, R, L, U, D. M, E, S. x, y, z. Fw, Bw, Rw, Lw, Uw, Dw, f, b, r, l, u, d**. Turns: **2, ', 2'**. You can also use **², Z, 1**, and **3**.
 
 
 #####Rotation notation

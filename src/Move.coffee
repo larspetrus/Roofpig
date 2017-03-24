@@ -38,13 +38,6 @@ class Move
       for side, location of side_drift
         for i in [0..3]
           if location == cycle[i]
-            side_drift[side] = cycle[(i+@turns+4)% 4]
-
-  track_fwd_drift: (side_drift) ->
-    for cycle in [@layer.cycle1, @layer.cycle2] when cycle[0].length == 1 # center cycle
-      for side, location of side_drift
-        for i in [0..3]
-          if location == cycle[i]
             side_drift[side] = cycle[(i-@turns+4)% 4]
 
   as_brdflu: ->

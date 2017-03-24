@@ -136,13 +136,13 @@ describe "Alg", ->
   it "#_side_drift", ->
     world = null
     expect(new Alg("F", world, "")._side_drift()).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
-    expect(new Alg("M", world, "")._side_drift()).to.deep.equal(U: 'B', D: 'F', L: 'L', R: 'R', F: 'U', B: 'D')
-    expect(new Alg("M z", world, "")._side_drift()).to.deep.equal(U: 'L', D: 'R', L: 'F', R: 'B', F: 'U', B: 'D')
+    expect(new Alg("M", world, "")._side_drift()).to.deep.equal(B: 'U', F: 'D', L: 'L', R: 'R', U: 'F', D: 'B')
+    expect(new Alg("M z", world, "")._side_drift()).to.deep.equal(L: 'U', R: 'D', F: 'L', B: 'R', U: 'F', D: 'B')
     expect(new Alg("MZ", world, "")._side_drift()).to.deep.equal(U: 'D', D: 'U', L: 'L', R: 'R', F: 'B', B: 'F')
 
   it "@side_drift", ->
     expect(Alg.side_drift("F")).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
-    expect(Alg.side_drift("M")).to.deep.equal(U: 'B', D: 'F', L: 'L', R: 'R', F: 'U', B: 'D')
+    expect(Alg.side_drift("M")).to.deep.equal(B: 'U', F: 'D', L: 'L', R: 'R', U: 'F', D: 'B')
 
   it "unhand", ->
     expect(new Alg("F L2", null, "").unhand()).to.equal("F L2")

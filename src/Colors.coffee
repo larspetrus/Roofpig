@@ -41,12 +41,12 @@ class Colors
   _undrift: (code, side_drift) ->
     return code unless code
 
-    reverse_drift = {}
+    uncased_drift = {}
     for own key, value of side_drift
-      reverse_drift[value] = key
-      reverse_drift[value.toLowerCase()] = key.toLowerCase()
+      uncased_drift[key] = value
+      uncased_drift[key.toLowerCase()] = value.toLowerCase()
 
-    (reverse_drift[char] || char for char in code.split('')).join('')
+    (uncased_drift[char] || char for char in code.split('')).join('')
 
   DEFAULT_COLORS = {g:'#0d0', b:'#07f', r:'red', o:'orange', y:'yellow', w:'#eee'}
   @_set_colors: (overrides, side_drift) ->
@@ -58,6 +58,10 @@ class Colors
       type = {s:'solved', i:'ignored', c:'cube'}[type] || type
       result[type] = DEFAULT_COLORS[color] || color
 
-    [r, d] = [result, side_drift]
+    inverted_drift = {}
+    for own key, value of side_drift
+      inverted_drift[value] = key
+
+    [r, d] = [result, inverted_drift]
     [r.U, r.D, r.R, r.L, r.F, r.B] = [r[d.U], r[d.D], r[d.R], r[d.L], r[d.F], r[d.B]]
     result

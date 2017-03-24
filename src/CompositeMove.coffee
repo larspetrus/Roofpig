@@ -20,9 +20,6 @@ class CompositeMove
   track_drift: (side_drift) ->
     move.track_drift(side_drift) for move in @moves
 
-  track_fwd_drift: (side_drift) ->
-    move.track_fwd_drift(side_drift) for move in @moves
-
   count: (count_rotations) ->
     return 1 if @official_text
 
