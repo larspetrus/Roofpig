@@ -71,6 +71,15 @@ describe "Move", ->
     expect(new Move("U>>").count(false)).to.equal(0)
     expect(new Move("U>>").count(true)).to.equal(1)
 
+  it "#track_pov", ->
+    map = Pov.start_map()
+
+    new Move("U").track_pov(map)
+    expect(map).to.deep.equal(Pov.start_map())
+
+    new Move("S").track_pov(map)
+    expect(map).to.deep.equal(B: "B", D: "L", F: "F", L: "U", R: "D", U: "R")
+
   it "#as_brdflu", ->
     expect(new Move("U2").as_brdflu()).to.equal("U2")
     expect(new Move("M").as_brdflu()).to.equal("L' R")

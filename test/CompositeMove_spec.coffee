@@ -35,3 +35,12 @@ describe "CompositeMove", ->
     expect(new CompositeMove("B2+S2").as_brdflu()).to.equal("F2")  # Bw2
     expect(new CompositeMove("R2+M2+L2").as_brdflu()).to.equal("")  # x
     expect(new CompositeMove("U>+L").as_brdflu()).to.equal("L")
+
+  it "#track_pov", ->
+    map = Pov.start_map()
+
+    new CompositeMove("U2+D").track_pov(map)
+    expect(map).to.deep.equal(Pov.start_map())
+
+    new CompositeMove("B'+S").track_pov(map)
+    expect(map).to.deep.equal(B: "B", D: "L", F: "F", L: "U", R: "D", U: "R")

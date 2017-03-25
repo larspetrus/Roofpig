@@ -97,35 +97,15 @@ class Alg
         new Move(code, @world3d, @speed)
 
   unhand: ->
-    drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'} # drift.U says what center is on U
-    colors = new Colors(drift, "", "")
-
+    pov = new Pov()
     result = []
     for move in @moves
-      drifted_move = this.drift(move.as_brdflu(), drift)
-      result.push(drifted_move)
-      move.track_drift(drift)
+      result.push(pov.hand_to_cube(move.as_brdflu()))
+      pov.track(move)
     result.join(' ').replace(/[ ]+/g, ' ').replace(/^ +| +$/g, '')
 
-  drift: (code, side_drift) ->
-    return code unless code
-
-    inverted_drift = {}
-    for own key, value of side_drift
-      inverted_drift[value] = key
-      inverted_drift[value.toLowerCase()] = key.toLowerCase()
-
-    ((inverted_drift[char] || char) for char in code.split('')).join('')
-
-
-  @side_drift: (moves) ->
-    new Alg(moves, null, "")._side_drift()
-
-  _side_drift: ->
-    drift = {U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B'}
-    for move in @moves
-      move.track_drift(drift)
-    drift
+  @pov_from: (move_codes) ->
+    new Pov(new Alg(move_codes).moves)
 
   _update_dom: (time = 'later') ->
     if @dom && @moves.length > 0

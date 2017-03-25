@@ -4,11 +4,11 @@
 
 class Colors
 
-  constructor: (side_drift, colored, solved, tweaks, colors = "") ->
-    @colored = new Cubexp(this._undrift(colored, side_drift) || "*")
-    @solved = new Cubexp(this._undrift(solved, side_drift))
-    @tweaks = new Tweaks(this._undrift(tweaks, side_drift))
-    @side_colors = Colors._set_colors(colors, side_drift)
+  constructor: (pov, colored, solved, tweaks, overrides = "") ->
+    @colored = new Cubexp(pov.cube_to_hand(colored) || "*")
+    @solved = new Cubexp(pov.cube_to_hand(solved))
+    @tweaks = new Tweaks(pov.cube_to_hand(tweaks))
+    @side_colors = Colors._set_colors(overrides, pov.hand_to_cube_map())
 
   to_draw: (piece_name, side) ->
     result = { hovers: false, color: this.of(side) }
@@ -38,30 +38,16 @@ class Colors
       throw new Error("Unknown sticker type '#{sticker_type}'")
     @side_colors[type]
 
-  _undrift: (code, side_drift) ->
-    return code unless code
-
-    uncased_drift = {}
-    for own key, value of side_drift
-      uncased_drift[key] = value
-      uncased_drift[key.toLowerCase()] = value.toLowerCase()
-
-    (uncased_drift[char] || char for char in code.split('')).join('')
-
   DEFAULT_COLORS = {g:'#0d0', b:'#07f', r:'red', o:'orange', y:'yellow', w:'#eee'}
-  @_set_colors: (overrides, side_drift) ->
-    dc = DEFAULT_COLORS
+  @_set_colors: (config_colors, h2c_map) ->
+    dc = DEFAULT_COLORS # shorten name for readability
     result = {R:dc.g, L:dc.b, F:dc.r, B:dc.o, U:dc.y, D:dc.w, solved:'#444', ignored:'#888', cube:'black'}
 
-    for override in overrides.split(' ')
+    for override in config_colors.split(' ')
       [type, color] = override.split(':')
       type = {s:'solved', i:'ignored', c:'cube'}[type] || type
       result[type] = DEFAULT_COLORS[color] || color
 
-    inverted_drift = {}
-    for own key, value of side_drift
-      inverted_drift[value] = key
-
-    [r, d] = [result, inverted_drift]
-    [r.U, r.D, r.R, r.L, r.F, r.B] = [r[d.U], r[d.D], r[d.R], r[d.L], r[d.F], r[d.B]]
+    r = result # shorten name for readability
+    [r.U, r.D, r.R, r.L, r.F, r.B] = [r[h2c_map.U], r[h2c_map.D], r[h2c_map.R], r[h2c_map.L], r[h2c_map.F], r[h2c_map.B]]
     result

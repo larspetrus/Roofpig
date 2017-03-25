@@ -133,16 +133,11 @@ describe "Alg", ->
       alg = new Alg("F R> U2+D' F<< LZ D+D>", world, new Config("algdisplay=rotations").algdisplay)
       expect(alg.display_text().future).to.equal("F R> U2+D' F<< L2 D+D>")
 
-  it "#_side_drift", ->
-    world = null
-    expect(new Alg("F", world, "")._side_drift()).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
-    expect(new Alg("M", world, "")._side_drift()).to.deep.equal(B: 'U', F: 'D', L: 'L', R: 'R', U: 'F', D: 'B')
-    expect(new Alg("M z", world, "")._side_drift()).to.deep.equal(L: 'U', R: 'D', F: 'L', B: 'R', U: 'F', D: 'B')
-    expect(new Alg("MZ", world, "")._side_drift()).to.deep.equal(U: 'D', D: 'U', L: 'L', R: 'R', F: 'B', B: 'F')
-
-  it "@side_drift", ->
-    expect(Alg.side_drift("F")).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
-    expect(Alg.side_drift("M")).to.deep.equal(B: 'U', F: 'D', L: 'L', R: 'R', U: 'F', D: 'B')
+  it "pov_from", ->
+    expect(Alg.pov_from("F").map).to.deep.equal(U: 'U', D: 'D', L: 'L', R: 'R', F: 'F', B: 'B')
+    expect(Alg.pov_from("M").map).to.deep.equal(B: 'U', F: 'D', L: 'L', R: 'R', U: 'F', D: 'B')
+    expect(Alg.pov_from("M z").map).to.deep.equal(L: 'U', R: 'D', F: 'L', B: 'R', U: 'F', D: 'B')
+    expect(Alg.pov_from("MZ").map).to.deep.equal(U: 'D', D: 'U', L: 'L', R: 'R', F: 'B', B: 'F')
 
   it "unhand", ->
     expect(new Alg("F L2", null, "").unhand()).to.equal("F L2")

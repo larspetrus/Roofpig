@@ -33,12 +33,12 @@ class Move
     unless @is_rotation
       this.undo()
 
-  track_drift: (side_drift) ->
+  track_pov: (pov_map) ->
     for cycle in [@layer.cycle1, @layer.cycle2] when cycle[0].length == 1 # center cycle
-      for side, location of side_drift
+      for side, location of pov_map
         for i in [0..3]
           if location == cycle[i]
-            side_drift[side] = cycle[(i-@turns+4)% 4]
+            pov_map[side] = cycle[(i-@turns+4)% 4]
 
   as_brdflu: ->
     return '' if @is_rotation

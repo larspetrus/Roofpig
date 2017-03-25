@@ -17,8 +17,8 @@ class CompositeMove
   show_do:  -> new ConcurrentChangers( (@moves.map (move) -> move.show_do()) )
   show_undo:-> new ConcurrentChangers( (@moves.map (move) -> move.show_undo()) )
 
-  track_drift: (side_drift) ->
-    move.track_drift(side_drift) for move in @moves
+  track_pov: (pov_map) ->
+    move.track_pov(pov_map) for move in @moves
 
   count: (count_rotations) ->
     return 1 if @official_text
