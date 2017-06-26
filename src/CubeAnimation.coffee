@@ -108,6 +108,12 @@ class CubeAnimation
     if @changers[category] then @changers[category].finish()
     @changers[category] = changer
 
+  user_move: (hand_code) ->
+    @pov ||= new Pov()
+    move = Alg.make_move(hand_code, @world3d, 200)
+    @pov.track(move)
+    this.add_changer('pieces', move.show_do())
+
   button_click: (name, shift) ->
     switch name
       when 'play'

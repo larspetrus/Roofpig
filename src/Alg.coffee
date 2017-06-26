@@ -7,7 +7,7 @@ class Alg
     @moves = []
     for code in @move_codes.split(' ')
       if code.length > 0
-        @moves.push(this._make_move(code))
+        @moves.push(Alg.make_move(code, @world3d, @speed))
     @next = 0
     @playing = false
     this._update_dom('first time')
@@ -67,9 +67,9 @@ class Alg
     { past: past.join(' '), future: future.join(' ')}
 
   turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
-  _make_move: (code) ->
+  @make_move: (code, world3d, speed) ->
     if code.indexOf('+') > -1
-      new CompositeMove(code, @world3d, @speed)
+      new CompositeMove(code, world3d, speed)
 
     else if code[0] in ['x', 'y', 'z']
       [t1, t2] = turn_codes[Move.parse_turns(code.substring(1))]
@@ -77,7 +77,7 @@ class Alg
         when 'x' then "R#{t1}+M#{t2}+L#{t2}"
         when 'y' then "U#{t1}+E#{t2}+D#{t2}"
         when 'z' then "F#{t1}+S#{t1}+B#{t2}"
-      new CompositeMove(moves, @world3d, @speed, code)
+      new CompositeMove(moves, world3d, speed, code)
 
     else
       last_char_index = 2 if (code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
@@ -91,11 +91,12 @@ class Alg
           when 'D' then "D#{t1}+E#{t1}"
           when 'F' then "F#{t1}+S#{t1}"
           when 'B' then "B#{t1}+S#{t2}"
-        new CompositeMove(moves, @world3d, @speed, code)
+        new CompositeMove(moves, world3d, speed, code)
 
       else
-        new Move(code, @world3d, @speed)
+        new Move(code, world3d, speed)
 
+  # Translate "hand" moves to BRDFLU
   unhand: ->
     pov = new Pov()
     result = []

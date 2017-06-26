@@ -77,19 +77,15 @@ class EventHandlers
 
     help_toggled = @dom.remove_help()
 
-    if e.ctrlKey || e.metaKey
+    if this.cube_key_moves(e)
       return true
 
-    [key, shift, alt] = [e.keyCode, e.shiftKey, e.altKey]
+    if e.ctrlKey || e.metaKey || e.altKey
+      return true
 
-    if key in turn_keys
-      turns = if shift then 3 else if alt then 2 else 1
-      this._move("#{side_for[key]}#{turns}")
+    [key, shift] = [e.keyCode, e.shiftKey]
 
-    else if alt
-      unhandled = true
-
-    else if key == key_tab
+    if key == key_tab
       new_focus = if shift then @focus().previous_cube() else @focus().next_cube()
       this.set_focus(new_focus)
 
@@ -99,17 +95,7 @@ class EventHandlers
     else if key in button_keys
       this._fake_click_down(this._button_for(key, shift))
 
-    else if key in rotate_keys
-      axis = switch key
-        when key_C, key_Z then 'up'
-        when key_A, key_D then 'dr'
-        when key_S, key_X then 'dl'
-      turns = switch key
-        when key_C, key_A, key_S then 1
-        when key_Z, key_D, key_X then -1
-      this._rotate(axis, turns)
-
-    else if key == key_question
+    else if key == key_questionmark
       @focus().dom.show_help() unless help_toggled
 
     else
@@ -119,6 +105,21 @@ class EventHandlers
       e.preventDefault()
       e.stopPropagation()
 
+  @cube_key_moves: (e) ->
+    return false unless e.keyCode in [key_J, key_K, key_L]
+
+    third_key = e.metaKey || e.ctrlKey
+    side = switch e.keyCode
+      when key_J
+        if third_key then 'z' else 'F'
+      when key_K
+        if third_key then 'y' else 'U'
+      when key_L
+        if third_key then 'x' else 'R'
+    turns = if e.shiftKey then 3 else if e.altKey then 2 else 1
+    @focus().user_move("#{side}#{turns}")
+
+    true
 
   @_button_for: (key, shift) ->
     switch key
@@ -149,13 +150,6 @@ class EventHandlers
       button.removeClass('roofpig-button-fake-active')
       button.click()
 
-  @_rotate: (axis_name, turns) ->
-    angle_to_turn = -Math.PI/2 * turns
-    @focus().add_changer('camera', new CameraMovement(@camera, @camera.user_dir[axis_name], angle_to_turn, 500, true))
-
-  @_move: (code) ->
-    @focus().add_changer('pieces', new Move(code, @focus().world3d, 200).show_do())
-
 
   # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
   key_tab = 9
@@ -175,13 +169,7 @@ class EventHandlers
   key_S = 83
   key_X = 88
   key_Z = 90
-  key_question = 191
+  key_questionmark = 191
 
   button_keys = [key_space, key_home, key_left_arrow, key_right_arrow]
-  rotate_keys = [key_C, key_Z, key_A, key_D, key_S, key_X]
-  turn_keys   = [key_J, key_K, key_L]
 
-  side_for = {}
-  side_for[key_J] = "U"
-  side_for[key_K] = "F"
-  side_for[key_L] = "R"

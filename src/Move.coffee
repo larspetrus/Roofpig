@@ -16,8 +16,8 @@ class Move
       throw new Error("Invalid Move code '#{code}'")
     [layer, turns, is_rotation]
 
-  @parse_turns: (tcode) ->
-    switch tcode
+  @parse_turns: (turn_code) ->
+    switch turn_code
       when "1",  "", ">" then  1
       when "2", "²",">>" then  2
       when "3", "'", "<" then -1
