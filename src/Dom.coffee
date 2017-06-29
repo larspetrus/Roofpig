@@ -11,13 +11,25 @@ class Dom
     @scale = @div.width()/400
     @hscale = Math.max(@scale, 15.0/40) # Minimum height -> readable text
 
+    if true
+      this.mouse_target('U', 0.50, 0.25)
+      this.mouse_target('F', 0.30, 0.62)
+      this.mouse_target('R', 0.70, 0.62)
+
     if make_alg_area
       this.add_alg_area(showalg)
+
+  mouse_target: (side, x_center, y_center) ->
+    width = @div.width()*0.30
+    left = @div.width()*x_center-width/2
+    top  = @div.width()*y_center-width/2
+    @div.append("<div class='mouse_target' data-side='#{side}' style='width:#{width}px; height:#{width}px; left:#{left}px; top:#{top}px;'></div>")
 
   has_focus: (has_it) ->
     color = if has_it then 'gray' else '#eee'
     cursor = if has_it then 'pointer' else 'default'
     @div.css(border: "2px solid #{color}", cursor: cursor)
+    if has_it then @div.addClass('focus') else @div.removeClass('focus')
 
   alg_changed: (is_playing, at_start, at_end, count_text, alg_texts) ->
     if is_playing

@@ -108,7 +108,8 @@ class CubeAnimation
     if @changers[category] then @changers[category].finish()
     @changers[category] = changer
 
-  user_move: (hand_code) ->
+  user_move: (side, turns) ->
+    hand_code = "#{side}#{turns}"
     @pov ||= new Pov()
     move = Alg.make_move(hand_code, @world3d, 200)
     @pov.track(move)

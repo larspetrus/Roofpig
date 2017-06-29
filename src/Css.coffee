@@ -100,5 +100,11 @@ class Css
   padding: 0 2px;
   background-color: #ddd;
 }
+.mouse_target {
+  position: absolute;
+}
+.focus .mouse_target {
+  cursor: move;
+}
 </style>
     """

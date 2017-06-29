@@ -36,15 +36,22 @@ class EventHandlers
 
     $(document).on('click', '.roofpig', (e) ->
       cube = CubeAnimation.by_id[$(this).data('cube-id')]
-      EventHandlers.set_focus(cube))
-
+      EventHandlers.set_focus(cube)
+    )
+    $(document).on('click', '.focus .mouse_target', (e) ->
+      EventHandlers.left_cube_click(e, $(this).data('side'))
+    )
+    $(document).on('contextmenu', '.focus .mouse_target', (e) ->
+      EventHandlers.right_cube_click(e, $(this).data('side'))
+    )
     $(document).on('click', '.roofpig button', (e) ->
       [button_name, cube_id] = $(this).attr('id').split('-')
-      CubeAnimation.by_id[cube_id].button_click(button_name, e.shiftKey))
-
+      CubeAnimation.by_id[cube_id].button_click(button_name, e.shiftKey)
+    )
     $(document).on('click', '.roofpig-help-button', (e) ->
       [_, cube_id] = $(this).attr('id').split('-')
-      CubeAnimation.by_id[cube_id].dom.show_help())
+      CubeAnimation.by_id[cube_id].dom.show_help()
+    )
 
     @initialized = true
 
@@ -69,8 +76,35 @@ class EventHandlers
         dy = 0
       @focus().add_changer('camera', new OneChange( => @camera.bend(dx, dy)))
 
+  @left_cube_click: (e, click_side) ->
+    this._handle_cube_click(e, click_side)
 
-  # ---- Keyboard Events ----
+  @right_cube_click: (e, click_side) ->
+    this._handle_cube_click(e, click_side)
+    e.preventDefault() # no context menu
+
+  @_handle_cube_click: (e, click_side) ->
+    third_key = e.metaKey || e.ctrlKey
+    opposite = false
+    side_map = switch e.which
+      when 1 # left button
+        opposite = third_key
+        if third_key then {F: 'B', U: 'D', R: 'L'} else {F: 'F', U: 'U', R: 'R'}
+      when 3 # right button
+        if third_key then {F: 'f', U: 'u', R: 'r'} else {F: 'z', U: 'y', R: 'x'}
+      when 2 # middle button
+        opposite = third_key
+        if third_key then {F: 'b', U: 'd', R: 'l'} else {F: 'f', U: 'u', R: 'r'}
+
+    @focus().user_move(side_map[click_side], this._turns(e, opposite))
+
+
+  @_turns: (e, opposite = false) ->
+    result = if e.shiftKey then -1 else if e.altKey then 2 else 1
+    result = -result if opposite
+    { 1: '', 2: '2', '-1': "'", '-2': 'Z'}[result]
+
+# ---- Keyboard Events ----
 
   @key_down: (e) ->
     return if @focus().is_null
