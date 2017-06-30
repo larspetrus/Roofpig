@@ -1,8 +1,8 @@
-#= require Alg
+#= require moves/Alg
 #= require Config
 #= require Dom
 #= require EventHandlers
-#= require Move
+#= require moves/Move
 #= require Pieces3D
 #= require OneChange
 

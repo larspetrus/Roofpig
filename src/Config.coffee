@@ -1,4 +1,4 @@
-#= require Alg
+#= require moves/Alg
 #= require Colors
 
 class Config

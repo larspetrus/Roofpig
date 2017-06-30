@@ -1,5 +1,5 @@
 #= require three.min
-#= require Alg
+#= require moves/Alg
 #= require Config
 
 describe "Alg", ->

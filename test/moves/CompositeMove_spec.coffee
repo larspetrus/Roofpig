@@ -1,7 +1,7 @@
 #= require three.min
 #= require Config
-#= require CompositeMove
-#= require Move
+#= require moves/CompositeMove
+#= require moves/Move
 
 describe "CompositeMove", ->
   it "works", ->
