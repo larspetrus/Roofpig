@@ -1,6 +1,7 @@
 #= require three.min
 #= require Colors
 #= require Layer
+#= require SingleMove
 
 
 describe "Colors", ->
@@ -77,25 +78,25 @@ describe "Colors", ->
   describe "side pov adjustments", ->
     it "side colors", ->
       plain_colors = new Colors(new Pov(), "", "", "")
-      pov_colors = new Colors(new Pov(new Move("S")), "", "", "")
+      pov_colors = new Colors(new Pov(new SingleMove("S")), "", "", "")
       expect(pov_colors.of('F')).to.equal(plain_colors.of('F'))
       expect(pov_colors.of('R')).to.equal(plain_colors.of('U'))
 
     it "colored", ->
-      colors = new Colors(new Pov(new Move("S")), "u", "", "")
+      colors = new Colors(new Pov(new SingleMove("S")), "u", "", "")
       expect(colors.to_draw('U', 'U')).to.deep.equal(color: colors.of('ignored'), hovers: false)
       expect(colors.to_draw('R', 'R')).to.deep.equal(color: colors.of('R'), hovers: true)
 
     it "solved", ->
-      colors = new Colors(new Pov(new Move("S")), "Ufr", "r", "")
+      colors = new Colors(new Pov(new SingleMove("S")), "Ufr", "r", "")
       expect(colors.to_draw('R', 'R')).to.deep.equal(color: colors.of('ignored'), hovers: false)
       expect(colors.to_draw('D', 'D')).to.deep.equal(color: colors.of('solved'), hovers: false)
 
     it "tweaks", ->
-      untweaked = new Colors(new Pov(new Move("S")), "", "", "")
+      untweaked = new Colors(new Pov(new SingleMove("S")), "", "", "")
       expect(untweaked.to_draw('RF', 'R'), 1).to.deep.equal(color: untweaked.of('R'), hovers: true)
       expect(untweaked.to_draw('LU', 'L'), 22).to.deep.equal(color: untweaked.of('L'), hovers: true)
 
-      tweaked = new Colors(new Pov(new Move("S")), "", "", "X:Uf RF:DL")
+      tweaked = new Colors(new Pov(new SingleMove("S")), "", "", "X:Uf RF:DL")
       expect(tweaked.to_draw('RF', 'R')).to.deep.equal(color: tweaked.of('R'), hovers: true, x_color: 'black')
       expect(tweaked.to_draw('LU', 'L')).to.deep.equal(color: tweaked.of('D'), hovers: true)

@@ -1,5 +1,4 @@
 #= require Move
-#= require CompositeMove
 #= require AlgAnimation
 
 class Alg
@@ -7,7 +6,7 @@ class Alg
     @moves = []
     for code in @move_codes.split(' ')
       if code.length > 0
-        @moves.push(Alg.make_move(code, @world3d, @speed))
+        @moves.push(Move.make(code, @world3d, @speed))
     @next = 0
     @playing = false
     this._update_dom('first time')
@@ -65,36 +64,6 @@ class Alg
       if text
         active.push(text)
     { past: past.join(' '), future: future.join(' ')}
-
-  turn_code_pairs = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
-  @make_move: (code, world3d, speed) ->
-    if code.indexOf('+') > -1
-      new CompositeMove(code, world3d, speed)
-
-    else if code[0] in ['x', 'y', 'z']
-      [t1, t2] = turn_code_pairs[Move.parse_turns(code.substring(1))]
-      moves = switch code[0]
-        when 'x' then "R#{t1}+M#{t2}+L#{t2}"
-        when 'y' then "U#{t1}+E#{t2}+D#{t2}"
-        when 'z' then "F#{t1}+S#{t1}+B#{t2}"
-      new CompositeMove(moves, world3d, speed, code)
-
-    else
-      last_char_index = 2 if (code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
-      last_char_index = 1 if (code[0] in ['u', 'd', 'l', 'r', 'f', 'b'])
-      if last_char_index
-        [t1, t2] = turn_code_pairs[Move.parse_turns(code.substring(last_char_index))]
-        moves = switch code[0].toUpperCase()
-          when 'R' then "R#{t1}+M#{t2}"
-          when 'L' then "L#{t1}+M#{t1}"
-          when 'U' then "U#{t1}+E#{t2}"
-          when 'D' then "D#{t1}+E#{t1}"
-          when 'F' then "F#{t1}+S#{t1}"
-          when 'B' then "B#{t1}+S#{t2}"
-        new CompositeMove(moves, world3d, speed, code)
-
-      else
-        new Move(code, world3d, speed)
 
   # Translate "hand" moves to BRDFLU
   unhand: ->

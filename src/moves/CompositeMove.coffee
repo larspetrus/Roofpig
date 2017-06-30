@@ -1,9 +1,9 @@
-#= require Move
+#= require SingleMove
 #= require ConcurrentChangers
 
 class CompositeMove
   constructor: (move_codes, world3d, speed, @official_text = null) ->
-    @moves = (new Move(code, world3d, speed) for code in move_codes.split('+'))
+    @moves = (new SingleMove(code, world3d, speed) for code in move_codes.split('+'))
 
     real_moves = (move for move in @moves when not move.is_rotation)
     for other_move in real_moves[1..]

@@ -1,13 +1,38 @@
-#= require Layer
-#= require CameraMovement
-#= require MoveExecution
+# Move utility functions
 
 class Move
-  constructor: (code, @world3d, @speed = 400) ->
-    [@layer, @turns, @is_rotation] = Move._parse_code(code)
-    @turn_time = @speed/2 * (1 + Math.abs(@turns))
 
-  @_parse_code: (code) ->
+  turn_code_pairs = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
+  @make: (code, world3d, speed) ->
+    if code.indexOf('+') > -1
+      new CompositeMove(code, world3d, speed)
+
+    else if code[0] in ['x', 'y', 'z']
+      [t1, t2] = turn_code_pairs[Move.parse_turns(code.substring(1))]
+      moves = switch code[0]
+        when 'x' then "R#{t1}+M#{t2}+L#{t2}"
+        when 'y' then "U#{t1}+E#{t2}+D#{t2}"
+        when 'z' then "F#{t1}+S#{t1}+B#{t2}"
+      new CompositeMove(moves, world3d, speed, code)
+
+    else
+      last_char_index = 2 if (code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
+      last_char_index = 1 if (code[0] in ['u', 'd', 'l', 'r', 'f', 'b'])
+      if last_char_index
+        [t1, t2] = turn_code_pairs[Move.parse_turns(code.substring(last_char_index))]
+        moves = switch code[0].toUpperCase()
+          when 'R' then "R#{t1}+M#{t2}"
+          when 'L' then "L#{t1}+M#{t1}"
+          when 'U' then "U#{t1}+E#{t2}"
+          when 'D' then "D#{t1}+E#{t1}"
+          when 'F' then "F#{t1}+S#{t1}"
+          when 'B' then "B#{t1}+S#{t2}"
+        new CompositeMove(moves, world3d, speed, code)
+
+      else
+        new SingleMove(code, world3d, speed)
+
+  @parse_code: (code) ->
     turns = Move.parse_turns(code.substring(1))
     is_rotation = code.substring(1) in [">", ">>", "<", "<<"]
     layer = Layer.by_name(code[0])
@@ -26,61 +51,7 @@ class Move
   @turn_code: (turns, rotation = false) ->
     { true: { 1: '>', 2: '>>', '-1': '<', '-2': '<<'}, false: { 1: '', 2: '2', '-1': "'", '-2': 'Z'}}[rotation][turns]
 
-  do: ->
-    this._do(@turns, false)
-
-  undo: ->
-    this._do(-@turns, false)
-
-  mix: ->
-    unless @is_rotation
-      this.undo()
-
-  track_pov: (pov_map) ->
-    for cycle in [@layer.cycle1, @layer.cycle2] when cycle[0].length == 1 # center cycle
-      for side, location of pov_map
-        for i in [0..3]
-          if location == cycle[i]
-            pov_map[side] = cycle[(i-@turns+4)% 4]
-
-  as_brdflu: ->
-    return '' if @is_rotation
-
-    standard_turn_codes = { 1: '', 2: '2', '-1': "'", '-2': '2'}
-    t1 = standard_turn_codes[@turns]
-    t2 = standard_turn_codes[-@turns]
-
-    switch @layer
-      when Layer.M then "L#{t2} R#{t1}"
-      when Layer.E then "D#{t2} U#{t1}"
-      when Layer.S then "B#{t1} F#{t2}"
-      else this.to_s().replace('Z', '2')
-
-  show_do: ->
-    this._do(@turns, true)
-
-  show_undo: ->
-    this._do( -@turns, true)
-
-  _do: (do_turns, animate) ->
-    if @is_rotation
-      new CameraMovement(@world3d.camera, @layer.normal, do_turns * Math.PI/2, @turn_time, animate)
-    else
-      @world3d.pieces.move(@layer, do_turns)
-      new MoveExecution(@world3d.pieces.on(@layer), @layer.normal, do_turns * -Math.PI/2, @turn_time, animate)
-
-  count: (count_rotations) ->
-    return 1 if count_rotations || not @is_rotation
-    0
-
-  to_s: ->
-    @layer.name + Move.turn_code(@turns, @is_rotation)
-
   @displayify: (move_text, algdisplay) ->
     result = move_text.replace('Z', algdisplay.Zcode)
     result = result.replace('2', '²') if algdisplay.fancy2s
     result
-
-  display_text: (algdisplay) ->
-    return Move.displayify(this.to_s(), algdisplay) if algdisplay.rotations || not @is_rotation
-    ''

@@ -110,7 +110,7 @@ class CubeAnimation
 
   user_move: (hand_code) ->
     @pov ||= new Pov()
-    move = Alg.make_move(hand_code, @world3d, 200)
+    move = Move.make(hand_code, @world3d, 200)
     @pov.track(move)
     this.add_changer('pieces', move.show_do())
 
