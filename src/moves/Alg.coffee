@@ -1,5 +1,5 @@
-#= require moves/Move
-#= require moves/CompositeMove
+#= require Move
+#= require CompositeMove
 #= require AlgAnimation
 
 class Alg

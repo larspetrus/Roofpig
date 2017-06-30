@@ -1,4 +1,4 @@
-#= require moves/Move
+#= require Move
 #= require ConcurrentChangers
 
 class CompositeMove

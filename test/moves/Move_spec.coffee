@@ -1,5 +1,5 @@
 #= require three.min
-#= require moves/Move
+#= require Move
 
 describe "Move", ->
   describe "#_parse_code", ->
