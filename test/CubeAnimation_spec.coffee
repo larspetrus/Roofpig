@@ -11,6 +11,10 @@ mock_div = {
   append: ->
   attr: ->
   remove: ->
+  addClass: ->
+  removeClass: ->
+  html: (msg) ->
+    throw new Error(msg)
 }
 
 new_cube = -> new CubeAnimation(mock_div)

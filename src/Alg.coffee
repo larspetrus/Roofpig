@@ -66,13 +66,13 @@ class Alg
         active.push(text)
     { past: past.join(' '), future: future.join(' ')}
 
-  turn_codes = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
+  turn_code_pairs = {'-2': ['Z', '2'], '-1': ["'", ''], 1: ['', "'"], 2: ['2', 'Z']}
   @make_move: (code, world3d, speed) ->
     if code.indexOf('+') > -1
       new CompositeMove(code, world3d, speed)
 
     else if code[0] in ['x', 'y', 'z']
-      [t1, t2] = turn_codes[Move.parse_turns(code.substring(1))]
+      [t1, t2] = turn_code_pairs[Move.parse_turns(code.substring(1))]
       moves = switch code[0]
         when 'x' then "R#{t1}+M#{t2}+L#{t2}"
         when 'y' then "U#{t1}+E#{t2}+D#{t2}"
@@ -83,7 +83,7 @@ class Alg
       last_char_index = 2 if (code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
       last_char_index = 1 if (code[0] in ['u', 'd', 'l', 'r', 'f', 'b'])
       if last_char_index
-        [t1, t2] = turn_codes[Move.parse_turns(code.substring(last_char_index))]
+        [t1, t2] = turn_code_pairs[Move.parse_turns(code.substring(last_char_index))]
         moves = switch code[0].toUpperCase()
           when 'R' then "R#{t1}+M#{t2}"
           when 'L' then "L#{t1}+M#{t1}"

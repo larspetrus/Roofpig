@@ -23,6 +23,9 @@ class Move
       when "3", "'", "<" then -1
       when "Z","2'","<<" then -2
 
+  @turn_code: (turns, rotation = false) ->
+    { true: { 1: '>', 2: '>>', '-1': '<', '-2': '<<'}, false: { 1: '', 2: '2', '-1': "'", '-2': 'Z'}}[rotation][turns]
+
   do: ->
     this._do(@turns, false)
 
@@ -71,8 +74,7 @@ class Move
     0
 
   to_s: ->
-    turn_codes = { true: { 1: '>', 2: '>>', '-1': '<', '-2': '<<'}, false: { 1: '', 2: '2', '-1': "'", '-2': 'Z'}}
-    "#{@layer.name}#{turn_codes[@is_rotation][@turns]}"
+    @layer.name + Move.turn_code(@turns, @is_rotation)
 
   @displayify: (move_text, algdisplay) ->
     result = move_text.replace('Z', algdisplay.Zcode)

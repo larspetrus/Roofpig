@@ -26,6 +26,8 @@ class EventHandlers
   @initialize: ->
     return if @initialized
 
+    @down_keys = {}
+
     $('body').keydown (e) -> EventHandlers.key_down(e)
     $('body').keyup   (e) -> EventHandlers.key_up(e)
 
@@ -107,6 +109,8 @@ class EventHandlers
 # ---- Keyboard Events ----
 
   @key_down: (e) ->
+    @down_keys[e.keyCode] = true
+
     return if @focus().is_null
 
     help_toggled = @dom.remove_help()
@@ -139,21 +143,49 @@ class EventHandlers
       e.preventDefault()
       e.stopPropagation()
 
-  @cube_key_moves: (e) ->
-    return false unless e.keyCode in [key_J, key_K, key_L]
 
-    third_key = e.metaKey || e.ctrlKey
-    side = switch e.keyCode
-      when key_J
-        if third_key then 'z' else 'F'
-      when key_K
-        if third_key then 'y' else 'U'
-      when key_L
-        if third_key then 'x' else 'R'
-    turns = if e.shiftKey then 3 else if e.altKey then 2 else 1
-    @focus().user_move("#{side}#{turns}")
+  @cube_key_moves: (e) ->
+    number_key = Math.max(key_num.indexOf(e.keyCode), key_numpad.indexOf(e.keyCode))
+    return false unless number_key > 0
+
+    side = switch number_key
+      when 1, 4, 7 then "F"
+      when 2, 5, 8 then "U"
+      when 3, 6, 9 then "R"
+
+    turns = switch number_key
+      when 1, 2, 3 then -1
+      when 4, 5, 6 then 1
+      when 7, 8, 9 then 2
+
+    turn_code      = Move.turn_code(turns)
+    anti_turn_code = Move.turn_code(-turns)
+
+    opposite = @down_keys[key_Z]
+    middle   = @down_keys[key_X]
+    the_side = @down_keys[key_C] || (!opposite && !middle)
+
+    moves = []
+
+    if the_side
+      moves.push("#{side}#{turn_code}")
+
+    if middle
+      switch side
+        when 'F' then moves.push("S"+turn_code)
+        when 'U' then moves.push("E"+anti_turn_code)
+        when 'R' then moves.push("M"+anti_turn_code)
+
+    if opposite
+      switch side
+        when 'F' then moves.push("B"+anti_turn_code)
+        when 'U' then moves.push("D"+anti_turn_code)
+        when 'R' then moves.push("L"+anti_turn_code)
+
+    @focus().user_move(moves.join('+'))
 
     true
+
 
   @_button_for: (key, shift) ->
     switch key
@@ -167,6 +199,8 @@ class EventHandlers
         @dom.play_or_pause
 
   @key_up: (e) ->
+    @down_keys[e.keyCode] = false
+
     button_key = e.keyCode in button_keys
     if button_key
       if @down_button
@@ -204,6 +238,9 @@ class EventHandlers
   key_X = 88
   key_Z = 90
   key_questionmark = 191
+
+  key_num = [48, 49, 50, 51, 52 ,53 ,54 ,55, 56, 57]
+  key_numpad = [96, 97, 98, 99, 100, 101, 102, 103, 104, 105]
 
   button_keys = [key_space, key_home, key_left_arrow, key_right_arrow]
 

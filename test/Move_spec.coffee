@@ -35,6 +35,18 @@ describe "Move", ->
       expect(Move._parse_code("S>")).to.have.members([Layer.S, 1, true])
       expect(Move._parse_code("E>")).to.have.members([Layer.E, 1, true])
 
+  describe "#turn_code", ->
+    it "returns correct code", ->
+      expect(Move.turn_code(1)).to.equal("")
+      expect(Move.turn_code(2)).to.equal("2")
+      expect(Move.turn_code(-1)).to.equal("'")
+      expect(Move.turn_code(-2)).to.equal("Z")
+
+      expect(Move.turn_code(1, true)).to.equal(">")
+      expect(Move.turn_code(2, true)).to.equal(">>")
+      expect(Move.turn_code(-1, true)).to.equal("<")
+      expect(Move.turn_code(-2, true)).to.equal("<<")
+
   describe "#constructor", ->
     it "sets the right attributes", ->
       time = 200
