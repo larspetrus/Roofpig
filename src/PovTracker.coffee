@@ -2,13 +2,13 @@
 #
 # Seen from the cube, U is always up, and there are only six kinds of moves: B, R, D, F, L, and U.
 # Seen from the hands of a human, more moves exist (x, y, x, M, E, S, etc), and after a z2 move,
-# U seen from the cube is D seen from the hands.
+# U as seen from the cube is D as seen from the hands.
 #
 # This class keeps track of and maps between these POVs
 
-class Pov
+class PovTracker
   constructor: (moves) ->
-    @map = Pov.start_map()
+    @map = PovTracker.start_map()
     this.track(moves) if moves
 
   @start_map: ->

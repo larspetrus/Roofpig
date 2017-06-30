@@ -67,7 +67,7 @@ class Alg
 
   # Translate "hand" moves to BRDFLU
   unhand: ->
-    pov = new Pov()
+    pov = new PovTracker()
     result = []
     for move in @moves
       result.push(pov.hand_to_cube(move.as_brdflu()))
@@ -75,7 +75,7 @@ class Alg
     result.join(' ').replace(/[ ]+/g, ' ').replace(/^ +| +$/g, '')
 
   @pov_from: (move_codes) ->
-    new Pov(new Alg(move_codes).moves)
+    new PovTracker(new Alg(move_codes).moves)
 
   _update_dom: (time = 'later') ->
     if @dom && @moves.length > 0

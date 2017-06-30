@@ -40,10 +40,10 @@ describe "SingleMove", ->
     expect(new SingleMove("U>>").count(true)).to.equal(1)
 
   it "#track_pov", ->
-    map = Pov.start_map()
+    map = PovTracker.start_map()
 
     new SingleMove("U").track_pov(map)
-    expect(map).to.deep.equal(Pov.start_map())
+    expect(map).to.deep.equal(PovTracker.start_map())
 
     new SingleMove("S").track_pov(map)
     expect(map).to.deep.equal(B: "B", D: "L", F: "F", L: "U", R: "D", U: "R")
