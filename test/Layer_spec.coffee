@@ -1,6 +1,8 @@
 #= require Layer
 
 describe "Layer", ->
+
+  # shift() is tested a lot more in Pieces3D_spec
   it "#shift", ->
     expect(Layer.F.shift('L', 1)).to.equal('U')
     expect(Layer.F.shift('L', 2)).to.equal('R')

@@ -27,14 +27,30 @@ describe "CubeAnimation", ->
     CubeAnimation.by_id = []
     EventHandlers.initialize
 
-  it "gives the keyboard focus to the first CubeAnimation created", ->
+  it "handles creating and removing instances", ->
     expect(EventHandlers.focus().is_null).to.equal(true)
+    expect(CubeAnimation.count()).to.equal(0)
 
     c1 = new_cube()
     expect(EventHandlers.focus()).to.equal(c1)
+    expect(CubeAnimation.count()).to.equal(1)
+    expect(c1.next_cube()).to.equal(c1)
+    expect(c1.previous_cube()).to.equal(c1)
 
     c2 = new_cube()
     expect(EventHandlers.focus()).to.equal(c1)
+    expect(CubeAnimation.count()).to.equal(2)
+    expect(c1.next_cube()).to.equal(c2)
+    expect(c2.next_cube()).to.equal(c1)
+    expect(c1.previous_cube()).to.equal(c2)
+    expect(c2.previous_cube()).to.equal(c1)
+
+    c1.remove()
+    expect(EventHandlers.focus()).to.equal(c2)
+    expect(CubeAnimation.count()).to.equal(1)
+    expect(c2.next_cube()).to.equal(c2)
+    expect(c2.previous_cube()).to.equal(c2)
+
 
   it "@id, #next_cube(), #previous_cube()", ->
     [c1, c2, c3] = [new_cube(), new_cube(), new_cube()]

@@ -1,16 +1,22 @@
 #= require Layer
 #= require utils
 
-# Pieces3D.UFR, Pieces3D.DL, Pieces3D.B etc are the 3D models for those pieces
+# pieces.UFR is the 3D model for the UFR piece
+#
+# Keeping track of where the 3D pieces are is hard, so we track them in parallel:
+# pieces.at.UFR is the 3D piece currently at the UFR position
+# piece.UFR.sticker_locations == 'LFU' means the U sticker is on the L side, the F sticker on F, and R sticker on U
+#
 class Pieces3D
   TINY = 0.0030
+  NAMES = ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
 
   constructor: (scene, hover, colors, @use_canvas) ->
     @at = {}
     @cube_surfaces = if @use_canvas then [true] else [true, false]
     @sticker_size  = if @use_canvas then 0.84 else 0.90
     @hover_size    = if @use_canvas then 0.91 else 0.97
-    this.make_stickers(scene, hover, colors)
+    this.make_surfaces(scene, hover, colors)
 
   on: (layer) ->
     (@at[position] for position in layer.positions)
@@ -20,11 +26,22 @@ class Pieces3D
     this._track_stickers(layer, positive_turns)
     this._track_pieces(positive_turns, layer.cycle1, layer.cycle2)
 
+  solved: ->
+    side_for = {}
+    for center in ['B', 'R', 'D', 'F', 'L', 'U']
+      side_for[@at[center].name] = center
+
+    for position_name in NAMES
+      for sticker_color, index in @at[position_name].name.split('')
+        unless side_for[sticker_color] == @at[position_name].sticker_locations[index]
+          return false
+    true
+
   state: ->
-    result = ""
-    for piece in ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
-      result += this[piece].sticker_locations.join('') + ' '
-    result
+    result = []
+    for name in NAMES
+      result.push "#{name}: #{@at[name].name} -> #{@at[name].sticker_locations.join('')}"
+    result.join("\n")
 
   _track_stickers: (layer, turns) ->
     for piece in this.on(layer)
@@ -40,7 +57,7 @@ class Pieces3D
 
   # ========= The 3D Factory =========
 
-  make_stickers: (scene, hover, colors) ->
+  make_surfaces: (scene, hover, colors) ->
     slice = { normal: v3(0.0, 0.0, 0.0), name: '-' }
 
     for x_side in [Layer.R, slice, Layer.L]

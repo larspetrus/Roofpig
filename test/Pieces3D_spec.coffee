@@ -9,8 +9,14 @@ mock_colors = {
   of: ->
     'black'
 }
+
+make_moves = (pieces, moves) ->
+  for move in moves.split(' ')
+    [layer, turns, is_rotation] = Move.parse_code(move)
+    pieces.move(layer, turns)
+
 describe "Pieces3D", ->
-  it ".make_stickers() creates Pieces3D.UBL, Pieces3D.UL, Pieces3D.F etc", ->
+  it "constructor creates Pieces3D.UBL, Pieces3D.UL, Pieces3D.F etc", ->
     pieces = new Pieces3D(mock_scene, 1, mock_colors)
 
     for piece in [pieces.UBL, pieces.UL, pieces.U]
@@ -19,53 +25,119 @@ describe "Pieces3D", ->
     for piece in [pieces.BLU, pieces.WTF, pieces.LU]
       expect(piece).to.be.undefined
 
-  describe "keeps track of pieces and stickers", ->
-    it "for regular moves", ->
+  describe "#move tracks pieces and stickers", ->
+    it "B move", ->
       pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      pieces.move(Layer.B, 1)
 
-      expect(pieces.at.UFR.name).to.equal('UFR')
-      expect(pieces.at.DR.name).to.equal('DR')
-      expect(pieces.UFR.sticker_locations.join('')).to.equal('UFR')
-      expect(pieces.DR.sticker_locations.join('')).to.equal('DR')
+      expect(pieces.at.UB.name).to.equal('BR')
+      expect(pieces.BR.sticker_locations.join('')).to.equal('BU')
+      expect(pieces.UB.sticker_locations.join('')).to.equal('LB')
 
+    it "R move", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
       pieces.move(Layer.R, 1)
 
-      expect(pieces.at.UFR.name).to.equal('DFR') #The DFR piece is now in the UFR position
       expect(pieces.at.DR.name).to.equal('BR')
-      expect(pieces.DFR.sticker_locations.join('')).to.equal('FUR') # The D sticker of the DFR piece is on the F side. F is on U. R is on R.
       expect(pieces.BR.sticker_locations.join('')).to.equal('DR')
+      expect(pieces.DR.sticker_locations.join('')).to.equal('FR')
 
-      pieces.move(Layer.U, 2)
-
-      expect(pieces.at.UFR.name).to.equal('UBL')
-      expect(pieces.at.DR.name).to.equal('BR')
-      expect(pieces.UBL.sticker_locations.join('')).to.equal('UFR')
-
-    it "for slice moves", ->
+    it "D move", ->
       pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      pieces.move(Layer.D, 1)
 
+      expect(pieces.at.DF.name).to.equal('DL')
+      expect(pieces.DL.sticker_locations.join('')).to.equal('DF')
+      expect(pieces.DF.sticker_locations.join('')).to.equal('DR')
+
+    it "F move", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      pieces.move(Layer.F, 1)
+
+      expect(pieces.at.FL.name).to.equal('DF')
+      expect(pieces.DF.sticker_locations.join('')).to.equal('LF')
+      expect(pieces.FL.sticker_locations.join('')).to.equal('FU')
+
+    it "L move", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      pieces.move(Layer.L, 1)
+
+      expect(pieces.at.DL.name).to.equal('FL')
+      expect(pieces.FL.sticker_locations.join('')).to.equal('DL')
+      expect(pieces.DL.sticker_locations.join('')).to.equal('BL')
+
+    it "U move", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      pieces.move(Layer.U, 1)
+
+      expect(pieces.at.UF.name).to.equal('UR')
+      expect(pieces.UR.sticker_locations.join('')).to.equal('UF')
+      expect(pieces.UF.sticker_locations.join('')).to.equal('UL')
+
+    it "M move", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
       pieces.move(Layer.M, 1)
 
       expect(pieces.at.UF.name).to.equal('UB')
-      expect(pieces.at.U.name).to.equal('B')
       expect(pieces.UB.sticker_locations.join('')).to.equal('FU')
-      expect(pieces.B.sticker_locations.join('')).to.equal('U')
+      expect(pieces.UF.sticker_locations.join('')).to.equal('FD')
 
-      pieces.move(Layer.E, 2)
+    it "E move", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      pieces.move(Layer.E, 1)
 
-      expect(pieces.at.FR.name).to.equal('BL')
-      expect(pieces.at.F.name).to.equal('D')
-      expect(pieces.BL.sticker_locations.join('')).to.equal('FR')
-      expect(pieces.U.sticker_locations.join('')).to.equal('B')
+      expect(pieces.at.FR.name).to.equal('FL')
+      expect(pieces.FL.sticker_locations.join('')).to.equal('RF')
+      expect(pieces.FR.sticker_locations.join('')).to.equal('RB')
 
-      expect(pieces.at.UFR.name).to.equal('UFR')
+    it "S move", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      pieces.move(Layer.S, 1)
 
-  it "#solved", ->
-    solved = 'B BL BR D DB DBL DBR DF DFL DFR DL DR F FL FR L R U UB UBL UBR UF UFL UFR UL UR '
+      expect(pieces.at.UL.name).to.equal('DL')
+      expect(pieces.DL.sticker_locations.join('')).to.equal('LU')
+      expect(pieces.UL.sticker_locations.join('')).to.equal('RU')
 
-    pieces = new Pieces3D(mock_scene, 1, mock_colors)
-    expect(pieces.state()).to.equal(solved)
+    it "many random moves", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
 
-    pieces.move(Layer.R, 2)
-    pieces.move(Layer.R, -2)
-    expect(pieces.state()).to.equal(solved)
+      make_moves(pieces, "M' B' U R' S2 M2 L D F E' R2 D2 B2 R L2 E2 B U2 D' F' S F2 L' U'")
+
+      # check that the sticker tracking matches the piece tracking
+      for name in ['B','BL','BR','D','DB','DBL','DBR','DF','DFL','DFR','DL','DR','F','FL','FR','L','R','U','UB','UBL','UBR','UF','UFL','UFR','UL','UR']
+        expect(name.split('').sort().join('')).to.equal(pieces.at[name].sticker_locations.sort().join(''))
+
+
+  describe "#solved", ->
+    it "simple cases", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      expect(pieces.solved()).to.equal(true)
+
+      pieces.move(Layer.R, 2)
+      expect(pieces.solved()).to.equal(false)
+
+      pieces.move(Layer.R, -2)
+      expect(pieces.solved()).to.equal(true)
+
+
+    it "works in different orientation", ->
+      pieces = new Pieces3D(mock_scene, 1, mock_colors)
+      expect(pieces.solved(), 1).to.equal(true)
+
+      pieces.move(Layer.F, 1)
+      expect(pieces.solved(), 2).to.equal(false)
+      pieces.move(Layer.S, 1)
+      expect(pieces.solved(), 3).to.equal(false)
+      pieces.move(Layer.B, 3)
+      expect(pieces.solved(), 4).to.equal(true)
+
+      make_moves(pieces, "F S B'")
+      expect(pieces.solved(), 5).to.equal(true)
+
+      make_moves(pieces, "F S B'")
+      expect(pieces.solved(), 6).to.equal(true)
+
+      make_moves(pieces, "R M' L'")
+      expect(pieces.solved(), 7).to.equal(true)
+
+

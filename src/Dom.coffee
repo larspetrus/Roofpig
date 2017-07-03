@@ -1,6 +1,6 @@
 class Dom
 
-  constructor: (@cube_id, @div, renderer, make_alg_area, showalg) ->
+  constructor: (@cube_id, @div, renderer, make_alg_area, showalg, user_controlled) ->
     @div.css(position:'relative', 'font-family':'"Lucida Sans Unicode", "Lucida Grande", sans-serif')
     this.has_focus(false)
     @div.attr('data-cube-id', @cube_id)
@@ -11,7 +11,7 @@ class Dom
     @scale = @div.width()/400
     @hscale = Math.max(@scale, 15.0/40) # Minimum height -> readable text
 
-    if true
+    if user_controlled
       this.mouse_target('U', 0.50, 0.25)
       this.mouse_target('F', 0.30, 0.62)
       this.mouse_target('R', 0.70, 0.62)

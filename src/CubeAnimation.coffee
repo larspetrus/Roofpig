@@ -29,6 +29,9 @@ class CubeAnimation
     new_pig = $("<div #{div_attributes} data-config=\"#{config}\"></div>").appendTo($(parent_selector))
     new CubeAnimation(new_pig)
 
+  @count: ->
+    Object.keys(this.by_id).length
+
   next_cube: ->
     ids = Object.keys(CubeAnimation.by_id)
     next_id = ids[(ids.indexOf(@id.toString()) + 1) % ids.length]
@@ -41,7 +44,7 @@ class CubeAnimation
 
   constructor: (roofpig_div) ->
     unless CubeAnimation.canvas_browser
-      roofpig_div.html("Your browser does not support <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>WebGL</a>.<p/> Find out how to get it <a href='http://get.webgl.org/'>here</a>.")
+      roofpig_div.html("This browser does not support <a href='http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation'>WebGL</a>.<p/> Find out how to get it <a href='http://get.webgl.org/'>here</a>.")
       roofpig_div.css(background: '#f66')
       return
 
@@ -58,7 +61,7 @@ class CubeAnimation
         CubeAnimation.webgl_cubes += 1
         @renderer = new THREE.WebGLRenderer(antialias: true, alpha: true)
 
-      @dom = new Dom(@id, roofpig_div, @renderer, @config.alg != "", @config.flag('showalg'))
+      @dom = new Dom(@id, roofpig_div, @renderer, this.has_alg(), @config.flag('showalg'), this.user_controlled())
       @scene = new THREE.Scene()
       @world3d =
         camera: new Camera(@config.hover, @config.pov),
@@ -69,7 +72,7 @@ class CubeAnimation
       if (@config.setup) then new Alg(@config.setup, @world3d).to_end()
       @alg.mix() unless @config.flag('startsolved')
 
-      if this.cube_count() == 1
+      if CubeAnimation.count() == 1
         EventHandlers.set_focus(this)
 
       @changers = {}
@@ -80,15 +83,18 @@ class CubeAnimation
       roofpig_div.html(e.message)
       roofpig_div.css(background: '#f66')
 
+  has_alg: ->
+    @config.alg != ""
+
+  user_controlled: ->
+    not this.has_alg()
+
   remove: ->
     if this == EventHandlers.focus()
-      new_focus = (if this.cube_count() == 1 then null else this.next_cube())
+      new_focus = (if this == this.next_cube() then null else this.next_cube())
       EventHandlers.set_focus(new_focus)
     delete CubeAnimation.by_id[@id]
     @dom.div.remove()
-
-  cube_count: ->
-    Object.keys(CubeAnimation.by_id).length
 
   animate: (first_time = false) ->  # called for each redraw
     now = (new Date()).getTime()

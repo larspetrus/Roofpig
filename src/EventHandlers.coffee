@@ -86,6 +86,8 @@ class EventHandlers
     e.preventDefault() # no context menu
 
   @_handle_cube_click: (e, click_side) ->
+    return false unless @focus().user_controlled()
+
     third_key = e.metaKey || e.ctrlKey
     opposite = false
     side_map = switch e.which
@@ -145,6 +147,8 @@ class EventHandlers
 
 
   @cube_key_moves: (e) ->
+    return false unless @focus().user_controlled()
+
     number_key = Math.max(key_num.indexOf(e.keyCode), key_numpad.indexOf(e.keyCode))
     return false unless number_key > 0
 
