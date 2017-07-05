@@ -156,6 +156,8 @@ describe "Alg", ->
 
     # weird cases
     expect(new Alg("F y L2", null, "").unhand()).to.equal("F F2")
+    expect(new Alg("U+E'", null, "").unhand()).to.equal("D")
+    expect(new Alg("F'+S'+B", null, "").unhand()).to.equal("")
 
 
   move_should_be = (move, layer, turns, is_rotation = false) ->

@@ -3,7 +3,7 @@
 
 # pieces.UFR is the 3D model for the UFR piece
 #
-# Keeping track of where the 3D pieces are is hard, so we track them in parallel:
+# -- Keeping track of where the 3D pieces are is hard, so we track them in parallel:
 # pieces.at.UFR is the 3D piece currently at the UFR position
 # piece.UFR.sticker_locations == 'LFU' means the U sticker is on the L side, the F sticker on F, and R sticker on U
 #
@@ -51,6 +51,15 @@ class Pieces3D
     for n in [1..turns]
       this._permute(cycle1)
       this._permute(cycle2)
+
+  reset: ->
+    for name in NAMES
+      piece = this[name]
+
+      @at[name] = piece
+      piece.sticker_locations = name.split('')
+      piece.rotation.x = piece.rotation.y = piece.rotation.z = 0
+
 
   _permute: (p) ->
     [@at[p[0]], @at[p[1]], @at[p[2]], @at[p[3]]] = [@at[p[1]], @at[p[2]], @at[p[3]], @at[p[0]]]

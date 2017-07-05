@@ -55,3 +55,18 @@ class Move
     result = move_text.replace('Z', algdisplay.Zcode)
     result = result.replace('2', '²') if algdisplay.fancy2s
     result
+
+  HUMAN_NAMES = {
+    "F2+S2+BZ": "z2",
+    "F+S+B'":   "z",
+    "F'+S'+B":  "z'",
+    "U2+EZ+DZ": "y2",
+    "U+E'+D'":  "y",
+    "U'+E+D":   "y'",
+    "R2+MZ+LZ": "x2",
+    "R+M'+L'":  "x",
+    "R'+M+L":   "x'",
+  }
+  @human_name: (primitive_name) ->
+
+    HUMAN_NAMES[primitive_name] || primitive_name

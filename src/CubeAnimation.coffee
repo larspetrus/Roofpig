@@ -89,6 +89,15 @@ class CubeAnimation
   user_controlled: ->
     not this.has_alg()
 
+  solved: ->
+    @world3d.pieces.solved()
+
+  reset: ->
+    this.add_changer('pieces', new OneChange( => @world3d.pieces.reset()))
+
+  starting_solve: ->
+    @now_solving = true
+
   remove: ->
     if this == EventHandlers.focus()
       new_focus = (if this == this.next_cube() then null else this.next_cube())
@@ -114,11 +123,17 @@ class CubeAnimation
     if @changers[category] then @changers[category].finish()
     @changers[category] = changer
 
-  user_move: (hand_code) ->
+  external_move: (hand_code) ->
     @pov ||= new PovTracker()
     move = Move.make(hand_code, @world3d, 200)
     @pov.track(move)
+    if @now_solving
+      document.dispatchEvent(new CustomEvent('cube_move', detail: {move: hand_code}))
     this.add_changer('pieces', move.show_do())
+    if this.solved() && @now_solving
+      document.dispatchEvent(new CustomEvent('cube_solved', detail: {'id': @id}))
+      @now_solving = false
+
 
   button_click: (name, shift) ->
     switch name

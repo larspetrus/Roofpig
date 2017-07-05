@@ -100,7 +100,7 @@ class EventHandlers
         opposite = third_key
         if third_key then {F: 'b', U: 'd', R: 'l'} else {F: 'f', U: 'u', R: 'r'}
 
-    @focus().user_move(side_map[click_side], this._turns(e, opposite))
+    @focus().external_move(side_map[click_side]+this._turns(e, opposite))
 
 
   @_turns: (e, opposite = false) ->
@@ -158,9 +158,9 @@ class EventHandlers
       when 3, 6, 9 then "R"
 
     turns = switch number_key
-      when 1, 2, 3 then -1
+      when 1, 2, 3 then 2
       when 4, 5, 6 then 1
-      when 7, 8, 9 then 2
+      when 7, 8, 9 then -1
 
     turn_code      = Move.turn_code(turns)
     anti_turn_code = Move.turn_code(-turns)
@@ -186,7 +186,7 @@ class EventHandlers
         when 'U' then moves.push("D"+anti_turn_code)
         when 'R' then moves.push("L"+anti_turn_code)
 
-    @focus().user_move(moves.join('+'))
+    @focus().external_move(moves.join('+'))
 
     true
 
