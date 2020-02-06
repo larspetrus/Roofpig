@@ -20,7 +20,7 @@ class Move
     switch tcode
       when "1",  "", ">" then  1
       when "2", "²",">>" then  2
-      when "3", "'", "<" then -1
+      when "3", "'", "<", "⁻¹", "-1" then -1
       when "Z","2'","<<" then -2
 
   do: ->
@@ -77,6 +77,7 @@ class Move
   @displayify: (move_text, algdisplay) ->
     result = move_text.replace('Z', algdisplay.Zcode)
     result = result.replace('2', '²') if algdisplay.fancy2s
+    result = result.replace("'", '⁻¹') if algdisplay.fancym1s
     result
 
   display_text: (algdisplay) ->
