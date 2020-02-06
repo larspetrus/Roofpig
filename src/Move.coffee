@@ -30,8 +30,8 @@ class Move
     this._do(-@turns, false)
 
   mix: ->
-    unless @is_rotation
-      this.undo()
+    # unless @is_rotation 
+    this.undo()
 
   track_pov: (pov_map) ->
     for cycle in [@layer.cycle1, @layer.cycle2] when cycle[0].length == 1 # center cycle
