@@ -1,0 +1,81 @@
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src='../roofpig_and_three.min.js'></script>
+  <style>
+    body {
+      font-family: Calibri; 
+      margin-left: 1em;
+    }
+
+    div.roofpig {width: 15rem; margin-bottom: 2rem; margin-top: 1rem; float: left}
+
+    h3, h4 {
+      clear:left;
+      padding-top: 1rem;
+    }
+
+    li {margin-bottom: 0.5rem; margin-left: 2rem; list-style-type: disc}
+  </style>
+</head>
+<h2>alexfung commits demo</h2>
+<p>
+  This demo page shows the effects of the commits on the alexfung branch,
+  which is a fork of the 1.4 master.
+</p><p>
+  The demo files refer to the roofpig JS file at the root of this repo.
+  That file is not exactly the same as the output of the build process.
+  The roofpig JS file contains non-ANSI characters and may confuse browsers.
+  I have added BOM to the roofpig JS file at the root of this repo to make sure browsers know it is a UTF-8 file.
+</p>
+
+<h3>Color Fix</h3>
+<p>
+  In 1.4 (and 1.5P) color is not assigned correctly if alg= includes any M/E/S slice movement or x/y/z rotation.
+  Fixed in the color fix commit.
+</p>
+<div class="roofpig" data-config="alg=U| colored=*|flags=showalg startsolved">Normal: U on top</div>
+<div class="roofpig" data-config="alg=M| colored=*|flags=showalg startsolved|algdisplay=rotations">color fix for M</div>
+<div class="roofpig" data-config="alg=x| colored=*|flags=showalg startsolved|algdisplay=rotations">color fix for X</div>
+
+
+<h3>Rotations: X vs R&gt; vs Ra</h3>
+
+<p>
+  It came to my notice that the two types of rotations are not identical.
+  <ul>
+    <li>
+      X/Y/Z are macros for combo moves. 
+      For example, X&nbsp;&equiv;&nbsp;R&oplus;M<sup>-1</sup>&oplus;L<sup>-1</sup>.
+      After X/Y/Z, U is still on top.
+    </li>
+    <li>
+      R&gt; etc moves the camera angle.
+      It allows you to view the cube from another direction.
+      After this kind of rotations, U moves the same face as if the rotation never happened.
+    </li>
+  </ul>
+  It is easier to understand with examples:
+</p>
+<div class="roofpig" data-config="alg=x U| colored=*|flags=showalg startsolved|algdisplay=rotations">U is still on top</div>
+
+<div class="roofpig" data-config="alg=R> U| colored=*|flags=showalg startsolved|algdisplay=rotations">U not on top</div>
+<p style='clear:left'>
+  I keep the current hebaviour without making any changes.
+  I don't need R&gt; at all, and I found that X is too diffult to understand.
+  So I added a new set of accepted input alg= 
+  <ul>
+    <li>Ra&nbsp;&equiv;&nbsp;X</li>
+    <li>Ua&nbsp;&equiv;&nbsp;Y</li>
+    <li>Fa&nbsp;&equiv;&nbsp;Z</li>
+    <li>La&nbsp;&equiv;&nbsp;X<sup>-1</sup></li>
+    <li>Da&nbsp;&equiv;&nbsp;Y<sup>-1</sup></li>
+    <li>Ba&nbsp;&equiv;&nbsp;Z<sup>-1</sup></li>
+  </ul>
+</p><p>
+  I think my names are much easier to understand.
+  Following the style of Rw (rotate double rows),
+  I use Ra to mean moving all three planes.
+  Ra moves the cube in the same direction as R,
+  La moves the cube in the same direction as L.
+</p>
+<div class="roofpig" data-config="alg=Ra La Fa Ba Ua Da|solved=undefined|flags=startsolved showalg|algdisplay=rotation fancy-1s xyzUpper">Rotations: Ra La Fa Ba Ua Da</div>
