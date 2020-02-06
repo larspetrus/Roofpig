@@ -71,12 +71,14 @@ class Alg
     if code.indexOf('+') > -1
       new CompositeMove(code, @world3d, @speed)
 
-    else if code[0] in ['x', 'y', 'z']
+    else if (c0lower = code[0].toLowerCase()) in ['x', 'y', 'z']
       [t1, t2] = turn_codes[Move.parse_turns(code.substring(1))]
-      moves = switch code[0]
+      moves = switch c0lower
         when 'x' then "R#{t1}+M#{t2}+L#{t2}"
         when 'y' then "U#{t1}+E#{t2}+D#{t2}"
         when 'z' then "F#{t1}+S#{t1}+B#{t2}"
+      new CompositeMove(moves, @world3d, @speed, c0lower + code.substring(1))
+      # allow input XYZ, but must store as xyz or else Z will be displayed as 2
       new CompositeMove(moves, @world3d, @speed, code)
 
     else

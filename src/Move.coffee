@@ -77,6 +77,7 @@ class Move
   @displayify: (move_text, algdisplay) ->
     result = move_text.replace('Z', algdisplay.Zcode)
     result = result.replace('2', '²') if algdisplay.fancy2s
+    result = result.replace("x", 'X').replace("y", 'Y').replace("z", 'Z') if algdisplay.xyzUpper
     result
 
   display_text: (algdisplay) ->
