@@ -79,7 +79,6 @@ class Alg
         when 'z' then "F#{t1}+S#{t1}+B#{t2}"
       new CompositeMove(moves, @world3d, @speed, c0lower + code.substring(1))
       # allow input XYZ, but must store as xyz or else Z will be displayed as 2
-      new CompositeMove(moves, @world3d, @speed, code)
 
     else
       last_char_index = 2 if (code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
