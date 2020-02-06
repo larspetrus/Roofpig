@@ -9,7 +9,10 @@
 class Pov
   constructor: (moves) ->
     @map = Pov.start_map()
-    this.track(moves) if moves
+    # alex
+    # fix issue initial orientation
+    # will color incorrectly if moves include M/E/S 
+    # this.track(moves) if moves
 
   @start_map: ->
     {B: 'B', D: 'D', F: 'F',L: 'L', R: 'R', U: 'U'}
