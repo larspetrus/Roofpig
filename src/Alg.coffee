@@ -78,6 +78,17 @@ class Alg
         when 'y' then "U#{t1}+E#{t2}+D#{t2}"
         when 'z' then "F#{t1}+S#{t1}+B#{t2}"
       new CompositeMove(moves, @world3d, @speed, code)
+    
+    else if (code[1] == 'a' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
+      [t1, t2] = turn_codes[Move.parse_turns(code.substring(2))]
+      moves = switch code[0]
+        when 'R' then "R#{t1}+M#{t2}+L#{t2}"
+        when 'U' then "U#{t1}+E#{t2}+D#{t2}"
+        when 'F' then "F#{t1}+S#{t1}+B#{t2}"
+        when 'L' then "R#{t2}+M#{t1}+L#{t1}"
+        when 'D' then "U#{t2}+E#{t1}+D#{t1}"
+        when 'B' then "F#{t2}+S#{t2}+B#{t1}"
+      new CompositeMove(moves, @world3d, @speed, code)
 
     else
       last_char_index = 2 if (code[1] == 'w' && code[0] in ['U', 'D', 'L', 'R', 'F', 'B'])
