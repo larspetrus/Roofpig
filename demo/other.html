@@ -1,0 +1,29 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src='../roofpig_and_three.min.js'></script>
+<style>
+body {
+    font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 10px;
+}
+div.roofpig {
+    width:120px;
+    height:160px;
+    margin: 0px;
+    float:left;
+}
+</style>
+</head>
+<h2>Roofpig various options Demo</h2>
+
+<div class="roofpig" data-config="colors=F:r R:#fee U:#f99 L:pink B:#f44 D:#fdd">colors in pink</div>
+<div class="roofpig" data-config="colors=solved:plum ignored:#cfc cube:yellow | colored=UD- | solved=D*">non sticker colors</div>
+<div class="roofpig" data-config="flags=startsolved|alg=F L F U' R U F2 L2 U' L' B D' B' L2 U">startsolved</div>
+
+<div class="roofpig" data-config="algdisplay=fancy2s | alg=F D2 UZ+R>>|flags=showalg">algdisplay=fancy2s</div>
+<div class="roofpig" data-config="algdisplay=rotations 2p| alg=F D2 UZ+R>>|flags=showalg">algdisplay=rotations 2p</div>
+
+<div class="roofpig" data-config="hover=far">hover=far</div>
+<div class="roofpig" data-config="hover=5">hover=5</div>
+<div class="roofpig" data-config="hover=near">hover=near</div>
+<div class="roofpig" data-config="hover=none">hover=none</div>

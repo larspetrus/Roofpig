@@ -90,7 +90,15 @@ class Dom
 
     @buttons = [@reset, @prev, @next, @pause, @play]
 
-  LUCIDA_WIDTHS = {M:108, '+':100, '>':100, '<':100, w:98, D:94, U:87, 2:80, R:80, x:78, Z:77, B:73, z:73, F:68, E:68, S:68, L:67, y:65, '²':53, ' ':40, "'":29}
+  # LUCIDA_WIDTHS = {M:108, '+':100, '>':100, '<':100, w:98, D:94, U:87, 2:80, R:80, x:78, Z:77, B:73, z:73, F:68, E:68, S:68, L:67, y:65, '²':53, ' ':40, "'":29}
+  LUCIDA_WIDTHS = {M:108, '+':100, '>':100, '<':100, w:98, D:94, U:87, 2:80, R:80, x:78, Z:77, B:73, z:73, F:68, E:68, S:68, L:67, y:65, '²':53, ' ':40, "'":29
+    , '⁻': 73, '¹': 54, "-":63, "1":80 
+  }
+  # I haven't really found out what the width here means.
+  # Below are the real values from the Lucida Sans font, 
+  # since +/</> are 1628, I divide numbers by 16.28 and round up to get the value for LUCIDA_WIDTHS
+  # , '⁻': 1185, '¹': 864, "-":1024, "1":1295
+  
   init_alg_text: (text) ->
     if @alg_text
       width = 0
