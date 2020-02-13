@@ -1,0 +1,45 @@
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src='../roofpig_and_three.min.js'></script>
+  <style>
+    body {
+      font-family: Calibri; 
+      margin-left: 1em;
+    }
+
+    div.roofpig {width: 15rem; margin-bottom: 2rem; margin-top: 1rem; float: left}
+
+    h3, h4 {
+      clear:left;
+      padding-top: 1rem;
+    }
+
+    li {margin-bottom: 0.5rem; margin-left: 2rem; list-style-type: disc}
+  </style>
+</head>
+<h2>alexfung commits demo</h2>
+<p>
+  This demo page shows the effects of the commits on the alexfung branch,
+  which is a fork of the 1.4 master.
+</p><p>
+  The demo files refer to the roofpig JS file at the root of this repo.
+  That file is not exactly the same as the output of the build process.
+  The roofpig JS file contains non-ANSI characters and may confuse browsers.
+  I have added BOM to the roofpig JS file at the root of this repo to make sure browsers know it is a UTF-8 file.
+</p>
+
+<h3>Color Fix</h3>
+<p>
+  In 1.4 (and 1.5P) color is not assigned correctly if alg= includes any M/E/S slice movement or x/y/z rotation.
+  Fixed in the color fix commit.
+</p>
+<div class="roofpig" data-config="alg=U| colored=*|flags=showalg startsolved">Normal: U on top</div>
+<div class="roofpig" data-config="alg=M| colored=*|flags=showalg startsolved|algdisplay=rotations">color fix for M</div>
+<div class="roofpig" data-config="alg=x| colored=*|flags=showalg startsolved|algdisplay=rotations">color fix for X</div>
+
+<h3>Upper Case XYZ</h3>
+<p>
+  Using the algdisplay=xyzUpper option, X/Y/Z are displayed in upper case, as they should be.
+</p>
+<div class="roofpig" data-config="alg=x y z| colored=|flags=showalg startsolved|algdisplay=rotations">Lower Case xyz</div>
+<div class="roofpig" data-config="alg=x y z| colored=|flags=showalg startsolved|algdisplay=rotations xyzUpper">Upper Case XYZ</div>
