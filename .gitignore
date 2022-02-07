@@ -20,6 +20,7 @@
 
 #Local build/test files
 /local
+rptest.html
 
 # Idea project stuff
 .idea
