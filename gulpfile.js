@@ -9,42 +9,48 @@ var uglify = require('gulp-uglify');
 
 var dateFormat = require('dateformat');
 var del        = require('del');
-var filenames  = require('gulp-filenames');
 var replace    = require('gulp-replace');
 
 
+// ------------- BUILD -----
+
 var build_dir = 'local/build/';
-var rp_js_file = 'roofpig.js';
+var roofpig_file = 'roofpig.js';
 var extras_file = '3extras.js';
 var release_file = 'roofpig_and_three.min.js';
 
-// ------------- BUILD -----
-
-gulp.task('clean-build', function() {
+function cleanBuild() {
   return del(build_dir +'**/*');
-});
+}
 
-gulp.task('build-rp', ['clean-build'], function() {
+function roofpig() {
   return gulp.src('src/**/*.coffee')
     .pipe(cofcon('roofpig.coffee'))
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(replace('@@BUILT_WHEN@@', dateFormat(new Date(), "yyyy-mm-dd HH:MM")))
     .pipe(uglify())
     .pipe(gulp.dest(build_dir));
-});
+}
 
-gulp.task('build-3x', ['clean-build'], function() {
+function extras() {
   return gulp.src(['lib/Projector.js', 'lib/CanvasRenderer.js'])
     .pipe(uglify())
     .pipe(concat(extras_file))
-    .pipe(gulp.dest(build_dir));
-});
+    .pipe(gulp.dest(build_dir));  
+}
 
-gulp.task('build', ['build-rp', 'build-3x'], function() {
-  gulp.src(['lib/three.min.js', build_dir + extras_file, build_dir + rp_js_file])
+async function copyDemo() {
+  return gulp.src('templates/local_demo.html')
+    .pipe(gulp.dest(build_dir));
+}
+
+async function combine() {
+  return gulp.src(['lib/three.min.js', build_dir + extras_file, build_dir + roofpig_file])
     .pipe(concat(release_file))
     .pipe(gulp.dest(build_dir));
-});
+}
+
+exports.default = exports.build = gulp.series(cleanBuild, gulp.parallel(roofpig, extras, copyDemo), combine);
 
 
 // ------------- TEST -----
@@ -53,37 +59,42 @@ var rename = require("gulp-rename");
 var glob   = require("glob");
 //var sourcemaps = require('gulp-sourcemaps');
 
-var js_dir = 'local/test_js/';
-var test_js_dir = js_dir+'test/';
+var test_dir = 'local/test/';
+var rel_source_dir = 'src/';
+var source_dir = test_dir + rel_source_dir;
+var rel_spec_dir = 'specs/';
+var spec_dir = test_dir + rel_spec_dir;
 
-gulp.task('clean-js', function() {
-  return del(js_dir+'**/*');
-});
+function cleanTest() {
+  return del(test_dir + '**/*');
+}
 
-gulp.task('compile-test', ['clean-js'], function() {
+function compileSpecs() {
   return gulp.src('test/**/*.coffee')
 //    .pipe(sourcemaps.init())
     .pipe(coffee({bare: true}).on('error', gutil.log))
 //    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(test_js_dir));
-});
+    .pipe(gulp.dest(spec_dir));
+}
 
-gulp.task('compile-src', ['clean-js'], function() {
+function compileTestSource() {
   return gulp.src('src/**/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
-    .pipe(gulp.dest(js_dir+'src'));
-});
+    .pipe(gulp.dest(source_dir));
+}
 
-gulp.task('test', ['compile-test', 'compile-src'], function(){
+function renderMochaTemplate() {
   var test_html = '';
-  glob.sync(test_js_dir+'**/*.js', {}).forEach(function(test_file){
-    test_html += '<script src="'+test_file+'"></script>\n';
+  glob.sync('**/*.js', {cwd: spec_dir}).forEach(function(test_file) {
+    test_html += '<script src="' + rel_spec_dir + test_file + '"></script>\n';
   });
 
-  console.log("\nTests generated. `open rptest.html` can run them!\n")
+  console.log("\nTests generated. `open local/test/mocha.html` can run them!\n")
 
-  return gulp.src('misc/rptest_template.html')
+  return gulp.src('templates/mocha.html')
     .pipe(replace('@@TEST_FILES_GO_HERE@@', test_html))
-    .pipe(rename('rptest.html'))
-    .pipe(gulp.dest('.'));
-});
+    .pipe(rename('mocha.html'))
+    .pipe(gulp.dest(test_dir));
+}
+
+exports.test = gulp.series(cleanTest, gulp.parallel(compileSpecs, compileTestSource), renderMochaTemplate);
