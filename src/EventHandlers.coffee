@@ -84,6 +84,13 @@ class EventHandlers
 
     if key in turn_keys
       turns = if shift then 3 else if alt then 2 else 1
+      side_for = {}
+      side_for[turn_B] = "B"
+      side_for[turn_D] = "D"
+      side_for[turn_F] = "F"
+      side_for[turn_L] = "L"
+      side_for[turn_R] = "R"
+      side_for[turn_U] = "U"
       this._move("#{side_for[key]}#{turns}")
 
     else if alt
@@ -93,7 +100,7 @@ class EventHandlers
       new_focus = if shift then @focus().previous_cube() else @focus().next_cube()
       this.set_focus(new_focus)
 
-    else if key == key_end || (key == key_right_arrow && shift)
+    else if key == key_end || (key == menu_next && shift)
       @focus().add_changer('pieces', new OneChange( => @focus().alg.to_end(@focus().world3d)))
 
     else if key in button_keys
@@ -101,12 +108,12 @@ class EventHandlers
 
     else if key in rotate_keys
       axis = switch key
-        when key_C, key_Z then 'up'
-        when key_A, key_D then 'dr'
-        when key_S, key_X then 'dl'
+        when rotate_D, rotate_U then 'up'
+        when rotate_L, rotate_R then 'dr'
+        when rotate_B, rotate_F then 'dl'
       turns = switch key
-        when key_C, key_A, key_S then 1
-        when key_Z, key_D, key_X then -1
+        when rotate_D, rotate_L, rotate_B then 1
+        when rotate_U, rotate_R, rotate_F then -1
       this._rotate(axis, turns)
 
     else if key == key_question
@@ -122,13 +129,13 @@ class EventHandlers
 
   @_button_for: (key, shift) ->
     switch key
-      when key_home
+      when menu_reset
         @dom.reset
-      when key_left_arrow
+      when menu_prev
         unless shift then @dom.prev else @dom.reset
-      when key_right_arrow
+      when menu_next
        @dom.next
-      when key_space
+      when menu_play
         @dom.play_or_pause
 
   @key_up: (e) ->
@@ -157,15 +164,18 @@ class EventHandlers
     @focus().add_changer('pieces', new Move(code, @focus().world3d, 200).show_do())
 
 
-  # http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+  # Declare keycodes for physical keys
+  # (http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes)
   key_tab = 9
   key_space = 32
   key_end = 35
   key_home = 36
+
   key_left_arrow = 37
   key_up_arrow = 38
   key_right_arrow = 39
   key_down_arrow = 40
+
   key_A = 65
   key_C = 67
   key_D = 68
@@ -175,13 +185,51 @@ class EventHandlers
   key_S = 83
   key_X = 88
   key_Z = 90
+
+  numpad_0 = 96
+  numpad_1 = 97
+  numpad_2 = 98
+  numpad_3 = 99
+  numpad_4 = 100
+  numpad_5 = 101
+  numpad_6 = 102
+  numpad_7 = 103
+  numpad_8 = 104
+  numpad_9 = 105
+  
   key_question = 191
 
-  button_keys = [key_space, key_home, key_left_arrow, key_right_arrow]
-  rotate_keys = [key_C, key_Z, key_A, key_D, key_S, key_X]
-  turn_keys   = [key_J, key_K, key_L]
 
-  side_for = {}
-  side_for[key_J] = "U"
-  side_for[key_K] = "F"
-  side_for[key_L] = "R"
+  # Map physical keys to logical actions
+  # TODO: extract into a config option
+
+  # cube rotations
+  rotate_B = key_S
+  rotate_D = key_C
+  rotate_F = key_X
+  rotate_L = key_A
+  rotate_R = key_D
+  rotate_U = key_Z
+
+  # face turns
+  turn_B = null
+  turn_D = null
+  turn_F = key_K
+  turn_L = null
+  turn_R = key_L
+  turn_U = key_J
+
+  # menu buttons
+  menu_reset = key_home
+  menu_prev = key_left_arrow
+  menu_next = key_right_arrow
+  menu_play = key_space
+
+
+  # keybindings will be deactivated automatically, if you assign `null` to them in the mapping above
+  compact = (array) ->
+    item for item in array when item != null
+
+  button_keys = compact([menu_reset, menu_prev, menu_next, menu_play])
+  rotate_keys = compact([rotate_B, rotate_D, rotate_F, rotate_L, rotate_R, rotate_U])
+  turn_keys   = compact([turn_B, turn_D, turn_F, turn_L, turn_R, turn_U])
