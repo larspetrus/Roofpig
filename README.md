@@ -5,7 +5,7 @@ Roofpig is an animated, programmable and interactive Rubik's Cube for the modern
 It should work on most [any modern browser](http://caniuse.com/canvas).
 
 ## 1. Usage
-All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://raw.githubusercontent.com/larspetrus/Roofpig/master/roofpig_and_three.min.js) on your server. Include it, and jQuery 3.1.1 in your HTML:
+All you need is one file and a web server. Put [`roofpig_and_three.min.js`](https://raw.githubusercontent.com/dunkelziffer/Roofpig/development/roofpig_and_three.min.js) on your server. Include it, and jQuery 3.1.1 in your HTML:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -26,7 +26,7 @@ CubeAnimation.create_in_dom('#show-alg', "alg=R U R' U R U2 R'", "class='my-roof
 
 
 ## 2. data-config
-In `data-config` you set values to properties. The format is `property1=value|prop2=other value | prop99=you get the idea`.
+In `data-config` you set values to properties. The format is `property1=value|prop2=other value|prop99=you get the idea`.
 
 This is a fully configured example cube:
 
@@ -140,22 +140,27 @@ To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a commo
 
 ### 3. Working with the code
 1. Install Node and NPM - https://docs.npmjs.com/getting-started/installing-node
-2. Clone/download this Github repository, and `cd` to the resulting directory
-3. `npm install`
-4. `sudo npm install -g gulp`
+2. Install nvm - https://github.com/nvm-sh/nvm
+3. Clone/download this Github repository, and `cd` to the resulting directory
+4. `nvm install lts/gallium`
+5. `nvm use`
+6. `npm install`
+7. `sudo npm install -g gulp`
 
 Now the gulp task below should work. Let me know if it doesn't.
 
+#### Running the prebuilt release version
+
+The `demo.html` in the root directory shows multiple examples using the current release version.
+
 #### Building it
 
-`gulp build` on the command line creates a `roofpig_and_three.min.js` file in `local/build/`
+Running `gulp build` or simply `gulp` on the command line creates a `roofpig_and_three.min.js` and a `local_demo.html` file in `local/build/`.
 
-`misc/demo_local.html` is a demo page using the built file. `misc/demo.html` is the same demo using the official release file. 
+#### Testing it
 
+Running `gulp test` creates everything needed for testing in `local/test/`. Open `mocha.html` in a browser to run the tests suite.
 
-#### Testing
-
-`gulp test` makes the `rptest.html` file for running the tests in a browser. `open rptest.html` is one way.
 
 ## 4. What's a Roofpig anyway?
 [**"Most unexpected!"**](https://www.youtube.com/watch?v=PtO0diaiZEE&t=14m57s)
