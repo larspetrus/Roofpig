@@ -140,9 +140,12 @@ To share between pages, you can for example put **"ROOFPIG_CONF_"**'s in a commo
 
 ### 3. Working with the code
 1. Install Node and NPM - https://docs.npmjs.com/getting-started/installing-node
-2. Clone/download this Github repository, and `cd` to the resulting directory
-3. `npm install`
-4. `sudo npm install -g gulp`
+2. Install nvm - https://github.com/nvm-sh/nvm
+3. Clone/download this Github repository, and `cd` to the resulting directory
+4. `nvm install lts/gallium`
+5. `nvm use`
+6. `npm install`
+7. `sudo npm install -g gulp`
 
 Now the gulp task below should work. Let me know if it doesn't.
 
@@ -153,7 +156,7 @@ Now the gulp task below should work. Let me know if it doesn't.
 `misc/demo_local.html` is a demo page using the built file. `misc/demo.html` is the same demo using the official release file. 
 
 
-#### Testing
+#### Testing (not working currently)
 
 `gulp test` makes the `rptest.html` file for running the tests in a browser. `open rptest.html` is one way.
 

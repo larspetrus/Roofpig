@@ -24,7 +24,7 @@ gulp.task('clean-build', function() {
   return del(build_dir +'**/*');
 });
 
-gulp.task('build-rp', ['clean-build'], function() {
+gulp.task('rp', function() {
   return gulp.src('src/**/*.coffee')
     .pipe(cofcon('roofpig.coffee'))
     .pipe(coffee({bare: true}).on('error', gutil.log))
@@ -33,18 +33,22 @@ gulp.task('build-rp', ['clean-build'], function() {
     .pipe(gulp.dest(build_dir));
 });
 
-gulp.task('build-3x', ['clean-build'], function() {
+gulp.task('3x', function() {
   return gulp.src(['lib/Projector.js', 'lib/CanvasRenderer.js'])
     .pipe(uglify())
     .pipe(concat(extras_file))
     .pipe(gulp.dest(build_dir));
 });
 
-gulp.task('build', ['build-rp', 'build-3x'], function() {
+gulp.task('build-rp', gulp.series('clean-build', 'rp'))
+gulp.task('build-3x', gulp.series('clean-build', '3x'))
+
+gulp.task('build', gulp.series('clean-build', 'rp', '3x', function(done) {
   gulp.src(['lib/three.min.js', build_dir + extras_file, build_dir + rp_js_file])
     .pipe(concat(release_file))
     .pipe(gulp.dest(build_dir));
-});
+    done();
+}));
 
 
 // ------------- TEST -----
@@ -60,21 +64,21 @@ gulp.task('clean-js', function() {
   return del(js_dir+'**/*');
 });
 
-gulp.task('compile-test', ['clean-js'], function() {
+gulp.task('compile-test', gulp.series('clean-js', function() {
   return gulp.src('test/**/*.coffee')
 //    .pipe(sourcemaps.init())
     .pipe(coffee({bare: true}).on('error', gutil.log))
 //    .pipe(sourcemaps.write())
     .pipe(gulp.dest(test_js_dir));
-});
+}));
 
-gulp.task('compile-src', ['clean-js'], function() {
+gulp.task('compile-src', gulp.series('clean-js', function() {
   return gulp.src('src/**/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(gulp.dest(js_dir+'src'));
-});
+}));
 
-gulp.task('test', ['compile-test', 'compile-src'], function(){
+gulp.task('test', gulp.series('compile-test', 'compile-src', function() {
   var test_html = '';
   glob.sync(test_js_dir+'**/*.js', {}).forEach(function(test_file){
     test_html += '<script src="'+test_file+'"></script>\n';
@@ -86,4 +90,4 @@ gulp.task('test', ['compile-test', 'compile-src'], function(){
     .pipe(replace('@@TEST_FILES_GO_HERE@@', test_html))
     .pipe(rename('rptest.html'))
     .pipe(gulp.dest('.'));
-});
+}));
