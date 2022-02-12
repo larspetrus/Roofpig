@@ -39,8 +39,11 @@ function extras() {
     .pipe(gulp.dest(build_dir));  
 }
 
-async function copyDemo() {
-  return gulp.src('templates/local_demo.html')
+async function createDemo() {
+  return gulp.src('demo.html')
+    .pipe(replace('Official release version', 'Local build version'))
+    .pipe(replace('src="lib/jquery-3.1.1.min.js"', 'src="../../lib/jquery-3.1.1.min.js"'))
+    .pipe(rename('local_demo.html'))
     .pipe(gulp.dest(build_dir));
 }
 
@@ -50,7 +53,7 @@ async function combine() {
     .pipe(gulp.dest(build_dir));
 }
 
-exports.default = exports.build = gulp.series(cleanBuild, gulp.parallel(roofpig, extras, copyDemo), combine);
+exports.default = exports.build = gulp.series(cleanBuild, gulp.parallel(roofpig, extras, createDemo), combine);
 
 
 // ------------- TEST -----
@@ -91,7 +94,7 @@ function renderMochaTemplate() {
 
   console.log("\nTests generated. `open local/test/mocha.html` can run them!\n")
 
-  return gulp.src('templates/mocha.html')
+  return gulp.src('test/mocha.html')
     .pipe(replace('@@TEST_FILES_GO_HERE@@', test_html))
     .pipe(rename('mocha.html'))
     .pipe(gulp.dest(test_dir));
